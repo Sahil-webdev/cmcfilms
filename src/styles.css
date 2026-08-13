@@ -1,0 +1,306 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+/*
+ * CMC FILMS — luxury editorial design system.
+ * Palette: warm ivory / editorial beige / taupe / espresso / cinematic black / soft gold.
+ */
+
+@theme inline {
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ivory: var(--ivory);
+  --color-beige: var(--beige);
+  --color-taupe: var(--taupe);
+  --color-olive: var(--olive);
+  --color-espresso: var(--espresso);
+  --color-cinema: var(--cinema);
+  --color-gold: var(--gold);
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-editorial: "Instrument Serif", Georgia, serif;
+  --font-sans: "Manrope", system-ui, sans-serif;
+  --ease-cinema: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  --radius: 0px;
+  --background: oklch(0.955 0.014 88.5); /* #F4F0E9 */
+  --foreground: oklch(0.235 0.008 60);   /* #27231F */
+  --ivory: oklch(0.975 0.009 90);        /* #FAF8F3 */
+  --beige: oklch(0.878 0.02 85);         /* #DDD4C7 */
+  --taupe: oklch(0.673 0.028 79);        /* #A69A89 */
+  --olive: oklch(0.428 0.025 96);        /* #625F4E */
+  --espresso: oklch(0.235 0.008 60);
+  --cinema: oklch(0.15 0 0);             /* #0D0D0D */
+  --gold: oklch(0.688 0.062 79);         /* #B79A6B */
+  --card: var(--ivory);
+  --card-foreground: var(--espresso);
+  --popover: var(--ivory);
+  --popover-foreground: var(--espresso);
+  --primary: var(--espresso);
+  --primary-foreground: var(--ivory);
+  --secondary: var(--beige);
+  --secondary-foreground: var(--espresso);
+  --muted: var(--beige);
+  --muted-foreground: var(--olive);
+  --accent: var(--gold);
+  --accent-foreground: var(--cinema);
+  --destructive: oklch(0.52 0.16 27);
+  --destructive-foreground: var(--ivory);
+  --border: oklch(0.878 0.02 85 / 70%);
+  --input: oklch(0.673 0.028 79 / 45%);
+  --ring: var(--gold);
+}
+
+.dark {
+  --background: oklch(0.15 0 0);
+  --foreground: oklch(0.975 0.009 90);
+  --card: oklch(0.19 0.004 60);
+  --card-foreground: oklch(0.975 0.009 90);
+  --popover: oklch(0.19 0.004 60);
+  --popover-foreground: oklch(0.975 0.009 90);
+  --primary: oklch(0.975 0.009 90);
+  --primary-foreground: oklch(0.15 0 0);
+  --secondary: oklch(0.25 0.006 60);
+  --secondary-foreground: oklch(0.975 0.009 90);
+  --muted: oklch(0.25 0.006 60);
+  --muted-foreground: oklch(0.72 0.02 80);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 18%);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--gold);
+    color: var(--cinema);
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* ——— Editorial primitives ——— */
+
+@utility label-xs {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+@utility grain {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.35;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+}
+
+@utility rule-gold {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    color-mix(in oklab, var(--gold) 80%, transparent),
+    transparent
+  );
+}
+
+/* Fast GPU Scroll reveal */
+@utility reveal {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  transition:
+    opacity 0.7s var(--ease-cinema),
+    transform 0.7s var(--ease-cinema);
+  will-change: transform, opacity;
+}
+
+@utility reveal-in {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Clip-path image reveal */
+@utility mask-reveal {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.7s var(--ease-cinema);
+}
+
+@utility mask-reveal-in {
+  clip-path: inset(0 0 0 0);
+}
+
+@utility hover-zoom {
+  overflow: hidden;
+  & img {
+    transition: transform 0.7s var(--ease-cinema);
+  }
+  &:hover img {
+    transform: scale(1.05);
+  }
+}
+
+@utility link-underline {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s var(--ease-cinema);
+  }
+  &:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+@utility ticker {
+  animation: ticker 42s linear infinite;
+}
+
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes slow-zoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+@utility slow-zoom {
+  animation: slow-zoom 20s var(--ease-cinema) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* hide scrollbar on drag rails */
+@utility no-bar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ——— Floating Social Sidebar ——— */
+
+.social-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: rgb(44, 44, 44);
+  overflow: hidden;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.social-pill:hover {
+  background-color: var(--hover-color, #b79a6b);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.social-pill:active {
+  transform: scale(0.88);
+}
+
+.social-pill:hover .social-svg {
+  animation: social-slide-in 0.3s both;
+}
+
+.social-svg {
+  width: 16px;
+  height: 16px;
+  fill: rgb(255, 255, 255);
+}
+
+.social-svg path {
+  fill: rgb(255, 255, 255);
+}
+
+@keyframes social-slide-in {
+  0% {
+    transform: translateY(-40px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
