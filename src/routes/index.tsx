@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Hero } from "@/components/home/Hero";
 import { Philosophy } from "@/components/home/Philosophy";
-import { ThreeImageStory } from "@/components/home/ThreeImageStory";
+
 import { StoriesCarousel } from "@/components/home/StoriesCarousel";
 import { FeaturedStory } from "@/components/home/FeaturedStory";
 import { PortfolioEditorial } from "@/components/home/PortfolioEditorial";
@@ -53,7 +53,7 @@ function Home() {
     <main>
       <Hero />
       <Philosophy />
-      <ThreeImageStory />
+
       <StoriesCarousel />
       <FeaturedStory />
       <PortfolioEditorial />
