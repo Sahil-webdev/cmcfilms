@@ -11,7 +11,7 @@ export function Hero() {
   }, []);
 
   return (
-    <section className="grain relative h-[100svh] min-h-[640px] w-full overflow-hidden bg-cinema">
+    <section className="relative h-[100svh] min-h-[640px] w-full overflow-hidden bg-black">
       {/* ── Fallback still image (shown until video loads) ── */}
       <img
         src={heroImg}
@@ -22,11 +22,11 @@ export function Hero() {
         fetchPriority="high"
         decoding="async"
         className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
-          videoLoaded ? "opacity-0" : "opacity-90"
+          videoLoaded ? "opacity-0" : "opacity-100"
         }`}
       />
 
-      {/* ── Background Video ── */}
+      {/* ── Crystal Clear Full-Opacity Background Video ── */}
       <video
         autoPlay
         muted
@@ -34,31 +34,30 @@ export function Hero() {
         playsInline
         preload="auto"
         onCanPlay={() => setVideoLoaded(true)}
-        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${
-          videoLoaded ? "opacity-80" : "opacity-0"
+        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
+          videoLoaded ? "opacity-100" : "opacity-0"
         }`}
         aria-hidden
       >
         <source src="/hero-bg.mp4" type="video/mp4" />
       </video>
 
-      {/* ── Cinematic gradient overlays ── */}
-      <div className="absolute inset-0 bg-gradient-to-b from-cinema/75 via-cinema/30 to-cinema/85 pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-r from-cinema/30 via-transparent to-cinema/30 pointer-events-none" />
+      {/* ── Minimal Subtle Gradient for Text Readability (Just like KnotsbyAMP) ── */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-black/35 pointer-events-none" />
 
-      {/* ── Hero content (Ultra-clean brand focus) ── */}
-      <div className="relative flex h-full flex-col items-center justify-center px-5 text-center text-ivory">
-        {/* Main Grand Title (Bold & Sleek) */}
+      {/* ── Hero content placed in lower center like KnotsbyAMP ── */}
+      <div className="relative flex h-full flex-col items-center justify-end px-5 pb-20 md:pb-28 text-center text-white">
+        {/* Main Title */}
         <h1
-          className="font-display text-[clamp(2.4rem,6.8vw,5.5rem)] font-bold leading-[0.95] tracking-[0.18em] text-[#FAF8F3] uppercase transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] drop-shadow-[0_8px_25px_rgba(0,0,0,0.8)]"
+          className="font-display text-[clamp(3.2rem,8.5vw,6.5rem)] font-normal md:font-medium leading-none tracking-tight text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)] transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]"
           style={{ opacity: ready ? 1 : 0, transform: ready ? "none" : "translateY(20px)" }}
         >
-          CMC FILMS
+          CMC Films
         </h1>
 
         {/* Subtitle */}
         <p
-          className="mt-3 md:mt-4 font-editorial text-[clamp(1.2rem,2.8vw,2.1rem)] italic text-[#E5CA92] font-normal tracking-wide transition-all duration-1000 delay-200 ease-out drop-shadow-md"
+          className="mt-2.5 md:mt-3.5 font-display text-[clamp(1.15rem,2.8vw,2.1rem)] font-light tracking-wide text-white/95 drop-shadow-[0_2px_14px_rgba(0,0,0,0.85)] transition-all duration-1000 delay-200 ease-out"
           style={{ opacity: ready ? 1 : 0, transform: ready ? "none" : "translateY(14px)" }}
         >
           Stories for love Told forever
