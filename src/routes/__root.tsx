@@ -139,8 +139,6 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
-import { WhatsAppFloatingButton } from "@/components/WhatsAppFloatingButton";
-
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
@@ -149,7 +147,6 @@ function RootComponent() {
       <Preloader />
       <Navbar />
       <SocialSidebar />
-      <WhatsAppFloatingButton />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
       <Footer />
