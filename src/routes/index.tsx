@@ -8,7 +8,7 @@ import { PortfolioEditorial } from "@/components/home/PortfolioEditorial";
 import { FilmsSection } from "@/components/home/FilmsSection";
 import { QuoteSection } from "@/components/home/QuoteSection";
 import { Approach } from "@/components/home/Approach";
-import { Fragments } from "@/components/home/Fragments";
+
 import { ExperienceTimeline } from "@/components/home/ExperienceTimeline";
 import { Destinations } from "@/components/home/Destinations";
 import { Testimonials } from "@/components/home/Testimonials";
@@ -60,7 +60,7 @@ function Home() {
       <FilmsSection />
       <QuoteSection />
       <Approach />
-      <Fragments />
+
       <ExperienceTimeline />
       <Destinations />
       <Testimonials />
