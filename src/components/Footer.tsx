@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, Instagram, Youtube, Facebook, Linkedin, Mail, Phone, MapPin } from "lucide-react";
 import { studio } from "@/lib/site-data";
-import hdCamera from "@/assets/hd_camera_transparent.png";
+import canonCamera from "@/assets/canon_camera.png";
 
 // Large organic, asymmetrical, flowing contour line SVG pattern spanning entire footer background
 function TopographicContourBackground() {
@@ -57,13 +57,22 @@ export function Footer() {
   return (
     <div className="relative bg-[#FAF8F5] pt-16 md:pt-24">
       {/* ── Main Horizontal Footer Section (Large Rounded Top Corners Only) ── */}
-      <footer className="relative rounded-t-[44px] md:rounded-t-[64px] rounded-b-none bg-[#0C0D10] text-[#FAF8F3] pt-14 md:pt-20 pb-8 border-t border-emerald-500/20 shadow-[0_-25px_60px_rgba(0,0,0,0.5)] overflow-visible">
+      <footer className="relative rounded-t-[44px] md:rounded-t-[64px] rounded-b-none bg-[#0C0D10] text-[#FAF8F3] pt-24 sm:pt-28 md:pt-36 pb-8 border-t border-emerald-500/20 shadow-[0_-25px_60px_rgba(0,0,0,0.5)] overflow-visible">
         
         {/* Subtle Ambient Radial Glow */}
         <div className="pointer-events-none absolute inset-0 rounded-t-[44px] md:rounded-t-[64px] bg-[radial-gradient(circle_at_50%_0%,rgba(16,185,129,0.15),transparent_65%)]" />
         
         {/* Large Asymmetrical Organic Contour Line Pattern */}
         <TopographicContourBackground />
+
+        {/* ── USER CANON CAMERA IMAGE ON TOP BORDER (CENTER ALIGNED, HIGH Z-INDEX z-[40]) ── */}
+        <div className="absolute -top-16 sm:-top-20 md:-top-24 lg:-top-28 left-1/2 -translate-x-1/2 z-[40] pointer-events-none flex justify-center items-center w-full">
+          <img
+            src={canonCamera}
+            alt="Canon Cinema Camera Emblem"
+            className="w-44 sm:w-56 md:w-64 lg:w-72 h-auto object-contain filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.9)] hover:scale-105 transition-transform duration-500"
+          />
+        </div>
 
         {/* ── Main 3-Column Footer Layout ── */}
         <div className="relative z-10 mx-auto max-w-[1600px] px-6 md:px-12">
