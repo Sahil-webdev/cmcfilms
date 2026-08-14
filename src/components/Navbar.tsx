@@ -145,25 +145,25 @@ export function Navbar() {
       </label>
 
       {/* ── Mobile Glassmorphism Sliding Sidebar ── */}
-      {/* 1. Backdrop Blur Overlay */}
+      {/* 1. Subtle Backdrop Blur Overlay */}
       <div
         onClick={() => setOpen(false)}
         className={cn(
-          "fixed inset-0 z-[80] bg-black/60 backdrop-blur-md transition-opacity duration-500 lg:hidden",
+          "fixed inset-0 z-[80] bg-black/25 backdrop-blur-[3px] transition-opacity duration-500 lg:hidden",
           open ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none",
         )}
       />
 
-      {/* 2. Redesigned Ultra-Glassmorphism Drawer */}
+      {/* 2. Redesigned Light Blurry Transparent Glass Drawer */}
       <aside
         className={cn(
-          "fixed top-0 right-0 bottom-0 z-[85] w-[88%] max-w-[380px] bg-[#12100E]/80 backdrop-blur-3xl border-l border-white/15 text-ivory shadow-[-25px_0_60px_rgba(0,0,0,0.8)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden flex flex-col justify-between p-6 overflow-y-auto",
+          "fixed top-0 right-0 bottom-0 z-[85] w-[85%] max-w-[360px] bg-black/30 backdrop-blur-2xl border-l border-white/20 text-ivory shadow-[-15px_0_45px_rgba(0,0,0,0.35)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden flex flex-col justify-between p-6 overflow-y-auto",
           open ? "translate-x-0" : "translate-x-full",
         )}
       >
-        {/* Ambient Glass Glow Circles in Drawer Background */}
-        <div className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-[#E5CA92]/15 blur-3xl" />
-        <div className="pointer-events-none absolute bottom-12 -left-20 h-56 w-56 rounded-full bg-[#015287]/20 blur-3xl" />
+        {/* Ambient Glass Glow in Drawer Background */}
+        <div className="pointer-events-none absolute -top-20 -right-20 h-56 w-56 rounded-full bg-[#E5CA92]/20 blur-2xl" />
+        <div className="pointer-events-none absolute bottom-10 -left-16 h-48 w-48 rounded-full bg-[#015287]/25 blur-2xl" />
 
         {/* Top Header of Sidebar */}
         <div className="relative z-10 pt-2 pb-6 border-b border-white/10 flex items-center justify-between pr-14">
