@@ -1,4 +1,3 @@
-import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import heroImg from "@/assets/hero.jpg";
 
@@ -12,7 +11,7 @@ export function Hero() {
   }, []);
 
   return (
-    <section className="grain relative h-[100svh] min-h-[680px] w-full overflow-hidden bg-cinema">
+    <section className="grain relative h-[100svh] min-h-[640px] w-full overflow-hidden bg-cinema">
       {/* ── Fallback still image (shown until video loads) ── */}
       <img
         src={heroImg}
@@ -47,8 +46,8 @@ export function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-cinema/75 via-cinema/30 to-cinema/85 pointer-events-none" />
       <div className="absolute inset-0 bg-gradient-to-r from-cinema/30 via-transparent to-cinema/30 pointer-events-none" />
 
-      {/* ── Hero content ── */}
-      <div className="relative flex h-full flex-col items-center justify-center px-5 text-center text-ivory pt-12">
+      {/* ── Hero content (Ultra-clean brand focus) ── */}
+      <div className="relative flex h-full flex-col items-center justify-center px-5 text-center text-ivory">
         {/* Main Grand Title */}
         <h1
           className="font-display text-[clamp(3.5rem,11vw,9.5rem)] font-light leading-[0.88] tracking-widest text-[#FAF8F3] uppercase transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] drop-shadow-[0_10px_35px_rgba(0,0,0,0.8)]"
@@ -64,25 +63,6 @@ export function Hero() {
         >
           Stories for love Told forever
         </p>
-
-        {/* CTAs */}
-        <div
-          className="mt-10 flex flex-wrap items-center justify-center gap-4 transition-all duration-700 delay-500"
-          style={{ opacity: ready ? 1 : 0, transform: ready ? "none" : "translateY(12px)" }}
-        >
-          <Link
-            to="/portfolio"
-            className="label-xs border border-ivory bg-ivory px-9 py-4 text-espresso transition-all duration-300 hover:bg-[#E5CA92] hover:border-[#E5CA92] hover:text-[#27231F] shadow-lg"
-          >
-            Explore Portfolio
-          </Link>
-          <Link
-            to="/films"
-            className="label-xs border border-ivory/40 bg-cinema/40 px-9 py-4 text-ivory transition-all duration-300 hover:border-[#E5CA92] hover:text-[#E5CA92] hover:bg-ivory/15 backdrop-blur-md"
-          >
-            Watch Films 🎬
-          </Link>
-        </div>
       </div>
     </section>
   );
