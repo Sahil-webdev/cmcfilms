@@ -57,7 +57,7 @@ export function Footer() {
   return (
     <div className="relative">
       {/* ── Main Horizontal Footer Section (Large Rounded Top Corners Only) ── */}
-      <footer className="relative rounded-t-[44px] md:rounded-t-[64px] rounded-b-none bg-[#0C0D10] text-[#FAF8F3] pt-24 sm:pt-28 md:pt-36 pb-8 border-t border-emerald-500/20 shadow-[0_-25px_60px_rgba(0,0,0,0.5)] overflow-visible">
+      <footer className="relative -mt-10 sm:-mt-14 md:-mt-20 z-20 rounded-t-[44px] md:rounded-t-[64px] rounded-b-none bg-[#0C0D10] text-[#FAF8F3] pt-24 sm:pt-28 md:pt-36 pb-8 border-t border-emerald-500/20 shadow-[0_-25px_60px_rgba(0,0,0,0.6)] overflow-visible">
         
         {/* Subtle Ambient Radial Glow */}
         <div className="pointer-events-none absolute inset-0 rounded-t-[44px] md:rounded-t-[64px] bg-[radial-gradient(circle_at_50%_0%,rgba(16,185,129,0.15),transparent_65%)]" />
