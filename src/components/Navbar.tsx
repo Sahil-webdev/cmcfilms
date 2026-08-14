@@ -52,7 +52,20 @@ export function Navbar() {
             scrolled ? "px-4 md:px-8 max-w-full" : "px-5 md:px-10 max-w-[1600px]",
           )}
         >
-          {/* Desktop Left Navigation */}
+          {/* Desktop Left Brand Logo */}
+          <Link
+            to="/"
+            className={cn(
+              "font-display tracking-[0.28em] font-normal transition-all duration-300",
+              scrolled
+                ? "text-xl md:text-2xl text-espresso hover:opacity-75"
+                : "text-2xl md:text-3xl text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)] hover:opacity-85",
+            )}
+          >
+            CMC FILMS
+          </Link>
+
+          {/* Desktop Right Navigation Links */}
           <nav className="hidden items-center gap-7 lg:flex" role="navigation" aria-label="Main Navigation">
             {navLinks.map((l) => (
               <Link
@@ -71,59 +84,6 @@ export function Navbar() {
               </Link>
             ))}
           </nav>
-
-          {/* Desktop & Mobile Brand Logo */}
-          <Link
-            to="/"
-            className={cn(
-              "font-display tracking-[0.28em] font-normal transition-all duration-300 lg:absolute lg:left-1/2 lg:-translate-x-1/2",
-              scrolled
-                ? "text-xl md:text-2xl text-espresso hover:opacity-75"
-                : "text-2xl md:text-3xl text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)] hover:opacity-85",
-            )}
-          >
-            CMC FILMS
-          </Link>
-
-          {/* Desktop Right Actions */}
-          <div className="hidden items-center gap-5 lg:flex">
-            <a
-              href={studio.socials[0]?.href}
-              aria-label="Instagram"
-              className={cn(
-                "transition-all duration-300",
-                scrolled
-                  ? "text-espresso/70 hover:text-espresso"
-                  : "text-white/80 hover:text-gold drop-shadow-sm",
-              )}
-            >
-              <Instagram className="h-4 w-4" strokeWidth={1.5} />
-            </a>
-            <a
-              href={studio.socials[1]?.href}
-              aria-label="YouTube"
-              className={cn(
-                "transition-all duration-300",
-                scrolled
-                  ? "text-espresso/70 hover:text-espresso"
-                  : "text-white/80 hover:text-gold drop-shadow-sm",
-              )}
-            >
-              <Youtube className="h-4 w-4" strokeWidth={1.5} />
-            </a>
-            <Link
-              to="/contact"
-              className={cn(
-                "label-xs border px-5 py-2.5 transition-all duration-300 flex items-center gap-2 rounded-full",
-                scrolled
-                  ? "border-espresso bg-espresso text-ivory hover:bg-gold hover:border-gold hover:text-cinema shadow-sm"
-                  : "border-white/40 bg-white/10 text-white hover:border-white hover:bg-white hover:text-espresso backdrop-blur-md",
-              )}
-            >
-              <Calendar className="w-3.5 h-3.5" />
-              <span>Book Experience</span>
-            </Link>
-          </div>
 
           {/* Mobile Spacer (Keeps header layout balanced) */}
           <div className="w-8 h-8 lg:hidden" />
