@@ -1,42 +1,41 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import heroImg from "@/assets/hero.jpg";
 
 export function Hero() {
   const [ready, setReady] = useState(false);
-  const [videoLoaded, setVideoLoaded] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const t = setTimeout(() => setReady(true), 80);
+
+    // Ensure browser autoplay policy is satisfied
+    if (videoRef.current) {
+      videoRef.current.defaultMuted = true;
+      videoRef.current.muted = true;
+      videoRef.current.playsInline = true;
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Autoplay was prevented; fallback poster is shown
+        });
+      }
+    }
+
     return () => clearTimeout(t);
   }, []);
 
   return (
     <section className="relative h-[100svh] min-h-[640px] w-full overflow-hidden bg-black">
-      {/* ── Fallback still image (shown until video loads) ── */}
-      <img
-        src={heroImg}
-        alt=""
-        aria-hidden
-        width={1920}
-        height={1200}
-        fetchPriority="high"
-        decoding="async"
-        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
-          videoLoaded ? "opacity-0" : "opacity-100"
-        }`}
-      />
-
-      {/* ── Crystal Clear Full-Opacity Background Video ── */}
+      {/* ── Crystal Clear Background Video with Poster Fallback ── */}
       <video
+        ref={videoRef}
         autoPlay
         muted
         loop
         playsInline
         preload="auto"
-        onCanPlay={() => setVideoLoaded(true)}
-        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
-          videoLoaded ? "opacity-100" : "opacity-0"
-        }`}
+        poster={heroImg}
+        className="absolute inset-0 h-full w-full object-cover"
         aria-hidden
       >
         <source src="/hero-bg.mp4" type="video/mp4" />
