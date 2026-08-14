@@ -304,3 +304,52 @@
     opacity: 1;
   }
 }
+
+/* ——— Subtle Circuit Grid Background ——— */
+.circuit-background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 19px,
+      rgba(255, 255, 255, 0.04) 19px,
+      rgba(255, 255, 255, 0.04) 20px,
+      transparent 20px,
+      transparent 39px,
+      rgba(255, 255, 255, 0.04) 39px,
+      rgba(255, 255, 255, 0.04) 40px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 19px,
+      rgba(255, 255, 255, 0.04) 19px,
+      rgba(255, 255, 255, 0.04) 20px,
+      transparent 20px,
+      transparent 39px,
+      rgba(255, 255, 255, 0.04) 39px,
+      rgba(255, 255, 255, 0.04) 40px
+    ),
+    radial-gradient(
+      circle at 20px 20px,
+      rgba(229, 202, 146, 0.18) 2px,
+      transparent 2px
+    ),
+    radial-gradient(
+      circle at 40px 40px,
+      rgba(229, 202, 146, 0.18) 2px,
+      transparent 2px
+    );
+  background-size:
+    40px 40px,
+    40px 40px,
+    40px 40px,
+    40px 40px;
+}
+
