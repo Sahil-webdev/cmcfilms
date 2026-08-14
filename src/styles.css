@@ -444,5 +444,12 @@
   border-color: rgba(0, 215, 87, 0.6);
 }
 
+/* Hide WhatsApp button completely on Desktop View (≥ 768px) */
+@media (min-width: 768px) {
+  .wa-btn {
+    display: none !important;
+  }
+}
+
 
 
