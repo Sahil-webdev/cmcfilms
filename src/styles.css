@@ -305,7 +305,7 @@
   }
 }
 
-/* ——— Subtle Circuit Grid Background ——— */
+/* ——— Circuit Grid Background (High Visibility) ——— */
 .circuit-background {
   position: absolute;
   top: 0;
@@ -318,33 +318,33 @@
       0deg,
       transparent,
       transparent 19px,
-      rgba(255, 255, 255, 0.04) 19px,
-      rgba(255, 255, 255, 0.04) 20px,
+      rgba(255, 255, 255, 0.14) 19px,
+      rgba(255, 255, 255, 0.14) 20px,
       transparent 20px,
       transparent 39px,
-      rgba(255, 255, 255, 0.04) 39px,
-      rgba(255, 255, 255, 0.04) 40px
+      rgba(255, 255, 255, 0.14) 39px,
+      rgba(255, 255, 255, 0.14) 40px
     ),
     repeating-linear-gradient(
       90deg,
       transparent,
       transparent 19px,
-      rgba(255, 255, 255, 0.04) 19px,
-      rgba(255, 255, 255, 0.04) 20px,
+      rgba(255, 255, 255, 0.14) 19px,
+      rgba(255, 255, 255, 0.14) 20px,
       transparent 20px,
       transparent 39px,
-      rgba(255, 255, 255, 0.04) 39px,
-      rgba(255, 255, 255, 0.04) 40px
+      rgba(255, 255, 255, 0.14) 39px,
+      rgba(255, 255, 255, 0.14) 40px
     ),
     radial-gradient(
       circle at 20px 20px,
-      rgba(229, 202, 146, 0.18) 2px,
-      transparent 2px
+      rgba(229, 202, 146, 0.55) 2.5px,
+      transparent 2.5px
     ),
     radial-gradient(
       circle at 40px 40px,
-      rgba(229, 202, 146, 0.18) 2px,
-      transparent 2px
+      rgba(229, 202, 146, 0.55) 2.5px,
+      transparent 2.5px
     );
   background-size:
     40px 40px,
