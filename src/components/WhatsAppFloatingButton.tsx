@@ -7,7 +7,8 @@ export function WhatsAppFloatingButton() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Direct WhatsApp Inquiry"
-      className="fixed bottom-6 right-6 z-[9999] wa-btn transition-all duration-300 hover:scale-110 active:scale-95 md:hidden shadow-2xl"
+      style={{ position: "fixed", bottom: "24px", right: "24px", zIndex: 99999 }}
+      className="wa-btn transition-all duration-300 hover:scale-110 active:scale-95 md:hidden shadow-2xl"
     >
       <span className="wa-svgContainer">
         <svg viewBox="0 0 16 16" height="2.4em" width="2.4em" className="svgIcon" fill="white">
