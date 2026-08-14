@@ -395,15 +395,15 @@
 
 /* ——— Uiverse Floating WhatsApp Button (By Gaurang7717) ——— */
 .wa-btn {
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: none;
   background-color: transparent;
   position: relative;
-  border-radius: 12px;
+  border-radius: 14px;
   cursor: pointer;
   transition: all 0.3s;
 }
