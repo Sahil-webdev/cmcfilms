@@ -55,7 +55,7 @@ function TopographicContourBackground() {
 
 export function Footer() {
   return (
-    <div className="relative bg-[#FAF8F5] pt-16 md:pt-24">
+    <div className="relative">
       {/* ── Main Horizontal Footer Section (Large Rounded Top Corners Only) ── */}
       <footer className="relative rounded-t-[44px] md:rounded-t-[64px] rounded-b-none bg-[#0C0D10] text-[#FAF8F3] pt-24 sm:pt-28 md:pt-36 pb-8 border-t border-emerald-500/20 shadow-[0_-25px_60px_rgba(0,0,0,0.5)] overflow-visible">
         
