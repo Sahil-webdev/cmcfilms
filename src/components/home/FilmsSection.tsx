@@ -19,7 +19,7 @@ export function FilmsSection() {
   const [activeVideo, setActiveVideo] = useState<{ title: string; place: string } | null>(null);
 
   return (
-    <section className="grain relative bg-[#012640] px-5 py-24 text-ivory md:px-10 md:py-36 overflow-hidden border-y border-ivory/10">
+    <section className="grain relative bg-[#012640] px-5 py-14 text-ivory md:px-10 md:py-20 overflow-hidden border-y border-ivory/10">
       {/* Ambient background depth for royal sapphire blue */}
       <div className="pointer-events-none absolute -top-40 -right-20 h-[500px] w-[500px] rounded-full bg-[#E5CA92]/10 blur-[130px]" />
       <div className="pointer-events-none absolute -bottom-40 -left-20 h-[500px] w-[500px] rounded-full bg-cinema/40 blur-[140px]" />
@@ -27,17 +27,17 @@ export function FilmsSection() {
       <div className="relative mx-auto max-w-[1600px]">
         {/* ── Top Header ── */}
         <Reveal>
-          <div className="flex items-center gap-3 mb-3">
-            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#E5CA92]/20 border border-[#E5CA92]/40 text-[#E5CA92]">
-              <Film className="h-3 w-3" />
+          <div className="flex items-center gap-3 mb-2">
+            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#E5CA92]/20 border border-[#E5CA92]/40 text-[#E5CA92]">
+              <Film className="h-2.5 w-2.5" />
             </span>
-            <span className="label-xs uppercase tracking-[0.3em] text-[#E5CA92] font-mono text-[11px]">
+            <span className="label-xs uppercase tracking-[0.25em] text-[#E5CA92] font-mono text-[10px]">
               Wedding Films &amp; Cinema
             </span>
           </div>
 
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <h2 className="font-display text-[clamp(2.5rem,6.5vw,5.2rem)] font-light leading-[0.98] text-[#FAF8F3]">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <h2 className="font-display text-[clamp(2.2rem,4.8vw,4rem)] font-light leading-[1] text-[#FAF8F3]">
               Films That Let You{" "}
               <em className="font-editorial italic text-[#E5CA92] font-normal">
                 Feel It Again.
@@ -55,10 +55,10 @@ export function FilmsSection() {
         </Reveal>
 
         {/* ── Featured Hero Film Preview ── */}
-        <Reveal className="group mt-12 block cursor-pointer" delay={100}>
+        <Reveal className="group mt-8 block cursor-pointer" delay={100}>
           <div
             onClick={() => setActiveVideo({ title: "Ananya & Arjun — The Royal Pichola Vows", place: "Udaipur, Rajasthan" })}
-            className="relative aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden rounded-sm bg-cinema/80 shadow-2xl border border-ivory/15 transition-all duration-700 group-hover:border-[#E5CA92]/70"
+            className="relative aspect-[16/9] md:aspect-[2.35/1] w-full overflow-hidden rounded-sm bg-cinema/80 shadow-2xl border border-ivory/15 transition-all duration-700 group-hover:border-[#E5CA92]/70"
           >
             <img
               src={poster}
@@ -72,28 +72,28 @@ export function FilmsSection() {
 
             {/* Glowing Play Button Center */}
             <span className="absolute inset-0 flex items-center justify-center">
-              <span className="flex h-20 w-20 md:h-24 md:w-24 items-center justify-center rounded-full border border-ivory/40 bg-cinema/60 backdrop-blur-md transition-all duration-500 group-hover:scale-110 group-hover:bg-[#E5CA92] group-hover:border-[#E5CA92] group-hover:text-[#27231F] text-[#FAF8F3] shadow-2xl">
-                <Play className="h-6 w-6 md:h-8 md:w-8 translate-x-0.5 fill-current" strokeWidth={1.5} />
+              <span className="flex h-16 w-16 md:h-20 md:w-20 items-center justify-center rounded-full border border-ivory/40 bg-cinema/60 backdrop-blur-md transition-all duration-500 group-hover:scale-110 group-hover:bg-[#E5CA92] group-hover:border-[#E5CA92] group-hover:text-[#27231F] text-[#FAF8F3] shadow-2xl">
+                <Play className="h-5 w-5 md:h-7 md:w-7 translate-x-0.5 fill-current" strokeWidth={1.5} />
               </span>
             </span>
 
             {/* Top Badge */}
-            <div className="absolute top-5 left-5 md:top-8 md:left-8">
-              <span className="label-xs text-xs font-mono uppercase tracking-[0.25em] text-[#E5CA92] bg-cinema/70 px-3 py-1.5 rounded-sm border border-[#E5CA92]/30 backdrop-blur-md">
+            <div className="absolute top-4 left-4 md:top-6 md:left-6">
+              <span className="label-xs text-[11px] font-mono uppercase tracking-[0.2em] text-[#E5CA92] bg-cinema/70 px-2.5 py-1 rounded-sm border border-[#E5CA92]/30 backdrop-blur-md">
                 Featured 4K Cinema
               </span>
             </div>
 
             {/* Bottom Title Info */}
-            <div className="absolute bottom-5 left-5 right-5 md:bottom-8 md:left-8 md:right-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div className="absolute bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-6 flex flex-col md:flex-row md:items-end justify-between gap-2">
               <div>
-                <span className="font-mono text-xs text-[#E5CA92]">Udaipur · City Palace Lakefront</span>
-                <h3 className="font-display text-2xl md:text-4xl text-[#FAF8F3] font-light mt-1">
+                <span className="font-mono text-[11px] text-[#E5CA92]">Udaipur · City Palace Lakefront</span>
+                <h3 className="font-display text-xl md:text-3xl text-[#FAF8F3] font-light mt-0.5">
                   Ananya &amp; Arjun — The Royal Pichola Vows
                 </h3>
               </div>
 
-              <span className="label-xs font-mono text-xs text-ivory/80 bg-cinema/60 px-3.5 py-1.5 rounded-full border border-ivory/20 backdrop-blur-md self-start md:self-end">
+              <span className="label-xs font-mono text-[11px] text-ivory/80 bg-cinema/60 px-3 py-1 rounded-full border border-ivory/20 backdrop-blur-md self-start md:self-end">
                 Duration · 06:12
               </span>
             </div>
@@ -101,22 +101,22 @@ export function FilmsSection() {
         </Reveal>
 
         {/* ── Category Tags ── */}
-        <div className="mt-14 flex items-center justify-between border-b border-ivory/15 pb-4">
+        <div className="mt-8 flex items-center justify-between border-b border-ivory/15 pb-3">
           <div className="flex gap-4 md:gap-8 font-mono text-xs uppercase tracking-wider text-ivory/70">
-            <span className="text-[#E5CA92] border-b-2 border-[#E5CA92] pb-4 -mb-4 font-medium">
+            <span className="text-[#E5CA92] border-b-2 border-[#E5CA92] pb-3 -mb-3 font-medium">
               Featured Reels
             </span>
             <span className="hover:text-ivory transition-colors cursor-pointer">Teasers</span>
             <span className="hover:text-ivory transition-colors cursor-pointer">Destination Stories</span>
           </div>
 
-          <span className="label-xs text-ivory/50 font-mono text-[11px] hidden sm:inline-block">
+          <span className="label-xs text-ivory/50 font-mono text-[10px] hidden sm:inline-block">
             4K UHD Cinematography
           </span>
         </div>
 
         {/* ── More Film Cards Strip ── */}
-        <div className="no-bar mt-8 flex gap-4 md:gap-6 overflow-x-auto pb-4">
+        <div className="no-bar mt-5 flex gap-3.5 md:gap-5 overflow-x-auto pb-2">
           {films.map((f) => (
             <div
               key={f.title}
