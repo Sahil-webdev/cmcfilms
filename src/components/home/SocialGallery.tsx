@@ -4,12 +4,12 @@ import { Reveal, SectionLabel } from "@/components/Reveal";
 
 export function SocialGallery() {
   return (
-    <section className="bg-ivory py-24 md:py-32">
+    <section className="bg-ivory py-10 md:py-24">
       <div className="mx-auto max-w-[1600px] px-5 md:px-10">
         <Reveal>
           <SectionLabel>Stories Beyond The Frame</SectionLabel>
-          <div className="mt-6 flex flex-wrap items-end justify-between gap-4">
-            <h2 className="font-display text-[clamp(1.9rem,4vw,3.25rem)] leading-tight">
+          <div className="mt-4 md:mt-6 flex flex-wrap items-end justify-between gap-3 md:gap-4">
+            <h2 className="font-display text-[clamp(1.75rem,4vw,3.25rem)] leading-tight">
               Behind the scenes, between the frames
             </h2>
             <a href={studio.socials[0]?.href} className="label-xs link-underline">
@@ -19,7 +19,7 @@ export function SocialGallery() {
         </Reveal>
       </div>
 
-      <div className="no-bar mt-12 flex gap-3 overflow-x-auto px-5 pb-3 md:px-10">
+      <div className="no-bar mt-6 md:mt-12 flex gap-3 overflow-x-auto px-5 pb-2 md:px-10">
         {gallery.map((src, i) => (
           <a
             key={i}

@@ -155,10 +155,10 @@ export function PortfolioEditorial() {
     : wallItems.filter((item) => item.categoryTag === activeTab);
 
   return (
-    <section className="bg-background px-4 py-16 md:px-8 md:py-24 border-b border-espresso/10">
+    <section className="bg-background px-4 py-10 md:px-8 md:py-24 border-b border-espresso/10">
       <div className="mx-auto max-w-[1700px]">
         {/* Header Title & Filter Pills */}
-        <Reveal className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-espresso/15 pb-8 mb-8">
+        <Reveal className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6 border-b border-espresso/15 pb-4 mb-5 md:pb-8 md:mb-8">
           <div>
             <SectionLabel>Selected Work</SectionLabel>
             <h2 className="mt-3 font-display text-[clamp(2.2rem,5vw,4.25rem)] leading-tight font-light text-espresso">

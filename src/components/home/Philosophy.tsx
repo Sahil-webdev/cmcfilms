@@ -28,7 +28,7 @@ export function Philosophy() {
   ];
 
   return (
-    <section className="bg-background px-5 py-16 md:px-10 md:py-28 border-b border-espresso/10">
+    <section className="bg-background px-5 py-10 md:px-10 md:py-24 border-b border-espresso/10">
       <div className="mx-auto max-w-[1600px]">
         {/* Section Heading & Tagline */}
         <Reveal className="max-w-4xl">
@@ -36,12 +36,12 @@ export function Philosophy() {
           <TextReveal
             as="h2"
             text={"We don't simply document weddings.\nWe preserve how they felt."}
-            className="mt-6 font-display text-[clamp(2.25rem,5.5vw,4.75rem)] leading-[1.02] font-light text-espresso"
+            className="mt-4 md:mt-6 font-display text-[clamp(2.25rem,5.5vw,4.75rem)] leading-[1.02] font-light text-espresso"
           />
         </Reveal>
 
         {/* Dual Editorial Masterpiece Showcase (Fills empty space right below Hero) */}
-        <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
+        <div className="mt-8 md:mt-12 grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-12 items-center">
           {/* Main Newly Generated Masterpiece Image */}
           <Reveal delay={100} className="lg:col-span-7">
             <div

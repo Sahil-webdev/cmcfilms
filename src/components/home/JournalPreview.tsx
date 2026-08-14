@@ -3,13 +3,13 @@ import { journal } from "@/lib/site-data";
 
 export function JournalPreview() {
   return (
-    <section className="bg-background px-5 py-28 md:px-10 md:py-40">
+    <section className="bg-background px-5 py-10 md:px-10 md:py-32">
       <div className="mx-auto max-w-[1600px]">
         <Reveal>
           <SectionLabel>From The Journal</SectionLabel>
         </Reveal>
 
-        <div className="mt-14 grid gap-14 md:grid-cols-12 md:gap-10">
+        <div className="mt-6 md:mt-14 grid gap-8 md:grid-cols-12 md:gap-10">
           <article className="md:col-span-7">
             <ImageReveal src={journal[0]!.image} alt={journal[0]!.title} className="aspect-[16/11] w-full" />
             <p className="label-xs mt-5 text-taupe">

@@ -3,18 +3,18 @@ import { experience } from "@/lib/site-data";
 
 export function ExperienceTimeline() {
   return (
-    <section className="bg-background px-5 py-28 md:px-10 md:py-40">
+    <section className="bg-background px-5 py-12 md:px-10 md:py-32">
       <div className="mx-auto max-w-[1600px]">
         <Reveal>
           <SectionLabel>The Experience</SectionLabel>
-          <h2 className="mt-8 font-display text-[clamp(2.25rem,5vw,4.5rem)] leading-[1]">
+          <h2 className="mt-4 md:mt-8 font-display text-[clamp(2.25rem,5vw,4.5rem)] leading-[1]">
             Five quiet steps,
             <br />
             <em className="font-editorial italic text-taupe">from hello to heirloom.</em>
           </h2>
         </Reveal>
 
-        <ol className="mt-20 grid gap-10 border-t border-border pt-10 md:grid-cols-5 md:gap-6">
+        <ol className="mt-8 md:mt-20 grid gap-6 md:gap-6 border-t border-border pt-6 md:pt-10 md:grid-cols-5">
           {experience.map((s, i) => (
             <Reveal as="li" key={s.no} delay={i * 90} className="relative md:pr-6">
               <span className="label-xs text-gold">{s.no}</span>

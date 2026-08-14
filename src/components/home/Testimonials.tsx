@@ -9,11 +9,11 @@ export function Testimonials() {
   const go = (d: number) => setI((p) => (p + d + testimonials.length) % testimonials.length);
 
   return (
-    <section className="bg-ivory px-5 py-28 md:px-10 md:py-40">
+    <section className="bg-ivory px-5 py-10 md:px-10 md:py-32">
       <div className="mx-auto max-w-[1600px]">
         <SectionLabel>In Their Words</SectionLabel>
 
-        <div className="mt-14 grid items-center gap-12 md:grid-cols-12 md:gap-16">
+        <div className="mt-6 md:mt-14 grid items-center gap-6 md:grid-cols-12 md:gap-16">
           <div className="md:col-span-4">
             <div className="relative aspect-[3/4] w-full overflow-hidden bg-beige">
               {testimonials.map((x, xi) => (
@@ -35,11 +35,11 @@ export function Testimonials() {
           <div className="md:col-span-7 md:col-start-6">
             <blockquote
               key={i}
-              className="font-display text-[clamp(1.75rem,4vw,3.5rem)] leading-[1.1] animate-fade-in"
+              className="font-display text-[clamp(1.5rem,4vw,3.5rem)] leading-[1.1] animate-fade-in"
             >
               “{t.quote}”
             </blockquote>
-            <p className="label-xs mt-10 text-taupe">
+            <p className="label-xs mt-4 md:mt-10 text-taupe">
               {t.name} <span className="mx-2 text-gold">/</span> {t.place}{" "}
               <span className="mx-2 text-gold">/</span> {t.year}
             </p>

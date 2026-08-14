@@ -2,7 +2,7 @@ import { TextReveal } from "@/components/Reveal";
 
 export function QuoteSection() {
   return (
-    <section className="relative flex min-h-[70svh] items-center justify-center bg-ivory px-5 py-24 md:px-10 overflow-hidden border-b border-espresso/10">
+    <section className="relative flex min-h-[42svh] md:min-h-[60svh] items-center justify-center bg-ivory px-5 py-12 md:px-10 md:py-24 overflow-hidden border-b border-espresso/10">
       {/* ── Circuit Background Overlay ── */}
       <div className="circuit-background opacity-60" />
 
@@ -15,9 +15,9 @@ export function QuoteSection() {
           text={
             "Years from now,\nyou may forget how everything looked.\nBut you'll remember\nhow it felt."
           }
-          className="font-display text-[clamp(2rem,5.2vw,4.5rem)] leading-[1.12] text-espresso font-light"
+          className="font-display text-[clamp(1.75rem,5.2vw,4.5rem)] leading-[1.12] text-espresso font-light"
         />
-        <p className="mt-12 font-editorial text-2xl md:text-3xl italic text-gold font-normal">
+        <p className="mt-6 md:mt-12 font-editorial text-xl md:text-3xl italic text-gold font-normal">
           CMC Films
         </p>
       </div>
