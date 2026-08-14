@@ -24,18 +24,23 @@ export function Navbar() {
 
   return (
     <>
-      {/* ── Main Navbar ── */}
+      {/* ── Dynamic Navbar (Transparent at top -> 4-Side Rounded Floating Island on Scroll) ── */}
       <header
         className={cn(
-          "fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
+          "fixed z-50 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
           scrolled
-            ? "h-16 md:h-20 border-b border-espresso/10 bg-ivory/95 text-espresso backdrop-blur-md shadow-sm"
-            : "h-20 md:h-24 border-b border-transparent bg-gradient-to-b from-black/70 via-black/25 to-transparent text-white",
+            ? "top-3 md:top-4 inset-x-3 md:inset-x-auto md:left-1/2 md:-translate-x-1/2 md:w-[94%] max-w-[1400px] h-16 md:h-18 rounded-full border border-espresso/15 bg-ivory/92 text-espresso backdrop-blur-xl shadow-[0_12px_40px_rgba(0,0,0,0.14)]"
+            : "top-0 inset-x-0 h-20 md:h-24 rounded-none border-b border-transparent bg-gradient-to-b from-black/70 via-black/20 to-transparent text-white",
         )}
       >
-        <div className="mx-auto flex h-full max-w-[1600px] items-center justify-between px-5 md:px-10">
-          {/* Desktop Navigation */}
-          <nav className="hidden items-center gap-8 lg:flex">
+        <div
+          className={cn(
+            "mx-auto flex h-full items-center justify-between transition-all duration-500",
+            scrolled ? "px-4 md:px-8 max-w-full" : "px-5 md:px-10 max-w-[1600px]",
+          )}
+        >
+          {/* Left Navigation (Desktop) */}
+          <nav className="hidden items-center gap-7 lg:flex">
             {navLinks.map((l) => (
               <Link
                 key={l.to}
@@ -43,8 +48,8 @@ export function Navbar() {
                 className={cn(
                   "label-xs tracking-wider transition-all duration-300",
                   scrolled
-                    ? "text-espresso/80 hover:text-espresso"
-                    : "text-white/90 hover:text-gold drop-shadow-sm",
+                    ? "text-espresso/85 hover:text-espresso hover:opacity-100"
+                    : "text-white/90 hover:text-gold hover:opacity-100 drop-shadow-sm",
                 )}
                 activeProps={{ className: "opacity-100 text-gold font-semibold" }}
                 activeOptions={{ exact: l.to === "/" }}
@@ -58,21 +63,25 @@ export function Navbar() {
           <Link
             to="/"
             className={cn(
-              "font-display text-2xl md:text-3xl tracking-[0.3em] font-light transition-opacity hover:opacity-80 lg:absolute lg:left-1/2 lg:-translate-x-1/2",
-              scrolled ? "text-espresso" : "text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]",
+              "font-display tracking-[0.28em] font-normal transition-all duration-300 lg:absolute lg:left-1/2 lg:-translate-x-1/2",
+              scrolled
+                ? "text-xl md:text-2xl text-espresso hover:opacity-75"
+                : "text-2xl md:text-3xl text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)] hover:opacity-85",
             )}
           >
             CMC FILMS
           </Link>
 
-          {/* Desktop Right Actions */}
-          <div className="hidden items-center gap-6 lg:flex">
+          {/* Right Actions (Desktop Socials & Book CTA) */}
+          <div className="hidden items-center gap-5 lg:flex">
             <a
               href={studio.socials[0]?.href}
               aria-label="Instagram"
               className={cn(
-                "transition-all hover:text-gold",
-                scrolled ? "text-espresso/75" : "text-white/85",
+                "transition-all duration-300",
+                scrolled
+                  ? "text-espresso/70 hover:text-espresso"
+                  : "text-white/80 hover:text-gold drop-shadow-sm",
               )}
             >
               <Instagram className="h-4 w-4" strokeWidth={1.5} />
@@ -81,8 +90,10 @@ export function Navbar() {
               href={studio.socials[1]?.href}
               aria-label="YouTube"
               className={cn(
-                "transition-all hover:text-gold",
-                scrolled ? "text-espresso/75" : "text-white/85",
+                "transition-all duration-300",
+                scrolled
+                  ? "text-espresso/70 hover:text-espresso"
+                  : "text-white/80 hover:text-gold drop-shadow-sm",
               )}
             >
               <Youtube className="h-4 w-4" strokeWidth={1.5} />
@@ -90,7 +101,7 @@ export function Navbar() {
             <Link
               to="/contact"
               className={cn(
-                "label-xs border px-6 py-3 transition-all duration-300 flex items-center gap-2 rounded-full",
+                "label-xs border px-5 py-2.5 transition-all duration-300 flex items-center gap-2 rounded-full",
                 scrolled
                   ? "border-espresso bg-espresso text-ivory hover:bg-gold hover:border-gold hover:text-cinema shadow-sm"
                   : "border-white/40 bg-white/10 text-white hover:border-white hover:bg-white hover:text-espresso backdrop-blur-md",
@@ -101,7 +112,7 @@ export function Navbar() {
             </Link>
           </div>
 
-          {/* ── Mobile Animated Hamburger (Toggles between Hamburger & Cross X) ── */}
+          {/* ── Mobile Animated Hamburger (Hidden on Desktop) ── */}
           <label
             className={cn(
               "hamburger flex lg:!hidden items-center justify-center relative z-[80] p-1.5 rounded-full transition-colors duration-300 cursor-pointer select-none",
@@ -131,7 +142,7 @@ export function Navbar() {
       </header>
 
       {/* ── Mobile Glassmorphism Sliding Sidebar ── */}
-      {/* 1. Backdrop Overlay */}
+      {/* 1. Backdrop Blur Overlay */}
       <div
         onClick={() => setOpen(false)}
         className={cn(
@@ -143,11 +154,11 @@ export function Navbar() {
       {/* 2. Glassmorphism Drawer */}
       <aside
         className={cn(
-          "fixed top-0 right-0 bottom-0 z-[70] w-[85%] max-w-[360px] bg-cinema/80 backdrop-blur-2xl border-l border-white/15 text-ivory shadow-[-15px_0_50px_rgba(0,0,0,0.5)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden flex flex-col justify-between p-6 pt-24",
+          "fixed top-0 right-0 bottom-0 z-[70] w-[85%] max-w-[360px] bg-cinema/85 backdrop-blur-2xl border-l border-white/15 text-ivory shadow-[-15px_0_50px_rgba(0,0,0,0.5)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden flex flex-col justify-between p-6 pt-24",
           open ? "translate-x-0" : "translate-x-full",
         )}
       >
-        {/* Navigation Links inside Glass Cards */}
+        {/* Navigation Links in Glassmorphic Cards */}
         <div className="flex flex-col gap-3">
           <p className="label-xs text-gold uppercase tracking-widest px-2 mb-1">Navigation</p>
           {navLinks.map((l, i) => (
@@ -167,7 +178,7 @@ export function Navbar() {
             </Link>
           ))}
 
-          {/* Book Experience Button */}
+          {/* Book Experience CTA */}
           <Link
             to="/contact"
             onClick={() => setOpen(false)}
