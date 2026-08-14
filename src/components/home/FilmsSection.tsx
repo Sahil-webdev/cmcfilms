@@ -20,9 +20,6 @@ export function FilmsSection() {
 
   return (
     <section className="grain relative bg-[#012640] px-5 py-14 text-ivory md:px-10 md:py-20 overflow-hidden border-y border-ivory/10">
-      {/* Circuit Grid Pattern Overlay (High Visibility) */}
-      <div className="circuit-background opacity-90" />
-
       {/* Ambient background depth for royal sapphire blue */}
       <div className="pointer-events-none absolute -top-40 -right-20 h-[500px] w-[500px] rounded-full bg-[#E5CA92]/10 blur-[130px]" />
       <div className="pointer-events-none absolute -bottom-40 -left-20 h-[500px] w-[500px] rounded-full bg-cinema/40 blur-[140px]" />

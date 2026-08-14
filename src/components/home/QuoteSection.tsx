@@ -2,16 +2,24 @@ import { TextReveal } from "@/components/Reveal";
 
 export function QuoteSection() {
   return (
-    <section className="flex min-h-[80svh] items-center bg-ivory px-5 py-28 md:px-10">
-      <div className="mx-auto w-full max-w-[1300px] text-center">
+    <section className="relative flex min-h-[70svh] items-center justify-center bg-ivory px-5 py-24 md:px-10 overflow-hidden border-b border-espresso/10">
+      {/* ── Circuit Background Overlay ── */}
+      <div className="circuit-background opacity-60" />
+
+      {/* Subtle radial center mask to keep text ultra-crisp */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,var(--color-ivory)_35%,transparent_85%)] opacity-80" />
+
+      <div className="relative z-10 mx-auto w-full max-w-[1300px] text-center">
         <TextReveal
           as="blockquote"
           text={
             "Years from now,\nyou may forget how everything looked.\nBut you'll remember\nhow it felt."
           }
-          className="font-display text-[clamp(1.9rem,5vw,4.25rem)] leading-[1.12] text-espresso"
+          className="font-display text-[clamp(2rem,5.2vw,4.5rem)] leading-[1.12] text-espresso font-light"
         />
-        <p className="mt-14 font-editorial text-2xl italic text-gold">CMC Films</p>
+        <p className="mt-12 font-editorial text-2xl md:text-3xl italic text-gold font-normal">
+          CMC Films
+        </p>
       </div>
     </section>
   );
