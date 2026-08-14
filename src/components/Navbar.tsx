@@ -1,22 +1,35 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Instagram, Youtube, Calendar, ArrowRight, MessageCircle, Sparkles, Mail, MapPin, PhoneCall } from "lucide-react";
+import {
+  Instagram,
+  Youtube,
+  Calendar,
+  ArrowUpRight,
+  ChevronDown,
+  MessageCircle,
+  Sparkles,
+  X,
+  Phone,
+  Mail,
+} from "lucide-react";
 import { navLinks, studio } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
 
-// Subtle descriptors for each menu item to give high-end editorial feel
-const linkSubtitles: Record<string, string> = {
-  "/": "The Beginning & Experience",
-  "/about": "Philosophy & Cinematic Vision",
-  "/portfolio": "Curated Visual Stories",
-  "/films": "4K Cinematic Wedding Films",
-  "/contact": "Check Availability & Reserve",
-};
+// Submenu items for Services Accordion
+const serviceSubmenu = [
+  { label: "Cinematic Wedding Films", to: "/films" },
+  { label: "Candid Photography & Stills", to: "/portfolio" },
+  { label: "Destination Coverage", to: "/portfolio" },
+  { label: "Pre-Wedding & Concept Shoots", to: "/portfolio" },
+];
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const location = useLocation();
 
+  // Scroll listener for sticky header
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
     onScroll();
@@ -24,16 +37,27 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Lock body scroll & handle Escape key when sidebar is active
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    if (open) window.addEventListener("keydown", handleKeyDown);
     return () => {
       document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [open]);
 
+  // Close sidebar on route change
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname]);
+
   return (
     <>
-      {/* ── Dynamic Navbar (Desktop is untouched & full-width / rounded on scroll) ── */}
+      {/* ── Desktop Website Header (Untouched & Pristine) ── */}
       <header
         className={cn(
           "fixed z-50 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
@@ -48,8 +72,8 @@ export function Navbar() {
             scrolled ? "px-4 md:px-8 max-w-full" : "px-5 md:px-10 max-w-[1600px]",
           )}
         >
-          {/* Left Navigation (Desktop) */}
-          <nav className="hidden items-center gap-7 lg:flex">
+          {/* Desktop Left Navigation */}
+          <nav className="hidden items-center gap-7 lg:flex" role="navigation" aria-label="Main Navigation">
             {navLinks.map((l) => (
               <Link
                 key={l.to}
@@ -68,7 +92,7 @@ export function Navbar() {
             ))}
           </nav>
 
-          {/* Centered Brand Title */}
+          {/* Desktop & Mobile Brand Logo */}
           <Link
             to="/"
             className={cn(
@@ -81,7 +105,7 @@ export function Navbar() {
             CMC FILMS
           </Link>
 
-          {/* Right Actions (Desktop Socials & Book CTA) */}
+          {/* Desktop Right Actions */}
           <div className="hidden items-center gap-5 lg:flex">
             <a
               href={studio.socials[0]?.href}
@@ -121,177 +145,378 @@ export function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile Spacer (Keeps header layout balanced) */}
-          <div className="w-8 h-8 lg:hidden" />
+          {/* ── Mobile Custom Glass Hamburger Button (44px x 44px) ── */}
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            aria-expanded={open}
+            aria-controls="mobile-sidebar-drawer"
+            aria-label="Open navigation menu"
+            className={cn(
+              "flex lg:!hidden items-center justify-center h-11 w-11 rounded-full border transition-all duration-300 cursor-pointer select-none active:scale-95",
+              scrolled
+                ? "bg-ivory/90 border-espresso/15 text-espresso shadow-md backdrop-blur-md"
+                : "bg-white/10 border-white/25 text-white backdrop-blur-md drop-shadow-md hover:bg-white/20",
+            )}
+          >
+            {/* Elegant 2-line custom hamburger lines */}
+            <div className="flex flex-col items-center justify-center gap-1.5 w-5">
+              <span className="h-[2px] w-5 rounded-full bg-current transition-all" />
+              <span className="h-[2px] w-3.5 self-end rounded-full bg-current transition-all" />
+            </div>
+          </button>
         </div>
       </header>
 
-      {/* ── Fixed Mobile Animated Hamburger (Stays persistent & visible on top of everything including sidebar) ── */}
-      <label
-        className={cn(
-          "hamburger flex lg:!hidden items-center justify-center fixed top-4 right-4 z-[95] h-11 w-11 rounded-full transition-all duration-300 cursor-pointer select-none border",
-          open
-            ? "bg-white/20 border-white/30 text-white backdrop-blur-2xl shadow-xl scale-105"
-            : scrolled
-              ? "bg-ivory/90 border-espresso/15 text-espresso shadow-md backdrop-blur-md"
-              : "bg-black/35 border-white/20 text-white backdrop-blur-md drop-shadow-md",
-        )}
-        aria-label="Toggle navigation menu"
-      >
-        <input
-          type="checkbox"
-          checked={open}
-          onChange={(e) => setOpen(e.target.checked)}
-          aria-label="Toggle mobile menu"
-        />
-        <svg viewBox="0 0 32 32">
-          <path
-            className="line line-top-bottom"
-            d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"
-          />
-          <path className="line" d="M7 16 27 16" />
-        </svg>
-      </label>
+      {/* ── Mobile Off-Canvas Glass Sidebar Overlay & Panel ── */}
 
-      {/* ── Mobile Glassmorphism Sliding Sidebar ── */}
-      {/* 1. Backdrop Blur Overlay */}
+      {/* 1. Dark Translucent Backdrop Overlay (rgba(0,0,0,0.55) + blur 6px) */}
       <div
         onClick={() => setOpen(false)}
         className={cn(
-          "fixed inset-0 z-[80] bg-black/40 backdrop-blur-[4px] transition-opacity duration-500 lg:hidden",
+          "fixed inset-0 z-[80] bg-black/60 backdrop-blur-[6px] transition-opacity duration-500 lg:hidden",
           open ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none",
         )}
+        aria-hidden="true"
       />
 
-      {/* 2. Ultra-Luxury Frosted Glass Sidebar */}
+      {/* 2. Off-Canvas Panel Drawer (85-90% width, 100dvh height, rounded left corners 28px) */}
       <aside
+        id="mobile-sidebar-drawer"
+        role="navigation"
+        aria-label="Mobile Navigation Sidebar"
         className={cn(
-          "fixed top-0 right-0 bottom-0 z-[85] w-[88%] max-w-[390px] bg-black/45 backdrop-blur-3xl border-l border-white/20 text-ivory shadow-[-20px_0_60px_rgba(0,0,0,0.6)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden flex flex-col justify-between p-6 pt-5 overflow-y-auto overflow-x-hidden",
-          open ? "translate-x-0" : "translate-x-full",
+          "fixed top-0 right-0 bottom-0 z-[85] h-[100dvh] w-[88%] max-w-[400px] bg-[#0B0D10]/92 backdrop-blur-3xl border-l border-white/[0.08] text-[#F7F7F5] rounded-l-[28px] shadow-[-25px_0_60px_rgba(0,0,0,0.85)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden flex flex-col justify-between overflow-y-auto overflow-x-hidden pt-[env(safe-area-inset-top,20px)] pb-[env(safe-area-inset-bottom,20px)]",
+          open
+            ? "translate-x-0 scale-100 opacity-100"
+            : "translate-x-full scale-[0.985] opacity-0 pointer-events-none",
         )}
       >
-        {/* Soft Ambient Glows in Background */}
-        <div className="pointer-events-none absolute -top-16 -right-16 h-60 w-60 rounded-full bg-[#E5CA92]/20 blur-3xl" />
-        <div className="pointer-events-none absolute top-1/2 -left-20 h-52 w-52 rounded-full bg-[#015287]/25 blur-3xl" />
+        {/* Soft Blurred Ambient Glow in Background */}
+        <div className="pointer-events-none absolute -top-20 -right-20 h-64 w-64 rounded-full bg-[#E5CA92]/12 blur-3xl" />
+        <div className="pointer-events-none absolute bottom-12 -left-20 h-56 w-56 rounded-full bg-[#015287]/15 blur-3xl" />
 
-        {/* ── Sidebar Top Brand Header ── */}
-        <div className="relative z-10 pb-5 border-b border-white/15 flex items-center justify-between pr-14">
+        {/* ── Sidebar Top Header (px-6 pt-6 pb-3) ── */}
+        <div className="relative z-10 px-6 pt-6 pb-3 border-b border-white/[0.08] flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-full bg-gradient-to-br from-[#E5CA92]/30 to-white/10 border border-[#E5CA92]/40 flex items-center justify-center shadow-inner">
+            <div className="h-9 w-9 rounded-full bg-[#12151A] border border-white/[0.1] flex items-center justify-center shadow-inner">
               <span className="font-display font-bold text-xs text-[#E5CA92] tracking-wider">CMC</span>
             </div>
             <div>
-              <span className="font-display text-lg tracking-[0.2em] text-white font-medium block">
+              <span className="font-display text-lg tracking-[0.22em] text-[#F7F7F5] font-light block leading-none">
                 CMC FILMS
               </span>
-              <span className="label-xs text-[#E5CA92] text-[9px] uppercase tracking-widest flex items-center gap-1 font-mono">
+              <span className="label-xs text-[#E5CA92] text-[9px] uppercase tracking-widest flex items-center gap-1 font-mono mt-1">
                 <Sparkles className="w-2.5 h-2.5 text-[#E5CA92]" />
                 <span>Luxury Wedding Studio</span>
               </span>
             </div>
           </div>
+
+          {/* Premium Circular Close Button (44px x 44px, rotates on hover/tap) */}
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            aria-label="Close navigation sidebar"
+            className="flex items-center justify-center h-11 w-11 rounded-full bg-white/[0.06] border border-white/10 hover:bg-white/15 text-[#F7F7F5] transition-all duration-300 hover:rotate-90 active:scale-95 cursor-pointer"
+          >
+            <X className="w-5 h-5 stroke-[1.5]" />
+          </button>
         </div>
 
-        {/* ── Navigation Directory (Luxury Glass Cards) ── */}
-        <div className="relative z-10 py-5 flex flex-col gap-2.5 my-auto">
-          <div className="flex items-center justify-between px-1 mb-1">
-            <span className="label-xs text-white/50 uppercase tracking-[0.25em] text-[10px] font-mono">
-              Menu Navigation
-            </span>
-            <span className="label-xs text-[#E5CA92]/80 text-[10px] font-mono">
-              {navLinks.length} Destinations
-            </span>
-          </div>
+        {/* ── Middle Scrollable Navigation Content ── */}
+        <div className="relative z-10 flex-1 px-6 py-5 overflow-y-auto no-bar flex flex-col justify-between">
+          <div>
+            {/* Optional Brand Intro Section */}
+            <div className="mb-4">
+              <span className="label-xs text-[#E5CA92] uppercase tracking-[0.25em] text-[10px] font-mono block">
+                NAVIGATION
+              </span>
+              <p className="text-xs text-white/50 font-sans mt-0.5">
+                Discover our work, services and story.
+              </p>
+            </div>
 
-          {navLinks.map((l, i) => (
-            <Link
-              key={l.to}
-              to={l.to}
-              onClick={() => setOpen(false)}
-              className="group relative flex items-center justify-between px-4 py-3 rounded-2xl bg-white/[0.05] hover:bg-white/[0.12] border border-white/[0.08] hover:border-[#E5CA92]/50 backdrop-blur-xl transition-all duration-300 shadow-sm"
-              activeProps={{
-                className: "bg-white/[0.14] border-[#E5CA92]/60 shadow-[0_0_25px_rgba(229,202,146,0.18)]",
-              }}
-              style={{
-                transitionDelay: `${open ? 60 + i * 35 : 0}ms`,
-              }}
-            >
-              <div className="flex flex-col">
-                <div className="flex items-center gap-2.5">
-                  <span className="font-mono text-[10px] text-[#E5CA92] font-medium tracking-wider">
-                    0{i + 1}
+            {/* Vertically Stacked Navigation Items with Staggered Entrance */}
+            <div className="flex flex-col gap-2.5">
+              {/* 01. Home */}
+              <Link
+                to="/"
+                onClick={() => setOpen(false)}
+                className="group relative flex items-center justify-between px-4 py-3.5 rounded-[14px] bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300 min-h-[48px]"
+                activeProps={{
+                  className: "bg-white/[0.08] border-[#E5CA92]/40 shadow-[0_0_20px_rgba(229,202,146,0.12)]",
+                }}
+                style={{
+                  transitionDelay: open ? "60ms" : "0ms",
+                  transform: open ? "translateY(0)" : "translateY(12px)",
+                  opacity: open ? 1 : 0,
+                }}
+              >
+                <div className="flex items-center gap-3.5">
+                  <span className="font-mono text-[11px] text-white/40 group-hover:text-[#E5CA92] tracking-wider transition-colors">
+                    01
                   </span>
-                  <span className="font-display text-xl tracking-wide text-white group-hover:text-[#E5CA92] transition-colors font-light">
-                    {l.label}
+                  <span className="font-display text-[19px] font-medium tracking-wide text-[#F7F7F5] group-hover:translate-x-1 transition-all duration-300">
+                    Home
                   </span>
                 </div>
-                <span className="text-[10px] text-white/45 pl-6 font-sans group-hover:text-white/70 transition-colors">
-                  {linkSubtitles[l.to] || "Explore"}
-                </span>
+                <div className="flex items-center gap-2">
+                  {location.pathname === "/" && (
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#E5CA92] animate-pulse" />
+                  )}
+                  <ArrowUpRight className="w-4 h-4 text-white/40 group-hover:text-[#E5CA92] group-hover:translate-x-1 group-hover:-translate-y-0.5 transition-all duration-300" />
+                </div>
+              </Link>
+
+              {/* 02. About */}
+              <Link
+                to="/about"
+                onClick={() => setOpen(false)}
+                className="group relative flex items-center justify-between px-4 py-3.5 rounded-[14px] bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300 min-h-[48px]"
+                activeProps={{
+                  className: "bg-white/[0.08] border-[#E5CA92]/40 shadow-[0_0_20px_rgba(229,202,146,0.12)]",
+                }}
+                style={{
+                  transitionDelay: open ? "105ms" : "0ms",
+                  transform: open ? "translateY(0)" : "translateY(12px)",
+                  opacity: open ? 1 : 0,
+                }}
+              >
+                <div className="flex items-center gap-3.5">
+                  <span className="font-mono text-[11px] text-white/40 group-hover:text-[#E5CA92] tracking-wider transition-colors">
+                    02
+                  </span>
+                  <span className="font-display text-[19px] font-medium tracking-wide text-[#F7F7F5] group-hover:translate-x-1 transition-all duration-300">
+                    About
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  {location.pathname === "/about" && (
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#E5CA92] animate-pulse" />
+                  )}
+                  <ArrowUpRight className="w-4 h-4 text-white/40 group-hover:text-[#E5CA92] group-hover:translate-x-1 group-hover:-translate-y-0.5 transition-all duration-300" />
+                </div>
+              </Link>
+
+              {/* 03. Services (Expandable Accordion Menu) */}
+              <div
+                className="rounded-[14px] bg-white/[0.03] border border-white/[0.06] transition-all duration-300 overflow-hidden"
+                style={{
+                  transitionDelay: open ? "150ms" : "0ms",
+                  transform: open ? "translateY(0)" : "translateY(12px)",
+                  opacity: open ? 1 : 0,
+                }}
+              >
+                <button
+                  type="button"
+                  onClick={() => setServicesOpen((prev) => !prev)}
+                  aria-expanded={servicesOpen}
+                  className="w-full flex items-center justify-between px-4 py-3.5 min-h-[48px] text-left cursor-pointer group"
+                >
+                  <div className="flex items-center gap-3.5">
+                    <span className="font-mono text-[11px] text-white/40 group-hover:text-[#E5CA92] tracking-wider transition-colors">
+                      03
+                    </span>
+                    <span className="font-display text-[19px] font-medium tracking-wide text-[#F7F7F5] group-hover:translate-x-1 transition-all duration-300">
+                      Services
+                    </span>
+                  </div>
+                  <ChevronDown
+                    className={cn(
+                      "w-4 h-4 text-white/40 group-hover:text-[#E5CA92] transition-transform duration-300",
+                      servicesOpen && "rotate-180 text-[#E5CA92]",
+                    )}
+                  />
+                </button>
+
+                {/* Accordion Submenu Items */}
+                <div
+                  className={cn(
+                    "transition-all duration-300 ease-in-out px-4 overflow-hidden border-t border-white/[0.05]",
+                    servicesOpen ? "max-h-60 py-2.5 opacity-100" : "max-h-0 py-0 opacity-0 pointer-events-none",
+                  )}
+                >
+                  <div className="flex flex-col gap-2 pl-6 border-l border-white/10">
+                    {serviceSubmenu.map((sub) => (
+                      <Link
+                        key={sub.label}
+                        to={sub.to}
+                        onClick={() => setOpen(false)}
+                        className="text-xs text-white/65 hover:text-[#E5CA92] py-1.5 transition-colors flex items-center justify-between"
+                      >
+                        <span>{sub.label}</span>
+                        <ArrowUpRight className="w-3 h-3 text-white/30" />
+                      </Link>
+                    ))}
+                  </div>
+                </div>
               </div>
-              <div className="h-7 w-7 rounded-full bg-white/5 group-hover:bg-[#E5CA92]/20 flex items-center justify-center transition-all border border-white/10 group-hover:border-[#E5CA92]/40">
-                <ArrowRight className="w-3.5 h-3.5 text-white/50 group-hover:text-[#E5CA92] group-hover:translate-x-0.5 transition-all" />
-              </div>
-            </Link>
-          ))}
 
-          {/* ── Book Experience Luxury CTA Pill ── */}
-          <Link
-            to="/contact"
-            onClick={() => setOpen(false)}
-            className="mt-2 flex items-center justify-between px-5 py-3.5 rounded-2xl bg-gradient-to-r from-[#E5CA92] via-[#DFC184] to-[#C9A96E] text-[#27231F] font-semibold text-xs tracking-wider uppercase transition-all duration-300 hover:brightness-110 shadow-[0_4px_20px_rgba(229,202,146,0.3)] active:scale-[0.98]"
-          >
-            <div className="flex items-center gap-2.5">
-              <Calendar className="w-4 h-4 text-[#27231F]" />
-              <span className="font-medium">Book Your Experience</span>
+              {/* 04. Portfolio */}
+              <Link
+                to="/portfolio"
+                onClick={() => setOpen(false)}
+                className="group relative flex items-center justify-between px-4 py-3.5 rounded-[14px] bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300 min-h-[48px]"
+                activeProps={{
+                  className: "bg-white/[0.08] border-[#E5CA92]/40 shadow-[0_0_20px_rgba(229,202,146,0.12)]",
+                }}
+                style={{
+                  transitionDelay: open ? "195ms" : "0ms",
+                  transform: open ? "translateY(0)" : "translateY(12px)",
+                  opacity: open ? 1 : 0,
+                }}
+              >
+                <div className="flex items-center gap-3.5">
+                  <span className="font-mono text-[11px] text-white/40 group-hover:text-[#E5CA92] tracking-wider transition-colors">
+                    04
+                  </span>
+                  <span className="font-display text-[19px] font-medium tracking-wide text-[#F7F7F5] group-hover:translate-x-1 transition-all duration-300">
+                    Portfolio
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  {location.pathname === "/portfolio" && (
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#E5CA92] animate-pulse" />
+                  )}
+                  <ArrowUpRight className="w-4 h-4 text-white/40 group-hover:text-[#E5CA92] group-hover:translate-x-1 group-hover:-translate-y-0.5 transition-all duration-300" />
+                </div>
+              </Link>
+
+              {/* 05. Films */}
+              <Link
+                to="/films"
+                onClick={() => setOpen(false)}
+                className="group relative flex items-center justify-between px-4 py-3.5 rounded-[14px] bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300 min-h-[48px]"
+                activeProps={{
+                  className: "bg-white/[0.08] border-[#E5CA92]/40 shadow-[0_0_20px_rgba(229,202,146,0.12)]",
+                }}
+                style={{
+                  transitionDelay: open ? "240ms" : "0ms",
+                  transform: open ? "translateY(0)" : "translateY(12px)",
+                  opacity: open ? 1 : 0,
+                }}
+              >
+                <div className="flex items-center gap-3.5">
+                  <span className="font-mono text-[11px] text-white/40 group-hover:text-[#E5CA92] tracking-wider transition-colors">
+                    05
+                  </span>
+                  <span className="font-display text-[19px] font-medium tracking-wide text-[#F7F7F5] group-hover:translate-x-1 transition-all duration-300">
+                    Films
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  {location.pathname === "/films" && (
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#E5CA92] animate-pulse" />
+                  )}
+                  <ArrowUpRight className="w-4 h-4 text-white/40 group-hover:text-[#E5CA92] group-hover:translate-x-1 group-hover:-translate-y-0.5 transition-all duration-300" />
+                </div>
+              </Link>
+
+              {/* 06. Contact */}
+              <Link
+                to="/contact"
+                onClick={() => setOpen(false)}
+                className="group relative flex items-center justify-between px-4 py-3.5 rounded-[14px] bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300 min-h-[48px]"
+                activeProps={{
+                  className: "bg-white/[0.08] border-[#E5CA92]/40 shadow-[0_0_20px_rgba(229,202,146,0.12)]",
+                }}
+                style={{
+                  transitionDelay: open ? "285ms" : "0ms",
+                  transform: open ? "translateY(0)" : "translateY(12px)",
+                  opacity: open ? 1 : 0,
+                }}
+              >
+                <div className="flex items-center gap-3.5">
+                  <span className="font-mono text-[11px] text-white/40 group-hover:text-[#E5CA92] tracking-wider transition-colors">
+                    06
+                  </span>
+                  <span className="font-display text-[19px] font-medium tracking-wide text-[#F7F7F5] group-hover:translate-x-1 transition-all duration-300">
+                    Contact
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  {location.pathname === "/contact" && (
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#E5CA92] animate-pulse" />
+                  )}
+                  <ArrowUpRight className="w-4 h-4 text-white/40 group-hover:text-[#E5CA92] group-hover:translate-x-1 group-hover:-translate-y-0.5 transition-all duration-300" />
+                </div>
+              </Link>
             </div>
-            <ArrowRight className="w-4 h-4 text-[#27231F]" />
-          </Link>
-        </div>
-
-        {/* ── Bottom Concierge & Socials Section ── */}
-        <div className="relative z-10 pt-4 border-t border-white/15 flex flex-col gap-3">
-          {/* Quick WhatsApp Concierge Button */}
-          <a
-            href="https://wa.me/919999999999?text=Hello%20CMC%20Films%2C%20I%20would%20like%20to%20inquire%20about%20wedding%20photography%20and%20films."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 hover:bg-emerald-500/25 transition-all backdrop-blur-md text-xs font-medium"
-          >
-            <div className="flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Direct WhatsApp Concierge</span>
-            </div>
-            <MessageCircle className="w-4 h-4 text-emerald-400" />
-          </a>
-
-          {/* Social Icons Strip */}
-          <div className="grid grid-cols-2 gap-2">
-            <a
-              href={studio.socials[0]?.href}
-              aria-label="Instagram"
-              className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white/[0.05] border border-white/[0.08] hover:border-[#E5CA92]/40 hover:bg-white/[0.1] text-white/80 hover:text-[#E5CA92] backdrop-blur-md transition-all text-xs"
-            >
-              <Instagram className="w-3.5 h-3.5" />
-              <span className="font-mono text-[10px]">Instagram</span>
-            </a>
-            <a
-              href={studio.socials[1]?.href}
-              aria-label="YouTube"
-              className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white/[0.05] border border-white/[0.08] hover:border-[#E5CA92]/40 hover:bg-white/[0.1] text-white/80 hover:text-[#E5CA92] backdrop-blur-md transition-all text-xs"
-            >
-              <Youtube className="w-3.5 h-3.5" />
-              <span className="font-mono text-[10px]">YouTube</span>
-            </a>
           </div>
 
-          {/* Studio Footer */}
-          <div className="text-center pt-1 flex items-center justify-between text-white/40 text-[9px] font-mono px-1">
-            <span className="flex items-center gap-1">
-              <MapPin className="w-2.5 h-2.5 text-[#E5CA92]/70" />
-              <span>Rajasthan &amp; Worldwide</span>
-            </span>
-            <span className="text-[#E5CA92]/75">cmcfilms.com</span>
+          {/* ── Bottom Section: Primary CTA, Contact Info & Minimalist Socials ── */}
+          <div
+            className="mt-6 pt-4 border-t border-white/[0.07] flex flex-col gap-4"
+            style={{
+              transitionDelay: open ? "330ms" : "0ms",
+              transform: open ? "translateY(0)" : "translateY(12px)",
+              opacity: open ? 1 : 0,
+            }}
+          >
+            {/* Full-width Primary CTA Button (54px height) */}
+            <Link
+              to="/contact"
+              onClick={() => setOpen(false)}
+              className="flex items-center justify-between px-6 h-13 rounded-2xl bg-gradient-to-r from-[#E5CA92] via-[#DFC184] to-[#C9A96E] text-[#0B0D10] font-semibold text-xs tracking-wider uppercase transition-all duration-300 hover:brightness-110 shadow-lg shadow-[#E5CA92]/15 active:scale-[0.98]"
+            >
+              <div className="flex items-center gap-2.5">
+                <Calendar className="w-4 h-4 text-[#0B0D10]" />
+                <span>Book Your Experience</span>
+              </div>
+              <ArrowUpRight className="w-4 h-4 text-[#0B0D10]" />
+            </Link>
+
+            {/* Compact Contact Information */}
+            <div className="flex items-center justify-between text-xs text-white/55 font-mono px-1">
+              <a
+                href={`mailto:${studio.email}`}
+                className="hover:text-[#E5CA92] transition-colors flex items-center gap-1.5"
+              >
+                <Mail className="w-3 h-3 text-[#E5CA92]/80" />
+                <span>{studio.email}</span>
+              </a>
+              <span className="text-white/30">•</span>
+              <a
+                href="https://wa.me/919999999999"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#E5CA92] transition-colors flex items-center gap-1.5"
+              >
+                <Phone className="w-3 h-3 text-[#E5CA92]/80" />
+                <span>Inquire</span>
+              </a>
+            </div>
+
+            {/* Minimalist Social Row with Subtle Dividers */}
+            <div className="flex items-center justify-around py-2 border-t border-white/[0.07] text-[11px] font-mono text-white/60">
+              <a
+                href={studio.socials[0]?.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#E5CA92] transition-colors"
+              >
+                Instagram
+              </a>
+              <span className="text-white/20">•</span>
+              <a
+                href={studio.socials[1]?.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#E5CA92] transition-colors"
+              >
+                YouTube
+              </a>
+              <span className="text-white/20">•</span>
+              <a
+                href="https://wa.me/919999999999"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#E5CA92] transition-colors"
+              >
+                WhatsApp
+              </a>
+            </div>
           </div>
         </div>
       </aside>
