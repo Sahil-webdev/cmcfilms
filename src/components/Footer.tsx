@@ -57,22 +57,13 @@ export function Footer() {
   return (
     <div className="relative bg-[#FAF8F5] pt-16 md:pt-24">
       {/* ── Main Horizontal Footer Section (Large Rounded Top Corners Only) ── */}
-      <footer className="relative rounded-t-[44px] md:rounded-t-[64px] rounded-b-none bg-[#0C0D10] text-[#FAF8F3] pt-28 sm:pt-32 md:pt-40 pb-8 border-t border-emerald-500/20 shadow-[0_-25px_60px_rgba(0,0,0,0.5)] overflow-visible">
+      <footer className="relative rounded-t-[44px] md:rounded-t-[64px] rounded-b-none bg-[#0C0D10] text-[#FAF8F3] pt-14 md:pt-20 pb-8 border-t border-emerald-500/20 shadow-[0_-25px_60px_rgba(0,0,0,0.5)] overflow-visible">
         
         {/* Subtle Ambient Radial Glow */}
         <div className="pointer-events-none absolute inset-0 rounded-t-[44px] md:rounded-t-[64px] bg-[radial-gradient(circle_at_50%_0%,rgba(16,185,129,0.15),transparent_65%)]" />
         
         {/* Large Asymmetrical Organic Contour Line Pattern */}
         <TopographicContourBackground />
-
-        {/* ── CENTER HERO CAMERA EMBLEM (Standalone HD Transparent PNG, Half Outside / Half Inside Top Edge) ── */}
-        <div className="absolute -top-20 sm:-top-24 md:-top-32 lg:-top-40 left-1/2 -translate-x-1/2 z-30 pointer-events-none flex justify-center items-center w-full">
-          <img
-            src={hdCamera}
-            alt="CMC Films Standalone Cinema Camera Emblem"
-            className="w-52 sm:w-64 md:w-80 lg:w-96 h-auto object-contain filter drop-shadow-[0_25px_50px_rgba(0,0,0,0.95)] hover:scale-105 transition-transform duration-500"
-          />
-        </div>
 
         {/* ── Main 3-Column Footer Layout ── */}
         <div className="relative z-10 mx-auto max-w-[1600px] px-6 md:px-12">
