@@ -104,7 +104,7 @@ export function Navbar() {
           {/* ── Mobile Animated Hamburger (Toggles between Hamburger & Cross X) ── */}
           <label
             className={cn(
-              "hamburger lg:hidden relative z-[80] p-1.5 rounded-full transition-colors duration-300 cursor-pointer select-none",
+              "hamburger flex lg:!hidden items-center justify-center relative z-[80] p-1.5 rounded-full transition-colors duration-300 cursor-pointer select-none",
               open
                 ? "text-white bg-white/15 backdrop-blur-md"
                 : scrolled
