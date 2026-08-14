@@ -56,7 +56,7 @@ export function Navbar() {
           <nav className="hidden items-center gap-7 lg:flex" role="navigation" aria-label="Main Navigation">
             {navLinks.map((l) => (
               <Link
-                key={l.to}
+                key={l.label}
                 to={l.to}
                 className={cn(
                   "label-xs tracking-wider transition-all duration-300",
@@ -200,7 +200,7 @@ export function Navbar() {
             const isActive = location.pathname === l.to;
             return (
               <Link
-                key={l.to}
+                key={l.label}
                 to={l.to}
                 onClick={() => setOpen(false)}
                 className="group relative flex items-center justify-between transition-all duration-300 py-1"

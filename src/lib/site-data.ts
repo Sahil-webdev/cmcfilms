@@ -25,10 +25,11 @@ export const studio = {
 
 export const navLinks = [
   { label: "Home", to: "/" },
+  { label: "Wedding Stories", to: "/portfolio" },
+  { label: "Wedding Films", to: "/films" },
+  { label: "Couple Shoot", to: "/portfolio" },
   { label: "About", to: "/about" },
-  { label: "Portfolio", to: "/portfolio" },
-  { label: "Films", to: "/films" },
-  { label: "Contact", to: "/contact" },
+  { label: "Testimonials", to: "/#testimonials" },
 ] as const;
 
 export const categories = [
