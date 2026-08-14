@@ -83,34 +83,6 @@ export function Hero() {
             Watch Films 🎬
           </Link>
         </div>
-
-        {/* Floating Stats Bar */}
-        <div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 w-full max-w-[1200px] px-5 hidden md:flex items-center justify-between border-t border-ivory/15 pt-4 transition-all duration-700 delay-700"
-          style={{ opacity: ready ? 1 : 0 }}
-        >
-          <div className="flex items-center gap-12 text-left">
-            <div>
-              <p className="font-display text-2xl text-gold font-light">250+</p>
-              <p className="label-xs text-ivory/60 font-mono text-[10px]">Weddings Documented</p>
-            </div>
-            <div className="h-6 w-px bg-ivory/20" />
-            <div>
-              <p className="font-display text-2xl text-gold font-light">18+</p>
-              <p className="label-xs text-ivory/60 font-mono text-[10px]">Global Destinations</p>
-            </div>
-            <div className="h-6 w-px bg-ivory/20" />
-            <div>
-              <p className="font-display text-2xl text-gold font-light">100%</p>
-              <p className="label-xs text-ivory/60 font-mono text-[10px]">Cinematic Craft</p>
-            </div>
-          </div>
-
-          {/* Video credit */}
-          <p className="label-xs text-ivory/30 text-[9px] font-mono">
-            Video: viresh studio / Pexels
-          </p>
-        </div>
       </div>
     </section>
   );
