@@ -96,6 +96,17 @@ export function Navbar() {
                 </Link>
               );
             })}
+
+            {/* Packages — Coming Soon (disabled, no navigation) */}
+            <span
+              title="Coming Soon"
+              className={cn(
+                "relative py-1 text-xs md:text-[13px] font-mono uppercase tracking-wider font-medium cursor-not-allowed select-none opacity-50",
+                scrolled ? "text-espresso/50" : "text-white/50",
+              )}
+            >
+              Packages
+            </span>
           </nav>
 
           {/* Mobile Spacer (Keeps header layout balanced) */}
