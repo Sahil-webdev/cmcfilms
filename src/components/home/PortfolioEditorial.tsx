@@ -20,6 +20,7 @@ type GalleryWallItem = LightboxItem & {
   aspectRatio: string;
 };
 
+// Mixed Portrait & Landscape Editorial Gallery Wall (KnotsByAmp Style Mosaic)
 const wallItems: GalleryWallItem[] = [
   {
     id: "w1",
@@ -30,7 +31,7 @@ const wallItems: GalleryWallItem[] = [
     categoryTag: "Weddings",
     location: "Udaipur, Rajasthan",
     year: "2026",
-    aspectRatio: "aspect-[4/3]",
+    aspectRatio: "aspect-[16/9]", // Landscape
   },
   {
     id: "w2",
@@ -41,7 +42,7 @@ const wallItems: GalleryWallItem[] = [
     categoryTag: "Couples",
     location: "Udaipur Palace",
     year: "2026",
-    aspectRatio: "aspect-[3/4]",
+    aspectRatio: "aspect-[2/3]", // Tall Portrait (Key Reference Item)
   },
   {
     id: "w3",
@@ -52,7 +53,7 @@ const wallItems: GalleryWallItem[] = [
     categoryTag: "Ceremonies",
     location: "Jaipur Heritage",
     year: "2026",
-    aspectRatio: "aspect-[4/3]",
+    aspectRatio: "aspect-[4/3]", // Medium Landscape
   },
   {
     id: "w4",
@@ -63,7 +64,7 @@ const wallItems: GalleryWallItem[] = [
     categoryTag: "Weddings",
     location: "Udaipur Fort",
     year: "2026",
-    aspectRatio: "aspect-[4/3]",
+    aspectRatio: "aspect-[3/4]", // Portrait
   },
   {
     id: "w5",
@@ -74,7 +75,7 @@ const wallItems: GalleryWallItem[] = [
     categoryTag: "Pre-Wedding",
     location: "Goa Coast",
     year: "2026",
-    aspectRatio: "aspect-[4/3]",
+    aspectRatio: "aspect-[16/9]", // Wide Landscape
   },
   {
     id: "w6",
@@ -85,7 +86,7 @@ const wallItems: GalleryWallItem[] = [
     categoryTag: "Bridal",
     location: "Jaipur Palace",
     year: "2026",
-    aspectRatio: "aspect-[4/3]",
+    aspectRatio: "aspect-[2/3]", // Tall Portrait
   },
   {
     id: "w7",
@@ -96,18 +97,18 @@ const wallItems: GalleryWallItem[] = [
     categoryTag: "Pre-Wedding",
     location: "Goa Beachfront",
     year: "2026",
-    aspectRatio: "aspect-[4/3]",
+    aspectRatio: "aspect-[4/3]", // Landscape
   },
   {
     id: "w8",
     src: cat3,
-    alt: "Black and white intimate portrait of couple",
+    alt: "Intimate portrait of couple laughing together",
     title: "Monochrome Soulmate Portrait",
     category: "Couples",
     categoryTag: "Couples",
     location: "Studio Archive",
     year: "2026",
-    aspectRatio: "aspect-[4/3]",
+    aspectRatio: "aspect-[3/4]", // Portrait
   },
   {
     id: "w9",
@@ -118,7 +119,7 @@ const wallItems: GalleryWallItem[] = [
     categoryTag: "Ceremonies",
     location: "Jodhpur",
     year: "2026",
-    aspectRatio: "aspect-[4/3]",
+    aspectRatio: "aspect-[1/1]", // Square
   },
   {
     id: "w10",
@@ -129,7 +130,7 @@ const wallItems: GalleryWallItem[] = [
     categoryTag: "Pre-Wedding",
     location: "Jaisalmer Thar",
     year: "2026",
-    aspectRatio: "aspect-[4/3]",
+    aspectRatio: "aspect-[2/3]", // Tall Portrait
   },
   {
     id: "w11",
@@ -140,7 +141,7 @@ const wallItems: GalleryWallItem[] = [
     categoryTag: "Couples",
     location: "Ranthambore",
     year: "2026",
-    aspectRatio: "aspect-[4/3]",
+    aspectRatio: "aspect-[16/9]", // Wide Landscape
   },
 ];
 
@@ -156,16 +157,16 @@ export function PortfolioEditorial() {
 
   return (
     <section className="bg-background px-4 py-10 md:px-8 md:py-24 border-b border-espresso/10">
-      <div className="mx-auto max-w-[1700px]">
+      <div className="mx-auto max-w-[1750px]">
         {/* Header Title & Filter Pills */}
-        <Reveal className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6 border-b border-espresso/15 pb-4 mb-5 md:pb-8 md:mb-8">
+        <Reveal className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6 border-b border-espresso/15 pb-4 mb-6 md:pb-8 md:mb-10">
           <div>
-            <SectionLabel>Selected Work</SectionLabel>
+            <SectionLabel>Selected Gallery Work</SectionLabel>
             <h2 className="mt-3 font-display text-[clamp(2.2rem,5vw,4.25rem)] leading-tight font-light text-espresso">
-              The Visual <em className="font-editorial italic text-gold">Gallery Wall</em>
+              The Visual <em className="font-editorial italic text-gold">Editorial Masonry</em>
             </h2>
             <p className="mt-2 text-xs text-taupe font-sans">
-              Click any photo to enlarge and view in high-resolution full-screen mode.
+              Mixed portrait and landscape story frames. Click any photo for full-screen view.
             </p>
           </div>
 
@@ -191,18 +192,15 @@ export function PortfolioEditorial() {
           </div>
         </Reveal>
 
-        {/* 4-Column Dense Photo Wall Grid (Exact KnotsByAmp Tight Edge-to-Edge Layout) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3">
+        {/* ── MASONRY COLUMNS GRID (KnotsByAmp Style Mixed Portrait & Landscape Layout) ── */}
+        <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-3 md:gap-4 space-y-3 md:space-y-4">
           {filtered.map((item, idx) => (
-            <Reveal
+            <div
               key={item.id}
-              delay={(idx % 4) * 50}
-              className="group relative overflow-hidden bg-beige cursor-pointer border border-espresso/10 shadow-sm hover:shadow-2xl transition-all duration-300"
+              className="break-inside-avoid group relative overflow-hidden bg-beige cursor-pointer border border-espresso/10 shadow-sm hover:shadow-2xl transition-all duration-500 rounded-sm"
+              onClick={() => setLightboxIndex(idx)}
             >
-              <div
-                onClick={() => setLightboxIndex(idx)}
-                className={`relative w-full ${item.aspectRatio} overflow-hidden`}
-              >
+              <div className={`relative w-full ${item.aspectRatio} overflow-hidden`}>
                 <img
                   src={item.src}
                   alt={item.alt}
@@ -212,20 +210,20 @@ export function PortfolioEditorial() {
                 />
 
                 {/* Subtle Hover Dark Overlay */}
-                <div className="absolute inset-0 bg-cinema/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4">
+                <div className="absolute inset-0 bg-cinema/55 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4 md:p-5">
                   <div className="self-end">
                     <span className="label-xs text-ivory bg-cinema/75 border border-ivory/20 px-3 py-1 rounded-full backdrop-blur-md text-[10px]">
-                      Click to Enlarge 🔍
+                      View Photo 🔍
                     </span>
                   </div>
                   <div className="translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
                     <span className="label-xs text-gold uppercase text-[9px] tracking-widest">{item.category}</span>
-                    <h3 className="font-display text-lg text-ivory font-light leading-snug">{item.title}</h3>
+                    <h3 className="font-display text-lg md:text-xl text-ivory font-light leading-snug">{item.title}</h3>
                     <p className="text-[11px] font-mono text-ivory/70 mt-0.5">{item.location}</p>
                   </div>
                 </div>
               </div>
-            </Reveal>
+            </div>
           ))}
         </div>
 

@@ -49,6 +49,7 @@ type PortfolioMediaItem = LightboxItem & {
   categoryTag: string;
   city: string;
   colSpan?: string;
+  aspectRatio?: string;
 };
 
 const fullPortfolio: PortfolioMediaItem[] = [
@@ -62,7 +63,7 @@ const fullPortfolio: PortfolioMediaItem[] = [
     city: "Udaipur",
     location: "City Palace, Udaipur",
     year: "2026",
-    colSpan: "md:col-span-2",
+    aspectRatio: "aspect-[2/3]", // Tall Portrait
   },
   {
     id: "p2",
@@ -74,6 +75,7 @@ const fullPortfolio: PortfolioMediaItem[] = [
     city: "Jaipur",
     location: "Jaipur Palace",
     year: "2026",
+    aspectRatio: "aspect-[16/9]", // Landscape
   },
   {
     id: "p3",
@@ -85,6 +87,7 @@ const fullPortfolio: PortfolioMediaItem[] = [
     city: "Jaipur",
     location: "Heritage Resort, Jaipur",
     year: "2026",
+    aspectRatio: "aspect-[4/3]", // Medium Landscape
   },
   {
     id: "p4",
@@ -96,6 +99,7 @@ const fullPortfolio: PortfolioMediaItem[] = [
     city: "Udaipur",
     location: "Lake Pichola, Udaipur",
     year: "2026",
+    aspectRatio: "aspect-[3/4]", // Portrait
   },
   {
     id: "p5",
@@ -107,7 +111,7 @@ const fullPortfolio: PortfolioMediaItem[] = [
     city: "Goa",
     location: "Goa Beachfront",
     year: "2026",
-    colSpan: "md:col-span-2",
+    aspectRatio: "aspect-[16/9]", // Wide Landscape
   },
   {
     id: "p6",
@@ -119,6 +123,7 @@ const fullPortfolio: PortfolioMediaItem[] = [
     city: "Delhi",
     location: "Studio Archive, Delhi",
     year: "2026",
+    aspectRatio: "aspect-[2/3]", // Tall Portrait
   },
   {
     id: "p7",
@@ -130,6 +135,7 @@ const fullPortfolio: PortfolioMediaItem[] = [
     city: "Jodhpur",
     location: "Jodhpur Haveli",
     year: "2026",
+    aspectRatio: "aspect-[1/1]", // Square
   },
   {
     id: "p8",
@@ -141,6 +147,7 @@ const fullPortfolio: PortfolioMediaItem[] = [
     city: "Udaipur",
     location: "Udaipur Fort",
     year: "2026",
+    aspectRatio: "aspect-[3/4]", // Portrait
   },
   {
     id: "p9",
@@ -152,7 +159,7 @@ const fullPortfolio: PortfolioMediaItem[] = [
     city: "Goa",
     location: "Beach Resort, Goa",
     year: "2026",
-    colSpan: "md:col-span-2",
+    aspectRatio: "aspect-[16/9]", // Wide Landscape
   },
   {
     id: "p10",
@@ -164,6 +171,7 @@ const fullPortfolio: PortfolioMediaItem[] = [
     city: "Jaisalmer",
     location: "Thar Desert, Jaisalmer",
     year: "2026",
+    aspectRatio: "aspect-[2/3]", // Tall Portrait
   },
   {
     id: "p11",
@@ -175,6 +183,7 @@ const fullPortfolio: PortfolioMediaItem[] = [
     city: "Jaipur",
     location: "Amer Fort, Jaipur",
     year: "2026",
+    aspectRatio: "aspect-[16/9]", // Wide Landscape
   },
   {
     id: "p12",
@@ -316,16 +325,15 @@ function Portfolio() {
 
           {/* ── Masonry View (Premium editorial layout) ── */}
           {view === "masonry" && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 auto-rows-auto">
+            <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-3 md:gap-4 space-y-3 md:space-y-4">
               {shown.map((item, idx) => (
-                <Reveal
+                <div
                   key={item.id}
-                  delay={(idx % 3) * 60}
-                  className={`group relative overflow-hidden bg-beige cursor-pointer ${item.colSpan ?? ""}`}
+                  className="break-inside-avoid group relative overflow-hidden bg-beige cursor-pointer border border-espresso/10 shadow-sm hover:shadow-2xl transition-all duration-500 rounded-sm"
                   onClick={() => setLightboxIndex(idx)}
                 >
                   {/* Full bleed image */}
-                  <div className="relative aspect-[4/3] w-full overflow-hidden">
+                  <div className={`relative w-full ${item.aspectRatio ?? "aspect-[4/3]"} overflow-hidden`}>
                     <img
                       src={item.src}
                       alt={item.alt}
@@ -367,7 +375,7 @@ function Portfolio() {
                     <span className="font-display text-sm text-espresso truncate font-medium">{item.title}</span>
                     <span className="label-xs text-taupe font-mono text-[10px] shrink-0 ml-2">{item.city}</span>
                   </div>
-                </Reveal>
+                </div>
               ))}
             </div>
           )}
