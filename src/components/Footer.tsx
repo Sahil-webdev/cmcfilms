@@ -71,22 +71,21 @@ export function Footer() {
       {/* ── Main Rich Purple Uncluttered Footer Container ── */}
       <div className="bg-[#38167A] pt-4 md:pt-8 pb-10 px-6 sm:px-12 lg:px-24 border-t border-white/5">
         
-        {/* ── SPACIOUS 4-COLUMN UNCLUTTERED LAYOUT (Inspired by Reference) ── */}
-        <div className="mx-auto max-w-[1500px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-16 pb-16 border-b border-white/10 pt-4">
+        {/* ── 5-COLUMN BALANCED FOOTER LAYOUT ── */}
+        <div className="mx-auto max-w-[1650px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 lg:gap-12 pb-16 border-b border-white/10 pt-4">
           
           {/* ── COLUMN 1: EXPLORE ── */}
-          <div className="lg:col-span-3 space-y-4">
+          <div className="space-y-4">
             <h3 className="text-xs font-bold uppercase tracking-[0.25em] text-orange-400 font-mono">
               EXPLORE
             </h3>
-            <ul className="space-y-3 text-sm text-white/80 font-sans font-light">
+            <ul className="space-y-2.5 text-xs sm:text-sm text-white/80 font-sans font-light">
               <li><Link to="/portfolio" className="hover:text-orange-400 transition-colors">Wedding Photography</Link></li>
               <li><Link to="/films" className="hover:text-orange-400 transition-colors">Wedding Films</Link></li>
               <li><Link to="/portfolio" className="hover:text-orange-400 transition-colors">Real Wedding Stories</Link></li>
               <li><Link to="/about" className="hover:text-orange-400 transition-colors">The CMC Experience</Link></li>
               <li><Link to="/about" className="hover:text-orange-400 transition-colors">About Us</Link></li>
               
-              {/* Explicit User Request: "Work With Us" Option */}
               <li>
                 <Link to="/contact" className="hover:text-orange-400 transition-colors inline-flex items-center gap-1.5 text-orange-300 font-medium">
                   <span>Work With Us</span>
@@ -99,13 +98,32 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* ── COLUMN 2: STUDIO ── */}
-          <div className="lg:col-span-3 space-y-4">
+          {/* ── COLUMN 2: OUR SERVICES (User Explicit Request) ── */}
+          <div className="space-y-4">
+            <h3 className="text-xs font-bold uppercase tracking-[0.25em] text-orange-400 font-mono">
+              OUR SERVICES
+            </h3>
+            <ul className="space-y-2 text-xs sm:text-sm text-white/80 font-sans font-light">
+              <li><Link to="/portfolio" className="hover:text-orange-400 transition-colors">Wedding</Link></li>
+              <li><Link to="/couples" className="hover:text-orange-400 transition-colors">Pre-wedding</Link></li>
+              <li><Link to="/portfolio" className="hover:text-orange-400 transition-colors">Engagement</Link></li>
+              <li><Link to="/contact" className="hover:text-orange-400 transition-colors">Baby Shower</Link></li>
+              <li><Link to="/contact" className="hover:text-orange-400 transition-colors">Maternity Shoot</Link></li>
+              <li><Link to="/contact" className="hover:text-orange-400 transition-colors">New Born Baby Shoot</Link></li>
+              <li><Link to="/contact" className="hover:text-orange-400 transition-colors">Birthday Party</Link></li>
+              <li><Link to="/contact" className="hover:text-orange-400 transition-colors">Kitty Party</Link></li>
+              <li><Link to="/contact" className="hover:text-orange-400 transition-colors">Product Shoot</Link></li>
+              <li><Link to="/contact" className="hover:text-orange-400 transition-colors">Corporate</Link></li>
+            </ul>
+          </div>
+
+          {/* ── COLUMN 3: STUDIO ── */}
+          <div className="space-y-4">
             <h3 className="text-xs font-bold uppercase tracking-[0.25em] text-orange-400 font-mono">
               STUDIO
             </h3>
             
-            <div className="space-y-3 text-sm text-white/80 font-sans font-light leading-relaxed">
+            <div className="space-y-3 text-xs sm:text-sm text-white/80 font-sans font-light leading-relaxed">
               <p className="font-display text-xl text-white font-bold tracking-wider uppercase">
                 CMC Films
               </p>
@@ -132,12 +150,12 @@ export function Footer() {
             </div>
           </div>
 
-          {/* ── COLUMN 3: CONNECT ── */}
-          <div className="lg:col-span-3 space-y-4">
+          {/* ── COLUMN 4: CONNECT ── */}
+          <div className="space-y-4">
             <h3 className="text-xs font-bold uppercase tracking-[0.25em] text-orange-400 font-mono">
               CONNECT
             </h3>
-            <ul className="space-y-3 text-sm text-white/80 font-sans font-light">
+            <ul className="space-y-2.5 text-xs sm:text-sm text-white/80 font-sans font-light">
               <li>
                 <a href={studio.socials[0]?.href} target="_blank" rel="noopener noreferrer" className="hover:text-orange-400 transition-colors flex items-center gap-2">
                   <span>Instagram</span>
@@ -167,8 +185,8 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* ── COLUMN 4: WORK WITH US & NEWSLETTER ── */}
-          <div className="lg:col-span-3 space-y-4">
+          {/* ── COLUMN 5: JOIN OUR CREW ── */}
+          <div className="space-y-4">
             <h3 className="text-xs font-bold uppercase tracking-[0.25em] text-orange-400 font-mono">
               JOIN OUR CREW
             </h3>
