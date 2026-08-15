@@ -28,7 +28,7 @@ export const navLinks = [
   { label: "Home", to: "/" },
   { label: "Wedding Stories", to: "/portfolio" },
   { label: "Wedding Films", to: "/films" },
-  { label: "Couple Shoot", to: "/portfolio" },
+  { label: "Couple Shoot", to: "/couples" },
   { label: "Packages", to: "/contact" },
   { label: "About", to: "/about" },
   { label: "Testimonials", to: "/#testimonials" },
