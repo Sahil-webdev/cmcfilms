@@ -193,7 +193,7 @@ export function PortfolioEditorial() {
         </Reveal>
 
         {/* ── MASONRY COLUMNS GRID (Pure Clean Images, No Hover Effects, Tight Gap) ── */}
-        <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-1.5 md:gap-2 space-y-1.5 md:space-y-2">
+        <div className="columns-2 sm:columns-2 md:columns-3 lg:columns-4 gap-1 sm:gap-1.5 md:gap-2 space-y-1 sm:space-y-1.5 md:space-y-2">
           {filtered.map((item, idx) => (
             <div
               key={item.id}

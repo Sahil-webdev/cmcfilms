@@ -164,7 +164,7 @@ function CoupleShootPage() {
       {/* ── Couple Shoot Editorial Gallery Grid ── */}
       <section className="px-4 md:px-10">
         <div className="mx-auto max-w-[1700px]">
-          <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-1.5 md:gap-2 space-y-1.5 md:space-y-2">
+          <div className="columns-2 sm:columns-2 md:columns-3 lg:columns-4 gap-1 sm:gap-1.5 md:gap-2 space-y-1 sm:space-y-1.5 md:space-y-2">
             {filteredItems.map((item, idx) => (
               <div
                 key={item.id}
