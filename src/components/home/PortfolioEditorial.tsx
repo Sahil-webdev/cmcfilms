@@ -192,12 +192,12 @@ export function PortfolioEditorial() {
           </div>
         </Reveal>
 
-        {/* ── MASONRY COLUMNS GRID (KnotsByAmp Style Mixed Portrait & Landscape Layout) ── */}
-        <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-3 md:gap-4 space-y-3 md:space-y-4">
+        {/* ── MASONRY COLUMNS GRID (Pure Clean Images, No Hover Effects, Tight Gap) ── */}
+        <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-1.5 md:gap-2 space-y-1.5 md:space-y-2">
           {filtered.map((item, idx) => (
             <div
               key={item.id}
-              className="break-inside-avoid group relative overflow-hidden bg-beige cursor-pointer border border-espresso/10 shadow-sm hover:shadow-2xl transition-all duration-500 rounded-sm"
+              className="break-inside-avoid relative overflow-hidden bg-beige cursor-pointer mb-1.5 md:mb-2 shadow-none"
               onClick={() => setLightboxIndex(idx)}
             >
               <div className={`relative w-full ${item.aspectRatio} overflow-hidden`}>
@@ -206,22 +206,8 @@ export function PortfolioEditorial() {
                   alt={item.alt}
                   loading="lazy"
                   decoding="async"
-                  className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+                  className="h-full w-full object-cover"
                 />
-
-                {/* Subtle Hover Dark Overlay */}
-                <div className="absolute inset-0 bg-cinema/55 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4 md:p-5">
-                  <div className="self-end">
-                    <span className="label-xs text-ivory bg-cinema/75 border border-ivory/20 px-3 py-1 rounded-full backdrop-blur-md text-[10px]">
-                      View Photo 🔍
-                    </span>
-                  </div>
-                  <div className="translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                    <span className="label-xs text-gold uppercase text-[9px] tracking-widest">{item.category}</span>
-                    <h3 className="font-display text-lg md:text-xl text-ivory font-light leading-snug">{item.title}</h3>
-                    <p className="text-[11px] font-mono text-ivory/70 mt-0.5">{item.location}</p>
-                  </div>
-                </div>
               </div>
             </div>
           ))}

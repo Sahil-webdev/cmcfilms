@@ -323,57 +323,23 @@ function Portfolio() {
             <div className="h-px flex-1 bg-espresso/10 ml-6" />
           </Reveal>
 
-          {/* ── Masonry View (Premium editorial layout) ── */}
+          {/* ── Masonry View (Pure Clean Images, No Hover Effects, Tight Gap) ── */}
           {view === "masonry" && (
-            <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-3 md:gap-4 space-y-3 md:space-y-4">
+            <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-1.5 md:gap-2 space-y-1.5 md:space-y-2">
               {shown.map((item, idx) => (
                 <div
                   key={item.id}
-                  className="break-inside-avoid group relative overflow-hidden bg-beige cursor-pointer border border-espresso/10 shadow-sm hover:shadow-2xl transition-all duration-500 rounded-sm"
+                  className="break-inside-avoid relative overflow-hidden bg-beige cursor-pointer mb-1.5 md:mb-2 shadow-none"
                   onClick={() => setLightboxIndex(idx)}
                 >
-                  {/* Full bleed image */}
                   <div className={`relative w-full ${item.aspectRatio ?? "aspect-[4/3]"} overflow-hidden`}>
                     <img
                       src={item.src}
                       alt={item.alt}
                       loading="lazy"
                       decoding="async"
-                      className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-107"
+                      className="h-full w-full object-cover"
                     />
-
-                    {/* Dark gradient overlay on hover */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-cinema/90 via-cinema/30 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-400" />
-
-                    {/* Category badge top-left always visible */}
-                    <div className="absolute top-3 left-3">
-                      <span className="label-xs text-ivory bg-cinema/75 border border-ivory/20 px-2.5 py-1 backdrop-blur-md text-[9px] rounded-sm">
-                        {item.category}
-                      </span>
-                    </div>
-
-                    {/* Hover reveal bottom info */}
-                    <div className="absolute inset-x-0 bottom-0 p-5 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400">
-                      <h3 className="font-display text-xl text-ivory font-light leading-snug">
-                        {item.title}
-                      </h3>
-                      <p className="mt-1 text-[11px] font-mono text-ivory/70">
-                        {item.location} <span className="text-gold mx-1">/</span> {item.year}
-                      </p>
-                    </div>
-
-                    {/* Expand icon top-right on hover */}
-                    <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <span className="flex items-center justify-center w-8 h-8 rounded-full bg-ivory/20 border border-ivory/30 backdrop-blur-md text-ivory text-xs">
-                        ↗
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Caption bar below image */}
-                  <div className="flex items-center justify-between px-4 py-3 bg-ivory border-t border-espresso/8 transition-colors group-hover:bg-gold/10">
-                    <span className="font-display text-sm text-espresso truncate font-medium">{item.title}</span>
-                    <span className="label-xs text-taupe font-mono text-[10px] shrink-0 ml-2">{item.city}</span>
                   </div>
                 </div>
               ))}
