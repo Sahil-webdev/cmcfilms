@@ -61,7 +61,6 @@ function Home() {
       <ExperienceTimeline />
       <Destinations />
       <Testimonials />
-      <FinalCTA />
     </main>
   );
 }
