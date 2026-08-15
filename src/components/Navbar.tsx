@@ -65,19 +65,19 @@ export function Navbar() {
             CMC FILMS
           </Link>
 
-          {/* Desktop Right Navigation Links */}
-          <nav className="hidden items-center gap-7 lg:flex" role="navigation" aria-label="Main Navigation">
+          {/* Desktop Right Navigation Links (Slightly Larger Font & Rounded Button Hover) */}
+          <nav className="hidden items-center gap-1.5 md:gap-2.5 lg:flex" role="navigation" aria-label="Main Navigation">
             {navLinks.map((l) => (
               <Link
                 key={l.label}
                 to={l.to}
                 className={cn(
-                  "label-xs tracking-wider transition-all duration-300",
+                  "text-xs md:text-[13px] font-mono uppercase tracking-wider px-3.5 py-1.5 rounded-full transition-all duration-300 font-medium",
                   scrolled
-                    ? "text-espresso/85 hover:text-espresso hover:opacity-100"
-                    : "text-white/90 hover:text-gold hover:opacity-100 drop-shadow-sm",
+                    ? "text-espresso/90 hover:text-espresso hover:bg-espresso/10"
+                    : "text-white/95 hover:text-gold hover:bg-white/15 drop-shadow-sm",
                 )}
-                activeProps={{ className: "opacity-100 text-gold font-semibold" }}
+                activeProps={{ className: "opacity-100 text-gold bg-white/20 font-semibold" }}
                 activeOptions={{ exact: l.to === "/" }}
               >
                 {l.label}
