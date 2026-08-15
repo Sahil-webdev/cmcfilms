@@ -52,8 +52,12 @@ const blogPosts: BlogPost[] = [
   },
 ];
 
+// Duplicate array 3x for seamless 360 infinite loop
+const infiniteBlogPosts = [...blogPosts, ...blogPosts, ...blogPosts];
+
 export function BlogJournalSection() {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(blogPosts.length);
+  const [isTransitioning, setIsTransitioning] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
 
   // Automatic Step Carousel (2 Second Interval)
@@ -61,19 +65,41 @@ export function BlogJournalSection() {
     if (isPaused) return;
 
     const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % blogPosts.length);
+      setCurrentIndex((prev) => prev + 1);
     }, 2000);
 
     return () => clearInterval(timer);
   }, [isPaused]);
 
+  // Seamless Infinite Loop Reset at boundary
+  const handleTransitionEnd = () => {
+    if (currentIndex >= blogPosts.length * 2) {
+      setIsTransitioning(false);
+      setCurrentIndex(blogPosts.length);
+    } else if (currentIndex < blogPosts.length) {
+      setIsTransitioning(false);
+      setCurrentIndex(blogPosts.length * 2 - 1);
+    }
+  };
+
+  useEffect(() => {
+    if (!isTransitioning) {
+      const t = setTimeout(() => {
+        setIsTransitioning(true);
+      }, 50);
+      return () => clearTimeout(t);
+    }
+  }, [isTransitioning]);
+
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % blogPosts.length);
+    setCurrentIndex((prev) => prev + 1);
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + blogPosts.length) % blogPosts.length);
+    setCurrentIndex((prev) => prev - 1);
   };
+
+  const activeDotIndex = currentIndex % blogPosts.length;
 
   return (
     <section className="bg-[#FAF8F5] py-16 md:py-24 overflow-hidden">
@@ -89,7 +115,7 @@ export function BlogJournalSection() {
           </h2>
         </div>
 
-        {/* ── SIMPLE CLEAN CAROUSEL CONTAINER (2-Sec Auto Step) ── */}
+        {/* ── INFINITE SEAMLESS LOOP CAROUSEL CONTAINER (2-Sec Auto Step) ── */}
         <div
           className="relative px-4"
           onMouseEnter={() => setIsPaused(true)}
@@ -117,14 +143,19 @@ export function BlogJournalSection() {
           {/* Sliding Track */}
           <div className="overflow-hidden py-2">
             <div
-              className="flex gap-6 md:gap-8 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
+              onTransitionEnd={handleTransitionEnd}
+              className={`flex gap-6 md:gap-8 ${
+                isTransitioning
+                  ? "transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
+                  : "transition-none"
+              }`}
               style={{
                 transform: `translateX(-${currentIndex * (360 + 24)}px)`,
               }}
             >
-              {blogPosts.map((post) => (
+              {infiniteBlogPosts.map((post, idx) => (
                 <div
-                  key={post.id}
+                  key={`${post.id}-${idx}`}
                   className="w-[300px] sm:w-[340px] md:w-[360px] shrink-0 flex flex-col justify-between text-center"
                 >
                   <div>
@@ -170,10 +201,10 @@ export function BlogJournalSection() {
               <button
                 key={idx}
                 type="button"
-                onClick={() => setCurrentIndex(idx)}
+                onClick={() => setCurrentIndex(blogPosts.length + idx)}
                 aria-label={`Go to slide ${idx + 1}`}
                 className={`h-2 rounded-full transition-all duration-500 cursor-pointer ${
-                  idx === currentIndex ? "w-6 bg-[#3D3A36]" : "w-2 bg-espresso/20"
+                  idx === activeDotIndex ? "w-6 bg-[#3D3A36]" : "w-2 bg-espresso/20"
                 }`}
               />
             ))}
