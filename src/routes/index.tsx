@@ -9,6 +9,7 @@ import { FilmsSection } from "@/components/home/FilmsSection";
 import { QuoteSection } from "@/components/home/QuoteSection";
 import { Approach } from "@/components/home/Approach";
 
+import { Destinations } from "@/components/home/Destinations";
 import { BlogJournalSection } from "@/components/home/BlogJournalSection";
 
 const title = "CMC FILMS — Luxury Wedding Photography & Cinematic Films";
