@@ -271,16 +271,16 @@ export function WeddingStoriesPage() {
 
       {/* ── 1. HERO (Full-Screen Background Image with Left Foggy Gradient & WEDDING STORIES Typography) ── */}
       <section className="relative z-10 h-[100svh] min-h-[640px] w-full overflow-hidden flex flex-col justify-between p-6 md:p-14 border-b border-black/5">
-        {/* Full-Bleed Background Image with Left Foggy Mist Fade */}
+        {/* Full-Bleed Background Image with Left Subtle Foggy Mist Fade */}
         <div className="absolute inset-0 overflow-hidden z-0">
           <img
-            src={luxuryEditorial}
+            src={featured}
             alt="Wedding Stories Background"
             className="h-full w-full object-cover object-center scale-105 transition-transform duration-[10000ms]"
           />
-          {/* Left Foggy Mist Gradient Fade */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/85 via-50% to-transparent/20" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#FAF8F5] via-transparent to-[#FAF8F5]/30" />
+          {/* Subtle Left Foggy Mist Gradient Fade */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/45 via-30% to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#FAF8F5]/60 via-transparent to-[#FAF8F5]/20" />
         </div>
 
         {/* Top Header Tag */}
