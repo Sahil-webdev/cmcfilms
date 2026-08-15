@@ -269,22 +269,38 @@ export function WeddingStoriesPage() {
         <div className="absolute bottom-1/3 -right-40 w-[500px] h-[500px] bg-[#F7F2EF] rounded-full blur-[160px]" />
       </div>
 
-      {/* ── 1. HERO (Full-Screen Opening Frame with Large Asymmetrical Typography) ── */}
+      {/* ── 1. HERO (Full-Screen Background Image with Left Foggy Gradient & WEDDING STORIES Typography) ── */}
       <section className="relative z-10 h-[100svh] min-h-[640px] w-full overflow-hidden flex flex-col justify-between p-6 md:p-14 border-b border-black/5">
-        {/* Asymmetrical Large Image (Overflowed toward right side) */}
-        <div className="absolute top-1/2 -translate-y-1/2 right-0 lg:-right-10 w-[85%] sm:w-[70%] lg:w-[58%] aspect-[4/3] sm:aspect-[16/10] overflow-hidden rounded-l-3xl shadow-2xl opacity-90 z-0">
+        {/* Full-Bleed Background Image with Left Foggy Mist Fade */}
+        <div className="absolute inset-0 overflow-hidden z-0">
           <img
             src={luxuryEditorial}
-            alt="Wedding Stories Opening"
-            className="h-full w-full object-cover object-center transition-transform duration-1000 hover:scale-105"
+            alt="Wedding Stories Background"
+            className="h-full w-full object-cover object-center scale-105 transition-transform duration-[10000ms]"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/30 to-transparent" />
+          {/* Left Foggy Mist Gradient Fade */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/85 via-50% to-transparent/20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#FAF8F5] via-transparent to-[#FAF8F5]/30" />
         </div>
 
-        {/* Large Typography Partially Over Photograph */}
+        {/* Top Header Tag */}
+        <div className="relative z-10 pt-16 md:pt-8 flex justify-between items-center">
+          <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.25em] text-[#C5A880]">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#C5A880] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#C5A880]"></span>
+            </span>
+            <span>CMC FILMS JOURNAL</span>
+          </div>
+          <span className="text-xs text-espresso/40 font-mono hidden sm:block">
+            VOL VI — STORIES
+          </span>
+        </div>
+
+        {/* Large Typography Over Foggy Gradient */}
         <div className="relative z-10 my-auto max-w-4xl space-y-6">
           <Reveal>
-            <h1 className="font-display text-[clamp(4.2rem,12vw,10rem)] leading-[0.82] font-light text-espresso tracking-tight select-none">
+            <h1 className="font-display text-[clamp(4rem,11.5vw,9.5rem)] leading-[0.85] font-light text-espresso tracking-tight select-none">
               WEDDING <br />
               <em className="font-editorial italic text-[#C5A880] font-light">
                 STORIES
@@ -293,7 +309,7 @@ export function WeddingStoriesPage() {
           </Reveal>
 
           <Reveal delay={150}>
-            <p className="text-sm sm:text-base md:text-lg text-espresso/70 font-sans font-light leading-relaxed max-w-xs space-y-1 pt-4">
+            <p className="text-sm sm:text-base md:text-lg text-espresso/75 font-sans font-light leading-relaxed max-w-xs space-y-1 pt-2">
               <span>Real weddings.</span> <br />
               <span>Real people.</span> <br />
               <span>Real memories.</span>
@@ -302,10 +318,10 @@ export function WeddingStoriesPage() {
         </div>
 
         {/* Bottom Indicator */}
-        <div className="relative z-10 flex justify-between items-end text-xs font-mono text-espresso/40">
-          <span>CMC FILMS ARCHIVE</span>
+        <div className="relative z-10 flex justify-between items-end text-xs font-mono text-espresso/50 border-t border-espresso/10 pt-4">
+          <span>REAL SHOOT DIARIES</span>
           <span className="flex items-center gap-2">
-            Scroll to discover <ArrowDown className="w-3.5 h-3.5" />
+            Scroll to discover <ArrowDown className="w-3.5 h-3.5 text-[#C5A880]" />
           </span>
         </div>
       </section>
