@@ -283,19 +283,6 @@ export function WeddingStoriesPage() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#FAF8F5]/60 via-transparent to-[#FAF8F5]/20" />
         </div>
 
-        {/* Top Header Tag */}
-        <div className="relative z-10 pt-16 md:pt-8 flex justify-between items-center">
-          <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.25em] text-[#C5A880]">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#C5A880] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#C5A880]"></span>
-            </span>
-            <span>CMC FILMS JOURNAL</span>
-          </div>
-          <span className="text-xs text-espresso/40 font-mono hidden sm:block">
-            VOL VI — STORIES
-          </span>
-        </div>
 
         {/* Large Typography Over Foggy Gradient */}
         <div className="relative z-10 my-auto max-w-4xl space-y-6">
