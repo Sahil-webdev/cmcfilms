@@ -63,8 +63,8 @@ export function Navbar() {
               src={logoImg}
               alt="CMC FILMS - Wedding Storytellers"
               className={cn(
-                "w-auto object-contain transition-all duration-300",
-                scrolled ? "h-9 sm:h-11" : "h-11 sm:h-13 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]"
+                "w-auto object-contain transition-all duration-300 drop-shadow-[0_0_14px_rgba(255,255,255,0.85)]",
+                scrolled ? "h-9 sm:h-11" : "h-11 sm:h-13"
               )}
             />
           </Link>
@@ -178,7 +178,7 @@ export function Navbar() {
             <img
               src={logoImg}
               alt="CMC FILMS - Wedding Storytellers"
-              className="h-10 sm:h-12 w-auto object-contain"
+              className="h-10 sm:h-12 w-auto object-contain drop-shadow-[0_0_14px_rgba(255,255,255,0.85)]"
             />
           </Link>
           <span className="label-xs text-[#E5CA92] text-[10px] uppercase tracking-widest block mt-2 font-mono">

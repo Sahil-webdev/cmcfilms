@@ -79,7 +79,7 @@ export function Footer() {
             <img
               src={logoImg}
               alt="CMC FILMS - Wedding Storytellers"
-              className="h-12 sm:h-16 w-auto object-contain"
+              className="h-12 sm:h-16 w-auto object-contain drop-shadow-[0_0_14px_rgba(255,255,255,0.85)]"
             />
           </Link>
           <span className="text-xs font-mono text-white/70 uppercase tracking-widest">
