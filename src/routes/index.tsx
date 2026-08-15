@@ -58,7 +58,6 @@ function Home() {
       <QuoteSection />
       <Approach />
 
-      <ExperienceTimeline />
       <Destinations />
     </main>
   );
