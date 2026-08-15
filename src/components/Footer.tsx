@@ -24,22 +24,22 @@ function LayeredWaveTopBorder() {
       >
         <path
           d="M0,110 C320,170 540,50 860,125 C1180,200 1340,75 1440,90 L1440,240 L0,240 Z"
-          fill="#6B46AC"
+          fill="#8555DF"
           opacity="0.25"
         />
         <path
           d="M0,140 C220,70 500,190 780,105 C1060,20 1300,155 1440,125 L1440,240 L0,240 Z"
-          fill="#4E3182"
+          fill="#6737C3"
           opacity="0.45"
         />
         <path
           d="M0,75 C380,190 660,55 940,155 C1220,255 1370,105 1440,140 L1440,240 L0,240 Z"
-          fill="#371F62"
+          fill="#4C239B"
           opacity="0.7"
         />
         <path
           d="M0,125 C260,55 580,175 900,90 C1220,5 1370,140 1440,110 L1440,240 L0,240 Z"
-          fill="#170D2B"
+          fill="#38167A"
         />
       </svg>
     </div>
@@ -69,7 +69,7 @@ export function Footer() {
       <LayeredWaveTopBorder />
 
       {/* ── Main Rich Purple Uncluttered Footer Container ── */}
-      <div className="bg-[#170D2B] pt-4 md:pt-8 pb-10 px-6 sm:px-12 lg:px-24 border-t border-white/5">
+      <div className="bg-[#38167A] pt-4 md:pt-8 pb-10 px-6 sm:px-12 lg:px-24 border-t border-white/5">
         
         {/* ── SPACIOUS 4-COLUMN UNCLUTTERED LAYOUT (Inspired by Reference) ── */}
         <div className="mx-auto max-w-[1500px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-16 pb-16 border-b border-white/10 pt-4">
