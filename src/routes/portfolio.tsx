@@ -278,25 +278,24 @@ export function WeddingStoriesPage() {
             alt="Wedding Stories Background"
             className="h-full w-full object-cover object-center scale-105 transition-transform duration-[10000ms]"
           />
-          {/* Subtle Left Foggy Mist Gradient Fade */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/45 via-30% to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#FAF8F5]/60 via-transparent to-[#FAF8F5]/20" />
+          {/* Left Foggy Mist Gradient Fade — Stronger behind text for 100% readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/90 via-40% to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#FAF8F5]/70 via-transparent to-[#FAF8F5]/30" />
         </div>
 
-
-        {/* Large Typography Over Foggy Gradient */}
+        {/* Large Bold High-Contrast Typography Over Foggy Gradient */}
         <div className="relative z-10 my-auto max-w-4xl space-y-6">
           <Reveal>
-            <h1 className="font-display text-[clamp(4rem,11.5vw,9.5rem)] leading-[0.85] font-light text-espresso tracking-tight select-none">
+            <h1 className="font-display text-[clamp(4rem,11.5vw,9.5rem)] leading-[0.85] font-extrabold text-[#0C0D10] tracking-tight select-none drop-shadow-sm">
               WEDDING <br />
-              <em className="font-editorial italic text-[#C5A880] font-light">
+              <em className="font-editorial italic text-[#A67B2E] font-bold drop-shadow-sm">
                 STORIES
               </em>
             </h1>
           </Reveal>
 
           <Reveal delay={150}>
-            <p className="text-sm sm:text-base md:text-lg text-espresso/75 font-sans font-light leading-relaxed max-w-xs space-y-1 pt-2">
+            <p className="text-sm sm:text-base md:text-lg text-[#1A1A1A] font-sans font-medium leading-relaxed max-w-xs space-y-1 pt-2">
               <span>Real weddings.</span> <br />
               <span>Real people.</span> <br />
               <span>Real memories.</span>
