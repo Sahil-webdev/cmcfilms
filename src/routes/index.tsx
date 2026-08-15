@@ -9,6 +9,7 @@ import { FilmsSection } from "@/components/home/FilmsSection";
 import { QuoteSection } from "@/components/home/QuoteSection";
 import { Approach } from "@/components/home/Approach";
 
+import { ClientExperiencesSection } from "@/components/home/ClientExperiencesSection";
 import { BlogJournalSection } from "@/components/home/BlogJournalSection";
 
 const title = "CMC FILMS — Luxury Wedding Photography & Cinematic Films";
@@ -55,6 +56,7 @@ function Home() {
       <QuoteSection />
       <Approach />
 
+      <ClientExperiencesSection />
       <BlogJournalSection />
     </main>
   );
