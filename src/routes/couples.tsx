@@ -15,6 +15,8 @@ import heroImg from "@/assets/hero.jpg";
 import haldi from "@/assets/haldi.jpg";
 import featured from "@/assets/featured.jpg";
 import cat1 from "@/assets/cat-1.jpg";
+const f2 = cat2;
+const f3 = cat3;
 
 const title = "Couple Shoots & Pre-Weddings — CMC FILMS";
 const description =
