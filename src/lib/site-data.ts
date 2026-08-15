@@ -32,6 +32,7 @@ export const navLinks = [
   { label: "Packages", to: "/contact" },
   { label: "About", to: "/about" },
   { label: "Testimonials", to: "/#testimonials" },
+  { label: "Contact", to: "/contact" },
 ] as const;
 
 export const categories = [
