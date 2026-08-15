@@ -75,11 +75,11 @@ export function FeaturedStory() {
   const { ref, inView } = useInView<HTMLElement>(0.15);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Automatic Smooth Fade-In / Fade-Out Slideshow Loop (3.2 second fast comfortable duration)
+  // Automatic Slow & Luxurious Fade-In / Fade-Out Slideshow Loop (6 seconds per photo, 2s slow crossfade)
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % heroSlides.length);
-    }, 3200);
+    }, 6000);
 
     return () => clearInterval(timer);
   }, []);
@@ -91,7 +91,7 @@ export function FeaturedStory() {
       ref={ref}
       className="grain relative h-[65svh] min-h-[420px] md:h-[85svh] md:min-h-[540px] overflow-hidden bg-cinema border-y border-ivory/10"
     >
-      {/* ── 6 STACKED BACKGROUND IMAGES WITH SMOOTH FADE-IN / FADE-OUT CROSSFADE ── */}
+      {/* ── 6 STACKED BACKGROUND IMAGES WITH SLOW SILKY FADE-IN / FADE-OUT CROSSFADE (2s FADE DURATION) ── */}
       {heroSlides.map((slide, idx) => (
         <img
           key={slide.id}
@@ -99,7 +99,7 @@ export function FeaturedStory() {
           alt={slide.alt}
           loading={idx === 0 ? "eager" : "lazy"}
           decoding="async"
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ease-in-out ${
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[2000ms] ease-in-out ${
             idx === currentIndex ? "opacity-90 z-0" : "opacity-0 pointer-events-none"
           }`}
         />
