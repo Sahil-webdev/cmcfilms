@@ -60,7 +60,6 @@ function Home() {
 
       <ExperienceTimeline />
       <Destinations />
-      <Testimonials />
     </main>
   );
 }
