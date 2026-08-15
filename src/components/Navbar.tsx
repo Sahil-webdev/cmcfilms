@@ -4,6 +4,8 @@ import { Instagram, Youtube, Calendar, ArrowUpRight, MessageCircle } from "lucid
 import { navLinks, studio } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
 
+import logoImg from "@/assets/logo.png";
+
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -55,14 +57,16 @@ export function Navbar() {
           {/* Desktop Left Brand Logo */}
           <Link
             to="/"
-            className={cn(
-              "font-display tracking-[0.28em] font-normal transition-all duration-300",
-              scrolled
-                ? "text-xl md:text-2xl text-espresso hover:opacity-75"
-                : "text-2xl md:text-3xl text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)] hover:opacity-85",
-            )}
+            className="inline-flex items-center transition-all duration-300 hover:opacity-90 active:scale-95"
           >
-            CMC FILMS
+            <img
+              src={logoImg}
+              alt="CMC FILMS - Wedding Storytellers"
+              className={cn(
+                "w-auto object-contain transition-all duration-300",
+                scrolled ? "h-9 sm:h-11" : "h-11 sm:h-13 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]"
+              )}
+            />
           </Link>
 
           {/* Desktop Right Navigation Links (Animated Gold Underline Active Highlight) */}
@@ -170,10 +174,14 @@ export function Navbar() {
 
         {/* ── Top Header / Brand Mark ── */}
         <div className="relative z-10 pb-4 border-b border-white/10">
-          <span className="font-display text-2xl tracking-[0.25em] text-white font-light block">
-            CMC FILMS
-          </span>
-          <span className="label-xs text-[#E5CA92] text-[10px] uppercase tracking-widest block mt-1 font-mono">
+          <Link to="/" onClick={() => setOpen(false)} className="inline-block">
+            <img
+              src={logoImg}
+              alt="CMC FILMS - Wedding Storytellers"
+              className="h-10 sm:h-12 w-auto object-contain"
+            />
+          </Link>
+          <span className="label-xs text-[#E5CA92] text-[10px] uppercase tracking-widest block mt-2 font-mono">
             Stories for love • Told forever
           </span>
         </div>

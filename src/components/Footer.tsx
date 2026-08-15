@@ -46,6 +46,8 @@ function LayeredWaveTopBorder() {
   );
 }
 
+import logoImg from "@/assets/logo.png";
+
 export function Footer() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
@@ -69,10 +71,24 @@ export function Footer() {
       <LayeredWaveTopBorder />
 
       {/* ── Main Rich Purple Uncluttered Footer Container ── */}
-      <div className="bg-[#38167A] pt-4 md:pt-8 pb-10 px-6 sm:px-12 lg:px-24 border-t border-white/5">
+      <div className="bg-[#38167A] pt-6 md:pt-10 pb-10 px-6 sm:px-12 lg:px-24 border-t border-white/5">
         
+        {/* Footer Top Brand Header */}
+        <div className="mx-auto max-w-[1650px] pb-8 border-b border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <Link to="/" className="inline-block transition-transform duration-300 hover:scale-105">
+            <img
+              src={logoImg}
+              alt="CMC FILMS - Wedding Storytellers"
+              className="h-12 sm:h-16 w-auto object-contain"
+            />
+          </Link>
+          <span className="text-xs font-mono text-white/70 uppercase tracking-widest">
+            Wedding Photography &amp; Cinematic Films Studio
+          </span>
+        </div>
+
         {/* ── 5-COLUMN BALANCED FOOTER LAYOUT ── */}
-        <div className="mx-auto max-w-[1650px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 lg:gap-12 pb-16 border-b border-white/10 pt-4">
+        <div className="mx-auto max-w-[1650px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 lg:gap-12 pb-16 border-b border-white/10 pt-10">
           
           {/* ── COLUMN 1: EXPLORE ── */}
           <div className="space-y-4">
