@@ -5,6 +5,7 @@ import story1 from "@/assets/story-1.jpg";
 import story2 from "@/assets/story-2.jpg";
 import story3 from "@/assets/story-3.jpg";
 import featured from "@/assets/featured.jpg";
+import maternity from "@/assets/maternity.jpg";
 
 /** Editable studio details — replace with real values when available. */
 export const studio = {
@@ -74,9 +75,9 @@ export const services = [
   },
   {
     no: "06",
-    title: "Editorial Films",
-    copy: "Short-form cinema for designers, venues and couples who love craft.",
-    image: story2,
+    title: "Maternity Photoshoot",
+    copy: "Fine-art maternity portraits capturing the grace, glow and quiet emotion of new beginnings.",
+    image: maternity,
   },
 ];
 
