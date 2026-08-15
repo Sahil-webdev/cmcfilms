@@ -323,22 +323,29 @@ export function WeddingStoriesPage() {
       </div>
 
       {/* ── HERO SECTION (Split Composition with Overlapping Photos & Faded Background Word) ── */}
-      <section className="relative z-10 pt-28 pb-20 md:pt-36 md:pb-28 px-6 md:px-14 max-w-[1700px] mx-auto border-b border-espresso/10">
+      <section className="relative z-10 pt-28 pb-20 md:pt-36 md:pb-28 px-6 md:px-14 max-w-[1700px] mx-auto border-b border-espresso/10 overflow-hidden">
         {/* Faded Background Word: STORIES */}
-        <span className="absolute right-4 top-16 font-display text-[15vw] leading-none text-espresso/5 font-extrabold select-none pointer-events-none tracking-widest hidden lg:block">
+        <span className="absolute right-0 top-1/2 -translate-y-1/2 font-editorial text-[20vw] leading-none text-espresso/[0.04] font-bold select-none pointer-events-none tracking-widest hidden lg:block z-0">
           STORIES
         </span>
 
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          {/* Left Side: Typography */}
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center relative z-10">
+          {/* Left Side: Editorial Typography */}
           <div className="lg:col-span-6 space-y-6">
             <Reveal>
-              <span className="label-xs text-gold uppercase tracking-[0.25em] font-mono block">
-                CMC FILMS JOURNAL
-              </span>
-              <h1 className="mt-3 font-display text-[clamp(2.8rem,6.5vw,5.2rem)] leading-[0.98] font-light text-espresso">
+              <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.25em] text-gold">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-gold"></span>
+                </span>
+                <span>CMC FILMS JOURNAL</span>
+              </div>
+
+              <h1 className="mt-4 font-display text-[clamp(3rem,6.8vw,5.5rem)] leading-[0.96] font-light text-espresso tracking-tight">
                 Stories We Were <br />
-                <em className="font-editorial italic text-gold">Lucky Enough To Witness.</em>
+                <em className="font-editorial italic text-gold font-light">
+                  Lucky Enough To Witness.
+                </em>
               </h1>
             </Reveal>
 
@@ -353,39 +360,45 @@ export function WeddingStoriesPage() {
                 href="#category-section"
                 className="inline-flex items-center gap-3 text-xs sm:text-sm font-mono uppercase tracking-widest text-espresso hover:text-gold transition-colors duration-300 group"
               >
-                <span>Explore Stories</span>
+                <span className="border-b border-espresso/40 pb-0.5 group-hover:border-gold">Explore Stories</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1 text-gold" />
               </a>
             </Reveal>
           </div>
 
           {/* Right Side: Creative Overlapping Images Composition */}
-          <div className="lg:col-span-6 relative min-h-[420px] sm:min-h-[500px] flex items-center justify-center">
-            {/* Base Vertical Image */}
-            <div className="w-[65%] aspect-[3/4] overflow-hidden rounded-2xl shadow-xl border border-white/50 relative z-10">
-              <img
-                src={luxuryEditorial}
-                alt="Main story portrait"
-                className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
-              />
-            </div>
-
-            {/* Overlapping Smaller Image (Bottom Right) */}
-            <div className="absolute bottom-2 right-2 sm:right-6 w-[50%] aspect-[4/3] overflow-hidden rounded-2xl shadow-2xl border-2 border-white z-20">
-              <img
-                src={haldi}
-                alt="Overlapping haldi detail"
-                className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
-              />
-            </div>
-
-            {/* Background Narrow Image Frame */}
-            <div className="absolute top-2 left-2 w-[45%] aspect-[3/4] overflow-hidden rounded-2xl opacity-40 z-0 border border-espresso/10">
+          <div className="lg:col-span-6 relative min-h-[440px] sm:min-h-[520px] flex items-center justify-center pt-4">
+            {/* Background Narrow Image Frame (Tilt -rotate-6) */}
+            <div className="absolute top-2 left-4 w-[48%] aspect-[3/4] overflow-hidden rounded-2xl opacity-40 -rotate-6 transition-transform duration-700 hover:rotate-0 border border-espresso/10 shadow-md">
               <img
                 src={story1}
                 alt="Background story frame"
                 className="h-full w-full object-cover"
               />
+            </div>
+
+            {/* Base Main Vertical Image Frame (Tilt -rotate-2) */}
+            <div className="w-[62%] aspect-[3/4] overflow-hidden rounded-2xl shadow-2xl border-4 border-white relative z-10 -rotate-2 hover:rotate-0 transition-transform duration-700 bg-beige">
+              <img
+                src={luxuryEditorial}
+                alt="Main story portrait"
+                className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+              />
+              <div className="absolute top-3 left-3 bg-[#0C0D10]/80 backdrop-blur-md border border-gold/30 text-gold px-3 py-1 rounded-full label-xs text-[10px] font-mono">
+                Jaipur Palace • Dec 2026
+              </div>
+            </div>
+
+            {/* Overlapping Smaller Image (Bottom-Right, Tilt rotate-3) */}
+            <div className="absolute bottom-4 right-2 sm:right-6 w-[52%] aspect-[4/3] overflow-hidden rounded-2xl shadow-2xl border-4 border-white z-20 rotate-3 hover:rotate-0 transition-transform duration-700 bg-beige">
+              <img
+                src={haldi}
+                alt="Overlapping haldi detail"
+                className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+              />
+              <div className="absolute bottom-2 right-2 bg-white/90 backdrop-blur-md text-espresso px-2.5 py-0.5 rounded-full text-[10px] font-mono font-medium shadow-sm">
+                Haldi Petal Rain
+              </div>
             </div>
           </div>
         </div>
