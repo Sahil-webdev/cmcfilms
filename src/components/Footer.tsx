@@ -32,37 +32,37 @@ function PinterestIcon({ className = "w-4 h-4" }: { className?: string }) {
   );
 }
 
-// ── HERO FEATURE: Multi-Layered Overlapping Organic Wave Top Border SVG (Deep, Dynamic & Extra Wavy) ──
+// ── HERO FEATURE: Multi-Layered Overlapping Organic Wave Top Border SVG (Balanced, Elegant & Realistic Flow) ──
 function LayeredWaveTopBorder() {
   return (
     <div className="relative w-full overflow-hidden leading-none pointer-events-none -mt-2">
       <svg
-        className="relative block w-full h-[120px] sm:h-[180px] md:h-[230px] lg:h-[285px]"
-        viewBox="0 0 1440 320"
+        className="relative block w-full h-[90px] sm:h-[135px] md:h-[175px] lg:h-[210px]"
+        viewBox="0 0 1440 240"
         preserveAspectRatio="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        {/* Layer 1: Backmost Soft Lavender High-Wavy Curve */}
+        {/* Layer 1: Backmost Soft Lavender Wave */}
         <path
-          d="M0,160 C180,40 360,260 620,120 C880,-20 1100,240 1280,100 C1380,20 1420,180 1440,120 L1440,320 L0,320 Z"
+          d="M0,110 C320,170 540,50 860,125 C1180,200 1340,75 1440,90 L1440,240 L0,240 Z"
           fill="#6B46AC"
-          opacity="0.3"
+          opacity="0.25"
         />
-        {/* Layer 2: Mid-Back Muted Lilac Deep Wave */}
+        {/* Layer 2: Mid-Back Muted Lilac Wave */}
         <path
-          d="M0,80 C260,280 480,40 740,220 C1000,40 1180,260 1340,90 C1400,30 1430,160 1440,180 L1440,320 L0,320 Z"
+          d="M0,140 C220,70 500,190 780,105 C1060,20 1300,155 1440,125 L1440,240 L0,240 Z"
           fill="#4E3182"
-          opacity="0.5"
+          opacity="0.45"
         />
-        {/* Layer 3: Foreground Soft Violet S-Curve Wave */}
+        {/* Layer 3: Foreground Soft Violet Wave */}
         <path
-          d="M0,220 C160,80 420,280 680,100 C940,-40 1140,260 1300,140 C1380,60 1420,200 1440,130 L1440,320 L0,320 Z"
+          d="M0,75 C380,190 660,55 940,155 C1220,255 1370,105 1440,140 L1440,240 L0,240 Z"
           fill="#371F62"
-          opacity="0.75"
+          opacity="0.7"
         />
         {/* Layer 4: Main Solid Rich Royal Purple Footer Surface Wave */}
         <path
-          d="M0,140 C220,260 460,70 720,200 C980,30 1220,250 1360,110 C1410,60 1430,150 1440,130 L1440,320 L0,320 Z"
+          d="M0,125 C260,55 580,175 900,90 C1220,5 1370,140 1440,110 L1440,240 L0,240 Z"
           fill="#170D2B"
         />
       </svg>
