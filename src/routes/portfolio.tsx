@@ -1,19 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
 import { Link } from "@tanstack/react-router";
-import {
-  ArrowRight,
-  ArrowDown,
-  BookOpen,
-  Camera,
-  Clock,
-  MapPin,
-  Search,
-  X,
-  ChevronRight,
-  Sparkles,
-  Quote as QuoteIcon,
-} from "lucide-react";
+import { ArrowRight, ArrowDown, Play, X, Quote as QuoteIcon } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 
 // Image Imports
@@ -32,7 +20,7 @@ import maternity from "@/assets/maternity.jpg";
 
 const pageTitle = "Wedding Stories — CMC FILMS";
 const pageDescription =
-  "Every wedding has a story. Real people, real emotions, and the wedding moments that stayed with us forever.";
+  "Real weddings. Real people. Real memories. Scroll through real wedding stories documented by CMC FILMS.";
 
 export const Route = createFileRoute("/portfolio")({
   head: () => ({
@@ -49,262 +37,222 @@ export const Route = createFileRoute("/portfolio")({
   component: WeddingStoriesPage,
 });
 
-// ── TYPES ──
-export interface SimpleWeddingStory {
+export interface StoryItem {
   id: string;
+  num: string;
   couple: string;
-  title: string;
-  category: "Traditional" | "Arranged Love" | "Destination" | "Royal" | "Intimate" | "Cultural";
   location: string;
   date: string;
-  readTime: string;
-  aspect: "portrait" | "landscape";
+  category: "Traditional" | "Destination" | "Arranged Love" | "Royal" | "Intimate" | "Cultural" | "International";
+  quoteHook: string;
   coverImage: string;
   secondaryImages: string[];
-  intro: string;
-  hook?: string;
-  chapters?: {
-    num: string;
-    heading: string;
+  intro: string[];
+  chapters: {
+    number: string;
+    title: string;
     text: string;
-    img?: string;
+    image?: string;
   }[];
-  quote?: string;
+  coupleQuote: string;
 }
 
-// ── DATA DEFINITION ──
-const weddingStoriesData: SimpleWeddingStory[] = [
+const storiesList: StoryItem[] = [
   {
     id: "s1",
+    num: "01",
     couple: "Aarav & Meera",
-    title: "A Winter Wedding in Jaipur",
-    category: "Traditional",
     location: "Jaipur, Rajasthan",
-    date: "12 DEC 2026",
-    readTime: "5 min read",
-    aspect: "portrait",
+    date: "December 2026",
+    category: "Traditional",
+    quoteHook:
+      "Two families met. Somewhere between the conversations, two people found each other.",
     coverImage: luxuryEditorial,
-    secondaryImages: [heroImg, haldi, cat2],
-    intro:
-      "Some weddings begin with years of friendship. Others begin with a conversation between two families. Aarav and Meera's story began somewhere between the two under the winter sky of Jaipur.",
-    hook: "They met because their families introduced them over tea in Delhi. The rest happened naturally.",
+    secondaryImages: [heroImg, haldi, cat2, story1],
+    intro: [
+      "They did not meet in college. There was no dramatic love-at-first-sight moment.",
+      "Their families introduced them.",
+      "What followed was much quieter. And somehow, much more beautiful.",
+    ],
     chapters: [
       {
-        num: "01 — How It Began",
-        heading: "The Chai Meeting",
-        text: "There was no loud spark, just an effortless calm. By the second hour, both knew that what their parents arranged was meant to be.",
-        img: cat2,
+        number: "01",
+        title: "How It Started",
+        text: "It began as a quiet Sunday meeting over tea in Delhi. No grand promises — just an instant, unexpected ease that felt like catching up with an old friend.",
+        image: cat2,
       },
       {
-        num: "02 — The Wedding Day",
-        heading: "Marigold Rain & Palace Pheras",
-        text: "In the central courtyard of Amer Haveli, yellow petals showered from ancient balconies as sacred Vedic mantras echoed in the evening air.",
-        img: haldi,
+        number: "02",
+        title: "The Days Before",
+        text: "In the ancestral courtyard of Amer Haveli, yellow marigold petals showered from balconies as classical musicians filled the air with traditional blessing hymns.",
+        image: haldi,
       },
       {
-        num: "03 — The Moments Between",
-        heading: "Silent Glances",
-        text: "The frames that mattered most weren't posed mandap portraits, but the quiet hand squeeze beneath the silk veil.",
-        img: heroImg,
+        number: "03",
+        title: "The Wedding",
+        text: "Sacred Vedic pheras around the holy fire as dusk illuminated ancient pink sandstone arches. A moment frozen in quiet reverence.",
+        image: heroImg,
+      },
+      {
+        number: "04",
+        title: "What We Remember",
+        text: "The silent hand squeeze beneath the silk veil. Her mother's quiet breath before the Vidai.",
+        image: story1,
       },
     ],
-    quote: "When we look at these photographs, we don't just remember how the day looked. We remember exactly how it felt.",
+    coupleQuote:
+      "We barely remember posing for the photographs. But somehow, every photograph feels like us.",
   },
+
   {
     id: "s2",
+    num: "02",
     couple: "Rhea & Kabir",
-    title: "A Royal Celebration in Udaipur",
-    category: "Royal",
     location: "Udaipur, Rajasthan",
-    date: "08 JAN 2026",
-    readTime: "6 min read",
-    aspect: "landscape",
+    date: "January 2026",
+    category: "Royal",
+    quoteHook:
+      "Ten years of shared city train rides culminated on a floating lake island.",
     coverImage: featured,
-    secondaryImages: [story3, cat1],
-    intro:
-      "Rhea and Kabir's love story spans ten years — from college lectures in Mumbai to a floating island mandap on Lake Pichola.",
-    hook: "Ten years after sitting next to each other in class, they said their vows surrounded by lake mist.",
+    secondaryImages: [story3, cat1, luxuryEditorial],
+    intro: [
+      "Ten years ago, they sat next to each other in a college lecture hall.",
+      "Ten years later, they stood on Lake Pichola as mist rose over the palace hills.",
+    ],
     chapters: [
       {
-        num: "01 — How It Began",
-        heading: "A Decade of Soulmates",
-        text: "Ten years of shared city train rides, long-distance years, and quiet support culminated on the calm waters of Lake Pichola.",
-        img: story3,
+        number: "01",
+        title: "How It Started",
+        text: "A decade of quiet trust, long-distance years, and unwavering friendship built the foundation for their lakefront celebration.",
+        image: story3,
       },
       {
-        num: "02 — The Wedding Day",
-        heading: "Floating Mandap at Dusk",
-        text: "As dusk settled over the Aravali hills, floating oil lamps illuminated the water while vows were spoken in quiet reverence.",
-        img: featured,
+        number: "02",
+        title: "The Wedding",
+        text: "Floating oil lamps drifted on Lake Pichola as vows were exchanged beneath an ivory silk mandap.",
+        image: featured,
+      },
+      {
+        number: "03",
+        title: "What We Remember",
+        text: "The laughter that broke out during the midnight sitar session on the palace lawns.",
+        image: cat1,
       },
     ],
-    quote: "Every photograph captured by CMC FILMS feels like a timeless memory preserved forever.",
+    coupleQuote:
+      "Every single photograph captured by CMC FILMS feels like a scene from a film we get to keep forever.",
   },
+
   {
     id: "s3",
+    num: "03",
     couple: "Aneesh & Maitri",
-    title: "Barefoot Sunset Vows in Goa",
-    category: "Destination",
     location: "Goa Beachfront",
-    date: "22 JAN 2026",
-    readTime: "4 min read",
-    aspect: "landscape",
+    date: "January 2026",
+    category: "Destination",
+    quoteHook:
+      "Barefoot sunset vows where the Arabian Sea met golden shoreline promises.",
     coverImage: coastal,
-    secondaryImages: [cat1, story2],
-    intro:
-      "There's something magical about a wedding by the sea, especially when the setting sun casts a warm golden glow over shoreline promises.",
-    hook: "Two continents, endless flight miles, and one forever promise on the Goa coast.",
+    secondaryImages: [cat1, story2, haldi],
+    intro: [
+      "There is something magical about a wedding by the sea.",
+      "Especially when the setting sun casts a golden glow over barefoot vows on sandy shores.",
+    ],
     chapters: [
       {
-        num: "01 — How It Began",
-        heading: "Coastal Ocean Mist",
-        text: "He grew up in South India; she grew up in Punjab. Their wedding brought two distinct cultures together on the Goa sand.",
-        img: coastal,
+        number: "01",
+        title: "How It Started",
+        text: "He grew up in South India; she grew up in Punjab. Their coastal celebration brought two vibrant cultures together under the warm Goa sun.",
+        image: coastal,
       },
       {
-        num: "02 — The Wedding Day",
-        heading: "Barefoot Shore Vows",
-        text: "With waves rustling yards away, they exchanged handwritten promises while sunset ocean light illuminated their smiles.",
-        img: cat1,
+        number: "02",
+        title: "The Wedding",
+        text: "Exchanging oceanfront promises with ocean waves rustling just yards away.",
+        image: cat1,
       },
     ],
-    quote: "We wanted ocean air, laughter, and authentic photos — and that's exactly what we received.",
+    coupleQuote:
+      "We didn't want a stiff, formal wedding. We wanted ocean air, laughter, and authentic photos — and that's exactly what we received.",
   },
+
   {
     id: "s4",
+    num: "04",
     couple: "Saba & Usman",
-    title: "Arabian Desert Dunes Story",
-    category: "Arranged Love",
     location: "Dubai, UAE",
-    date: "14 DEC 2025",
-    readTime: "5 min read",
-    aspect: "portrait",
+    date: "December 2025",
+    category: "International",
+    quoteHook:
+      "Golden desert sand dunes at sunset followed by a waterfront Nikah.",
     coverImage: cat1,
     secondaryImages: [luxuryEditorial, heroImg],
-    excerpt:
-      "A three-day high-fashion desert celebration in Dubai with sand dunes shoot and luxury coastal Nikah.",
-    intro:
-      "Saba and Usman's international celebration brought family together from London, Dubai, and Mumbai for a magnificent sand dunes affair.",
-    hook: "They met because their families introduced them. The rest happened naturally.",
+    intro: [
+      "Three days in Dubai.",
+      "Connecting families from London, Dubai, and Mumbai under Arabian desert skies.",
+    ],
     chapters: [
       {
-        num: "01 — The Beginning",
-        heading: "Desert Sands at Dusk",
-        text: "Standing amid golden desert dunes as the sun melted away, Saba's veil caught the breeze in cinematic grace.",
-        img: cat1,
+        number: "01",
+        title: "The Desert Dunes",
+        text: "Standing amid red desert sands as the sun melted into the dunes, Saba's ivory veil caught the desert breeze.",
+        image: cat1,
       },
       {
-        num: "02 — The Nikah",
-        heading: "Sacred Promises",
-        text: "Under a mirror and flower canopy, sacred promises were spoken in quiet dignity.",
-        img: luxuryEditorial,
+        number: "02",
+        title: "The Nikah",
+        text: "Under a mirror and floral canopy overlooking the Gulf skyline, sacred promises were spoken in quiet beauty.",
+        image: luxuryEditorial,
       },
     ],
-    quote: "CMC FILMS documented our destination wedding with the aesthetic care of a luxury editorial magazine.",
+    coupleQuote:
+      "CMC FILMS documented our destination wedding with the aesthetic care of a high-fashion magazine.",
   },
+
   {
     id: "s5",
+    num: "05",
     couple: "Dhruv & Pippa",
-    title: "Eco-Luxury Farm Vows",
-    category: "Intimate",
     location: "Karjat, Maharashtra",
-    date: "04 FEB 2026",
-    readTime: "4 min read",
-    aspect: "portrait",
+    date: "February 2026",
+    category: "Intimate",
+    quoteHook:
+      "An eco-luxury farmhouse wedding with eighty close family members.",
     coverImage: haldi,
     secondaryImages: [story2, coastal],
-    intro:
-      "In the green hills of Karjat, Dhruv and Pippa celebrated their intimate two-day wedding surrounded by rustic charm and close family.",
-    hook: "With only 80 guests present, every single photograph radiated pure family closeness.",
+    intro: [
+      "Eighty guests.",
+      "Green Karjat hills.",
+      "No rush. No pretense. Just pure family presence.",
+    ],
     chapters: [
       {
-        num: "01 — The Vibe",
-        heading: "Marigold Rain",
-        text: "An open-air Haldi ceremony filled with yellow blooms, spontaneous music jams, and deep family warmth.",
-        img: haldi,
+        number: "01",
+        title: "The Farmhouse",
+        text: "An open-air Haldi ceremony filled with yellow blooms, spontaneous music jams, and farm-to-table dinners under starry skies.",
+        image: haldi,
       },
     ],
-    quote: "Small weddings have a big soul. Looking at these photos brings back every laugh and tear.",
-  },
-  {
-    id: "s6",
-    couple: "Devendra & Ishita",
-    title: "Heritage Fort Pheras",
-    category: "Cultural",
-    location: "Jodhpur, Rajasthan",
-    date: "18 NOV 2025",
-    readTime: "5 min read",
-    aspect: "landscape",
-    coverImage: story3,
-    secondaryImages: [story1, luxuryEditorial],
-    intro:
-      "Ancient fort ramparts, traditional Manganiyar folk tunes, and sacred pheras under Jodhpur skies.",
-    hook: "Folk music, ancient fort walls, and traditional Marwari wedding customs.",
-    chapters: [
-      {
-        num: "01 — The Heritage",
-        heading: "Fort Ramparts at Dusk",
-        text: "Folk musicians led the royal procession through 500-year-old fort courtyards as golden hour illuminated the wedding veil.",
-        img: story3,
-      },
-    ],
-    quote: "Our cameras were simply quiet witnesses to sacred timeless vows.",
+    coupleQuote:
+      "Small weddings have a big soul. Looking at these photos brings back every laugh and tear.",
   },
 ];
 
-// Category Details
-const categoriesList = [
-  {
-    name: "Traditional",
-    desc: "Families, rituals and traditions that turn one day into a memory for generations.",
-    img: story3,
-  },
-  {
-    name: "Arranged Love",
-    desc: "Two souls introduced by families who discovered their exact missing piece.",
-    img: cat2,
-  },
-  {
-    name: "Destination",
-    desc: "Coastal ocean vows, sea mist romance and exotic locales around the world.",
-    img: coastal,
-  },
-  {
-    name: "Royal",
-    desc: "Grand palace courtyards, ancient sandstone forts and Rajwadi grandeur.",
-    img: luxuryEditorial,
-  },
-  {
-    name: "Intimate",
-    desc: "Micro-gatherings, open-air farm suppers and unhurried family moments.",
-    img: haldi,
-  },
-  {
-    name: "Cultural",
-    desc: "Authentic regional heritage, traditional attire, and folk music soul.",
-    img: heroImg,
-  },
-];
-
-// Destinations
-const destinationTiles = [
-  { city: "Jaipur", image: heroImg },
-  { city: "Udaipur", image: luxuryEditorial },
-  { city: "Jaisalmer", image: cat2 },
-  { city: "Goa", image: coastal },
-  { city: "Dubai", image: cat1 },
-  { city: "Bali", image: featured },
-];
+const categoryHoverImages: Record<string, string> = {
+  Traditional: story3,
+  Destination: coastal,
+  "Arranged Love": cat2,
+  Royal: luxuryEditorial,
+  Intimate: haldi,
+  Cultural: heroImg,
+  International: cat1,
+};
 
 export function WeddingStoriesPage() {
-  const [selectedCategory, setSelectedCategory] = useState("Traditional");
-  const [activeStoryModal, setActiveStoryModal] = useState<SimpleWeddingStory | null>(null);
-  const [hoveredJournalIndex, setHoveredJournalIndex] = useState<number | null>(null);
+  const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  const activeCategoryData = useMemo(() => {
-    return categoriesList.find((c) => c.name === selectedCategory) || categoriesList[0];
-  }, [selectedCategory]);
+  const [activeStory, setActiveStory] = useState<StoryItem | null>(null);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     setMousePos({ x: e.clientX, y: e.clientY });
@@ -313,509 +261,453 @@ export function WeddingStoriesPage() {
   return (
     <main
       onMouseMove={handleMouseMove}
-      className="bg-[#FAF8F5] text-espresso font-sans selection:bg-gold/20 relative overflow-hidden"
+      className="bg-[#FAF8F5] text-[#1A1A1A] font-sans selection:bg-[#C5A880]/20 relative overflow-hidden"
     >
-      {/* ── SUBTLE BACKGROUND GRAIN & OVERSIZED FADED TYPOGRAPHY ── */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-40">
-        {/* Soft Grain & Light Patches */}
-        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-[#C5A880]/15 rounded-full blur-[140px]" />
-        <div className="absolute bottom-1/3 -right-32 w-96 h-96 bg-[#D4AF37]/15 rounded-full blur-[140px]" />
+      {/* ── SUBTLE FILM GRAIN & AMBIENT BACKGROUND SYSTEM ── */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-30">
+        <div className="absolute top-1/4 -left-40 w-[500px] h-[500px] bg-[#EFECE6] rounded-full blur-[160px]" />
+        <div className="absolute bottom-1/3 -right-40 w-[500px] h-[500px] bg-[#F7F2EF] rounded-full blur-[160px]" />
       </div>
 
-      {/* ── HERO SECTION (Split Composition with Overlapping Photos & Faded Background Word) ── */}
-      <section className="relative z-10 pt-28 pb-20 md:pt-36 md:pb-28 px-6 md:px-14 max-w-[1700px] mx-auto border-b border-espresso/10 overflow-hidden">
-        {/* Faded Background Word: STORIES */}
-        <span className="absolute right-0 top-1/2 -translate-y-1/2 font-editorial text-[20vw] leading-none text-espresso/[0.04] font-bold select-none pointer-events-none tracking-widest hidden lg:block z-0">
-          STORIES
-        </span>
+      {/* ── 1. HERO (Full-Screen Opening Frame with Large Asymmetrical Typography) ── */}
+      <section className="relative z-10 h-[100svh] min-h-[640px] w-full overflow-hidden flex flex-col justify-between p-6 md:p-14 border-b border-black/5">
+        {/* Asymmetrical Large Image (Overflowed toward right side) */}
+        <div className="absolute top-1/2 -translate-y-1/2 right-0 lg:-right-10 w-[85%] sm:w-[70%] lg:w-[58%] aspect-[4/3] sm:aspect-[16/10] overflow-hidden rounded-l-3xl shadow-2xl opacity-90 z-0">
+          <img
+            src={luxuryEditorial}
+            alt="Wedding Stories Opening"
+            className="h-full w-full object-cover object-center transition-transform duration-1000 hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/30 to-transparent" />
+        </div>
 
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center relative z-10">
-          {/* Left Side: Editorial Typography */}
-          <div className="lg:col-span-6 space-y-6">
-            <Reveal>
-              <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.25em] text-gold">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-gold"></span>
-                </span>
-                <span>CMC FILMS JOURNAL</span>
-              </div>
+        {/* Large Typography Partially Over Photograph */}
+        <div className="relative z-10 my-auto max-w-4xl space-y-6">
+          <Reveal>
+            <h1 className="font-display text-[clamp(4.2rem,12vw,10rem)] leading-[0.82] font-light text-espresso tracking-tight select-none">
+              WEDDING <br />
+              <em className="font-editorial italic text-[#C5A880] font-light">
+                STORIES
+              </em>
+            </h1>
+          </Reveal>
 
-              <h1 className="mt-4 font-display text-[clamp(3rem,6.8vw,5.5rem)] leading-[0.96] font-light text-espresso tracking-tight">
-                Stories We Were <br />
-                <em className="font-editorial italic text-gold font-light">
-                  Lucky Enough To Witness.
-                </em>
-              </h1>
-            </Reveal>
+          <Reveal delay={150}>
+            <p className="text-sm sm:text-base md:text-lg text-espresso/70 font-sans font-light leading-relaxed max-w-xs space-y-1 pt-4">
+              <span>Real weddings.</span> <br />
+              <span>Real people.</span> <br />
+              <span>Real memories.</span>
+            </p>
+          </Reveal>
+        </div>
 
-            <Reveal delay={150}>
-              <p className="text-base sm:text-lg text-taupe font-sans font-light leading-relaxed max-w-md">
-                Real weddings, real people, and the moments that stayed with us.
-              </p>
-            </Reveal>
-
-            <Reveal delay={250} className="pt-4">
-              <a
-                href="#category-section"
-                className="inline-flex items-center gap-3 text-xs sm:text-sm font-mono uppercase tracking-widest text-espresso hover:text-gold transition-colors duration-300 group"
-              >
-                <span className="border-b border-espresso/40 pb-0.5 group-hover:border-gold">Explore Stories</span>
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1 text-gold" />
-              </a>
-            </Reveal>
-          </div>
-
-          {/* Right Side: Creative Overlapping Images Composition */}
-          <div className="lg:col-span-6 relative min-h-[440px] sm:min-h-[520px] flex items-center justify-center pt-4">
-            {/* Background Narrow Image Frame (Tilt -rotate-6) */}
-            <div className="absolute top-2 left-4 w-[48%] aspect-[3/4] overflow-hidden rounded-2xl opacity-40 -rotate-6 transition-transform duration-700 hover:rotate-0 border border-espresso/10 shadow-md">
-              <img
-                src={story1}
-                alt="Background story frame"
-                className="h-full w-full object-cover"
-              />
-            </div>
-
-            {/* Base Main Vertical Image Frame (Tilt -rotate-2) */}
-            <div className="w-[62%] aspect-[3/4] overflow-hidden rounded-2xl shadow-2xl border-4 border-white relative z-10 -rotate-2 hover:rotate-0 transition-transform duration-700 bg-beige">
-              <img
-                src={luxuryEditorial}
-                alt="Main story portrait"
-                className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
-              />
-              <div className="absolute top-3 left-3 bg-[#0C0D10]/80 backdrop-blur-md border border-gold/30 text-gold px-3 py-1 rounded-full label-xs text-[10px] font-mono">
-                Jaipur Palace • Dec 2026
-              </div>
-            </div>
-
-            {/* Overlapping Smaller Image (Bottom-Right, Tilt rotate-3) */}
-            <div className="absolute bottom-4 right-2 sm:right-6 w-[52%] aspect-[4/3] overflow-hidden rounded-2xl shadow-2xl border-4 border-white z-20 rotate-3 hover:rotate-0 transition-transform duration-700 bg-beige">
-              <img
-                src={haldi}
-                alt="Overlapping haldi detail"
-                className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
-              />
-              <div className="absolute bottom-2 right-2 bg-white/90 backdrop-blur-md text-espresso px-2.5 py-0.5 rounded-full text-[10px] font-mono font-medium shadow-sm">
-                Haldi Petal Rain
-              </div>
-            </div>
-          </div>
+        {/* Bottom Indicator */}
+        <div className="relative z-10 flex justify-between items-end text-xs font-mono text-espresso/40">
+          <span>CMC FILMS ARCHIVE</span>
+          <span className="flex items-center gap-2">
+            Scroll to discover <ArrowDown className="w-3.5 h-3.5" />
+          </span>
         </div>
       </section>
 
-      {/* ── STORY CATEGORY SECTION (Find Your Kind of Story) ── */}
-      <section id="category-section" className="relative z-10 py-20 md:py-28 px-6 md:px-14 border-b border-espresso/10 max-w-[1700px] mx-auto">
-        <Reveal className="mb-10 text-center max-w-2xl mx-auto">
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-light text-espresso">
-            Find Your Kind of <em className="font-editorial italic text-gold">Story</em>
-          </h2>
-          <p className="mt-2 text-xs sm:text-sm text-taupe font-sans font-light">
-            Every wedding begins differently.
+      {/* ── 2. STORY DISCOVERY (Text-Only Categories with Cursor Photo Follow) ── */}
+      <section className="relative z-10 py-24 md:py-36 px-6 md:px-16 border-b border-black/5">
+        <Reveal className="mb-14">
+          <p className="font-editorial text-2xl sm:text-3xl text-espresso/70 font-light italic">
+            “Choose a story that feels like yours.”
           </p>
         </Reveal>
 
-        {/* Clean Horizontal Category Navigation */}
-        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-12">
-          {categoriesList.map((cat) => {
-            const isSelected = selectedCategory === cat.name;
-            return (
-              <button
-                key={cat.name}
-                type="button"
-                onClick={() => setSelectedCategory(cat.name)}
-                className={`label-xs px-5 py-2.5 rounded-full transition-all duration-300 cursor-pointer border ${
-                  isSelected
-                    ? "bg-espresso text-ivory border-espresso shadow-md"
-                    : "bg-white text-espresso/70 border-espresso/15 hover:border-gold hover:text-espresso"
-                }`}
-              >
-                {cat.name}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Interactive Category Side-by-Side Transition Panel */}
-        <div className="grid md:grid-cols-12 gap-8 lg:gap-14 items-center bg-white p-6 sm:p-10 rounded-3xl border border-espresso/10 shadow-sm">
-          <div className="md:col-span-7 aspect-[16/10] overflow-hidden rounded-2xl bg-beige">
-            <img
-              src={activeCategoryData.img}
-              alt={activeCategoryData.name}
-              className="h-full w-full object-cover transition-all duration-700"
-            />
-          </div>
-
-          <div className="md:col-span-5 space-y-5">
-            <span className="label-xs text-gold uppercase tracking-widest font-mono">
-              {activeCategoryData.name} Stories
-            </span>
-            
-            <h3 className="font-display text-3xl sm:text-4xl text-espresso font-light">
-              {activeCategoryData.name} Weddings
-            </h3>
-
-            <p className="text-sm text-taupe font-sans font-light leading-relaxed">
-              "{activeCategoryData.desc}"
-            </p>
-
-            <div className="pt-2">
-              <button
-                type="button"
-                onClick={() => {
-                  const story = weddingStoriesData.find((s) => s.category.includes(selectedCategory.split(" ")[0])) || weddingStoriesData[0];
-                  setActiveStoryModal(story);
-                }}
-                className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-espresso text-ivory hover:bg-gold hover:text-cinema text-xs font-mono transition-all duration-300"
-              >
-                <span>Explore {activeCategoryData.name} Stories</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── FEATURED STORY (Large Horizontal Image + Floating Information Panel) ── */}
-      <section className="relative z-10 py-20 md:py-28 px-4 md:px-10 max-w-[1700px] mx-auto border-b border-espresso/10">
-        <div className="relative mx-auto w-full md:w-[92%]">
-          {/* Large Horizontal Image (80-90% width) */}
+        {/* Hover Category Background Photo Follower */}
+        {hoveredCategory && categoryHoverImages[hoveredCategory] && (
           <div
-            onClick={() => setActiveStoryModal(weddingStoriesData[0])}
-            className="aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden rounded-3xl cursor-pointer bg-beige shadow-lg group"
+            className="fixed pointer-events-none z-40 w-80 aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl transition-opacity duration-500 hidden md:block"
+            style={{
+              left: `${mousePos.x + 30}px`,
+              top: `${mousePos.y - 120}px`,
+            }}
           >
             <img
-              src={weddingStoriesData[0].coverImage}
-              alt={weddingStoriesData[0].couple}
-              className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
+              src={categoryHoverImages[hoveredCategory]}
+              alt={hoveredCategory}
+              className="h-full w-full object-cover animate-in fade-in duration-300"
             />
           </div>
+        )}
 
-          {/* Floating Information Panel (Warm Off-White Overlapping Box) */}
-          <div
-            onClick={() => setActiveStoryModal(weddingStoriesData[0])}
-            className="mt-6 md:mt-0 md:absolute md:bottom-8 md:right-8 lg:bottom-12 lg:right-12 md:max-w-md bg-[#FDFBF7] p-6 sm:p-8 rounded-2xl border border-espresso/10 shadow-xl cursor-pointer hover:border-gold transition-all space-y-3 z-20"
-          >
-            <span className="label-xs text-gold uppercase tracking-widest font-mono">
-              FEATURED STORY
-            </span>
-            
-            <h3 className="font-display text-3xl text-espresso font-light">
-              {weddingStoriesData[0].couple}
-            </h3>
-
-            <p className="font-editorial text-base italic text-gold font-light">
-              "{weddingStoriesData[0].title}"
-            </p>
-
-            <p className="text-xs font-mono text-taupe">
-              {weddingStoriesData[0].category} Wedding · {weddingStoriesData[0].location}
-            </p>
-
-            <div className="pt-2">
-              <span className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-espresso hover:text-gold transition-colors">
-                <span>Read Their Story</span>
-                <ArrowRight className="w-3.5 h-3.5 text-gold" />
-              </span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── STORY GRID (Recent Stories — 2-Column Alternating Proportions) ── */}
-      <section className="relative z-10 py-20 md:py-28 px-6 md:px-14 max-w-[1700px] mx-auto border-b border-espresso/10">
-        <Reveal className="mb-14 flex items-end justify-between border-b border-espresso/10 pb-6">
-          <div>
-            <span className="label-xs text-gold uppercase font-mono tracking-widest">
-              Curated Grid
-            </span>
-            <h2 className="mt-2 font-display text-3xl sm:text-4xl md:text-5xl font-light text-espresso">
-              Recent <em className="font-editorial italic text-gold">Stories</em>
-            </h2>
-          </div>
-        </Reveal>
-
-        {/* 2-Column Grid with Alternating Image Proportions */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-start">
-          {weddingStoriesData.map((story, idx) => {
-            // Alternate aspect ratio: Even rows = left tall / right wide; Odd rows = left wide / right tall
-            const isTall = idx % 2 === 0;
-
-            return (
-              <div
-                key={story.id}
-                onClick={() => setActiveStoryModal(story)}
-                className="group space-y-4 cursor-pointer"
-              >
-                {/* Image (No Cards, Image DOMINATES) */}
-                <div
-                  className={`w-full overflow-hidden rounded-2xl bg-beige shadow-sm ${
-                    isTall ? "aspect-[3/4]" : "aspect-[16/10]"
-                  }`}
-                >
-                  <img
-                    src={story.coverImage}
-                    alt={story.couple}
-                    loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
-                  />
-                </div>
-
-                {/* Minimal Info */}
-                <div className="space-y-1 pt-1 transition-transform duration-300 group-hover:-translate-y-1">
-                  <h3 className="font-display text-2xl sm:text-3xl text-espresso font-normal group-hover:text-gold transition-colors">
-                    {story.couple}
-                  </h3>
-                  
-                  <p className="font-editorial text-base italic text-taupe font-light">
-                    "{story.title}"
-                  </p>
-
-                  <div className="flex items-center justify-between pt-1">
-                    <span className="text-xs font-mono text-taupe/80">
-                      {story.category} · {story.location}
-                    </span>
-
-                    <span className="text-xs font-mono text-gold opacity-0 group-hover:opacity-100 transition-opacity inline-flex items-center gap-1">
-                      <span>Read Story</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </span>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* ── LOVE STORY TYPE SECTION (How It Began - Warm Muted Sand Background) ── */}
-      <section className="relative z-10 py-20 md:py-32 px-6 md:px-14 bg-[#F5F1EB] border-b border-espresso/10 overflow-hidden">
-        {/* Faded Background Text: HOW IT BEGAN */}
-        <span className="absolute left-1/2 -translate-x-1/2 top-10 font-display text-[14vw] leading-none text-espresso/5 font-extrabold select-none pointer-events-none tracking-widest whitespace-nowrap">
-          HOW IT BEGAN
-        </span>
-
-        <div className="relative z-10 max-w-[1700px] mx-auto space-y-14">
-          <Reveal className="text-center max-w-2xl mx-auto">
-            <span className="label-xs text-gold font-mono uppercase tracking-widest">
-              Relationship Journeys
-            </span>
-            <h2 className="mt-3 font-display text-3xl sm:text-4xl md:text-5xl font-light text-espresso">
-              Different Beginnings. <em className="font-editorial italic text-gold">Beautiful Endings.</em>
-            </h2>
-          </Reveal>
-
-          {/* 3 Simple Story Types */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {weddingStoriesData.slice(0, 3).map((s) => (
-              <div
-                key={s.id}
-                onClick={() => setActiveStoryModal(s)}
-                className="group space-y-4 bg-[#FAF8F5] p-6 rounded-2xl border border-espresso/10 cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500"
-              >
-                <div className="aspect-[4/3] w-full overflow-hidden rounded-xl bg-beige">
-                  <img
-                    src={s.coverImage}
-                    alt={s.couple}
-                    className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <span className="label-xs text-gold bg-gold/10 px-3 py-1 rounded-full text-[10px]">
-                    {s.category}
-                  </span>
-                  
-                  <h3 className="font-display text-2xl text-espresso font-normal">
-                    {s.couple}
-                  </h3>
-
-                  <p className="text-xs text-taupe font-sans font-light leading-relaxed">
-                    "{s.hook}"
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── DESTINATION STORIES (Horizontal Image Strip with City Overlay) ── */}
-      <section className="relative z-10 py-20 md:py-28 px-6 md:px-14 border-b border-espresso/10 max-w-[1700px] mx-auto">
-        <Reveal className="mb-12">
-          <span className="label-xs text-gold font-mono uppercase tracking-widest">
-            Photographer's Travel Log
-          </span>
-          <h2 className="mt-2 font-display text-3xl sm:text-4xl md:text-5xl font-light text-espresso">
-            Stories From <em className="font-editorial italic text-gold">Different Places</em>
-          </h2>
-        </Reveal>
-
-        {/* Photography Tile Strip */}
-        <div className="flex overflow-x-auto gap-4 md:gap-6 pb-4 scrollbar-none snap-x snap-mandatory">
-          {destinationTiles.map((dest, idx) => (
-            <div
-              key={idx}
-              className="w-[220px] sm:w-[260px] md:w-[280px] shrink-0 snap-start group relative aspect-[3/4] overflow-hidden rounded-2xl bg-[#0C0D10] text-ivory cursor-pointer shadow-md"
+        {/* Elegant Typography Category List */}
+        <div className="flex flex-wrap gap-x-8 gap-y-6 md:gap-x-14 md:gap-y-10 items-baseline max-w-5xl">
+          {[
+            "Traditional",
+            "Destination",
+            "Arranged Love",
+            "Royal",
+            "Intimate",
+            "Cultural",
+            "International",
+          ].map((cat) => (
+            <span
+              key={cat}
+              onMouseEnter={() => setHoveredCategory(cat)}
+              onMouseLeave={() => setHoveredCategory(null)}
+              onClick={() => {
+                const matched = storiesList.find((s) => s.category.includes(cat.split(" ")[0])) || storiesList[0];
+                setActiveStory(matched);
+              }}
+              className="font-display text-3xl sm:text-5xl md:text-6xl font-light text-espresso/40 hover:text-espresso hover:text-[#C5A880] transition-colors duration-300 cursor-pointer select-none"
             >
-              <img
-                src={dest.image}
-                alt={dest.city}
-                loading="lazy"
-                className="h-full w-full object-cover opacity-75 group-hover:scale-110 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent p-6 flex flex-col justify-end">
-                <h3 className="font-display text-3xl font-light text-ivory group-hover:text-gold transition-colors">
-                  {dest.city}
-                </h3>
-                <span className="text-xs font-mono text-gold opacity-0 group-hover:opacity-100 transition-opacity mt-1">
-                  View Stories →
-                </span>
-              </div>
-            </div>
+              {cat}
+            </span>
           ))}
         </div>
       </section>
 
-      {/* ── SIMPLE JOURNAL SECTION (Minimal List with Thin Separators) ── */}
-      <section className="relative z-10 py-20 md:py-28 px-6 md:px-14 border-b border-espresso/10 max-w-[1600px] mx-auto">
-        <Reveal className="mb-12">
-          <span className="label-xs text-gold font-mono uppercase tracking-widest">
-            Dispatches
+      {/* ── 3. MAIN STORY EXPERIENCE (Viewport-Sized Compositional Stories, NO CARDS) ── */}
+      <section className="relative z-10 space-y-28 md:space-y-44 py-20">
+        
+        {/* STORY 01 — Aarav & Meera (Left Image / Right Content) */}
+        <div className="px-6 md:px-16 max-w-[1700px] mx-auto min-h-[80vh] flex items-center">
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-20 items-center w-full">
+            <div
+              onClick={() => setActiveStory(storiesList[0])}
+              className="lg:col-span-7 aspect-[3/4] sm:aspect-[4/3] lg:aspect-[3/4] overflow-hidden rounded-3xl cursor-pointer group shadow-xl"
+            >
+              <img
+                src={storiesList[0].coverImage}
+                alt={storiesList[0].couple}
+                loading="lazy"
+                className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
+              />
+            </div>
+
+            <div className="lg:col-span-5 space-y-6 relative">
+              <span className="font-display text-8xl md:text-9xl text-espresso/5 font-extrabold absolute -top-16 -left-4 select-none pointer-events-none">
+                01
+              </span>
+
+              <div className="space-y-2 relative z-10">
+                <h2 className="font-display text-4xl sm:text-6xl font-light text-espresso">
+                  {storiesList[0].couple}
+                </h2>
+                <p className="text-xs font-mono text-espresso/60">
+                  {storiesList[0].location} · {storiesList[0].category} Wedding
+                </p>
+              </div>
+
+              <p className="font-editorial text-xl sm:text-2xl text-espresso/80 font-light italic leading-relaxed pt-2">
+                "{storiesList[0].quoteHook}"
+              </p>
+
+              <button
+                type="button"
+                onClick={() => setActiveStory(storiesList[0])}
+                className="inline-flex items-center gap-3 text-xs font-mono uppercase tracking-widest text-espresso hover:text-[#C5A880] transition-colors pt-4 group"
+              >
+                <span className="border-b border-espresso/40 pb-0.5">Read Their Story</span>
+                <ArrowRight className="w-4 h-4 text-[#C5A880] group-hover:translate-x-1 transition-transform" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* INTERLEAVED CATEGORY MOMENT — DESTINATION */}
+        <div className="relative py-20 px-6 text-center overflow-hidden bg-[#F5F0EB] border-y border-black/5">
+          <span className="absolute inset-0 flex items-center justify-center font-display text-[15vw] leading-none text-espresso/5 font-bold select-none pointer-events-none">
+            DESTINATION
           </span>
-          <h2 className="mt-2 font-display text-3xl sm:text-4xl font-light text-espresso">
-            From The <em className="font-editorial italic text-gold">Journal</em>
+          <div className="relative z-10 max-w-2xl mx-auto space-y-4">
+            <span className="text-xs font-mono text-[#C5A880] uppercase tracking-widest">CHAPTER</span>
+            <h3 className="font-display text-3xl sm:text-5xl font-light text-espresso">
+              “Some stories take us far from home.”
+            </h3>
+            <button
+              type="button"
+              onClick={() => setActiveStory(storiesList[2])}
+              className="text-xs font-mono text-espresso hover:text-[#C5A880] underline pt-2 inline-block"
+            >
+              Explore Destination Weddings →
+            </button>
+          </div>
+        </div>
+
+        {/* STORY 02 — Rhea & Kabir (Right Image / Left Content) */}
+        <div className="px-6 md:px-16 max-w-[1700px] mx-auto min-h-[80vh] flex items-center">
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-20 items-center w-full">
+            <div className="lg:col-span-5 space-y-6 lg:order-1 order-2 relative">
+              <span className="font-display text-8xl md:text-9xl text-espresso/5 font-extrabold absolute -top-16 -left-4 select-none pointer-events-none">
+                02
+              </span>
+
+              <div className="space-y-2 relative z-10">
+                <h2 className="font-display text-4xl sm:text-6xl font-light text-espresso">
+                  {storiesList[1].couple}
+                </h2>
+                <p className="text-xs font-mono text-espresso/60">
+                  {storiesList[1].location} · {storiesList[1].category} Wedding
+                </p>
+              </div>
+
+              <p className="font-editorial text-xl sm:text-2xl text-espresso/80 font-light italic leading-relaxed pt-2">
+                "{storiesList[1].quoteHook}"
+              </p>
+
+              <button
+                type="button"
+                onClick={() => setActiveStory(storiesList[1])}
+                className="inline-flex items-center gap-3 text-xs font-mono uppercase tracking-widest text-espresso hover:text-[#C5A880] transition-colors pt-4 group"
+              >
+                <span className="border-b border-espresso/40 pb-0.5">Read Their Story</span>
+                <ArrowRight className="w-4 h-4 text-[#C5A880] group-hover:translate-x-1 transition-transform" />
+              </button>
+            </div>
+
+            <div
+              onClick={() => setActiveStory(storiesList[1])}
+              className="lg:col-span-7 aspect-[3/4] sm:aspect-[4/3] lg:aspect-[3/4] overflow-hidden rounded-3xl cursor-pointer group shadow-xl lg:order-2 order-1"
+            >
+              <img
+                src={storiesList[1].coverImage}
+                alt={storiesList[1].couple}
+                loading="lazy"
+                className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* STORY 03 — Aneesh & Maitri (Full-Width Horizontal Image Composition) */}
+        <div className="px-6 md:px-16 max-w-[1700px] mx-auto space-y-6">
+          <div
+            onClick={() => setActiveStory(storiesList[2])}
+            className="aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden rounded-3xl cursor-pointer group shadow-xl relative"
+          >
+            <img
+              src={storiesList[2].coverImage}
+              alt={storiesList[2].couple}
+              loading="lazy"
+              className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
+            />
+          </div>
+
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pt-2">
+            <div className="space-y-1">
+              <span className="text-xs font-mono text-[#C5A880]">03</span>
+              <h2 className="font-display text-3xl sm:text-5xl font-light text-espresso">
+                {storiesList[2].couple}
+              </h2>
+              <p className="text-xs font-mono text-espresso/60">
+                {storiesList[2].location} · {storiesList[2].category}
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setActiveStory(storiesList[2])}
+              className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-espresso hover:text-[#C5A880] transition-colors"
+            >
+              <span>Read Their Story →</span>
+            </button>
+          </div>
+        </div>
+
+        {/* STORY 04 — Saba & Usman (Diptych Two Vertical Photos Composition) */}
+        <div className="px-6 md:px-16 max-w-[1700px] mx-auto space-y-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div
+              onClick={() => setActiveStory(storiesList[3])}
+              className="aspect-[3/4] overflow-hidden rounded-3xl cursor-pointer group shadow-lg"
+            >
+              <img
+                src={storiesList[3].coverImage}
+                alt={storiesList[3].couple}
+                className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+            </div>
+            <div
+              onClick={() => setActiveStory(storiesList[3])}
+              className="aspect-[3/4] overflow-hidden rounded-3xl cursor-pointer group shadow-lg hidden sm:block"
+            >
+              <img
+                src={storiesList[3].secondaryImages[0]}
+                alt={storiesList[3].couple}
+                className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+            </div>
+          </div>
+
+          <div className="flex justify-between items-end border-t border-black/5 pt-6">
+            <div>
+              <span className="text-xs font-mono text-[#C5A880]">04</span>
+              <h2 className="font-display text-3xl font-light text-espresso">
+                {storiesList[3].couple}
+              </h2>
+              <p className="text-xs font-mono text-espresso/60">
+                {storiesList[3].location} · {storiesList[3].category}
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setActiveStory(storiesList[3])}
+              className="text-xs font-mono text-espresso hover:text-[#C5A880]"
+            >
+              Read Their Story →
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+      {/* ── 5. SIGNATURE SCROLL MOMENT (Deep Charcoal Emotional Highlight) ── */}
+      <section className="relative z-10 py-32 md:py-48 px-6 text-center text-ivory bg-[#0C0D10] my-28 overflow-hidden">
+        <div className="max-w-4xl mx-auto space-y-12 relative z-10">
+          <span className="text-xs font-mono text-[#C5A880] uppercase tracking-[0.3em]">
+            THE UNNOTICED MOMENTS
+          </span>
+
+          <div className="max-w-md mx-auto aspect-[3/4] overflow-hidden rounded-2xl border border-white/20 shadow-2xl">
+            <img
+              src={story2}
+              alt="Quiet candid moment"
+              className="h-full w-full object-cover opacity-80"
+            />
+          </div>
+
+          <div className="space-y-4 max-w-2xl mx-auto">
+            <h3 className="font-editorial text-2xl sm:text-4xl italic text-ivory font-light leading-relaxed">
+              “Not every important moment happens at the mandap.”
+            </h3>
+            <p className="text-xs sm:text-sm font-sans text-ivory/60 font-light">
+              Sometimes the story is happening quietly beside it.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 6. STORY INDEX (Clean Rows with Cursor Image Preview) ── */}
+      <section className="relative z-10 py-24 px-6 md:px-16 max-w-[1600px] mx-auto border-b border-black/5">
+        <Reveal className="mb-12">
+          <h2 className="font-display text-4xl font-light text-espresso">
+            All <em className="font-editorial italic text-[#C5A880]">Stories</em>
           </h2>
         </Reveal>
 
-        {/* Floating Image Preview Beside Cursor on Hover */}
-        {hoveredJournalIndex !== null && (
+        {/* Hover Floating Photo Preview */}
+        {hoveredIndex !== null && (
           <div
-            className="fixed pointer-events-none z-50 w-48 aspect-[4/3] rounded-xl overflow-hidden shadow-2xl border-2 border-white transition-opacity duration-300 hidden md:block"
+            className="fixed pointer-events-none z-50 w-52 aspect-[4/3] rounded-xl overflow-hidden shadow-2xl border-2 border-white transition-opacity duration-300 hidden md:block"
             style={{
               left: `${mousePos.x + 20}px`,
               top: `${mousePos.y - 60}px`,
             }}
           >
             <img
-              src={weddingStoriesData[hoveredJournalIndex].coverImage}
-              alt="Journal preview"
+              src={storiesList[hoveredIndex].coverImage}
+              alt="Story row preview"
               className="h-full w-full object-cover"
             />
           </div>
         )}
 
-        {/* Minimal Row List */}
-        <div className="divide-y divide-espresso/15 border-t border-b border-espresso/15">
-          {weddingStoriesData.map((story, idx) => (
+        <div className="divide-y divide-black/10 border-t border-b border-black/10">
+          {storiesList.map((s, idx) => (
             <div
-              key={story.id}
-              onClick={() => setActiveStoryModal(story)}
-              onMouseEnter={() => setHoveredJournalIndex(idx)}
-              onMouseLeave={() => setHoveredJournalIndex(null)}
-              className="group py-5 px-2 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-white/80 transition-colors cursor-pointer"
+              key={s.id}
+              onClick={() => setActiveStory(s)}
+              onMouseEnter={() => setHoveredIndex(idx)}
+              onMouseLeave={() => setHoveredIndex(null)}
+              className="group py-5 flex items-center justify-between gap-4 hover:bg-white/80 transition-colors cursor-pointer"
             >
-              <div className="flex items-baseline gap-6 md:gap-12">
-                <span className="text-xs font-mono text-taupe/70 shrink-0 w-24">
-                  {story.date}
-                </span>
-
-                <div>
-                  <h3 className="font-display text-xl sm:text-2xl text-espresso font-normal group-hover:text-gold transition-colors">
-                    {story.couple}
-                  </h3>
-                  <p className="text-xs text-taupe font-light">
-                    {story.title}
-                  </p>
-                </div>
+              <div className="flex items-center gap-6 sm:gap-12">
+                <span className="text-xs font-mono text-[#C5A880] shrink-0">{s.num}</span>
+                <h3 className="font-display text-xl sm:text-2xl text-espresso font-normal group-hover:text-[#C5A880] transition-colors">
+                  {s.couple}
+                </h3>
               </div>
 
-              <div className="flex items-center gap-6 justify-between md:justify-end">
-                <span className="text-xs font-mono text-taupe/80">
-                  {story.category}
-                </span>
-                <span className="text-base text-espresso group-hover:text-gold group-hover:translate-x-1 transition-transform">
-                  →
-                </span>
+              <div className="flex items-center gap-8 text-xs font-mono text-espresso/60">
+                <span className="hidden sm:inline">{s.location}</span>
+                <span>{s.category}</span>
+                <span className="text-espresso group-hover:translate-x-1 transition-transform">→</span>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ── FINAL SECTION (Full-Width Wedding Photo Banner) ── */}
-      <section className="relative z-10 py-28 md:py-44 px-6 text-center text-ivory bg-[#0C0D10] overflow-hidden">
+      {/* ── 7. FINAL SECTION (Full-Width Wedding Photo Banner) ── */}
+      <section className="relative z-10 py-32 text-center text-ivory bg-[#0C0D10] overflow-hidden">
         <img
           src={featured}
           alt="Every frame holds a story"
-          className="absolute inset-0 h-full w-full object-cover opacity-45 scale-105"
+          className="absolute inset-0 h-full w-full object-cover opacity-40 scale-105"
         />
         <div className="absolute inset-0 bg-black/50" />
 
-        <div className="relative z-10 max-w-4xl mx-auto space-y-6">
-          <span className="label-xs text-gold uppercase tracking-[0.25em] font-mono">
+        <div className="relative z-10 max-w-3xl mx-auto space-y-6 px-6">
+          <span className="text-xs font-mono text-[#C5A880] uppercase tracking-[0.25em]">
             EVERY FRAME HOLDS A STORY
           </span>
-          <h2 className="font-display text-[clamp(2.3rem,5.5vw,4.5rem)] font-light leading-tight text-ivory">
-            “Some days pass. <em className="font-editorial italic text-gold">Some stay with you forever.</em>”
+          <h2 className="font-display text-3xl sm:text-5xl font-light text-white leading-tight">
+            “Some days pass. <br />
+            <em className="font-editorial italic text-[#C5A880]">Some stay with you forever.</em>”
           </h2>
           <div className="pt-4">
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gold text-cinema hover:bg-white text-xs font-mono font-semibold transition-all shadow-lg active:scale-95"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#C5A880] text-cinema hover:bg-white text-xs font-mono font-semibold transition-all shadow-lg active:scale-95"
             >
-              <span>View All Wedding Stories &amp; Enquire</span>
-              <ArrowRight className="w-4 h-4" />
+              <span>View All Wedding Stories &amp; Enquire →</span>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* ── INDIVIDUAL SIMPLE STORY PAGE READER MODAL ── */}
-      {activeStoryModal && (
-        <SimpleStoryReaderModal
-          story={activeStoryModal}
-          onClose={() => setActiveStoryModal(null)}
-          onNextStory={(nextS) => setActiveStoryModal(nextS)}
+      {/* ── INDIVIDUAL STORY PAGE MODAL (Seamless Reader Experience) ── */}
+      {activeStory && (
+        <IndividualStoryReaderModal
+          story={activeStory}
+          onClose={() => setActiveStory(null)}
+          onNextStory={(nextS) => setActiveStory(nextS)}
         />
       )}
     </main>
   );
 }
 
-// ── INDIVIDUAL SIMPLE STORY READER MODAL ──
-function SimpleStoryReaderModal({
+// ── INDIVIDUAL STORY READER MODAL ──
+function IndividualStoryReaderModal({
   story,
   onClose,
   onNextStory,
 }: {
-  story: SimpleWeddingStory;
+  story: StoryItem;
   onClose: () => void;
-  onNextStory: (nextS: SimpleWeddingStory) => void;
+  onNextStory: (nextS: StoryItem) => void;
 }) {
-  const currentIndex = weddingStoriesData.findIndex((s) => s.id === story.id);
-  const nextStory = weddingStoriesData[(currentIndex + 1) % weddingStoriesData.length];
+  const currentIndex = storiesList.findIndex((s) => s.id === story.id);
+  const nextStory = storiesList[(currentIndex + 1) % storiesList.length];
 
   return (
     <div className="fixed inset-0 z-[100] bg-[#FAF8F5] text-espresso overflow-y-auto animate-in fade-in duration-300">
       
-      {/* Simple Sticky Navbar */}
-      <div className="sticky top-0 z-50 flex items-center justify-between px-6 py-4 bg-white/90 backdrop-blur-md border-b border-espresso/10">
-        <span className="label-xs text-gold font-mono uppercase tracking-widest">
-          {story.couple} — Story Journal
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-50 flex items-center justify-between px-6 py-4 bg-white/90 backdrop-blur-md border-b border-black/5">
+        <span className="text-xs font-mono text-[#C5A880] uppercase tracking-widest">
+          A STORY BY CMC FILMS
         </span>
         <button
           type="button"
           onClick={onClose}
-          className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-espresso text-ivory hover:bg-gold hover:text-cinema text-xs font-mono transition-all"
+          className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-espresso text-ivory hover:bg-[#C5A880] hover:text-cinema text-xs font-mono transition-all"
         >
-          <span>Close Story</span>
+          <span>Close</span>
           <X className="w-4 h-4" />
         </button>
       </div>
 
-      {/* 1. Full-Width Hero Image */}
-      <section className="relative h-[80vh] min-h-[500px] w-full overflow-hidden bg-[#0C0D10] text-ivory flex flex-col justify-end p-6 md:p-14">
+      {/* Hero */}
+      <section className="relative h-[85vh] min-h-[500px] w-full overflow-hidden bg-[#0C0D10] text-ivory flex flex-col justify-end p-6 md:p-14">
         <img
           src={story.coverImage}
           alt={story.couple}
@@ -824,65 +716,67 @@ function SimpleStoryReaderModal({
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
 
         <div className="relative z-10 max-w-3xl space-y-3">
-          <span className="label-xs text-gold bg-black/60 px-3 py-1 rounded-full w-fit">
-            {story.category} Wedding · {story.location} · {story.date}
+          <span className="text-xs font-mono text-[#C5A880] uppercase">
+            {story.location} · {story.date}
           </span>
-          <h1 className="font-display text-4xl sm:text-6xl font-light text-white">
+          <h1 className="font-display text-5xl sm:text-7xl font-light text-white">
             {story.couple}
           </h1>
-          <p className="font-editorial text-xl italic text-gold font-light">
-            "{story.title}"
-          </p>
+          <p className="text-xs font-mono text-white/60">Scroll ↓</p>
         </div>
       </section>
 
-      {/* 2. Short Introduction */}
-      <section className="py-16 md:py-24 px-6 max-w-3xl mx-auto space-y-6">
-        <p className="font-editorial text-2xl sm:text-3xl text-espresso font-light leading-relaxed italic border-l-4 border-gold pl-6">
-          "{story.intro}"
-        </p>
+      {/* Intro Text */}
+      <section className="py-16 px-6 max-w-2xl mx-auto space-y-4">
+        {story.intro.map((p, i) => (
+          <p key={i} className="font-editorial text-2xl sm:text-3xl text-espresso font-light leading-relaxed italic">
+            "{p}"
+          </p>
+        ))}
       </section>
 
-      {/* 3. Flowing Story Content */}
-      <section className="py-8 px-6 max-w-4xl mx-auto space-y-16">
-        {story.chapters?.map((ch, i) => (
+      {/* Chapters & Flowing Content */}
+      <section className="py-8 px-6 max-w-3xl mx-auto space-y-16">
+        {story.chapters.map((ch, i) => (
           <div key={i} className="space-y-4">
-            <span className="text-xs font-mono text-gold font-bold">{ch.num}</span>
-            <h3 className="font-display text-3xl text-espresso font-light">{ch.heading}</h3>
-            <p className="text-base text-taupe font-sans font-light leading-relaxed">{ch.text}</p>
-            {ch.img && (
+            <span className="text-xs font-mono text-[#C5A880] font-bold">{ch.number} — {ch.title}</span>
+            <p className="text-base text-espresso/80 font-sans font-light leading-relaxed">{ch.text}</p>
+            {ch.image && (
               <div className="my-6 aspect-[16/10] overflow-hidden rounded-2xl bg-beige">
-                <img src={ch.img} alt={ch.heading} className="h-full w-full object-cover" />
+                <img src={ch.image} alt={ch.title} className="h-full w-full object-cover" />
               </div>
             )}
           </div>
         ))}
 
-        {story.quote && (
-          <div className="py-10 text-center space-y-3">
-            <QuoteIcon className="w-8 h-8 text-gold mx-auto opacity-50" />
-            <p className="font-editorial text-2xl italic text-espresso">"{story.quote}"</p>
-            <p className="text-xs font-mono text-taupe">— {story.couple}</p>
+        {/* Couple Quote */}
+        {story.coupleQuote && (
+          <div className="py-12 text-center space-y-3 border-t border-b border-black/10">
+            <QuoteIcon className="w-8 h-8 text-[#C5A880] mx-auto opacity-50" />
+            <p className="font-editorial text-2xl sm:text-3xl italic text-espresso font-light">
+              "{story.coupleQuote}"
+            </p>
+            <p className="text-xs font-mono text-espresso/60">— {story.couple}</p>
           </div>
         )}
 
         {/* Secondary Photos */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
           {story.secondaryImages.map((img, idx) => (
             <div key={idx} className="aspect-[4/3] overflow-hidden rounded-xl bg-beige">
-              <img src={img} alt="Story photo" className="h-full w-full object-cover" />
+              <img src={img} alt="Story snapshot" className="h-full w-full object-cover" />
             </div>
           ))}
         </div>
       </section>
 
-      {/* 4. Next Story Continuation */}
+      {/* Next Story Banner */}
       <section
         onClick={() => {
           window.scrollTo({ top: 0, behavior: "smooth" });
           onNextStory(nextStory);
         }}
-        className="relative h-[60vh] min-h-[400px] w-full overflow-hidden bg-[#0C0D10] text-ivory flex flex-col justify-center items-center text-center p-6 cursor-pointer group"
+        className="relative h-[65vh] min-h-[400px] w-full overflow-hidden bg-[#0C0D10] text-ivory flex flex-col justify-center items-center text-center p-6 cursor-pointer group"
       >
         <img
           src={nextStory.coverImage}
@@ -892,14 +786,13 @@ function SimpleStoryReaderModal({
         <div className="absolute inset-0 bg-black/60" />
 
         <div className="relative z-10 space-y-3 max-w-xl">
-          <span className="label-xs text-gold uppercase tracking-widest font-mono">NEXT STORY</span>
-          <h2 className="font-display text-4xl sm:text-5xl text-white font-light group-hover:text-gold transition-colors">
+          <span className="text-xs font-mono text-[#C5A880] uppercase tracking-widest">NEXT STORY</span>
+          <h2 className="font-display text-4xl sm:text-6xl text-white font-light group-hover:text-[#C5A880] transition-colors">
             {nextStory.couple}
           </h2>
-          <p className="font-editorial text-base italic text-white/80">"{nextStory.title}"</p>
-          <span className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gold text-cinema text-xs font-mono font-semibold pt-2">
-            <span>Read Next Story</span>
-            <ArrowRight className="w-4 h-4" />
+          <p className="font-editorial text-base italic text-white/80">{nextStory.location}</p>
+          <span className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#C5A880] text-cinema text-xs font-mono font-semibold pt-2">
+            <span>Read Next Story →</span>
           </span>
         </div>
       </section>
