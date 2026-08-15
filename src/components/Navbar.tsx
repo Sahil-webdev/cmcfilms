@@ -65,24 +65,37 @@ export function Navbar() {
             CMC FILMS
           </Link>
 
-          {/* Desktop Right Navigation Links (Slightly Larger Font & Rounded Button Hover) */}
-          <nav className="hidden items-center gap-1.5 md:gap-2.5 lg:flex" role="navigation" aria-label="Main Navigation">
-            {navLinks.map((l) => (
-              <Link
-                key={l.label}
-                to={l.to}
-                className={cn(
-                  "text-xs md:text-[13px] font-mono uppercase tracking-wider px-3.5 py-1.5 rounded-full transition-all duration-300 font-medium",
-                  scrolled
-                    ? "text-espresso/90 hover:text-espresso hover:bg-espresso/10"
-                    : "text-white/95 hover:text-gold hover:bg-white/15 drop-shadow-sm",
-                )}
-                activeProps={{ className: "opacity-100 text-gold bg-white/20 font-semibold" }}
-                activeOptions={{ exact: l.to === "/" }}
-              >
-                {l.label}
-              </Link>
-            ))}
+          {/* Desktop Right Navigation Links (Animated Gold Underline Active Highlight) */}
+          <nav className="hidden items-center gap-5 md:gap-7 lg:flex" role="navigation" aria-label="Main Navigation">
+            {navLinks.map((l) => {
+              const isActive =
+                l.to === "/"
+                  ? location.pathname === "/"
+                  : location.pathname === l.to;
+
+              return (
+                <Link
+                  key={l.label}
+                  to={l.to}
+                  className={cn(
+                    "relative py-1 text-xs md:text-[13px] font-mono uppercase tracking-wider font-medium transition-all duration-300",
+                    "after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-gold after:transition-all after:duration-300",
+                    isActive
+                      ? "text-gold after:w-full font-semibold"
+                      : "after:w-0 hover:after:w-full",
+                    scrolled
+                      ? isActive
+                        ? "text-gold"
+                        : "text-espresso/85 hover:text-espresso"
+                      : isActive
+                        ? "text-gold"
+                        : "text-white/95 hover:text-gold drop-shadow-sm",
+                  )}
+                >
+                  {l.label}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Mobile Spacer (Keeps header layout balanced) */}
