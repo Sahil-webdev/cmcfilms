@@ -57,14 +57,14 @@ export function Navbar() {
           {/* Desktop Left Brand Logo */}
           <Link
             to="/"
-            className="inline-flex items-center transition-all duration-300 hover:opacity-95 active:scale-95 bg-white/95 px-3.5 py-1.5 rounded-xl shadow-md border border-white/20"
+            className="inline-flex items-center transition-all duration-300 hover:opacity-90 active:scale-95"
           >
             <img
               src={logoImg}
               alt="CMC FILMS - Wedding Storytellers"
               className={cn(
                 "w-auto object-contain transition-all duration-300",
-                scrolled ? "h-7 sm:h-8" : "h-9 sm:h-10"
+                scrolled ? "h-9 sm:h-11" : "h-11 sm:h-13 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]"
               )}
             />
           </Link>
@@ -174,11 +174,11 @@ export function Navbar() {
 
         {/* ── Top Header / Brand Mark ── */}
         <div className="relative z-10 pb-4 border-b border-white/10">
-          <Link to="/" onClick={() => setOpen(false)} className="inline-block bg-white/95 px-3.5 py-1.5 rounded-xl shadow-md">
+          <Link to="/" onClick={() => setOpen(false)} className="inline-block">
             <img
               src={logoImg}
               alt="CMC FILMS - Wedding Storytellers"
-              className="h-8 sm:h-10 w-auto object-contain"
+              className="h-10 sm:h-12 w-auto object-contain"
             />
           </Link>
           <span className="label-xs text-[#E5CA92] text-[10px] uppercase tracking-widest block mt-2 font-mono">
