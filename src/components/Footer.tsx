@@ -75,11 +75,11 @@ export function Footer() {
         
         {/* Footer Top Brand Header */}
         <div className="mx-auto max-w-[1650px] pb-8 border-b border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <Link to="/" className="inline-block transition-transform duration-300 hover:scale-105">
+          <Link to="/" className="inline-block transition-transform duration-300 hover:scale-105 bg-white/95 px-4 py-2 rounded-2xl shadow-lg">
             <img
               src={logoImg}
               alt="CMC FILMS - Wedding Storytellers"
-              className="h-12 sm:h-16 w-auto object-contain"
+              className="h-10 sm:h-12 w-auto object-contain"
             />
           </Link>
           <span className="text-xs font-mono text-white/70 uppercase tracking-widest">
