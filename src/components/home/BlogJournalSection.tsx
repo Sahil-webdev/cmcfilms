@@ -60,13 +60,13 @@ export function BlogJournalSection() {
   const [isTransitioning, setIsTransitioning] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
 
-  // Automatic Step Carousel (2 Second Interval)
+  // Automatic Step Carousel (1.5 Second Slightly Faster Interval)
   useEffect(() => {
     if (isPaused) return;
 
     const timer = setInterval(() => {
       setCurrentIndex((prev) => prev + 1);
-    }, 2000);
+    }, 1500);
 
     return () => clearInterval(timer);
   }, [isPaused]);
