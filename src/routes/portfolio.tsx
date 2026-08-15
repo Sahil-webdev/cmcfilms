@@ -278,9 +278,9 @@ export function WeddingStoriesPage() {
             alt="Wedding Stories Background"
             className="h-full w-full object-cover object-center scale-105 transition-transform duration-[10000ms]"
           />
-          {/* Left Foggy Mist Gradient Fade — Stronger behind text for 100% readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/90 via-40% to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#FAF8F5]/70 via-transparent to-[#FAF8F5]/30" />
+          {/* Minimal Fog Gradient — Keeps full background image sharp and vibrant */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5]/75 via-[#FAF8F5]/20 via-20% to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#FAF8F5]/30 via-transparent to-transparent" />
         </div>
 
         {/* Large Bold High-Contrast Typography Over Foggy Gradient */}
