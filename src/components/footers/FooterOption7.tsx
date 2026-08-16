@@ -15,7 +15,7 @@ function WhatsAppIcon({ className = "w-3.5 h-3.5" }: { className?: string }) {
 // ── Slanted Sloppy Curved Top Edge SVG (Starts low on Left, Rises UP on Right) ──
 function SloppySlantedTopCurve() {
   return (
-    <div className="relative w-full overflow-hidden leading-none pointer-events-none -mt-1 select-none z-20">
+    <div className="relative w-full overflow-hidden leading-none pointer-events-none -mb-1 select-none z-20">
       <svg
         className="relative block w-full h-[70px] sm:h-[100px] md:h-[130px]"
         viewBox="0 0 1440 130"
@@ -25,13 +25,6 @@ function SloppySlantedTopCurve() {
         <path
           d="M0,95 C450,105 900,45 1440,12 L1440,130 L0,130 Z"
           fill="#1E1225"
-        />
-        <path
-          d="M0,95 C450,105 900,45 1440,12"
-          fill="none"
-          stroke="#C5A16A"
-          strokeWidth="1.2"
-          opacity="0.35"
         />
       </svg>
     </div>
@@ -56,7 +49,7 @@ export function FooterOption7() {
   };
 
   return (
-    <footer className="relative bg-[#FAF8F5] font-sans text-[#F4EEE8] selection:bg-[#C5A16A] selection:text-[#1E1225] overflow-hidden">
+    <footer className="relative bg-[#1E1225] font-sans text-[#F4EEE8] selection:bg-[#C5A16A] selection:text-[#1E1225] overflow-hidden">
       
       {/* ── SLANTED SLOPPY TOP EDGE TRANSITION (Low on Left, High / Rising on Right) ── */}
       <div className="relative">
@@ -76,7 +69,7 @@ export function FooterOption7() {
         </div>
 
         {/* MAIN ASYMMETRIC GRID CONTENT */}
-        <div className="relative z-10 max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 items-start pb-10 border-b border-white/10">
+        <div className="relative z-10 max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 items-start pb-10 border-b border-white/5">
           
           {/* ── COLUMN 1 (Left 3 Cols): Logo, Studio Info, Phone & Gold CTA ── */}
           <div className="lg:col-span-3 space-y-4">
