@@ -267,203 +267,65 @@ export function WeddingFilmsPage() {
       {/* ── SECTION 1 — FULL-SCREEN VIDEO HERO ── */}
       <FilmsVideoHero />
 
-      {/* ── SECTION 2 — LATEST FILMS (Structured Film Wall with 120-200px Vertical Spacing) ── */}
-      <section className="py-24 md:py-36 px-6 md:px-16 border-b border-black/10 space-y-24 md:space-y-36 max-w-[1600px] mx-auto">
+      {/* ── SECTION 2 — EDITORIAL INTRO & 2-COLUMN FILM GRID (Matching Reference Design) ── */}
+      <section className="py-20 md:py-28 px-6 sm:px-10 md:px-16 max-w-[1600px] mx-auto space-y-16">
         
-        <Reveal className="space-y-2 border-b border-black/10 pb-6">
-          <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#A67B2E]">
-            SELECTION
-          </span>
-          <h2 className="font-display text-4xl sm:text-5xl font-light text-[#171512]">
-            Latest <em className="font-editorial italic text-[#A67B2E]">Films</em>
+        {/* Editorial Intro Header */}
+        <Reveal className="max-w-4xl space-y-6">
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-light leading-[1.08] text-[#C47A65]">
+            Deeply personal, immersive, and timeless Films.
           </h2>
-          <p className="text-xs font-mono text-[#171512]/50">
-            “Stories we've recently had the privilege of filming.”
-          </p>
+
+          <div className="space-y-5 text-sm sm:text-base text-[#171512]/75 font-sans font-light leading-relaxed">
+            <p>
+              Cinematic wedding films rooted in genuine emotion, unscripted movement, and honest storytelling. We take pride in understanding the couple, their families, and the quiet, intimate glances between. Every celebration deserves a wedding film thoughtfully crafted to do justice to the beauty, grace, and authentic spirit of your story. This philosophy has made CMC FILMS the choice for couples seeking an elevated, artistic, and deeply personal cinema experience.
+            </p>
+            <p className="text-[#171512]/60 text-xs sm:text-sm font-sans">
+              Here is a curated selection of our recent wedding films. Each film captures a unique celebration—thoughtfully edited to take you on a timeless journey through pure joy, tearful vows, exuberant celebrations, and quiet romantic moments.
+            </p>
+          </div>
         </Reveal>
 
-        {/* FILM 01: Huge landscape image (65–70% width) on Left */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-14 items-center">
-          <div
-            onClick={() => setActiveFilmModal(filmsData[0])}
-            className="md:col-span-8 group relative aspect-[16/10] overflow-hidden rounded-[4px] bg-[#171512] shadow-xl cursor-pointer border border-black/5"
-          >
-            <img
-              src={filmsData[0].coverImage}
-              alt={filmsData[0].couple}
-              className="h-full w-full object-cover opacity-90 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.02]"
-            />
-            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors flex items-center justify-center">
-              <div className="h-16 w-16 rounded-full bg-white/90 text-[#171512] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                <Play className="w-6 h-6 fill-current ml-1" />
-              </div>
-            </div>
-            <span className="absolute top-4 left-4 text-[10px] font-mono text-white/90 bg-black/60 px-3 py-1 rounded-[2px]">
-              FILM {filmsData[0].code} · {filmsData[0].timestamp}
-            </span>
-          </div>
-
-          <div className="md:col-span-4 space-y-4">
-            <span className="text-xs font-mono text-[#A67B2E]">{filmsData[0].code}</span>
-            <h3 className="font-display text-4xl sm:text-5xl font-light text-[#171512]">
-              {filmsData[0].couple}
-            </h3>
-            <p className="text-xs font-mono uppercase text-[#171512]/60">
-              {filmsData[0].location} · {filmsData[0].year}
-            </p>
-            <p className="font-editorial text-lg italic text-[#171512]/80">
-              "{filmsData[0].filmTitle}"
-            </p>
-            <div className="pt-2">
-              <button
-                type="button"
-                onClick={() => setActiveFilmModal(filmsData[0])}
-                className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-[#171512] hover:text-[#A67B2E] transition-colors"
+        {/* 2-Column Video Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+          {filmsData.slice(0, 6).map((film) => (
+            <Reveal key={film.id}>
+              <div
+                onClick={() => setActiveFilmModal(film)}
+                className="group relative aspect-[16/10] w-full overflow-hidden rounded-[2px] bg-[#171512] shadow-xl cursor-pointer border border-black/5"
               >
-                <span>Watch Film</span>
-                <ArrowUpRight className="w-4 h-4 text-[#A67B2E]" />
-              </button>
-            </div>
-          </div>
-        </div>
+                {/* Film Cover Image */}
+                <img
+                  src={film.coverImage}
+                  alt={film.couple}
+                  className="h-full w-full object-cover opacity-90 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+                />
 
-        {/* FILM 02: Image on Right with Taller Proportion */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-14 items-center">
-          <div className="md:col-span-5 space-y-4 md:order-1 order-2">
-            <span className="text-xs font-mono text-[#A67B2E]">{filmsData[1].code}</span>
-            <h3 className="font-display text-4xl sm:text-5xl font-light text-[#171512]">
-              {filmsData[1].couple}
-            </h3>
-            <p className="text-xs font-mono uppercase text-[#171512]/60">
-              {filmsData[1].location} · {filmsData[1].year}
-            </p>
-            <p className="font-editorial text-lg italic text-[#171512]/80">
-              "{filmsData[1].filmTitle}"
-            </p>
-            <div className="pt-2">
-              <button
-                type="button"
-                onClick={() => setActiveFilmModal(filmsData[1])}
-                className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-[#171512] hover:text-[#A67B2E] transition-colors"
-              >
-                <span>Watch Film</span>
-                <ArrowUpRight className="w-4 h-4 text-[#A67B2E]" />
-              </button>
-            </div>
-          </div>
+                {/* Gradient Overlay for Text Readability & Hover Effect */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10 group-hover:from-black/85 group-hover:via-black/40 transition-all duration-500 flex items-center justify-center">
+                  {/* Center Play Button */}
+                  <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-white/20 backdrop-blur-md border border-white/40 flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:bg-white text-white group-hover:text-[#171512] transition-all duration-300">
+                    <Play className="w-6 h-6 fill-current ml-0.5" />
+                  </div>
+                </div>
 
-          <div
-            onClick={() => setActiveFilmModal(filmsData[1])}
-            className="md:col-span-7 md:order-2 order-1 group relative aspect-[4/3] overflow-hidden rounded-[4px] bg-[#171512] shadow-xl cursor-pointer border border-black/5"
-          >
-            <img
-              src={filmsData[1].coverImage}
-              alt={filmsData[1].couple}
-              className="h-full w-full object-cover opacity-90 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.02]"
-            />
-            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors flex items-center justify-center">
-              <div className="h-16 w-16 rounded-full bg-white/90 text-[#171512] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                <Play className="w-6 h-6 fill-current ml-1" />
+                {/* Bottom Overlay Text — Studio Name & Large Serif Couple Names */}
+                <div className="absolute bottom-5 left-6 right-6 text-white space-y-1 pointer-events-none">
+                  <p className="text-[10px] font-mono tracking-[0.3em] uppercase text-white/75 font-bold">
+                    CMC FILMS
+                  </p>
+                  <h3 className="font-display uppercase tracking-wider text-2xl sm:text-3xl md:text-4xl font-normal text-white drop-shadow-md leading-tight">
+                    {film.couple}
+                  </h3>
+                </div>
+
+                {/* Top Duration Badge */}
+                <span className="absolute top-4 right-4 text-[10px] font-mono text-white/90 bg-black/60 backdrop-blur-sm px-3 py-1 rounded-[2px]">
+                  {film.duration} · {film.location}
+                </span>
               </div>
-            </div>
-            <span className="absolute top-4 left-4 text-[10px] font-mono text-white/90 bg-black/60 px-3 py-1 rounded-[2px]">
-              FILM {filmsData[1].code} · {filmsData[1].timestamp}
-            </span>
-          </div>
-        </div>
-
-        {/* FILM 03: Almost Full-Width Cinematic Image with Couple Name Underneath */}
-        <div className="space-y-4">
-          <div
-            onClick={() => setActiveFilmModal(filmsData[2])}
-            className="group relative aspect-[21/9] w-full overflow-hidden rounded-[4px] bg-[#171512] shadow-2xl cursor-pointer border border-black/5"
-          >
-            <img
-              src={filmsData[2].coverImage}
-              alt={filmsData[2].couple}
-              className="h-full w-full object-cover opacity-90 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.02]"
-            />
-            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors flex items-center justify-center">
-              <div className="h-16 w-16 rounded-full bg-white/90 text-[#171512] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                <Play className="w-6 h-6 fill-current ml-1" />
-              </div>
-            </div>
-            <span className="absolute top-4 left-4 text-[10px] font-mono text-white/90 bg-black/60 px-3 py-1 rounded-[2px]">
-              FILM {filmsData[2].code} · {filmsData[2].timestamp}
-            </span>
-          </div>
-
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pt-2">
-            <div>
-              <h3 className="font-display text-4xl sm:text-5xl font-light text-[#171512]">
-                {filmsData[2].couple}
-              </h3>
-              <p className="font-editorial text-lg italic text-[#171512]/80">
-                "{filmsData[2].filmTitle}" — {filmsData[2].location} · {filmsData[2].year}
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={() => setActiveFilmModal(filmsData[2])}
-              className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-[#171512] hover:text-[#A67B2E] transition-colors shrink-0"
-            >
-              <span>Watch Film</span>
-              <ArrowUpRight className="w-4 h-4 text-[#A67B2E]" />
-            </button>
-          </div>
-        </div>
-
-        {/* FILM 04: Two Visual Frames Side by Side (Couple + Candid) */}
-        <div className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div
-              onClick={() => setActiveFilmModal(filmsData[3])}
-              className="group relative aspect-[4/3] overflow-hidden rounded-[4px] bg-[#171512] shadow-xl cursor-pointer"
-            >
-              <img
-                src={filmsData[3].coverImage}
-                alt={filmsData[3].couple}
-                className="h-full w-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-[1.02]"
-              />
-              <span className="absolute bottom-3 left-3 text-[10px] font-mono text-white/90 bg-black/60 px-2.5 py-0.5 rounded-[2px]">
-                FRAME A
-              </span>
-            </div>
-
-            <div
-              onClick={() => setActiveFilmModal(filmsData[3])}
-              className="group relative aspect-[4/3] overflow-hidden rounded-[4px] bg-[#171512] shadow-xl cursor-pointer"
-            >
-              <img
-                src={filmsData[3].secondaryImage || story3}
-                alt="Candid moment"
-                className="h-full w-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-[1.02]"
-              />
-              <span className="absolute bottom-3 left-3 text-[10px] font-mono text-white/90 bg-black/60 px-2.5 py-0.5 rounded-[2px]">
-                FRAME B
-              </span>
-            </div>
-          </div>
-
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pt-1">
-            <div>
-              <span className="text-xs font-mono text-[#A67B2E]">{filmsData[3].code}</span>
-              <h3 className="font-display text-4xl sm:text-5xl font-light text-[#171512]">
-                {filmsData[3].couple}
-              </h3>
-              <p className="font-editorial text-lg italic text-[#171512]/80">
-                "{filmsData[3].filmTitle}" — {filmsData[3].location} · {filmsData[3].year}
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={() => setActiveFilmModal(filmsData[3])}
-              className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-[#171512] hover:text-[#A67B2E] transition-colors shrink-0"
-            >
-              <span>Watch Film</span>
-              <ArrowUpRight className="w-4 h-4 text-[#A67B2E]" />
-            </button>
-          </div>
+            </Reveal>
+          ))}
         </div>
 
       </section>
