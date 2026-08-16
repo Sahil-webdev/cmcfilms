@@ -121,7 +121,7 @@ export function BlogJournalSection() {
           100% { transform: translateX(-50%); }
         }
         .marquee-track {
-          animation: marquee-rtl 22s linear infinite;
+          animation: marquee-rtl 45s linear infinite;
           will-change: transform;
         }
         @media (prefers-reduced-motion: reduce) {
@@ -138,8 +138,8 @@ export function BlogJournalSection() {
           {Array.from({ length: 12 }).map((_, i) => (
             <span
               key={i}
-              className="font-display font-bold uppercase tracking-tight text-[#3D3A36]/[0.07]"
-              style={{ fontSize: "clamp(5rem, 12vw, 11rem)", lineHeight: 1 }}
+              className="font-display font-black uppercase tracking-tighter text-[#3D3A36]/[0.09]"
+              style={{ fontSize: "clamp(7rem, 16vw, 15rem)", lineHeight: 1 }}
             >
               WEDDING STORIES
             </span>
