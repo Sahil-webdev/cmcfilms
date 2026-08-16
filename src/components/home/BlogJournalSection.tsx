@@ -59,6 +59,16 @@ export function BlogJournalSection() {
   const [currentIndex, setCurrentIndex] = useState(blogPosts.length);
   const [isTransitioning, setIsTransitioning] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    const updateViewport = () => setIsDesktop(mediaQuery.matches);
+
+    updateViewport();
+    mediaQuery.addEventListener("change", updateViewport);
+    return () => mediaQuery.removeEventListener("change", updateViewport);
+  }, []);
 
   // Automatic Step Carousel (1.5 Second Slightly Faster Interval)
   useEffect(() => {
@@ -102,8 +112,42 @@ export function BlogJournalSection() {
   const activeDotIndex = currentIndex % blogPosts.length;
 
   return (
-    <section className="bg-[#FAF8F5] py-16 md:py-24 overflow-hidden">
-      <div className="mx-auto max-w-[1600px] px-5 md:px-10">
+    <section className="bg-[#FAF8F5] py-16 md:py-24 overflow-hidden relative">
+
+      {/* ── SCROLLING MARQUEE BACKGROUND TEXT (Right to Left, Behind Everything) ── */}
+      <style>{`
+        @keyframes marquee-rtl {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .marquee-track {
+          animation: marquee-rtl 22s linear infinite;
+          will-change: transform;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .marquee-track { animation: none; }
+        }
+      `}</style>
+
+      <div
+        className="pointer-events-none select-none absolute inset-0 flex items-center overflow-hidden z-0"
+        aria-hidden="true"
+      >
+        <div className="marquee-track flex items-center gap-16 whitespace-nowrap">
+          {/* Repeat the phrase enough times so it seamlessly loops — 12 copies (6 visible + 6 hidden) */}
+          {Array.from({ length: 12 }).map((_, i) => (
+            <span
+              key={i}
+              className="font-display font-bold uppercase tracking-tight text-[#3D3A36]/[0.07]"
+              style={{ fontSize: "clamp(5rem, 12vw, 11rem)", lineHeight: 1 }}
+            >
+              WEDDING STORIES
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-[1600px] px-5 md:px-10">
         
         {/* Simple Clean Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 md:mb-16">
@@ -126,7 +170,7 @@ export function BlogJournalSection() {
             type="button"
             onClick={handlePrev}
             aria-label="Previous story"
-            className="absolute left-0 md:-left-2 top-1/3 -translate-y-1/2 z-20 h-11 w-11 rounded-full bg-[#3D3A36]/80 hover:bg-[#3D3A36] text-white flex items-center justify-center transition-all duration-300 active:scale-95 cursor-pointer shadow-md"
+          className="absolute left-1 md:-left-2 top-1/3 -translate-y-1/2 z-20 h-9 w-9 md:h-11 md:w-11 rounded-full bg-[#3D3A36]/80 hover:bg-[#3D3A36] text-white flex items-center justify-center transition-all duration-300 active:scale-95 cursor-pointer shadow-md"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
@@ -135,7 +179,7 @@ export function BlogJournalSection() {
             type="button"
             onClick={handleNext}
             aria-label="Next story"
-            className="absolute right-0 md:-right-2 top-1/3 -translate-y-1/2 z-20 h-11 w-11 rounded-full bg-[#3D3A36]/80 hover:bg-[#3D3A36] text-white flex items-center justify-center transition-all duration-300 active:scale-95 cursor-pointer shadow-md"
+          className="absolute right-1 md:-right-2 top-1/3 -translate-y-1/2 z-20 h-9 w-9 md:h-11 md:w-11 rounded-full bg-[#3D3A36]/80 hover:bg-[#3D3A36] text-white flex items-center justify-center transition-all duration-300 active:scale-95 cursor-pointer shadow-md"
           >
             <ArrowRight className="w-4 h-4" />
           </button>
@@ -144,19 +188,21 @@ export function BlogJournalSection() {
           <div className="overflow-hidden py-2">
             <div
               onTransitionEnd={handleTransitionEnd}
-              className={`flex gap-6 md:gap-8 ${
+              className={`flex ${isDesktop ? "gap-8" : ""} ${
                 isTransitioning
                   ? "transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
                   : "transition-none"
               }`}
               style={{
-                transform: `translateX(-${currentIndex * (360 + 24)}px)`,
+                transform: isDesktop
+                  ? `translateX(-${currentIndex * (360 + 32)}px)`
+                  : `translateX(-${currentIndex * 100}%)`,
               }}
             >
               {infiniteBlogPosts.map((post, idx) => (
                 <div
                   key={`${post.id}-${idx}`}
-                  className="w-[300px] sm:w-[340px] md:w-[360px] shrink-0 flex flex-col justify-between text-center"
+                  className={`${isDesktop ? "w-[360px]" : "w-full"} shrink-0 flex flex-col justify-between text-center`}
                 >
                   <div>
                     {/* Clean Simple Image Frame */}
