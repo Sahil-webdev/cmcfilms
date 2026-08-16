@@ -160,8 +160,21 @@ const coupleStoriesList: CoupleStoryItem[] = [
 export function CoupleShootsPage() {
   const [selectedCityFilter, setSelectedCityFilter] = useState<string>("All");
   const [activeStoryModal, setActiveStoryModal] = useState<CoupleStoryItem | null>(null);
+  const [activeLightboxPhoto, setActiveLightboxPhoto] = useState<string | null>(null);
 
   const featuredCouple = coupleStoriesList[0];
+
+  const collagePhotos = [
+    { src: story1, title: "Celebration Dance", alt: "Couple dancing" },
+    { src: heroImg, title: "Golden Hour Romance", alt: "Couple romantic veil moment" },
+    { src: haldi, title: "Joyful Haldi Vows", alt: "Haldi ceremony portrait" },
+    { src: cat2, title: "Confetti Celebration", alt: "Group celebration" },
+    { src: cat3, title: "Quiet Companionship", alt: "Outdoor bride portrait" },
+    { src: luxuryEditorial, title: "Royal Couple Portrait", alt: "Luxury bridal close up" },
+    { src: coastal, title: "Tropical Palms", alt: "Goa beach couple shoot" },
+    { src: story2, title: "Heritage Details", alt: "Bridal outfit architecture" },
+    { src: cat1, title: "Desert Sunset", alt: "Dubai pre-wedding" },
+  ];
 
   const filteredStories = useMemo(() => {
     if (selectedCityFilter === "All") return coupleStoriesList;
@@ -256,6 +269,52 @@ export function CoupleShootsPage() {
         </div>
 
       </section>
+
+      {/* ── 1.5 PHOTO COLLAGE GRID (3x3 Clean Grid Matching Reference Design) ── */}
+      <section className="py-16 sm:py-24 px-6 sm:px-12 md:px-16 max-w-[1440px] mx-auto border-b border-[#D8D3CB]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+          {collagePhotos.map((photo, idx) => (
+            <div
+              key={idx}
+              onClick={() => setActiveLightboxPhoto(photo.src)}
+              className="group relative aspect-[4/3] overflow-hidden rounded-[2px] shadow-md bg-[#D8D3CB] cursor-pointer border border-black/5"
+            >
+              <img
+                src={photo.src}
+                alt={photo.alt}
+                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-end p-4">
+                <span className="text-white text-xs font-mono opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-md">
+                  {photo.title} ↗
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Lightbox Modal for Photo Collage */}
+      {activeLightboxPhoto && (
+        <div
+          onClick={() => setActiveLightboxPhoto(null)}
+          className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 cursor-pointer animate-in fade-in duration-300"
+        >
+          <div className="relative max-w-5xl max-h-[90vh] overflow-hidden rounded-[4px] shadow-2xl">
+            <img
+              src={activeLightboxPhoto}
+              alt="Enlarged photo"
+              className="w-full h-full object-contain max-h-[85vh]"
+            />
+            <button
+              onClick={() => setActiveLightboxPhoto(null)}
+              className="absolute top-4 right-4 text-white bg-black/50 hover:bg-black p-2 rounded-full text-xs font-mono"
+            >
+              ✕ Close
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* ── 2. EDITORIAL INTRODUCTION (Clean 2-Column Grid) ── */}
       <section className="py-24 px-6 sm:px-12 md:px-16 max-w-[1440px] mx-auto border-b border-[#D8D3CB]">
