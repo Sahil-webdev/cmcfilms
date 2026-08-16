@@ -139,8 +139,8 @@ export function BlogJournalSection() {
           {Array.from({ length: 12 }).map((_, i) => (
             <span
               key={i}
-              className="font-display font-black uppercase tracking-tighter text-[#3D3A36]/[0.09]"
-              style={{ fontSize: "clamp(7rem, 16vw, 15rem)", lineHeight: 1 }}
+              className="uppercase tracking-tighter text-[#3D3A36]/[0.09]"
+              style={{ fontSize: "clamp(7rem, 16vw, 15rem)", lineHeight: 1, fontFamily: "'Anton', sans-serif" }}
             >
               WEDDING STORIES
             </span>
