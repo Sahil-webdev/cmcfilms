@@ -26,6 +26,13 @@ function SloppySlantedTopCurve() {
           d="M0,95 C450,105 900,45 1440,12 L1440,130 L0,130 Z"
           fill="#1E1225"
         />
+        <path
+          d="M0,95 C450,105 900,45 1440,12"
+          fill="none"
+          stroke="#C5A16A"
+          strokeWidth="1"
+          opacity="0.3"
+        />
       </svg>
     </div>
   );
@@ -49,7 +56,7 @@ export function FooterOption7() {
   };
 
   return (
-    <footer className="relative bg-[#1E1225] font-sans text-[#F4EEE8] selection:bg-[#C5A16A] selection:text-[#1E1225] overflow-hidden">
+    <footer className="relative bg-[#FAF8F5] font-sans text-[#F4EEE8] selection:bg-[#C5A16A] selection:text-[#1E1225] overflow-hidden">
       
       {/* ── SLANTED SLOPPY TOP EDGE TRANSITION (Low on Left, High / Rising on Right) ── */}
       <div className="relative">
