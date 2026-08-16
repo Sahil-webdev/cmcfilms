@@ -171,72 +171,86 @@ export function CoupleShootsPage() {
   return (
     <main className="bg-[#F3F0EA] text-[#171717] font-sans selection:bg-[#D8D3CB] selection:text-[#171717] min-h-screen relative">
       
-      {/* ── 1. HERO (55% / 45% Restrained 12-Column Grid Layout) ── */}
-      <section className="pt-28 pb-20 px-6 sm:px-12 md:px-16 max-w-[1440px] mx-auto border-b border-[#D8D3CB]">
+      {/* ── 1. SIGNATURE ARTISTIC HERO (Matching Reference Design) ── */}
+      <section className="relative pt-24 sm:pt-28 pb-16 sm:pb-24 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto border-b border-[#D8D3CB] overflow-hidden">
         
-        {/* Top Metadata Header */}
-        <div className="flex justify-between items-center pb-8 border-b border-[#D8D3CB]/60">
-          <span className="text-xs font-mono tracking-[0.25em] uppercase text-[#68645E]">
-            CMC FILMS · COUPLE PORTFOLIO
-          </span>
-          <span className="text-xs font-mono text-[#68645E] hidden sm:block">
-            Pre-Wedding · Engagement · Couple Sessions
-          </span>
+        {/* Background Scrolling Marquee Text */}
+        <style>{`
+          @keyframes marquee-couples {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+          .marquee-couples-track {
+            animation: marquee-couples 120s linear infinite;
+            will-change: transform;
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .marquee-couples-track { animation: none; }
+          }
+        `}</style>
+
+        <div
+          className="pointer-events-none select-none absolute top-4 inset-x-0 overflow-hidden z-0 flex items-center"
+          aria-hidden="true"
+        >
+          <div className="marquee-couples-track flex items-center gap-16 whitespace-nowrap">
+            {Array.from({ length: 10 }).map((_, i) => (
+              <span
+                key={i}
+                className="uppercase tracking-tighter text-[#171717]/[0.06]"
+                style={{ fontSize: "clamp(6rem, 15vw, 14rem)", lineHeight: 1, fontFamily: "'Anton', sans-serif" }}
+              >
+                COUPLE SHOOT
+              </span>
+            ))}
+          </div>
         </div>
 
-        {/* 12-Column Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center pt-12">
+        {/* Hero Main Content */}
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center pt-8 md:pt-12">
           
-          {/* Left Column (55% Width / 7 Cols): One Large Vertical Couple Image (4:5) */}
-          <div className="lg:col-span-7">
-            <div className="aspect-[4/5] w-full overflow-hidden bg-[#D8D3CB]">
-              <img
-                src={luxuryEditorial}
-                alt="Couple Shoot Main"
-                className="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.01]"
-              />
+          {/* Left Column: Tilted Real Couple Image Frame */}
+          <div className="lg:col-span-7 flex justify-center lg:justify-start">
+            <div className="relative w-full max-w-2xl transform rotate-[-3.5deg] hover:rotate-0 transition-transform duration-700 ease-out shadow-2xl bg-white p-3 sm:p-4 rounded-[4px] border border-black/10">
+              <div className="aspect-[4/3] w-full overflow-hidden rounded-[2px] bg-[#D8D3CB]">
+                <img
+                  src={luxuryEditorial}
+                  alt="Real Couple Shoot"
+                  className="h-full w-full object-cover transition-transform duration-1000 hover:scale-105"
+                />
+              </div>
             </div>
           </div>
 
-          {/* Right Column (5 Cols): Title, Quote, Metadata & Smaller Landscape Image (3:2) */}
-          <div className="lg:col-span-5 space-y-8 flex flex-col justify-between h-full">
-            <div className="space-y-6">
-              <h1 className="font-editorial text-5xl sm:text-6xl md:text-7xl font-normal leading-[0.9] text-[#171717]">
-                COUPLE <br />
-                <span className="italic font-light">SHOOTS</span>
+          {/* Right Column: Alex Brush Cursive Title & Editorial Copy */}
+          <div className="lg:col-span-5 space-y-6 pt-4 lg:pt-0">
+            {/* Cursive Signature Script Title */}
+            <div>
+              <h1
+                className="text-[#E57368] font-normal leading-[0.9] text-6xl sm:text-7xl md:text-8xl lg:text-9xl -ml-2 drop-shadow-sm select-none"
+                style={{ fontFamily: "'Alex Brush', cursive" }}
+              >
+                Couple Shoots
               </h1>
+            </div>
 
-              <p className="font-editorial text-2xl text-[#68645E] italic leading-relaxed">
-                “Stories of two people, photographed as they are.”
+            {/* Subheadline */}
+            <h2 className="font-sans font-normal text-xl sm:text-2xl md:text-3xl text-[#3D3A36] tracking-tight leading-snug">
+              Artistic Storytelling Celebrating YOU!
+            </h2>
+
+            {/* Description Copy */}
+            <div className="space-y-4 text-xs sm:text-sm md:text-base text-[#68645E] font-sans font-light leading-relaxed">
+              <p>
+                Welcome to CMC FILMS, where we infuse magic into your wedding memories turning them into timeless tales of love, romance, and companionship.
               </p>
-
-              <div className="text-xs font-mono uppercase tracking-widest text-[#68645E] space-x-3 pt-2">
-                <span>Pre-Wedding</span>
-                <span>·</span>
-                <span>Engagement</span>
-                <span>·</span>
-                <span>Couple Sessions</span>
-              </div>
+              <p>
+                We are an award-winning premium wedding photography and films brand, known for our artistic, professional, and couple-centric approach.
+              </p>
+              <p>
+                We believe in and exist to showcase the most beautiful and heartfelt stories of your life in their true magnificence.
+              </p>
             </div>
-
-            {/* Smaller Landscape Image (3:2) */}
-            <div className="space-y-4 pt-4">
-              <div className="aspect-[3/2] w-full overflow-hidden bg-[#D8D3CB]">
-                <img
-                  src={coastal}
-                  alt="Coastal couple moment"
-                  className="h-full w-full object-cover"
-                />
-              </div>
-
-              <div className="flex justify-between items-center text-xs font-mono text-[#68645E] pt-2">
-                <span>JAIPUR & GOA ARCHIVE</span>
-                <span className="flex items-center gap-1.5 text-[#171717]">
-                  Explore <ArrowDown className="w-3.5 h-3.5" />
-                </span>
-              </div>
-            </div>
-
           </div>
 
         </div>
