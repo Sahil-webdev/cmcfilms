@@ -121,7 +121,7 @@ export function BlogJournalSection() {
           100% { transform: translateX(-50%); }
         }
         .marquee-track {
-          animation: marquee-rtl 45s linear infinite;
+          animation: marquee-rtl 65s linear infinite;
           will-change: transform;
         }
         @media (prefers-reduced-motion: reduce) {
