@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
-import { ArrowUpRight, ArrowDown, Play, X } from "lucide-react";
+import { useState, useMemo, useEffect, useRef } from "react";
+import { ArrowUpRight, Play, X } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 
 // Image Imports
@@ -167,6 +167,76 @@ const categoryFilters = [
   "INTERNATIONAL",
 ] as const;
 
+// ── FILMS PAGE VIDEO HERO ─────────────────────────────────────────────────
+function FilmsVideoHero() {
+  const [ready, setReady] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const t = setTimeout(() => setReady(true), 80);
+    if (videoRef.current) {
+      videoRef.current.defaultMuted = true;
+      videoRef.current.muted = true;
+      videoRef.current.playsInline = true;
+      const p = videoRef.current.play();
+      if (p !== undefined) p.catch(() => {});
+    }
+    return () => clearTimeout(t);
+  }, []);
+
+  return (
+    <section className="relative h-[100svh] min-h-[640px] w-full overflow-hidden bg-black">
+      {/* Autoplay background video — couples cinematic wedding footage */}
+      <video
+        ref={videoRef}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        className="absolute inset-0 h-full w-full object-cover"
+        aria-hidden
+      >
+        {/* Drop a couple-specific video at /public/films-hero-bg.mp4 to override */}
+        <source src="/films-hero-bg.mp4" type="video/mp4" />
+        <source src="/hero-bg.mp4" type="video/mp4" />
+      </video>
+
+      {/* Cinematic gradient overlay — bottom-heavy for text legibility */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/40 pointer-events-none" />
+
+      {/* Content — identical layout to home hero, centered at bottom */}
+      <div
+        className="relative flex h-full flex-col items-center justify-end px-5 pb-20 md:pb-28 text-center text-white"
+      >
+        {/* Small label above */}
+        <p
+          className="mb-4 font-mono text-[11px] tracking-[0.35em] uppercase text-white/60 transition-all duration-700 delay-100"
+          style={{ opacity: ready ? 1 : 0, transform: ready ? "none" : "translateY(10px)" }}
+        >
+          CMC FILMS · WEDDING CINEMA
+        </p>
+
+        {/* Big "FILMS" title — same size & weight as home "CMC Films" */}
+        <h1
+          className="font-display text-[clamp(3.2rem,8.5vw,6.5rem)] font-normal md:font-medium leading-none tracking-tight text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)] transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]"
+          style={{ opacity: ready ? 1 : 0, transform: ready ? "none" : "translateY(20px)" }}
+        >
+          Films
+        </h1>
+
+        {/* Subtitle */}
+        <p
+          className="mt-2.5 md:mt-3.5 font-display text-[clamp(1.1rem,2.6vw,2rem)] font-light tracking-wide text-white/90 drop-shadow-[0_2px_14px_rgba(0,0,0,0.85)] transition-all duration-1000 delay-200 ease-out"
+          style={{ opacity: ready ? 1 : 0, transform: ready ? "none" : "translateY(14px)" }}
+        >
+          Cinematic Stories. Told Forever.
+        </p>
+      </div>
+    </section>
+  );
+}
+
 export function WeddingFilmsPage() {
   const [activeCategoryFilter, setActiveCategoryFilter] = useState<string>("ALL");
   const [mostLovedIndex, setMostLovedIndex] = useState(0);
@@ -194,75 +264,8 @@ export function WeddingFilmsPage() {
       onMouseMove={handleMouseMove}
       className="bg-[#F2EFE8] text-[#171512] font-sans selection:bg-[#171512] selection:text-[#F2EFE8] min-h-screen relative overflow-hidden"
     >
-
-      {/* ── SECTION 1 — PAGE OPENING (INTRO) ── */}
-      <section className="relative min-h-[75vh] flex flex-col justify-between p-6 sm:p-10 md:p-16 border-b border-black/10">
-        
-        {/* Top Header Tag */}
-        <div className="pt-16 md:pt-8 flex justify-between items-center">
-          <span className="text-xs font-mono tracking-[0.3em] uppercase text-[#A67B2E]">
-            WEDDING FILMS
-          </span>
-          <span className="text-xs font-mono text-[#171512]/40 hidden sm:block">
-            FILM ARCHIVE · CMC FILMS
-          </span>
-        </div>
-
-        {/* Spacious Composition */}
-        <div className="my-auto py-12 grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
-          
-          {/* Left Text */}
-          <div className="md:col-span-7 space-y-6 max-w-2xl">
-            <Reveal>
-              <h1 className="font-display text-[clamp(2.75rem,7.5vw,6rem)] leading-[0.92] font-light text-[#171512]">
-                “Some stories are <br />
-                <em className="font-editorial italic text-[#A67B2E] font-normal">
-                  better felt than explained.
-                </em>”
-              </h1>
-            </Reveal>
-
-            <Reveal delay={150}>
-              <p className="text-sm sm:text-base text-[#171512]/75 font-sans font-light leading-relaxed max-w-md">
-                We create films from the laughter, chaos, silence and everything in between.
-              </p>
-            </Reveal>
-          </div>
-
-          {/* Right Visual Frame Composition (Tall photo + small overlapping frame) */}
-          <Reveal delay={200} className="md:col-span-5 relative flex justify-end">
-            <div className="relative w-full max-w-sm aspect-[3/4] overflow-hidden rounded-[4px] shadow-2xl bg-[#171512]/10 border border-black/5">
-              <img
-                src={luxuryEditorial}
-                alt="Cinematic wedding still"
-                className="h-full w-full object-cover transition-transform duration-1000 hover:scale-105"
-              />
-              <span className="absolute bottom-3 right-3 text-[10px] font-mono text-white/80 bg-black/60 px-2.5 py-0.5 rounded-[2px]">
-                00:01:24
-              </span>
-            </div>
-
-            {/* Small Overlapping Frame */}
-            <div className="absolute -bottom-6 -left-4 w-32 aspect-square overflow-hidden rounded-[2px] shadow-xl border-2 border-[#F2EFE8] hidden sm:block">
-              <img
-                src={haldi}
-                alt="Candid moment"
-                className="h-full w-full object-cover"
-              />
-            </div>
-          </Reveal>
-
-        </div>
-
-        {/* Bottom Scroll Indicator */}
-        <div className="flex justify-between items-end text-xs font-mono text-[#171512]/50 border-t border-black/5 pt-4">
-          <span>CMC FILMS</span>
-          <span className="flex items-center gap-2 text-[#171512]/80 font-medium">
-            Scroll to watch <ArrowDown className="w-3.5 h-3.5 text-[#A67B2E]" />
-          </span>
-        </div>
-
-      </section>
+      {/* ── SECTION 1 — FULL-SCREEN VIDEO HERO ── */}
+      <FilmsVideoHero />
 
       {/* ── SECTION 2 — LATEST FILMS (Structured Film Wall with 120-200px Vertical Spacing) ── */}
       <section className="py-24 md:py-36 px-6 md:px-16 border-b border-black/10 space-y-24 md:space-y-36 max-w-[1600px] mx-auto">
