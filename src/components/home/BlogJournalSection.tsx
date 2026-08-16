@@ -130,8 +130,8 @@ export function BlogJournalSection() {
       `}</style>
 
       <div
-        className="pointer-events-none select-none absolute inset-x-0 overflow-hidden z-0"
-        style={{ top: "38%" }}
+        className="pointer-events-none select-none absolute inset-x-0 overflow-hidden z-0 flex items-center"
+        style={{ top: 0, height: "55%" }}
         aria-hidden="true"
       >
         <div className="marquee-track flex items-center gap-16 whitespace-nowrap">
