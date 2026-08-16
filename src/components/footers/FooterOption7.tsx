@@ -61,17 +61,6 @@ export function FooterOption7() {
       {/* ── SLANTED SLOPPY TOP EDGE TRANSITION (Low on Left, High / Rising on Right) ── */}
       <div className="relative">
         <SloppySlantedTopCurve />
-
-        {/* Floating Rounded Wedding Image Frame over the Top-Right Slope (As shown in reference image!) */}
-        <div className="absolute top-0 right-6 sm:right-16 md:right-24 z-30 transform -translate-y-1/3 hidden sm:block">
-          <div className="w-[120px] sm:w-[150px] md:w-[170px] aspect-[4/3] rounded-[16px] overflow-hidden border-2 border-white/80 shadow-2xl bg-[#1E1225] group cursor-pointer">
-            <img
-              src={coastal}
-              alt="Cinematic couple story"
-              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-          </div>
-        </div>
       </div>
 
       {/* ── MAIN DARK PLUM CONTAINER (#1E1225) ── */}
