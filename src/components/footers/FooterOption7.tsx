@@ -43,7 +43,7 @@ export function FooterOption7() {
               />
             </Link>
 
-            <p className="text-sm sm:text-base text-[#AE171E]/85 font-light leading-relaxed max-w-sm">
+            <p className="text-base sm:text-[18px] text-[#AE171E] font-light leading-relaxed max-w-md tracking-wide" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
               Capturing unscripted love stories, genuine emotions, and timeless cinema across India &amp; worldwide.
             </p>
 
@@ -90,11 +90,14 @@ export function FooterOption7() {
 
           {/* COL 2 (2.5 Cols): EXPLORE */}
           <div className="lg:col-span-3 space-y-4">
-            <span className="text-xs sm:text-sm font-mono uppercase tracking-[0.2em] text-[#AE171E] font-bold block">
+            <span
+              className="text-xs sm:text-sm font-mono uppercase tracking-[0.22em] text-[#AE171E] font-bold block"
+              style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
+            >
               EXPLORE
             </span>
 
-            <ul className="space-y-3 text-sm sm:text-base font-medium text-[#AE171E]/90">
+            <ul className="space-y-3 text-sm sm:text-base font-normal text-[#AE171E]/90" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
               <li>
                 <Link to="/portfolio" className="hover:underline transition-all">Wedding Stories</Link>
               </li>
@@ -108,7 +111,7 @@ export function FooterOption7() {
                 <Link to="/about" className="hover:underline transition-all">About Studio</Link>
               </li>
               <li>
-                <Link to="/contact" className="hover:underline transition-all font-semibold inline-flex items-center gap-1">
+                <Link to="/contact" className="hover:underline transition-all font-medium inline-flex items-center gap-1">
                   <span>Work With Us</span>
                   <ArrowUpRight className="w-4 h-4 text-[#AE171E]" />
                 </Link>
@@ -118,11 +121,14 @@ export function FooterOption7() {
 
           {/* COL 3 (2.5 Cols): SERVICES */}
           <div className="lg:col-span-2 space-y-4">
-            <span className="text-xs sm:text-sm font-mono uppercase tracking-[0.2em] text-[#AE171E] font-bold block">
+            <span
+              className="text-xs sm:text-sm font-mono uppercase tracking-[0.22em] text-[#AE171E] font-bold block"
+              style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
+            >
               SERVICES
             </span>
 
-            <ul className="space-y-3 text-sm sm:text-base font-medium text-[#AE171E]/90">
+            <ul className="space-y-3 text-sm sm:text-base font-normal text-[#AE171E]/90" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
               <li>
                 <Link to="/portfolio" className="hover:underline transition-all">Wedding Photography</Link>
               </li>
@@ -140,28 +146,32 @@ export function FooterOption7() {
 
           {/* COL 4 (3 Cols): CONTACT & ENQUIRE */}
           <div className="lg:col-span-3 space-y-4">
-            <span className="text-xs sm:text-sm font-mono uppercase tracking-[0.2em] text-[#AE171E] font-bold block">
+            <span
+              className="text-xs sm:text-sm font-mono uppercase tracking-[0.22em] text-[#AE171E] font-bold block"
+              style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
+            >
               CONTACT &amp; STUDIO
             </span>
 
-            <div className="space-y-3 text-sm sm:text-base text-[#AE171E]/90 font-medium leading-relaxed">
+            <div className="space-y-3 text-sm sm:text-base text-[#AE171E]/90 font-light leading-relaxed" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#AE171E] shrink-0 mt-1" />
                 <span>Jaipur &amp; Delhi NCR, India</span>
               </div>
               <div className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-[#AE171E] shrink-0" />
-                <a href="mailto:hello@cmcfilms.studio" className="hover:underline transition-all font-mono">hello@cmcfilms.studio</a>
+                <a href="mailto:hello@cmcfilms.studio" className="hover:underline transition-all">hello@cmcfilms.studio</a>
               </div>
               <div className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-[#AE171E] shrink-0" />
-                <a href="tel:+919999999999" className="hover:underline transition-all font-mono">+91 99999 99999</a>
+                <a href="tel:+919999999999" className="hover:underline transition-all">+91 99999 99999</a>
               </div>
 
               <div className="pt-2">
                 <Link
                   to="/contact"
-                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#AE171E] text-white hover:bg-black transition-all text-xs sm:text-sm font-mono font-bold uppercase tracking-wider shadow-md active:scale-95 cursor-pointer"
+                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#AE171E] text-white hover:bg-black transition-all text-xs sm:text-sm font-bold uppercase tracking-wider shadow-md active:scale-95 cursor-pointer"
+                  style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
                 >
                   <span>Enquire For Date</span>
                   <ArrowUpRight className="w-4 h-4 text-white" />
@@ -173,7 +183,7 @@ export function FooterOption7() {
         </div>
 
         {/* BOTTOM SPACIOUS COPYRIGHT BAR */}
-        <div className="pt-8 border-t border-[#AE171E]/15 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm font-mono text-[#AE171E]/80">
+        <div className="pt-8 border-t border-[#AE171E]/15 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-[#AE171E]/80" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
           <p>© {new Date().getFullYear()} CMC FILMS. All rights reserved.</p>
           
           <div className="flex items-center gap-6">
