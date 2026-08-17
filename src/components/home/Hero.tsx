@@ -59,7 +59,7 @@ export function Hero() {
           className="mt-2.5 md:mt-3.5 font-display text-[clamp(1.15rem,2.8vw,2.1rem)] font-light tracking-wide text-white/95 drop-shadow-[0_2px_14px_rgba(0,0,0,0.85)] transition-all duration-1000 delay-200 ease-out"
           style={{ opacity: ready ? 1 : 0, transform: ready ? "none" : "translateY(14px)" }}
         >
-          Stories for love Told forever
+          Wedding Storytellers
         </p>
       </div>
     </section>
