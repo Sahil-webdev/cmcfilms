@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowUpRight, ArrowUp, CheckCircle2 } from "lucide-react";
+import { ArrowUpRight, CheckCircle2 } from "lucide-react";
 import logoImg from "@/assets/logo.png";
 import coastal from "@/assets/coastal.jpg";
 
@@ -42,10 +42,6 @@ export function FooterOption7() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
     if (email.trim()) {
@@ -66,15 +62,6 @@ export function FooterOption7() {
       {/* ── MAIN DARK PLUM CONTAINER (#1E1225) ── */}
       <div className="relative bg-[#1E1225] pt-2 md:pt-6 pb-8 px-6 sm:px-10 md:px-14 lg:px-20 overflow-hidden">
         
-        {/* GIANT WATERMARK TYPOGRAPHY (Far-Right Background as shown in image) */}
-        <div
-          className="pointer-events-none absolute bottom-4 right-0 font-editorial font-normal text-[clamp(100px,16vw,220px)] leading-[0.8] text-[#725787]/[0.05] select-none text-right tracking-tighter uppercase z-0"
-          aria-hidden="true"
-        >
-          CMC <br />
-          FILMS
-        </div>
-
         {/* MAIN ASYMMETRIC GRID CONTENT */}
         <div className="relative z-10 max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 items-start pb-10 border-b border-white/5">
           
@@ -218,34 +205,6 @@ export function FooterOption7() {
 
           </div>
 
-        </div>
-
-        {/* ── BOTTOM LEGAL BAR (Matching exact reference screenshot layout) ── */}
-        <div className="relative z-10 max-w-[1600px] mx-auto pt-4 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#A79EA4] font-mono font-light">
-          <div>
-            © 2008–2026 CMC Films Studio by Sahil Sharma.
-          </div>
-
-          <div className="text-center text-[#F4EEE8]">
-            Award-winning wedding photography &amp; films — Jaipur, Delhi NCR and worldwide.
-          </div>
-
-          <div className="flex items-center gap-4 text-[#F4EEE8] shrink-0">
-            <span className="text-[#C5A16A] font-semibold">[ FOOTER 07 / SLOPED CINEMATIC CURVE ]</span>
-            <span>•</span>
-            <Link to="/contact" className="hover:text-[#C5A16A] transition-colors">Privacy</Link>
-            <span>•</span>
-            <Link to="/contact" className="hover:text-[#C5A16A] transition-colors">Terms</Link>
-            <span>•</span>
-            <button
-              onClick={scrollToTop}
-              aria-label="Back to top"
-              className="group inline-flex items-center gap-1 hover:text-[#C5A16A] transition-colors cursor-pointer font-bold"
-            >
-              <span>BACK TO TOP</span>
-              <ArrowUp className="w-3.5 h-3.5 text-[#C5A16A] group-hover:-translate-y-0.5 transition-transform" />
-            </button>
-          </div>
         </div>
 
       </div>

@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CouplesRouteImport } from './routes/couples'
 import { Route as FilmsRouteImport } from './routes/films'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
 
@@ -30,6 +31,11 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CouplesRoute = CouplesRouteImport.update({
+  id: '/couples',
+  path: '/couples',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FilmsRoute = FilmsRouteImport.update({
   id: '/films',
   path: '/films',
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/couples': typeof CouplesRoute
   '/films': typeof FilmsRoute
   '/portfolio': typeof PortfolioRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/couples': typeof CouplesRoute
   '/films': typeof FilmsRoute
   '/portfolio': typeof PortfolioRoute
 }
@@ -60,21 +68,30 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/couples': typeof CouplesRoute
   '/films': typeof FilmsRoute
   '/portfolio': typeof PortfolioRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/contact' | '/films' | '/portfolio'
+  fullPaths: '/' | '/about' | '/contact' | '/couples' | '/films' | '/portfolio'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/contact' | '/films' | '/portfolio'
-  id: '__root__' | '/' | '/about' | '/contact' | '/films' | '/portfolio'
+  to: '/' | '/about' | '/contact' | '/couples' | '/films' | '/portfolio'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/couples'
+    | '/films'
+    | '/portfolio'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
+  CouplesRoute: typeof CouplesRoute
   FilmsRoute: typeof FilmsRoute
   PortfolioRoute: typeof PortfolioRoute
 }
@@ -102,6 +119,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/couples': {
+      id: '/couples'
+      path: '/couples'
+      fullPath: '/couples'
+      preLoaderRoute: typeof CouplesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/films': {
       id: '/films'
       path: '/films'
@@ -123,6 +147,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
+  CouplesRoute: CouplesRoute,
   FilmsRoute: FilmsRoute,
   PortfolioRoute: PortfolioRoute,
 }

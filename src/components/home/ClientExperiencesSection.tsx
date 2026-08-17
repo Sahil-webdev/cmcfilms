@@ -80,6 +80,16 @@ export function ClientExperiencesSection() {
   const [currentIndex, setCurrentIndex] = useState(clientReviews.length);
   const [isTransitioning, setIsTransitioning] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    const updateViewport = () => setIsDesktop(mediaQuery.matches);
+
+    updateViewport();
+    mediaQuery.addEventListener("change", updateViewport);
+    return () => mediaQuery.removeEventListener("change", updateViewport);
+  }, []);
 
   // Automatic Step Carousel Timer (3s)
   useEffect(() => {
@@ -134,7 +144,7 @@ export function ClientExperiencesSection() {
           </h2>
         </div>
 
-        {/* ── CAROUSEL CONTAINER (Compact Height & Simple UI) ── */}
+        {/* ── CAROUSEL CONTAINER ── */}
         <div
           className="relative px-2"
           onMouseEnter={() => setIsPaused(true)}
@@ -145,7 +155,7 @@ export function ClientExperiencesSection() {
             type="button"
             onClick={handlePrev}
             aria-label="Previous review"
-            className="absolute left-0 md:-left-3 top-1/2 -translate-y-1/2 z-20 h-10 w-10 rounded-full bg-white/10 hover:bg-gold text-white hover:text-cinema flex items-center justify-center transition-all cursor-pointer shadow-md"
+            className="absolute left-1 md:-left-3 top-1/2 -translate-y-1/2 z-20 h-9 w-9 md:h-10 md:w-10 rounded-full bg-white/10 hover:bg-gold text-white hover:text-cinema flex items-center justify-center transition-all cursor-pointer shadow-md"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
@@ -154,7 +164,7 @@ export function ClientExperiencesSection() {
             type="button"
             onClick={handleNext}
             aria-label="Next review"
-            className="absolute right-0 md:-right-3 top-1/2 -translate-y-1/2 z-20 h-10 w-10 rounded-full bg-white/10 hover:bg-gold text-white hover:text-cinema flex items-center justify-center transition-all cursor-pointer shadow-md"
+            className="absolute right-1 md:-right-3 top-1/2 -translate-y-1/2 z-20 h-9 w-9 md:h-10 md:w-10 rounded-full bg-white/10 hover:bg-gold text-white hover:text-cinema flex items-center justify-center transition-all cursor-pointer shadow-md"
           >
             <ArrowRight className="w-4 h-4" />
           </button>
@@ -163,19 +173,21 @@ export function ClientExperiencesSection() {
           <div className="overflow-hidden py-1">
             <div
               onTransitionEnd={handleTransitionEnd}
-              className={`flex gap-5 ${
+              className={`flex ${isDesktop ? "gap-5" : ""} ${
                 isTransitioning
                   ? "transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
                   : "transition-none"
               }`}
               style={{
-                transform: `translateX(-${currentIndex * (340 + 20)}px)`,
+                transform: isDesktop
+                  ? `translateX(-${currentIndex * (340 + 20)}px)`
+                  : `translateX(-${currentIndex * 100}%)`,
               }}
             >
               {infiniteReviews.map((review, idx) => (
                 <div
                   key={`${review.id}-${idx}`}
-                  className="w-[280px] sm:w-[320px] md:w-[340px] shrink-0 rounded-2xl bg-[#14151C] border border-white/10 p-5 flex flex-col justify-between shadow-sm hover:border-gold/40 transition-all duration-300"
+                  className={`${isDesktop ? "w-[340px]" : "w-full"} shrink-0 rounded-2xl bg-[#14151C] border border-white/10 p-5 sm:p-6 flex flex-col justify-between shadow-sm hover:border-gold/40 transition-all duration-300`}
                 >
                   <div className="space-y-3">
                     {/* Stars */}
