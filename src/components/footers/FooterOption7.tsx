@@ -25,7 +25,7 @@ export function FooterOption7() {
   };
 
   return (
-    <footer className="relative bg-[#8E9E97] text-[#AE171E] font-sans selection:bg-[#AE171E] selection:text-white border-t border-[#AE171E]/20 overflow-hidden">
+    <footer className="relative bg-[#D4DDD8] text-[#AE171E] font-sans selection:bg-[#AE171E] selection:text-white border-t border-[#AE171E]/20 overflow-hidden">
       
       {/* ── MAIN SPACIOUS & CLEAN FOOTER CONTAINER ── */}
       <div className="relative z-10 py-14 sm:py-20 px-6 sm:px-12 md:px-16 max-w-[1400px] mx-auto space-y-14">
