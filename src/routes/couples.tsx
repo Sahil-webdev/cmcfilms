@@ -222,9 +222,9 @@ export function CoupleShootsPage() {
         {/* Hero Main Content */}
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center pt-8 md:pt-12">
           
-          {/* Left Column: Tilted Real Couple Image Frame */}
+          {/* Left Column: Straight Real Couple Image Frame */}
           <div className="lg:col-span-7 flex justify-center lg:justify-start">
-            <div className="relative w-full max-w-2xl transform rotate-[-3.5deg] hover:rotate-0 transition-transform duration-700 ease-out shadow-2xl bg-white p-3 sm:p-4 rounded-[4px] border border-black/10">
+            <div className="relative w-full max-w-2xl shadow-2xl bg-white p-3 sm:p-4 rounded-[4px] border border-black/10">
               <div className="aspect-[4/3] w-full overflow-hidden rounded-[2px] bg-[#D8D3CB]">
                 <img
                   src={luxuryEditorial}
