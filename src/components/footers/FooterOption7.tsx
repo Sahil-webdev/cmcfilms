@@ -25,10 +25,10 @@ export function FooterOption7() {
   };
 
   return (
-    <footer className="relative bg-[#596349] text-[#F5F3EF] font-sans selection:bg-[#D4C3A3] selection:text-[#2E3425] border-t border-white/15 overflow-hidden">
+    <footer className="relative bg-[#020812] text-[#EFECE6] font-sans selection:bg-[#C47A65] selection:text-white border-t border-white/10 overflow-hidden">
       
       {/* ── BACKGROUND BRAND WATERMARK ── */}
-      <div className="pointer-events-none select-none absolute -bottom-6 inset-x-0 overflow-hidden opacity-[0.07] z-0 flex items-center justify-center">
+      <div className="pointer-events-none select-none absolute -bottom-6 inset-x-0 overflow-hidden opacity-[0.04] z-0 flex items-center justify-center">
         <span
           className="uppercase tracking-tighter text-white whitespace-nowrap"
           style={{ fontSize: "clamp(6rem, 16vw, 15rem)", lineHeight: 0.8, fontFamily: "'Anton', sans-serif" }}
@@ -41,7 +41,7 @@ export function FooterOption7() {
       <div className="relative z-10 pt-16 sm:pt-24 pb-12 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto space-y-16">
         
         {/* TOP ROW: BRAND LOGO + CALL TO ACTION */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 border-b border-white/15 pb-12">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 border-b border-white/10 pb-12">
           
           {/* Logo & Tagline */}
           <div className="space-y-3">
@@ -52,7 +52,7 @@ export function FooterOption7() {
                 className="h-10 sm:h-12 w-auto object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.85)]"
               />
             </Link>
-            <p className="text-xs sm:text-sm text-[#EAE6DF]/80 font-light max-w-md">
+            <p className="text-xs sm:text-sm text-white/60 font-light max-w-md">
               Capturing unscripted love stories, genuine emotions, and timeless cinema across India & worldwide destinations.
             </p>
           </div>
@@ -61,7 +61,7 @@ export function FooterOption7() {
           <div>
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#D4C3A3] text-[#2E3425] hover:bg-white hover:text-[#596349] text-xs font-mono font-bold uppercase tracking-widest transition-all shadow-lg active:scale-95 cursor-pointer"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#C47A65] text-white hover:bg-white hover:text-[#020812] text-xs font-mono font-semibold uppercase tracking-widest transition-all shadow-lg active:scale-95 cursor-pointer"
             >
               <span>Enquire For Your Date</span>
               <ArrowUpRight className="w-4 h-4" />
