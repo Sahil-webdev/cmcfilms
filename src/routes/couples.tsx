@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
-import { ArrowUpRight, ArrowDown, X } from "lucide-react";
+import { useState, useMemo, useEffect, useRef } from "react";
+import { ArrowUpRight, ArrowDown, ArrowLeft, ArrowRight, X } from "lucide-react";
 
 // Image Imports
 import cat1 from "@/assets/cat-1.jpg";
@@ -336,56 +336,13 @@ export function CoupleShootsPage() {
         </div>
       </section>
 
-      {/* ── 6. MINIMAL LOCATION FILTER ── */}
-      <section className="py-24 px-6 sm:px-12 md:px-16 max-w-[1440px] mx-auto border-b border-[#D8D3CB] space-y-12">
-        
-        {/* Horizontal Line Filter Bar */}
-        <div className="flex flex-wrap items-center gap-8 border-b border-[#D8D3CB] pb-4 text-xs font-mono uppercase tracking-widest">
-          {["All", "Jaipur", "Udaipur", "Goa", "Mumbai", "International"].map((loc) => (
-            <button
-              key={loc}
-              type="button"
-              onClick={() => setSelectedCityFilter(loc)}
-              className={`pb-1 transition-all cursor-pointer ${
-                selectedCityFilter === loc
-                  ? "text-[#171717] border-b-2 border-[#171717] font-semibold"
-                  : "text-[#68645E] hover:text-[#171717]"
-              }`}
-            >
-              {loc}
-            </button>
-          ))}
-        </div>
-
-        {/* Filtered Stories Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {filteredStories.map((story) => (
-            <div
-              key={story.id}
-              onClick={() => setActiveStoryModal(story)}
-              className="space-y-4 cursor-pointer group"
-            >
-              <div className="aspect-[4/5] w-full overflow-hidden bg-[#D8D3CB]">
-                <img
-                  src={story.heroImage}
-                  alt={story.couple}
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.01]"
-                />
-              </div>
-              <div className="flex justify-between items-end">
-                <div>
-                  <h3 className="font-editorial text-3xl text-[#171717]">{story.couple}</h3>
-                  <p className="text-xs font-mono uppercase tracking-widest text-[#68645E] mt-1">
-                    {story.shootType} · {story.location}
-                  </p>
-                </div>
-                <span className="text-xs font-mono uppercase tracking-widest text-[#171717]">View →</span>
-              </div>
-            </div>
-          ))}
-        </div>
-
-      </section>
+      {/* ── 6. LOCATION FILTERED STORIES SLIDER CAROUSEL ── */}
+      <CoupleStoriesCarouselSection
+        stories={filteredStories}
+        selectedCityFilter={selectedCityFilter}
+        setSelectedCityFilter={setSelectedCityFilter}
+        onSelectStory={setActiveStoryModal}
+      />
 
       {/* ── 7. STORY INDEX (Compact 2-Column Archive) ── */}
       <section className="py-24 px-6 sm:px-12 md:px-16 max-w-[1440px] mx-auto border-b border-[#D8D3CB] space-y-12">
@@ -628,5 +585,196 @@ function IndividualCoupleStoryModal({
       </section>
 
     </div>
+  );
+}
+
+// ── LOCATION FILTERED COUPLE STORIES CAROUSEL SLIDER ────────────────────
+function CoupleStoriesCarouselSection({
+  stories,
+  selectedCityFilter,
+  setSelectedCityFilter,
+  onSelectStory,
+}: {
+  stories: CoupleStoryItem[];
+  selectedCityFilter: string;
+  setSelectedCityFilter: (city: string) => void;
+  onSelectStory: (story: CoupleStoryItem) => void;
+}) {
+  const [currentIndex, setCurrentIndex] = useState(stories.length);
+  const [isTransitioning, setIsTransitioning] = useState(true);
+  const [isPaused, setIsPaused] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  // Triple array for seamless infinite sliding
+  const infiniteStories = useMemo(
+    () => [...stories, ...stories, ...stories],
+    [stories]
+  );
+
+  // Reset index when filter changes
+  useEffect(() => {
+    setCurrentIndex(stories.length);
+  }, [stories.length, selectedCityFilter]);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    const updateViewport = () => setIsDesktop(mediaQuery.matches);
+    updateViewport();
+    mediaQuery.addEventListener("change", updateViewport);
+    return () => mediaQuery.removeEventListener("change", updateViewport);
+  }, []);
+
+  // Auto-play interval (2.5 seconds)
+  useEffect(() => {
+    if (isPaused || stories.length === 0) return;
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => prev + 1);
+    }, 2500);
+    return () => clearInterval(timer);
+  }, [isPaused, stories.length]);
+
+  // Handle seamless infinite reset
+  const handleTransitionEnd = () => {
+    if (currentIndex >= stories.length * 2) {
+      setIsTransitioning(false);
+      setCurrentIndex(stories.length);
+    } else if (currentIndex < stories.length) {
+      setIsTransitioning(false);
+      setCurrentIndex(stories.length * 2 - 1);
+    }
+  };
+
+  useEffect(() => {
+    if (!isTransitioning) {
+      const t = setTimeout(() => {
+        setIsTransitioning(true);
+      }, 50);
+      return () => clearTimeout(t);
+    }
+  }, [isTransitioning]);
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => prev + 1);
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => prev - 1);
+  };
+
+  const activeDotIndex = stories.length > 0 ? currentIndex % stories.length : 0;
+
+  return (
+    <section className="py-20 md:py-28 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto border-b border-[#D8D3CB] space-y-12 overflow-hidden">
+      
+      {/* Horizontal Line Filter Bar */}
+      <div className="flex flex-wrap items-center gap-8 border-b border-[#D8D3CB] pb-4 text-xs font-mono uppercase tracking-widest">
+        {["All", "Jaipur", "Udaipur", "Goa", "Mumbai", "International"].map((loc) => (
+          <button
+            key={loc}
+            type="button"
+            onClick={() => setSelectedCityFilter(loc)}
+            className={`pb-1 transition-all cursor-pointer ${
+              selectedCityFilter === loc
+                ? "text-[#171717] border-b-2 border-[#171717] font-semibold"
+                : "text-[#68645E] hover:text-[#171717]"
+            }`}
+          >
+            {loc}
+          </button>
+        ))}
+      </div>
+
+      {/* ── CAROUSEL CONTAINER ── */}
+      <div
+        className="relative px-2 sm:px-4"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
+        {/* Navigation Arrow Buttons */}
+        <button
+          type="button"
+          onClick={handlePrev}
+          aria-label="Previous story"
+          className="absolute left-1 md:-left-4 top-1/2 -translate-y-1/2 z-20 h-10 w-10 md:h-12 md:w-12 rounded-full bg-[#3D3A36]/80 hover:bg-[#3D3A36] text-white flex items-center justify-center transition-all duration-300 active:scale-95 cursor-pointer shadow-lg"
+        >
+          <ArrowLeft className="w-5 h-5" />
+        </button>
+
+        <button
+          type="button"
+          onClick={handleNext}
+          aria-label="Next story"
+          className="absolute right-1 md:-right-4 top-1/2 -translate-y-1/2 z-20 h-10 w-10 md:h-12 md:w-12 rounded-full bg-[#3D3A36]/80 hover:bg-[#3D3A36] text-white flex items-center justify-center transition-all duration-300 active:scale-95 cursor-pointer shadow-lg"
+        >
+          <ArrowRight className="w-5 h-5" />
+        </button>
+
+        {/* Sliding Track Container */}
+        <div className="overflow-hidden py-2">
+          <div
+            onTransitionEnd={handleTransitionEnd}
+            className={`flex ${isDesktop ? "gap-8" : ""} ${
+              isTransitioning
+                ? "transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
+                : "transition-none"
+            }`}
+            style={{
+              transform: isDesktop
+                ? `translateX(-${currentIndex * (420 + 32)}px)`
+                : `translateX(-${currentIndex * 100}%)`,
+            }}
+          >
+            {infiniteStories.map((story, idx) => (
+              <div
+                key={`${story.id}-${idx}`}
+                onClick={() => onSelectStory(story)}
+                className={`${isDesktop ? "w-[420px]" : "w-full"} shrink-0 cursor-pointer group space-y-4`}
+              >
+                {/* Photo Frame */}
+                <div className="aspect-[4/5] w-full overflow-hidden bg-[#D8D3CB] rounded-[4px] shadow-md border border-black/5">
+                  <img
+                    src={story.heroImage}
+                    alt={story.couple}
+                    className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  />
+                </div>
+
+                {/* Card Info */}
+                <div className="flex justify-between items-end pt-1">
+                  <div>
+                    <h3 className="font-editorial text-3xl text-[#171717] group-hover:text-[#68645E] transition-colors">
+                      {story.couple}
+                    </h3>
+                    <p className="text-xs font-mono uppercase tracking-widest text-[#68645E] mt-1">
+                      {story.shootType} · {story.location}
+                    </p>
+                  </div>
+                  <span className="inline-flex items-center gap-1 text-xs font-mono uppercase tracking-widest text-[#171717] font-semibold group-hover:translate-x-1 transition-transform">
+                    View →
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Dots Navigation Bar */}
+        <div className="mt-10 flex justify-center items-center gap-2">
+          {stories.map((_, idx) => (
+            <button
+              key={idx}
+              type="button"
+              onClick={() => setCurrentIndex(stories.length + idx)}
+              aria-label={`Go to slide ${idx + 1}`}
+              className={`h-2 rounded-full transition-all duration-500 cursor-pointer ${
+                idx === activeDotIndex ? "w-6 bg-[#3D3A36]" : "w-2 bg-[#171717]/20"
+              }`}
+            />
+          ))}
+        </div>
+
+      </div>
+
+    </section>
   );
 }
