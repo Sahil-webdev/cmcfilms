@@ -316,26 +316,6 @@ export function CoupleShootsPage() {
         </div>
       )}
 
-
-
-
-
-      {/* ── 5. EDITORIAL IMAGE BREAK (Natural Visual Pause 2:1 Wide Photo) ── */}
-      <section className="py-24 px-6 sm:px-12 md:px-16 max-w-[1440px] mx-auto border-b border-[#D8D3CB] space-y-4">
-        <div className="aspect-[2/1] w-full overflow-hidden bg-[#D8D3CB]">
-          <img
-            src={featured}
-            alt="Editorial image break"
-            className="h-full w-full object-cover"
-          />
-        </div>
-        <div className="flex justify-end">
-          <span className="text-xs font-mono uppercase tracking-widest text-[#68645E]">
-            Jaipur · Winter 2026
-          </span>
-        </div>
-      </section>
-
       {/* ── 6. LOCATION FILTERED STORIES SLIDER CAROUSEL ── */}
       <CoupleStoriesCarouselSection
         stories={filteredStories}
@@ -343,39 +323,6 @@ export function CoupleShootsPage() {
         setSelectedCityFilter={setSelectedCityFilter}
         onSelectStory={setActiveStoryModal}
       />
-
-
-
-      {/* ── 8. FINAL CTA (Understated 70% Width Layout) ── */}
-      <section className="py-32 px-6 sm:px-12 md:px-16 max-w-[1440px] mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          
-          {/* 70% Width Landscape Image (8 Cols) */}
-          <div className="lg:col-span-8 aspect-[16/10] overflow-hidden bg-[#D8D3CB]">
-            <img src={coastal} alt="Planning a shoot" className="h-full w-full object-cover" />
-          </div>
-
-          {/* Beside It: Planning Text & Enquire Link */}
-          <div className="lg:col-span-4 space-y-6">
-            <span className="text-xs font-mono uppercase tracking-widest text-[#68645E] block">
-              PLANNING A SHOOT?
-            </span>
-            <p className="font-editorial text-3xl sm:text-4xl text-[#171717] font-normal leading-tight">
-              “Let’s make something that feels like you.”
-            </p>
-            <div>
-              <Link
-                to="/contact"
-                className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-widest text-[#171717] border-b border-[#171717] pb-1 hover:text-[#68645E] hover:border-[#68645E] transition-colors"
-              >
-                <span>Enquire</span>
-                <ArrowUpRight className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
-
-        </div>
-      </section>
 
       {/* ── 9. DEDICATED COUPLE STORY PAGE MODAL ── */}
       {activeStoryModal && (
