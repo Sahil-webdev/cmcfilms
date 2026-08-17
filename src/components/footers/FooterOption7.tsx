@@ -25,10 +25,10 @@ export function FooterOption7() {
   };
 
   return (
-    <footer className="relative bg-[#0C0D10] text-[#EFECE6] font-sans selection:bg-[#C47A65] selection:text-white border-t border-white/10 overflow-hidden">
+    <footer className="relative bg-[#596349] text-[#F5F3EF] font-sans selection:bg-[#D4C3A3] selection:text-[#2E3425] border-t border-white/15 overflow-hidden">
       
       {/* ── BACKGROUND BRAND WATERMARK ── */}
-      <div className="pointer-events-none select-none absolute -bottom-6 inset-x-0 overflow-hidden opacity-[0.03] z-0 flex items-center justify-center">
+      <div className="pointer-events-none select-none absolute -bottom-6 inset-x-0 overflow-hidden opacity-[0.07] z-0 flex items-center justify-center">
         <span
           className="uppercase tracking-tighter text-white whitespace-nowrap"
           style={{ fontSize: "clamp(6rem, 16vw, 15rem)", lineHeight: 0.8, fontFamily: "'Anton', sans-serif" }}
@@ -41,7 +41,7 @@ export function FooterOption7() {
       <div className="relative z-10 pt-16 sm:pt-24 pb-12 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto space-y-16">
         
         {/* TOP ROW: BRAND LOGO + CALL TO ACTION */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 border-b border-white/10 pb-12">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 border-b border-white/15 pb-12">
           
           {/* Logo & Tagline */}
           <div className="space-y-3">
@@ -52,7 +52,7 @@ export function FooterOption7() {
                 className="h-10 sm:h-12 w-auto object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.85)]"
               />
             </Link>
-            <p className="text-xs sm:text-sm text-white/60 font-light max-w-md">
+            <p className="text-xs sm:text-sm text-[#EAE6DF]/80 font-light max-w-md">
               Capturing unscripted love stories, genuine emotions, and timeless cinema across India & worldwide destinations.
             </p>
           </div>
@@ -61,7 +61,7 @@ export function FooterOption7() {
           <div>
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#C47A65] text-white hover:bg-white hover:text-[#0C0D10] text-xs font-mono font-semibold uppercase tracking-widest transition-all shadow-lg active:scale-95 cursor-pointer"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#D4C3A3] text-[#2E3425] hover:bg-white hover:text-[#596349] text-xs font-mono font-bold uppercase tracking-widest transition-all shadow-lg active:scale-95 cursor-pointer"
             >
               <span>Enquire For Your Date</span>
               <ArrowUpRight className="w-4 h-4" />
@@ -75,22 +75,22 @@ export function FooterOption7() {
           
           {/* COL 1 (4 Cols): Contact Info & Studio Location */}
           <div className="lg:col-span-4 space-y-4">
-            <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#C47A65] font-bold block">
+            <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#D4C3A3] font-bold block">
               STUDIO LOCATION
             </span>
 
-            <div className="space-y-3 text-xs sm:text-sm text-white/80 font-light leading-relaxed">
+            <div className="space-y-3 text-xs sm:text-sm text-[#EAE6DF]/90 font-light leading-relaxed">
               <div className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-[#C47A65] shrink-0 mt-0.5" />
+                <MapPin className="w-4 h-4 text-[#D4C3A3] shrink-0 mt-0.5" />
                 <span>Jaipur &amp; Delhi NCR, Rajasthan, India</span>
               </div>
               <div className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-[#C47A65] shrink-0" />
-                <a href="tel:+919999999999" className="hover:text-[#C47A65] transition-colors font-mono">+91 99999 99999</a>
+                <Phone className="w-4 h-4 text-[#D4C3A3] shrink-0" />
+                <a href="tel:+919999999999" className="hover:text-[#D4C3A3] transition-colors font-mono">+91 99999 99999</a>
               </div>
               <div className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-[#C47A65] shrink-0" />
-                <a href="mailto:hello@cmcfilms.studio" className="hover:text-[#C47A65] transition-colors font-mono">hello@cmcfilms.studio</a>
+                <Mail className="w-4 h-4 text-[#D4C3A3] shrink-0" />
+                <a href="mailto:hello@cmcfilms.studio" className="hover:text-[#D4C3A3] transition-colors font-mono">hello@cmcfilms.studio</a>
               </div>
             </div>
 
@@ -100,7 +100,7 @@ export function FooterOption7() {
                 href="https://wa.me/919999999999"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-semibold hover:bg-emerald-500 hover:text-white transition-all"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-[#D4C3A3] text-xs font-mono font-semibold hover:bg-white hover:text-[#596349] transition-all"
               >
                 <WhatsAppIcon className="w-4 h-4" />
                 <span>Chat Directly on WhatsApp</span>
@@ -110,11 +110,11 @@ export function FooterOption7() {
 
           {/* COL 2 (2.5 Cols): Navigation Links */}
           <div className="lg:col-span-3 space-y-4">
-            <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#C47A65] font-bold block">
+            <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#D4C3A3] font-bold block">
               NAVIGATION
             </span>
 
-            <ul className="space-y-2.5 text-xs sm:text-sm font-light text-white/70">
+            <ul className="space-y-2.5 text-xs sm:text-sm font-light text-[#EAE6DF]/80">
               <li>
                 <Link to="/" className="hover:text-white transition-colors">Home</Link>
               </li>
@@ -138,11 +138,11 @@ export function FooterOption7() {
 
           {/* COL 3 (2.5 Cols): Services */}
           <div className="lg:col-span-2 space-y-4">
-            <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#C47A65] font-bold block">
+            <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#D4C3A3] font-bold block">
               SERVICES
             </span>
 
-            <ul className="space-y-2.5 text-xs sm:text-sm font-light text-white/70">
+            <ul className="space-y-2.5 text-xs sm:text-sm font-light text-[#EAE6DF]/80">
               <li>
                 <Link to="/portfolio" className="hover:text-white transition-colors">Wedding Films</Link>
               </li>
@@ -163,35 +163,35 @@ export function FooterOption7() {
 
           {/* COL 4 (3 Cols): Newsletter & Social Links */}
           <div className="lg:col-span-3 space-y-4">
-            <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#C47A65] font-bold block">
+            <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#D4C3A3] font-bold block">
               STAY CONNECTED
             </span>
 
-            <p className="text-xs text-white/60 font-light leading-relaxed">
+            <p className="text-xs text-[#EAE6DF]/70 font-light leading-relaxed">
               Subscribe to receive wedding inspiration and newly released couple stories.
             </p>
 
             <form onSubmit={handleSubscribe} className="space-y-2">
-              <div className="flex items-center bg-white/5 border border-white/15 focus-within:border-[#C47A65] rounded-full px-4 py-2 transition-colors">
+              <div className="flex items-center bg-white/10 border border-white/20 focus-within:border-[#D4C3A3] rounded-full px-4 py-2 transition-colors">
                 <input
                   type="email"
                   required
                   placeholder="Enter your email address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-transparent text-xs text-white placeholder-white/40 focus:outline-none font-sans"
+                  className="w-full bg-transparent text-xs text-white placeholder-white/50 focus:outline-none font-sans"
                 />
                 <button
                   type="submit"
                   aria-label="Subscribe"
-                  className="text-[#C47A65] hover:text-white transition-colors p-1 cursor-pointer"
+                  className="text-[#D4C3A3] hover:text-white transition-colors p-1 cursor-pointer"
                 >
                   <ArrowUpRight className="w-4 h-4" />
                 </button>
               </div>
 
               {subscribed && (
-                <div className="flex items-center gap-1.5 text-xs text-emerald-400 font-mono">
+                <div className="flex items-center gap-1.5 text-xs text-[#D4C3A3] font-mono">
                   <CheckCircle2 className="w-3.5 h-3.5" />
                   <span>Thank you for subscribing!</span>
                 </div>
@@ -199,13 +199,13 @@ export function FooterOption7() {
             </form>
 
             {/* Social Icons Bar */}
-            <div className="pt-2 flex items-center gap-3 text-white/70">
+            <div className="pt-2 flex items-center gap-3 text-white/80">
               <a
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="w-9 h-9 rounded-full bg-white/5 hover:bg-[#C47A65] hover:text-white flex items-center justify-center transition-all cursor-pointer border border-white/10"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#D4C3A3] hover:text-[#2E3425] flex items-center justify-center transition-all cursor-pointer border border-white/15"
               >
                 <Instagram className="w-4 h-4" />
               </a>
@@ -214,7 +214,7 @@ export function FooterOption7() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="YouTube"
-                className="w-9 h-9 rounded-full bg-white/5 hover:bg-[#C47A65] hover:text-white flex items-center justify-center transition-all cursor-pointer border border-white/10"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#D4C3A3] hover:text-[#2E3425] flex items-center justify-center transition-all cursor-pointer border border-white/15"
               >
                 <Youtube className="w-4 h-4" />
               </a>
@@ -223,7 +223,7 @@ export function FooterOption7() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                className="w-9 h-9 rounded-full bg-white/5 hover:bg-[#C47A65] hover:text-white flex items-center justify-center transition-all cursor-pointer border border-white/10"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#D4C3A3] hover:text-[#2E3425] flex items-center justify-center transition-all cursor-pointer border border-white/15"
               >
                 <Facebook className="w-4 h-4" />
               </a>
@@ -234,7 +234,7 @@ export function FooterOption7() {
         </div>
 
         {/* BOTTOM ROW: COPYRIGHT BAR */}
-        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-white/50">
+        <div className="pt-8 border-t border-white/15 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#EAE6DF]/60">
           <p>© {new Date().getFullYear()} CMC FILMS. All rights reserved.</p>
           
           <div className="flex items-center gap-6">
