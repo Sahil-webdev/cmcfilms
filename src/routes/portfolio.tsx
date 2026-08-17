@@ -730,33 +730,7 @@ export function WeddingStoriesPage() {
         </div>
       </section>
 
-      {/* ── SECTION 8: FINAL CALL-TO-EXPLORE SECTION ── */}
-      <section className="relative z-10 py-32 text-center text-ivory bg-[#0C0D10] overflow-hidden">
-        <img
-          src={featured}
-          alt="Every frame keeps something alive"
-          className="absolute inset-0 h-full w-full object-cover opacity-40 scale-105"
-        />
-        <div className="absolute inset-0 bg-black/50" />
 
-        <div className="relative z-10 max-w-3xl mx-auto space-y-6 px-6">
-          <span className="text-xs font-mono text-[#C5A880] uppercase tracking-[0.25em]">
-            EVERY FRAME KEEPS SOMETHING ALIVE
-          </span>
-          <h2 className="font-display text-3xl sm:text-5xl font-light text-white leading-tight">
-            “Some stories stay with you <br />
-            <em className="font-editorial italic text-[#C5A880]">long after the day is over.</em>”
-          </h2>
-          <div className="pt-4">
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#C5A880] text-cinema hover:bg-white text-xs font-mono font-semibold transition-all shadow-lg active:scale-95"
-            >
-              <span>View All Stories →</span>
-            </Link>
-          </div>
-        </div>
-      </section>
 
       {/* ── INDIVIDUAL STORY PAGE MODAL (Seamless Reader Experience) ── */}
       {activeStory && (
