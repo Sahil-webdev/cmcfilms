@@ -17,7 +17,7 @@ export function HeroMarqueeStrip() {
   const repeatedItems = [...items, ...items, ...items, ...items];
 
   return (
-    <div className="relative bg-[#FAF8F5] py-3 sm:py-3.5 border-y border-[#171512]/15 overflow-hidden select-none pointer-events-none z-10">
+    <div className="relative bg-[#FAF8F5] py-5 sm:py-6 md:py-7 border-y border-[#171512]/15 overflow-hidden select-none pointer-events-none z-10">
       <style>{`
         @keyframes marquee-hero-strip {
           0%   { transform: translateX(0); }
