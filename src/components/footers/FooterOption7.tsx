@@ -43,7 +43,7 @@ export function FooterOption7() {
               />
             </Link>
 
-            <p className="text-base sm:text-[18px] text-[#AE171E] font-light leading-relaxed max-w-md tracking-wide" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
+            <p className="text-xl sm:text-[22px] text-[#AE171E] font-normal leading-relaxed max-w-md tracking-wide" style={{ fontFamily: "'Sofia', cursive" }}>
               Capturing unscripted love stories, genuine emotions, and timeless cinema across India &amp; worldwide.
             </p>
 
