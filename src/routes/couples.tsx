@@ -2,18 +2,23 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useMemo, useEffect, useRef } from "react";
 import { ArrowUpRight, ArrowDown, ArrowLeft, ArrowRight, X } from "lucide-react";
 
-// Image Imports
-import cat1 from "@/assets/cat-1.jpg";
-import cat2 from "@/assets/cat-2.jpg";
-import cat3 from "@/assets/cat-3.jpg";
-import story1 from "@/assets/story-1.jpg";
-import story2 from "@/assets/story-2.jpg";
-import story3 from "@/assets/story-3.jpg";
-import coastal from "@/assets/coastal.jpg";
-import luxuryEditorial from "@/assets/luxury-editorial.jpg";
-import heroImg from "@/assets/hero.jpg";
-import haldi from "@/assets/haldi.jpg";
-import featured from "@/assets/featured.jpg";
+// Shoot Assets Imports (src/assets/shoot)
+import shoot1 from "@/assets/shoot/IMG_5570.JPG";
+import shoot2 from "@/assets/shoot/IMG_5603.JPG";
+import shoot3 from "@/assets/shoot/IMG_5636.JPG";
+import shoot4 from "@/assets/shoot/IMG_5712.JPG";
+import shoot5 from "@/assets/shoot/IMG_6666.JPG";
+import shoot6 from "@/assets/shoot/IMG_6668.JPG";
+import shoot7 from "@/assets/shoot/IMG_6671.JPG";
+import shoot8 from "@/assets/shoot/IMG_6672.JPG";
+import shoot9 from "@/assets/shoot/_04A4901.JPG";
+import shoot10 from "@/assets/shoot/_04A5018.JPG";
+import shoot11 from "@/assets/shoot/_04A5022.JPG";
+import shoot12 from "@/assets/shoot/_04A5023.JPG";
+import shoot13 from "@/assets/shoot/_04A5025.JPG";
+import shoot14 from "@/assets/shoot/_04A5033.JPG";
+import shoot15 from "@/assets/shoot/_04A5034.JPG";
+import shoot16 from "@/assets/shoot/_04A5036.JPG";
 
 const title = "Couple Shoots & Pre-Weddings — CMC FILMS";
 const description =
@@ -62,9 +67,9 @@ const coupleStoriesList: CoupleStoryItem[] = [
     city: "Jaipur",
     shootType: "Pre-Wedding",
     year: "2026",
-    heroImage: luxuryEditorial,
-    supportingImage: heroImg,
-    galleryImages: [featured, cat2, haldi, story1, story3, coastal],
+    heroImage: shoot1,
+    supportingImage: shoot2,
+    galleryImages: [shoot1, shoot2, shoot3, shoot4, shoot5, shoot6],
     introText:
       "Aarav and Meera wanted nothing elaborate. Just Jaipur before the streets became busy, some winter dawn light, and enough time to forget about the camera. We spent hours walking through Amer and calm haveli courtyards as early sun touched pink stone walls.",
     credits: {
@@ -82,9 +87,9 @@ const coupleStoriesList: CoupleStoryItem[] = [
     city: "Udaipur",
     shootType: "Couple Session",
     year: "2026",
-    heroImage: heroImg,
-    supportingImage: featured,
-    galleryImages: [cat1, story2, coastal, luxuryEditorial, haldi],
+    heroImage: shoot3,
+    supportingImage: shoot4,
+    galleryImages: [shoot7, shoot8, shoot9, shoot10, shoot11],
     introText:
       "Riya and Kabir shared ten years of memories before stepping onto a wooden lakeboat in Udaipur. As dusk descended over the Aravalli hills, mirror reflections on Lake Pichola created an unmatched quiet harmony.",
     credits: {
@@ -102,9 +107,9 @@ const coupleStoriesList: CoupleStoryItem[] = [
     city: "Goa",
     shootType: "Pre-Wedding",
     year: "2026",
-    heroImage: coastal,
-    supportingImage: cat1,
-    galleryImages: [story3, haldi, cat2, heroImg],
+    heroImage: shoot5,
+    supportingImage: shoot6,
+    galleryImages: [shoot12, shoot13, shoot14, shoot15, shoot16],
     introText:
       "Two weeks after their celebration, Ishita and Arjun escaped to southern Goa shores. No schedules, no heavy outfits — just barefoot ocean walks as warm sea breeze and evening waves rustled beside them.",
     credits: {
@@ -118,17 +123,17 @@ const coupleStoriesList: CoupleStoryItem[] = [
   {
     id: "cs-04",
     couple: "Saba & Usman",
-    location: "Dubai Desert, UAE",
-    city: "International",
+    location: "Mumbai Coastline",
+    city: "Mumbai",
     shootType: "Pre-Wedding",
     year: "2025",
-    heroImage: cat1,
-    supportingImage: cat3,
-    galleryImages: [luxuryEditorial, cat2, story2, coastal],
+    heroImage: shoot7,
+    supportingImage: shoot8,
+    galleryImages: [shoot1, shoot3, shoot5, shoot7, shoot9],
     introText:
-      "Standing amidst endless wind-swept Lahbab desert dunes as sunset painted the horizon in soft rose gold tones. The vast open dunes allowed them to feel like the only two souls on earth.",
+      "Standing amidst sunset waves as sea breeze painted the horizon in soft rose gold tones. The vast open shores allowed them to feel like the only two souls on earth.",
     credits: {
-      location: "Lahbab Desert, Dubai",
+      location: "Marine Drive & Bandra, Mumbai",
       photography: "Sahil Sharma",
       film: "CMC Films",
       styling: "Flowing Silk",
@@ -138,20 +143,20 @@ const coupleStoriesList: CoupleStoryItem[] = [
   {
     id: "cs-05",
     couple: "Neha & Kunal",
-    location: "Manali, Himachal Pradesh",
-    city: "International",
+    location: "Jaipur Haveli",
+    city: "Jaipur",
     shootType: "Post-Wedding",
     year: "2025",
-    heroImage: cat3,
-    supportingImage: story2,
-    galleryImages: [cat2, haldi, heroImg, coastal],
+    heroImage: shoot9,
+    supportingImage: shoot10,
+    galleryImages: [shoot2, shoot4, shoot6, shoot8, shoot10],
     introText:
-      "Quiet mountain trails surrounded by towering pine trees and soft morning mist. High elevation pine forests gave them a calm, intimate canopy far away from urban noise.",
+      "Quiet heritage haveli trails surrounded by royal archways and soft morning light. Historic stone courtyards gave them a calm, intimate canopy far away from urban noise.",
     credits: {
-      location: "Solang & Pine Forest, Manali",
+      location: "Haveli Courtyards, Jaipur",
       photography: "CMC Studio",
       film: "CMC Films",
-      styling: "Winter Knits",
+      styling: "Traditional Silk",
       year: "2025",
     },
   },
@@ -165,15 +170,15 @@ export function CoupleShootsPage() {
   const featuredCouple = coupleStoriesList[0];
 
   const collagePhotos = [
-    { src: story1, title: "Celebration Dance", alt: "Couple dancing" },
-    { src: heroImg, title: "Golden Hour Romance", alt: "Couple romantic veil moment" },
-    { src: haldi, title: "Joyful Haldi Vows", alt: "Haldi ceremony portrait" },
-    { src: cat2, title: "Confetti Celebration", alt: "Group celebration" },
-    { src: cat3, title: "Quiet Companionship", alt: "Outdoor bride portrait" },
-    { src: luxuryEditorial, title: "Royal Couple Portrait", alt: "Luxury bridal close up" },
-    { src: coastal, title: "Tropical Palms", alt: "Goa beach couple shoot" },
-    { src: story2, title: "Heritage Details", alt: "Bridal outfit architecture" },
-    { src: cat1, title: "Desert Sunset", alt: "Dubai pre-wedding" },
+    { src: shoot1, title: "Amer Dawn Vows", alt: "Real Couple Shoot 1" },
+    { src: shoot2, title: "Haveli Sunlight", alt: "Real Couple Shoot 2" },
+    { src: shoot3, title: "Royal Courtyard", alt: "Real Couple Shoot 3" },
+    { src: shoot4, title: "Sunset Reflections", alt: "Real Couple Shoot 4" },
+    { src: shoot5, title: "Palace Gardens", alt: "Real Couple Shoot 5" },
+    { src: shoot6, title: "Golden Hour Glow", alt: "Real Couple Shoot 6" },
+    { src: shoot7, title: "Barefoot Shoreline", alt: "Real Couple Shoot 7" },
+    { src: shoot8, title: "Quiet Companionship", alt: "Real Couple Shoot 8" },
+    { src: shoot9, title: "Heritage Architecture", alt: "Real Couple Shoot 9" },
   ];
 
   const filteredStories = useMemo(() => {
@@ -227,7 +232,7 @@ export function CoupleShootsPage() {
             <div className="relative w-full max-w-2xl shadow-2xl bg-white p-3 sm:p-4 rounded-[4px] border border-black/10">
               <div className="aspect-[4/3] w-full overflow-hidden rounded-[2px] bg-[#D8D3CB]">
                 <img
-                  src={luxuryEditorial}
+                  src={shoot1}
                   alt="Real Couple Shoot"
                   className="h-full w-full object-cover transition-transform duration-1000 hover:scale-105"
                 />
@@ -404,16 +409,16 @@ function IndividualCoupleStoryModal({
         {/* 2. Two Portraits Side by Side (4:5) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           <div className="aspect-[4/5] overflow-hidden bg-[#D8D3CB]">
-            <img src={story.galleryImages[1] || heroImg} alt="Gallery 2" className="h-full w-full object-cover" />
+            <img src={story.galleryImages[1] || shoot2} alt="Gallery 2" className="h-full w-full object-cover" />
           </div>
           <div className="aspect-[4/5] overflow-hidden bg-[#D8D3CB]">
-            <img src={story.galleryImages[2] || cat2} alt="Gallery 3" className="h-full w-full object-cover" />
+            <img src={story.galleryImages[2] || shoot3} alt="Gallery 3" className="h-full w-full object-cover" />
           </div>
         </div>
 
         {/* 3. One Landscape Image (3:2) */}
         <div className="aspect-[3/2] max-w-4xl mx-auto overflow-hidden bg-[#D8D3CB]">
-          <img src={story.galleryImages[3] || haldi} alt="Gallery 4" className="h-full w-full object-cover" />
+          <img src={story.galleryImages[3] || shoot4} alt="Gallery 4" className="h-full w-full object-cover" />
         </div>
 
         {/* 4. Short Text Passage */}
@@ -425,7 +430,7 @@ function IndividualCoupleStoryModal({
 
         {/* 5. One Vertical Image with Generous Whitespace */}
         <div className="max-w-md mx-auto aspect-[3/4] overflow-hidden bg-[#D8D3CB]">
-          <img src={story.galleryImages[4] || cat1} alt="Gallery 5" className="h-full w-full object-cover" />
+          <img src={story.galleryImages[4] || shoot5} alt="Gallery 5" className="h-full w-full object-cover" />
         </div>
 
         {/* 6. Three-Image Sequence */}
@@ -439,7 +444,7 @@ function IndividualCoupleStoryModal({
 
         {/* 7. Full-Width Closing Image */}
         <div className="aspect-[2/1] w-full overflow-hidden bg-[#D8D3CB]">
-          <img src={story.galleryImages[5] || coastal} alt="Closing image" className="h-full w-full object-cover" />
+          <img src={story.galleryImages[5] || shoot6} alt="Closing image" className="h-full w-full object-cover" />
         </div>
 
       </section>
