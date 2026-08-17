@@ -668,7 +668,7 @@ function CoupleStoriesCarouselSection({
       
       {/* Horizontal Line Filter Bar */}
       <div className="flex flex-wrap items-center gap-8 border-b border-[#D8D3CB] pb-4 text-xs font-mono uppercase tracking-widest">
-        {["All", "Jaipur", "Udaipur", "Goa", "Mumbai", "International"].map((loc) => (
+        {["All", "Jaipur", "Udaipur", "Goa", "Mumbai"].map((loc) => (
           <button
             key={loc}
             type="button"
