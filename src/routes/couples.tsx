@@ -19,6 +19,7 @@ import shoot13 from "@/assets/shoot/_04A5025.JPG";
 import shoot14 from "@/assets/shoot/_04A5033.JPG";
 import shoot15 from "@/assets/shoot/_04A5034.JPG";
 import shoot16 from "@/assets/shoot/_04A5036.JPG";
+import couplesHeroCustom from "@/assets/couples-hero-custom.jpg";
 
 const title = "Couple Shoots & Pre-Weddings — CMC FILMS";
 const description =
@@ -229,12 +230,12 @@ export function CoupleShootsPage() {
           
           {/* Left Column: Straight Real Couple Image Frame */}
           <div className="lg:col-span-7 flex justify-center lg:justify-start">
-            <div className="relative w-full max-w-2xl shadow-2xl bg-white p-3 sm:p-4 rounded-[4px] border border-black/10">
-              <div className="aspect-[4/3] w-full overflow-hidden rounded-[2px] bg-[#D8D3CB]">
+            <div className="relative w-full max-w-xl shadow-2xl bg-white p-3 sm:p-4 rounded-[4px] border border-black/10">
+              <div className="aspect-[3/4] w-full overflow-hidden rounded-[2px] bg-[#D8D3CB]">
                 <img
-                  src={shoot1}
+                  src={couplesHeroCustom}
                   alt="Real Couple Shoot"
-                  className="h-full w-full object-cover transition-transform duration-1000 hover:scale-105"
+                  className="h-full w-full object-cover object-top transition-transform duration-1000 hover:scale-105"
                 />
               </div>
             </div>
