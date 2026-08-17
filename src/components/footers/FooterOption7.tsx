@@ -38,7 +38,7 @@ export function FooterOption7() {
       </div>
 
       {/* ── MAIN COMPACT FOOTER CONTAINER ── */}
-      <div className="relative z-10 py-8 sm:py-10 px-6 sm:px-12 max-w-[1400px] mx-auto space-y-8">
+      <div className="relative z-10 py-8 sm:py-12 px-6 sm:px-12 max-w-[1400px] mx-auto space-y-10">
         
         {/* TOP COMPACT BRAND & ACTION STRIP */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/15 pb-6">
@@ -47,33 +47,33 @@ export function FooterOption7() {
               <img
                 src={logoImg}
                 alt="CMC FILMS - Wedding Storytellers"
-                className="h-8 sm:h-9 w-auto object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.85)]"
+                className="h-9 sm:h-11 w-auto object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.85)]"
               />
             </Link>
-            <span className="hidden md:inline-block text-xs text-white/70 font-light border-l border-white/20 pl-4">
+            <span className="hidden md:inline-block text-sm text-white/80 font-light border-l border-white/20 pl-4">
               Wedding Photography &amp; Cinematic Films • Jaipur &amp; Delhi NCR
             </span>
           </div>
 
           <Link
             to="/contact"
-            className="inline-flex items-center gap-1.5 px-5 py-2 rounded-full bg-[#D4C3A3] text-[#25322A] hover:bg-white hover:text-[#4A6254] text-xs font-mono font-bold uppercase tracking-wider transition-all shadow-md active:scale-95 cursor-pointer self-start sm:self-auto"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#D4C3A3] text-[#25322A] hover:bg-white hover:text-[#4A6254] text-xs sm:text-sm font-mono font-bold uppercase tracking-wider transition-all shadow-md active:scale-95 cursor-pointer self-start sm:self-auto"
           >
             <span>Enquire Date</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
+            <ArrowUpRight className="w-4 h-4" />
           </Link>
         </div>
 
-        {/* MIDDLE ROW: 4-COLUMN COMPACT NAVIGATION */}
+        {/* MIDDLE ROW: 4-COLUMN NAVIGATION (INCREASED FONT SIZE) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10">
           
           {/* COL 1 (3 Cols): EXPLORE */}
-          <div className="lg:col-span-3 space-y-2.5">
-            <span className="text-xs font-mono uppercase tracking-[0.2em] text-[#D4C3A3] font-bold block">
+          <div className="lg:col-span-3 space-y-3">
+            <span className="text-sm font-mono uppercase tracking-[0.2em] text-[#D4C3A3] font-bold block">
               EXPLORE
             </span>
 
-            <ul className="space-y-1.5 text-xs font-light text-white/85">
+            <ul className="space-y-2 text-sm sm:text-[15px] font-light text-white/90">
               <li>
                 <Link to="/portfolio" className="hover:text-white transition-colors">Wedding Photography</Link>
               </li>
@@ -92,7 +92,7 @@ export function FooterOption7() {
               <li>
                 <Link to="/contact" className="hover:text-white transition-colors text-[#D4C3A3] font-medium inline-flex items-center gap-1">
                   <span>Work With Us</span>
-                  <ArrowUpRight className="w-3 h-3" />
+                  <ArrowUpRight className="w-3.5 h-3.5" />
                 </Link>
               </li>
               <li>
@@ -105,12 +105,12 @@ export function FooterOption7() {
           </div>
 
           {/* COL 2 (3.5 Cols): OUR SERVICES */}
-          <div className="lg:col-span-3 space-y-2.5">
-            <span className="text-xs font-mono uppercase tracking-[0.2em] text-[#D4C3A3] font-bold block">
+          <div className="lg:col-span-3 space-y-3">
+            <span className="text-sm font-mono uppercase tracking-[0.2em] text-[#D4C3A3] font-bold block">
               OUR SERVICES
             </span>
 
-            <div className="grid grid-cols-2 gap-x-3 gap-y-1.5 text-xs font-light text-white/85">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm sm:text-[15px] font-light text-white/90">
               <Link to="/portfolio" className="hover:text-white transition-colors">Wedding</Link>
               <Link to="/contact" className="hover:text-white transition-colors">Maternity Shoot</Link>
               <Link to="/couples" className="hover:text-white transition-colors">Pre-wedding</Link>
@@ -125,55 +125,55 @@ export function FooterOption7() {
           </div>
 
           {/* COL 3 (3 Cols): STUDIO */}
-          <div className="lg:col-span-3 space-y-2.5">
-            <span className="text-xs font-mono uppercase tracking-[0.2em] text-[#D4C3A3] font-bold block">
+          <div className="lg:col-span-3 space-y-3">
+            <span className="text-sm font-mono uppercase tracking-[0.2em] text-[#D4C3A3] font-bold block">
               STUDIO
             </span>
 
-            <div className="space-y-1.5 text-xs text-white/85 font-light leading-relaxed">
-              <p className="font-semibold text-white">CMC Films Studio</p>
+            <div className="space-y-2 text-sm sm:text-[15px] text-white/90 font-light leading-relaxed">
+              <p className="font-semibold text-white text-base">CMC Films Studio</p>
               <div className="flex items-start gap-2">
-                <MapPin className="w-3.5 h-3.5 text-[#D4C3A3] shrink-0 mt-0.5" />
+                <MapPin className="w-4 h-4 text-[#D4C3A3] shrink-0 mt-0.5" />
                 <span>Jaipur &amp; Delhi NCR, India</span>
               </div>
               <div className="flex items-center gap-2">
-                <Phone className="w-3.5 h-3.5 text-[#D4C3A3] shrink-0" />
+                <Phone className="w-4 h-4 text-[#D4C3A3] shrink-0" />
                 <a href="tel:+919999999999" className="hover:text-[#D4C3A3] transition-colors font-mono">+91 99999 99999</a>
               </div>
               <div className="flex items-center gap-2">
-                <Mail className="w-3.5 h-3.5 text-[#D4C3A3] shrink-0" />
+                <Mail className="w-4 h-4 text-[#D4C3A3] shrink-0" />
                 <a href="mailto:hello@cmcfilms.studio" className="hover:text-[#D4C3A3] transition-colors font-mono">hello@cmcfilms.studio</a>
               </div>
-              <div className="pt-0.5">
-                <Link to="/contact" className="text-[#D4C3A3] font-mono text-[11px] uppercase tracking-wider font-semibold hover:underline inline-flex items-center gap-1">
+              <div className="pt-1">
+                <Link to="/contact" className="text-[#D4C3A3] font-mono text-xs uppercase tracking-wider font-semibold hover:underline inline-flex items-center gap-1">
                   <span>Enquire / Contact us</span>
-                  <ArrowUpRight className="w-3 h-3" />
+                  <ArrowUpRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
             </div>
           </div>
 
           {/* COL 4 (2.5 Cols): CONNECT */}
-          <div className="lg:col-span-2 space-y-2.5">
-            <span className="text-xs font-mono uppercase tracking-[0.2em] text-[#D4C3A3] font-bold block">
+          <div className="lg:col-span-2 space-y-3">
+            <span className="text-sm font-mono uppercase tracking-[0.2em] text-[#D4C3A3] font-bold block">
               CONNECT
             </span>
 
-            <div className="flex flex-col gap-1.5 text-xs font-light text-white/85">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-1.5">
-                <Instagram className="w-3.5 h-3.5 text-[#D4C3A3]" />
+            <div className="flex flex-col gap-2 text-sm sm:text-[15px] font-light text-white/90">
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2">
+                <Instagram className="w-4 h-4 text-[#D4C3A3]" />
                 <span>Instagram</span>
               </a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-1.5">
-                <Youtube className="w-3.5 h-3.5 text-[#D4C3A3]" />
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2">
+                <Youtube className="w-4 h-4 text-[#D4C3A3]" />
                 <span>YouTube</span>
               </a>
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-1.5">
-                <Facebook className="w-3.5 h-3.5 text-[#D4C3A3]" />
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2">
+                <Facebook className="w-4 h-4 text-[#D4C3A3]" />
                 <span>Facebook</span>
               </a>
-              <a href="https://wa.me/919999999999" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors text-emerald-300 font-mono font-semibold flex items-center gap-1.5 pt-0.5">
-                <WhatsAppIcon className="w-3.5 h-3.5" />
+              <a href="https://wa.me/919999999999" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors text-emerald-300 font-mono font-semibold flex items-center gap-2 pt-1">
+                <WhatsAppIcon className="w-4 h-4" />
                 <span>WhatsApp Direct</span>
               </a>
             </div>
@@ -182,10 +182,10 @@ export function FooterOption7() {
         </div>
 
         {/* BOTTOM ROW: COPYRIGHT BAR */}
-        <div className="pt-4 border-t border-white/15 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] font-mono text-white/70">
+        <div className="pt-6 border-t border-white/15 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs sm:text-sm font-mono text-white/80">
           <p>© {new Date().getFullYear()} CMC FILMS. All rights reserved.</p>
           
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-5">
             <Link to="/contact" className="hover:text-white transition-colors">Privacy Policy</Link>
             <Link to="/contact" className="hover:text-white transition-colors">Terms of Service</Link>
           </div>
