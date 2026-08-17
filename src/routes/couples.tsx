@@ -230,8 +230,8 @@ export function CoupleShootsPage() {
           
           {/* Left Column: Straight Real Couple Image Frame */}
           <div className="lg:col-span-7 flex justify-center lg:justify-start">
-            <div className="relative w-full max-w-xl shadow-2xl bg-white p-3 sm:p-4 rounded-[4px] border border-black/10">
-              <div className="aspect-[3/4] w-full overflow-hidden rounded-[2px] bg-[#D8D3CB]">
+            <div className="relative w-full max-w-md sm:max-w-lg shadow-2xl bg-white p-3 sm:p-4 rounded-[4px] border border-black/10">
+              <div className="aspect-[4/4.2] max-h-[520px] w-full overflow-hidden rounded-[2px] bg-[#D8D3CB]">
                 <img
                   src={couplesHeroCustom}
                   alt="Real Couple Shoot"
