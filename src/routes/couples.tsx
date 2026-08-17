@@ -344,33 +344,7 @@ export function CoupleShootsPage() {
         onSelectStory={setActiveStoryModal}
       />
 
-      {/* ── 7. STORY INDEX (Compact 2-Column Archive) ── */}
-      <section className="py-24 px-6 sm:px-12 md:px-16 max-w-[1440px] mx-auto border-b border-[#D8D3CB] space-y-12">
-        <div className="border-b border-[#D8D3CB] pb-4">
-          <h2 className="font-editorial text-4xl text-[#171717]">More Stories</h2>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {coupleStoriesList.map((story) => (
-            <div
-              key={story.id}
-              onClick={() => setActiveStoryModal(story)}
-              className="flex items-center gap-6 cursor-pointer group border-b border-[#D8D3CB]/60 pb-6"
-            >
-              <div className="w-24 h-24 shrink-0 overflow-hidden bg-[#D8D3CB]">
-                <img src={story.heroImage} alt={story.couple} className="h-full w-full object-cover" />
-              </div>
-              <div className="flex-1 flex justify-between items-center">
-                <div>
-                  <h3 className="font-editorial text-2xl text-[#171717] group-hover:text-[#68645E] transition-colors">{story.couple}</h3>
-                  <p className="text-xs font-mono uppercase tracking-widest text-[#68645E] mt-0.5">{story.location}</p>
-                </div>
-                <span className="text-xs font-mono uppercase tracking-widest text-[#171717]">View →</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
 
       {/* ── 8. FINAL CTA (Understated 70% Width Layout) ── */}
       <section className="py-32 px-6 sm:px-12 md:px-16 max-w-[1440px] mx-auto">
