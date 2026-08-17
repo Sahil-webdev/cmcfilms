@@ -73,13 +73,71 @@ export function FooterOption7() {
         {/* MIDDLE ROW: 4-COLUMN STRUCTURED NAVIGATION */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12">
           
-          {/* COL 1 (4 Cols): Contact Info & Studio Location */}
-          <div className="lg:col-span-4 space-y-4">
+          {/* COL 1 (3 Cols): EXPLORE */}
+          <div className="lg:col-span-3 space-y-4">
             <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#D4C3A3] font-bold block">
-              STUDIO LOCATION
+              EXPLORE
+            </span>
+
+            <ul className="space-y-2.5 text-xs sm:text-sm font-light text-white/85">
+              <li>
+                <Link to="/portfolio" className="hover:text-white transition-colors">Wedding Photography</Link>
+              </li>
+              <li>
+                <Link to="/films" className="hover:text-white transition-colors">Wedding Films</Link>
+              </li>
+              <li>
+                <Link to="/portfolio" className="hover:text-white transition-colors">Real Wedding Stories</Link>
+              </li>
+              <li>
+                <Link to="/about" className="hover:text-white transition-colors">The CMC Experience</Link>
+              </li>
+              <li>
+                <Link to="/about" className="hover:text-white transition-colors">About Us</Link>
+              </li>
+              <li>
+                <Link to="/contact" className="hover:text-white transition-colors text-[#D4C3A3] font-medium inline-flex items-center gap-1">
+                  <span>Work With Us</span>
+                  <ArrowUpRight className="w-3 h-3" />
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="hover:text-white transition-colors">FAQs</Link>
+              </li>
+              <li>
+                <Link to="/contact" className="hover:text-white transition-colors">Contact</Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* COL 2 (3.5 Cols): OUR SERVICES (2-Column Grid for clean layout) */}
+          <div className="lg:col-span-3 space-y-4">
+            <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#D4C3A3] font-bold block">
+              OUR SERVICES
+            </span>
+
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2.5 text-xs sm:text-sm font-light text-white/85">
+              <Link to="/portfolio" className="hover:text-white transition-colors">Wedding</Link>
+              <Link to="/contact" className="hover:text-white transition-colors">Maternity Shoot</Link>
+              <Link to="/couples" className="hover:text-white transition-colors">Pre-wedding</Link>
+              <Link to="/contact" className="hover:text-white transition-colors">New Born Baby Shoot</Link>
+              <Link to="/couples" className="hover:text-white transition-colors">Engagement</Link>
+              <Link to="/contact" className="hover:text-white transition-colors">Birthday Party</Link>
+              <Link to="/contact" className="hover:text-white transition-colors">Baby Shower</Link>
+              <Link to="/contact" className="hover:text-white transition-colors">Kitty Party</Link>
+              <Link to="/contact" className="hover:text-white transition-colors">Product Shoot</Link>
+              <Link to="/contact" className="hover:text-white transition-colors">Corporate</Link>
+            </div>
+          </div>
+
+          {/* COL 3 (2.5 Cols): STUDIO */}
+          <div className="lg:col-span-3 space-y-4">
+            <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#D4C3A3] font-bold block">
+              STUDIO
             </span>
 
             <div className="space-y-3 text-xs sm:text-sm text-white/90 font-light leading-relaxed">
+              <p className="font-semibold text-white">CMC Films Studio</p>
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#D4C3A3] shrink-0 mt-0.5" />
                 <span>Jaipur &amp; Delhi NCR, Rajasthan, India</span>
@@ -92,141 +150,68 @@ export function FooterOption7() {
                 <Mail className="w-4 h-4 text-[#D4C3A3] shrink-0" />
                 <a href="mailto:hello@cmcfilms.studio" className="hover:text-[#D4C3A3] transition-colors font-mono">hello@cmcfilms.studio</a>
               </div>
-            </div>
-
-            {/* Direct WhatsApp Chat Link */}
-            <div className="pt-2">
-              <a
-                href="https://wa.me/919999999999"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-[#D4C3A3] text-xs font-mono font-semibold hover:bg-white hover:text-[#4A6254] transition-all"
-              >
-                <WhatsAppIcon className="w-4 h-4" />
-                <span>Chat Directly on WhatsApp</span>
-              </a>
-            </div>
-          </div>
-
-          {/* COL 2 (2.5 Cols): Navigation Links */}
-          <div className="lg:col-span-3 space-y-4">
-            <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#D4C3A3] font-bold block">
-              NAVIGATION
-            </span>
-
-            <ul className="space-y-2.5 text-xs sm:text-sm font-light text-white/85">
-              <li>
-                <Link to="/" className="hover:text-white transition-colors">Home</Link>
-              </li>
-              <li>
-                <Link to="/portfolio" className="hover:text-white transition-colors">Wedding Stories</Link>
-              </li>
-              <li>
-                <Link to="/films" className="hover:text-white transition-colors">Wedding Films</Link>
-              </li>
-              <li>
-                <Link to="/couples" className="hover:text-white transition-colors">Couple Shoots</Link>
-              </li>
-              <li>
-                <Link to="/about" className="hover:text-white transition-colors">About Studio</Link>
-              </li>
-              <li>
-                <Link to="/contact" className="hover:text-white transition-colors">Contact Us</Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* COL 3 (2.5 Cols): Services */}
-          <div className="lg:col-span-2 space-y-4">
-            <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#D4C3A3] font-bold block">
-              SERVICES
-            </span>
-
-            <ul className="space-y-2.5 text-xs sm:text-sm font-light text-white/85">
-              <li>
-                <Link to="/portfolio" className="hover:text-white transition-colors">Wedding Films</Link>
-              </li>
-              <li>
-                <Link to="/couples" className="hover:text-white transition-colors">Pre-Wedding Shoots</Link>
-              </li>
-              <li>
-                <Link to="/portfolio" className="hover:text-white transition-colors">Candid Photography</Link>
-              </li>
-              <li>
-                <Link to="/couples" className="hover:text-white transition-colors">Couple Sessions</Link>
-              </li>
-              <li>
-                <Link to="/portfolio" className="hover:text-white transition-colors">Destination Weddings</Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* COL 4 (3 Cols): Newsletter & Social Links */}
-          <div className="lg:col-span-3 space-y-4">
-            <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#D4C3A3] font-bold block">
-              STAY CONNECTED
-            </span>
-
-            <p className="text-xs text-white/80 font-light leading-relaxed">
-              Subscribe to receive wedding inspiration and newly released couple stories.
-            </p>
-
-            <form onSubmit={handleSubscribe} className="space-y-2">
-              <div className="flex items-center bg-white/10 border border-white/20 focus-within:border-[#D4C3A3] rounded-full px-4 py-2 transition-colors">
-                <input
-                  type="email"
-                  required
-                  placeholder="Enter your email address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-transparent text-xs text-white placeholder-white/50 focus:outline-none font-sans"
-                />
-                <button
-                  type="submit"
-                  aria-label="Subscribe"
-                  className="text-[#D4C3A3] hover:text-white transition-colors p-1 cursor-pointer"
-                >
-                  <ArrowUpRight className="w-4 h-4" />
-                </button>
+              <div className="pt-1">
+                <Link to="/contact" className="text-[#D4C3A3] font-mono text-xs uppercase tracking-wider font-semibold hover:underline inline-flex items-center gap-1">
+                  <span>Enquire / Contact us</span>
+                  <ArrowUpRight className="w-3 h-3" />
+                </Link>
               </div>
+            </div>
+          </div>
 
-              {subscribed && (
-                <div className="flex items-center gap-1.5 text-xs text-[#D4C3A3] font-mono">
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  <span>Thank you for subscribing!</span>
+          {/* COL 4 (3 Cols): CONNECT & JOIN CREW */}
+          <div className="lg:col-span-3 space-y-4">
+            <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#D4C3A3] font-bold block">
+              CONNECT
+            </span>
+
+            <div className="flex flex-col gap-2 text-xs sm:text-sm font-light text-white/85">
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2">
+                <Instagram className="w-4 h-4 text-[#D4C3A3]" />
+                <span>Instagram</span>
+              </a>
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2">
+                <Youtube className="w-4 h-4 text-[#D4C3A3]" />
+                <span>YouTube</span>
+              </a>
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2">
+                <Facebook className="w-4 h-4 text-[#D4C3A3]" />
+                <span>Facebook</span>
+              </a>
+              <a href="https://wa.me/919999999999" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors text-emerald-300 font-mono font-semibold flex items-center gap-2 pt-1">
+                <WhatsAppIcon className="w-4 h-4" />
+                <span>WhatsApp Direct</span>
+              </a>
+            </div>
+
+            {/* Newsletter Subscription */}
+            <div className="pt-2">
+              <form onSubmit={handleSubscribe} className="space-y-2">
+                <div className="flex items-center bg-white/10 border border-white/20 focus-within:border-[#D4C3A3] rounded-full px-4 py-2 transition-colors">
+                  <input
+                    type="email"
+                    required
+                    placeholder="Enter your email address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full bg-transparent text-xs text-white placeholder-white/50 focus:outline-none font-sans"
+                  />
+                  <button
+                    type="submit"
+                    aria-label="Subscribe"
+                    className="text-[#D4C3A3] hover:text-white transition-colors p-1 cursor-pointer"
+                  >
+                    <ArrowUpRight className="w-4 h-4" />
+                  </button>
                 </div>
-              )}
-            </form>
 
-            {/* Social Icons Bar */}
-            <div className="pt-2 flex items-center gap-3 text-white">
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#D4C3A3] hover:text-[#25322A] flex items-center justify-center transition-all cursor-pointer border border-white/15"
-              >
-                <Instagram className="w-4 h-4" />
-              </a>
-              <a
-                href="https://youtube.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="YouTube"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#D4C3A3] hover:text-[#25322A] flex items-center justify-center transition-all cursor-pointer border border-white/15"
-              >
-                <Youtube className="w-4 h-4" />
-              </a>
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Facebook"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#D4C3A3] hover:text-[#25322A] flex items-center justify-center transition-all cursor-pointer border border-white/15"
-              >
-                <Facebook className="w-4 h-4" />
-              </a>
+                {subscribed && (
+                  <div className="flex items-center gap-1.5 text-xs text-[#D4C3A3] font-mono">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    <span>Thank you for subscribing!</span>
+                  </div>
+                )}
+              </form>
             </div>
 
           </div>
