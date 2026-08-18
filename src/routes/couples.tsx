@@ -244,11 +244,11 @@ export function CoupleShootsPage() {
             {/* Dual-tone Title */}
             <div>
               <h1
-                className="font-normal leading-[0.9] text-6xl sm:text-7xl md:text-8xl lg:text-9xl -ml-2 drop-shadow-sm select-none"
+                className="font-normal leading-[0.85] text-6xl sm:text-7xl md:text-8xl lg:text-9xl select-none"
                 style={{ fontFamily: "'Alex Brush', cursive" }}
               >
-                <span className="text-[#922A2F] inline-block mr-3">Couple</span>
-                <span className="text-[#8A8072] inline-block">Shoots</span>
+                <span className="text-[#922A2F] block">Couple</span>
+                <span className="text-[#8A8072] block pl-[0.8em] sm:pl-[0.85em] md:pl-[0.9em] -mt-2 sm:-mt-4 md:-mt-6">Shoots</span>
               </h1>
             </div>
 
