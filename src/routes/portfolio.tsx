@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
-import { ArrowRight, ArrowDown, Clock, Calendar, User, X, BookOpen, Sparkles, Send, CheckCircle2 } from "lucide-react";
+import { ArrowRight, ArrowDown, Clock, Calendar, X } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 
 // Image Imports
@@ -41,12 +41,11 @@ export interface BlogPost {
   id: string;
   slug: string;
   title: string;
-  category: "Real Wedding Stories" | "Pre-Wedding & Couple Shoots" | "Bridal Guide & Tips" | "Destination Venues";
+  category: "Real Weddings" | "Couple Shoots" | "Bridal Guides" | "Destinations";
   date: string;
   readTime: string;
   author: {
     name: string;
-    role: string;
     avatar: string;
   };
   coverImage: string;
@@ -67,13 +66,12 @@ const blogPosts: BlogPost[] = [
   {
     id: "b1",
     slug: "winter-wedding-in-jaipur-aarav-meera",
-    title: "A Winter Wedding in Jaipur: Traditions, Emotions & Royal Heritage",
-    category: "Real Wedding Stories",
+    title: "A Winter Wedding in Jaipur: Traditions & Royal Heritage",
+    category: "Real Weddings",
     date: "14 Feb 2026",
     readTime: "6 min read",
     author: {
       name: "Sahil Sharma",
-      role: "Lead Creative Director",
       avatar: clientPortrait,
     },
     coverImage: luxuryEditorial,
@@ -94,11 +92,6 @@ const blogPosts: BlogPost[] = [
           body: "Sacred Vedic chants echoed around the holy fire as dusk illuminated ancient pink sandstone arches. Our cinema crew utilized ultra-low-light prime lenses to capture the subtle tears and laughter without distracting heat lamps.",
           image: heroImg,
         },
-        {
-          heading: "Editorial Photography Insights",
-          body: "When documenting high-heritage Rajasthani weddings, preserving raw skin tones against rich crimson bridal lehengas and gold zari embroidery requires careful dynamic range management.",
-          image: story1,
-        },
       ],
       conclusion:
         "A wedding is more than a single day; it is a priceless heritage archive passed down through generations. Preserving how it felt is our lifelong commitment.",
@@ -108,12 +101,11 @@ const blogPosts: BlogPost[] = [
     id: "b2",
     slug: "why-pre-wedding-couple-shoots-matter",
     title: "Why Pre-Wedding Couple Shoots Are Essential for Modern Couples",
-    category: "Pre-Wedding & Couple Shoots",
+    category: "Couple Shoots",
     date: "02 Feb 2026",
     readTime: "5 min read",
     author: {
       name: "CMC Editorial Team",
-      role: "Visual Storytellers",
       avatar: cat2,
     },
     coverImage: coastal,
@@ -143,12 +135,11 @@ const blogPosts: BlogPost[] = [
     id: "b3",
     slug: "complete-wedding-photography-timeline-guide",
     title: "The Ultimate Photography Timeline Guide for a Stress-Free Wedding Day",
-    category: "Bridal Guide & Tips",
+    category: "Bridal Guides",
     date: "20 Jan 2026",
     readTime: "8 min read",
     author: {
       name: "Sahil Sharma",
-      role: "Lead Creative Director",
       avatar: clientPortrait,
     },
     coverImage: featured,
@@ -177,13 +168,12 @@ const blogPosts: BlogPost[] = [
   {
     id: "b4",
     slug: "destination-nikah-in-dubai-saba-usman",
-    title: "Destination Nikah in Dubai: Sunset Light, Desert Mist & Elegance",
-    category: "Destination Venues",
+    title: "Destination Nikah in Dubai: Sunset Light & Desert Romance",
+    category: "Destinations",
     date: "10 Jan 2026",
     readTime: "7 min read",
     author: {
       name: "CMC Editorial Team",
-      role: "Visual Storytellers",
       avatar: story2,
     },
     coverImage: cat1,
@@ -199,11 +189,6 @@ const blogPosts: BlogPost[] = [
           image: luxuryEditorial,
           quote: "The photos captured the quiet dignity and grandeur of our desert Nikah.",
         },
-        {
-          heading: "Waterfront Canopy Ceremony",
-          body: "Under a mirror and floral canopy overlooking the Gulf skyline, sacred promises were spoken in quiet beauty as family members looked on with tears of happiness.",
-          image: story1,
-        },
       ],
       conclusion:
         "Destination celebrations thrive when local geography and architecture are woven directly into the visual film narrative.",
@@ -212,13 +197,12 @@ const blogPosts: BlogPost[] = [
   {
     id: "b5",
     slug: "intimate-vs-royal-grand-weddings",
-    title: "Intimate vs. Grand Royal Weddings: Finding Your Signature Visual Style",
-    category: "Bridal Guide & Tips",
+    title: "Intimate vs. Royal Weddings: Finding Your Visual Style",
+    category: "Bridal Guides",
     date: "28 Dec 2025",
     readTime: "4 min read",
     author: {
       name: "Sahil Sharma",
-      role: "Lead Creative Director",
       avatar: clientPortrait,
     },
     coverImage: haldi,
@@ -242,12 +226,11 @@ const blogPosts: BlogPost[] = [
     id: "b6",
     slug: "royal-palace-weddings-in-udaipur",
     title: "The Magic of Lake Pichola: Royal Palace Weddings in Udaipur",
-    category: "Destination Venues",
+    category: "Destinations",
     date: "15 Dec 2025",
     readTime: "6 min read",
     author: {
       name: "CMC Editorial Team",
-      role: "Visual Storytellers",
       avatar: cat3,
     },
     coverImage: story3,
@@ -271,60 +254,36 @@ const blogPosts: BlogPost[] = [
 ];
 
 export function WeddingStoriesPage() {
-  const [selectedCategory, setSelectedCategory] = useState<string>("All Stories");
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [activePost, setActivePost] = useState<BlogPost | null>(null);
-  const [emailInput, setEmailInput] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
 
-  const categories = [
-    "All Stories",
-    "Real Wedding Stories",
-    "Pre-Wedding & Couple Shoots",
-    "Bridal Guide & Tips",
-    "Destination Venues",
-  ];
+  const categories = ["All", "Real Weddings", "Couple Shoots", "Bridal Guides", "Destinations"];
 
   const filteredPosts = useMemo(() => {
-    if (selectedCategory === "All Stories") return blogPosts;
+    if (selectedCategory === "All") return blogPosts;
     return blogPosts.filter((p) => p.category === selectedCategory);
   }, [selectedCategory]);
 
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (emailInput.trim()) {
-      setSubscribed(true);
-      setEmailInput("");
-    }
-  };
-
   return (
-    <main className="bg-[#FAF8F5] text-[#1A1A1A] font-sans selection:bg-[#C5A880]/20 relative overflow-hidden">
-      {/* ── SUBTLE AMBIENT BACKGROUND SYSTEM ── */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-30">
-        <div className="absolute top-1/4 -left-40 w-[500px] h-[500px] bg-[#EFECE6] rounded-full blur-[160px]" />
-        <div className="absolute bottom-1/3 -right-40 w-[500px] h-[500px] bg-[#F7F2EF] rounded-full blur-[160px]" />
-      </div>
-
+    <main className="bg-[#FAF8F5] text-[#261E1E] font-sans selection:bg-[#93191E]/20 relative overflow-hidden">
+      
       {/* ── 1. HERO SECTION (100% PRESERVED EXACTLY AS IS) ── */}
       <section className="relative z-10 h-[100svh] min-h-[640px] w-full overflow-hidden flex flex-col justify-between p-6 md:p-14 border-b border-black/5">
-        {/* Full-Bleed Background Image */}
         <div className="absolute inset-0 overflow-hidden z-0">
           <img
             src={featured}
             alt="Wedding Stories Background"
             className="h-full w-full object-cover object-center scale-105 transition-transform duration-[10000ms]"
           />
-          {/* Fog Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5]/75 via-[#FAF8F5]/20 via-20% to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#FAF8F5]/30 via-transparent to-transparent" />
         </div>
 
-        {/* Large Bold High-Contrast Hero Typography */}
         <div className="relative z-10 my-auto max-w-4xl space-y-6">
           <Reveal>
             <h1 className="font-display text-[clamp(4rem,11.5vw,9.5rem)] leading-[0.85] font-extrabold text-[#0C0D10] tracking-tight select-none drop-shadow-sm">
               WEDDING <br />
-              <em className="font-editorial italic text-[#A67B2E] font-bold drop-shadow-sm">
+              <em className="font-editorial italic text-[#93191E] font-bold drop-shadow-sm">
                 STORIES
               </em>
             </h1>
@@ -339,11 +298,10 @@ export function WeddingStoriesPage() {
           </Reveal>
         </div>
 
-        {/* Bottom Scroll Indicator */}
         <div className="relative z-10 flex justify-between items-end text-xs font-mono text-[#1A1A1A]/60 border-t border-black/10 pt-4">
           <span>REAL SHOOT DIARIES & JOURNAL</span>
           <span className="flex items-center gap-2">
-            Scroll to read journal <ArrowDown className="w-3.5 h-3.5 text-[#A67B2E]" />
+            Scroll to read journal <ArrowDown className="w-3.5 h-3.5 text-[#93191E]" />
           </span>
         </div>
       </section>
@@ -351,10 +309,9 @@ export function WeddingStoriesPage() {
       {/* ── 2. FEATURED STORY BANNER (PRESERVED EXACTLY AS IS) ── */}
       <section className="relative z-10 py-16 md:py-24 px-4 md:px-10 max-w-[1700px] mx-auto border-b border-black/5">
         <div className="relative mx-auto w-full md:w-[92%]">
-          {/* Large Cinematic Image */}
           <div
             onClick={() => setActivePost(blogPosts[0])}
-            className="aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden rounded-3xl cursor-pointer bg-beige shadow-lg group"
+            className="aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden rounded-3xl cursor-pointer bg-[#EFECE6] shadow-lg group"
           >
             <img
               src={blogPosts[0].coverImage}
@@ -363,61 +320,59 @@ export function WeddingStoriesPage() {
             />
           </div>
 
-          {/* Floating Text Panel */}
           <div
             onClick={() => setActivePost(blogPosts[0])}
-            className="mt-6 md:mt-0 md:absolute md:bottom-8 md:right-8 lg:bottom-12 lg:right-12 md:max-w-md bg-[#FDFBF7] p-6 sm:p-8 rounded-2xl border border-black/10 shadow-xl cursor-pointer hover:border-[#A67B2E] transition-all space-y-3 z-20"
+            className="mt-6 md:mt-0 md:absolute md:bottom-8 md:right-8 lg:bottom-12 lg:right-12 md:max-w-md bg-[#FDFBF7] p-6 sm:p-8 rounded-2xl border border-black/10 shadow-xl cursor-pointer hover:border-[#93191E] transition-all space-y-3 z-20"
           >
-            <span className="label-xs text-[#A67B2E] uppercase tracking-widest font-mono">
+            <span className="label-xs text-[#93191E] uppercase tracking-widest font-mono">
               FEATURED STORY
             </span>
 
-            <h3 className="font-display text-2.5xl sm:text-3xl text-[#1A1A1A] font-light">
+            <h3 className="font-display text-2.5xl sm:text-3xl text-[#261E1E] font-light">
               Aarav & Meera
             </h3>
 
-            <p className="font-editorial text-base italic text-[#A67B2E] font-light">
+            <p className="font-editorial text-base italic text-[#93191E] font-normal">
               "{blogPosts[0].title}"
             </p>
 
-            <p className="text-xs font-mono text-black/60">
+            <p className="text-xs font-mono text-[#261E1E]/60">
               {blogPosts[0].category} · Jaipur, Rajasthan
             </p>
 
-            <p className="text-xs text-black/80 font-sans font-light leading-relaxed">
+            <p className="text-xs text-[#261E1E]/80 font-sans font-light leading-relaxed">
               "{blogPosts[0].excerpt}"
             </p>
 
             <div className="pt-2">
-              <span className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-[#1A1A1A] hover:text-[#A67B2E] transition-colors">
-                <span>Read Full Article</span>
-                <ArrowRight className="w-3.5 h-3.5 text-[#A67B2E]" />
+              <span className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-[#261E1E] hover:text-[#93191E] transition-colors">
+                <span>Read Story</span>
+                <ArrowRight className="w-3.5 h-3.5 text-[#93191E]" />
               </span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── 3. WEDDING JOURNAL / BLOG SECTION (NEW EDITORIAL BLOG LAYOUT) ── */}
-      <section className="relative z-10 py-16 md:py-24 px-6 md:px-14 max-w-[1700px] mx-auto space-y-12">
-        {/* Section Header & Category Filter Pills */}
-        <div className="space-y-6 border-b border-black/10 pb-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
-              <span className="text-xs font-mono text-[#A67B2E] uppercase tracking-[0.25em]">
-                EDITORIAL JOURNAL & GUIDES
-              </span>
-              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-light text-[#1A1A1A] mt-1">
-                Latest <em className="font-editorial italic text-[#A67B2E] font-normal">Articles & Stories</em>
-              </h2>
-            </div>
-            <p className="text-xs sm:text-sm text-black/60 font-sans font-light max-w-md">
-              In-depth wedding stories, professional photography guides, location spotlights, and romantic inspirations.
+      {/* ── 3. CLEAN & MINIMALIST BLOG SECTION ── */}
+      <section className="relative z-10 py-16 md:py-24 px-6 md:px-14 max-w-[1500px] mx-auto space-y-12">
+        
+        {/* Minimal Header & Filter Tabs */}
+        <div className="space-y-6 text-center max-w-2xl mx-auto">
+          <div className="space-y-2">
+            <span className="text-[11px] font-mono text-[#93191E] uppercase tracking-[0.25em]">
+              THE JOURNAL
+            </span>
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-light text-[#261E1E]">
+              Wedding Stories & <em className="font-editorial italic text-[#93191E] font-normal">Diaries</em>
+            </h2>
+            <p className="text-xs sm:text-sm text-[#261E1E]/70 font-sans font-light">
+              Simple, authentic, and beautifully written stories from our visual archives.
             </p>
           </div>
 
-          {/* Category Filter Pills */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+          {/* Clean Category Filter Tabs */}
+          <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
             {categories.map((cat) => {
               const active = selectedCategory === cat;
               return (
@@ -425,10 +380,10 @@ export function WeddingStoriesPage() {
                   key={cat}
                   type="button"
                   onClick={() => setSelectedCategory(cat)}
-                  className={`px-4 py-2 rounded-full text-xs font-mono transition-all whitespace-nowrap cursor-pointer ${
+                  className={`px-4 py-1.5 rounded-full text-xs font-mono transition-all cursor-pointer ${
                     active
-                      ? "bg-[#1A1A1A] text-white shadow-sm"
-                      : "bg-white text-black/70 hover:bg-[#EFECE6] border border-black/5"
+                      ? "bg-[#93191E] text-white shadow-sm"
+                      : "bg-white text-[#261E1E]/70 hover:text-[#261E1E] border border-black/10"
                   }`}
                 >
                   {cat}
@@ -438,70 +393,54 @@ export function WeddingStoriesPage() {
           </div>
         </div>
 
-        {/* Blog Post Cards Grid (3 Columns on Desktop) */}
+        {/* Clean Editorial Blog Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
           {filteredPosts.map((post) => (
             <article
               key={post.id}
               onClick={() => setActivePost(post)}
-              className="group bg-white rounded-3xl overflow-hidden border border-black/10 shadow-sm hover:shadow-xl hover:border-[#A67B2E]/50 transition-all duration-300 flex flex-col justify-between cursor-pointer"
+              className="group bg-white p-4 sm:p-5 rounded-2xl border border-black/10 shadow-sm hover:shadow-md hover:border-[#93191E]/40 transition-all duration-300 flex flex-col justify-between cursor-pointer space-y-4"
             >
-              <div>
-                {/* Image Container */}
-                <div className="relative aspect-[16/10] w-full overflow-hidden bg-beige">
+              <div className="space-y-4">
+                {/* Image */}
+                <div className="aspect-[16/10] w-full overflow-hidden rounded-xl bg-[#EFECE6]">
                   <img
                     src={post.coverImage}
                     alt={post.title}
                     loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+                    className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />
-                  {/* Category Pill Tag */}
-                  <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-[#1A1A1A]/85 backdrop-blur-md text-white text-[11px] font-mono tracking-wider">
-                    {post.category}
-                  </span>
                 </div>
 
-                {/* Content Body */}
-                <div className="p-6 space-y-3">
-                  {/* Meta Info */}
-                  <div className="flex items-center gap-4 text-[11px] font-mono text-black/50">
-                    <span className="inline-flex items-center gap-1">
-                      <Calendar className="w-3 h-3 text-[#A67B2E]" />
-                      {post.date}
-                    </span>
-                    <span className="inline-flex items-center gap-1">
-                      <Clock className="w-3 h-3 text-[#A67B2E]" />
-                      {post.readTime}
-                    </span>
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="font-display text-xl sm:text-2xl text-[#1A1A1A] font-normal leading-snug group-hover:text-[#A67B2E] transition-colors">
-                    {post.title}
-                  </h3>
-
-                  {/* Excerpt */}
-                  <p className="text-xs text-black/70 font-sans font-light leading-relaxed line-clamp-3">
-                    {post.excerpt}
-                  </p>
+                {/* Sub-meta */}
+                <div className="flex items-center justify-between text-[11px] font-mono text-[#93191E]">
+                  <span className="uppercase tracking-wider font-semibold">{post.category}</span>
+                  <span className="text-[#261E1E]/50">{post.readTime}</span>
                 </div>
+
+                {/* Title */}
+                <h3 className="font-display text-xl sm:text-2xl text-[#261E1E] font-normal leading-snug group-hover:text-[#93191E] transition-colors">
+                  {post.title}
+                </h3>
+
+                {/* Excerpt */}
+                <p className="text-xs text-[#261E1E]/75 font-sans font-light leading-relaxed line-clamp-2">
+                  {post.excerpt}
+                </p>
               </div>
 
-              {/* Card Footer: Author & Read Link */}
-              <div className="px-6 pb-6 pt-2 border-t border-black/5 flex items-center justify-between">
-                <div className="flex items-center gap-2.5">
+              {/* Card Bottom Row */}
+              <div className="pt-3 border-t border-black/5 flex items-center justify-between">
+                <div className="flex items-center gap-2">
                   <img
                     src={post.author.avatar}
                     alt={post.author.name}
-                    className="w-7 h-7 rounded-full object-cover border border-[#A67B2E]/30"
+                    className="w-6 h-6 rounded-full object-cover border border-[#93191E]/30"
                   />
-                  <div className="leading-tight">
-                    <p className="text-xs font-medium text-[#1A1A1A]">{post.author.name}</p>
-                    <p className="text-[10px] font-mono text-black/50">{post.author.role}</p>
-                  </div>
+                  <span className="text-xs font-mono text-[#261E1E]/70">{post.author.name}</span>
                 </div>
 
-                <span className="text-xs font-mono font-semibold text-[#A67B2E] group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                <span className="text-xs font-mono text-[#93191E] font-semibold inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
                   <span>Read</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </span>
@@ -511,107 +450,55 @@ export function WeddingStoriesPage() {
         </div>
       </section>
 
-      {/* ── 4. JOURNAL NEWSLETTER / INSPIRATION SUBSCRIBER BANNER ── */}
-      <section className="relative z-10 py-16 md:py-24 px-6 md:px-14 bg-[#1A1A1A] text-white border-t border-b border-black/10">
-        <div className="max-w-4xl mx-auto text-center space-y-6">
-          <span className="text-xs font-mono text-[#A67B2E] uppercase tracking-[0.25em]">
-            STAY INSPIRED
-          </span>
-
-          <h2 className="font-display text-3xl sm:text-5xl font-light text-white leading-tight">
-            Subscribe to Our <em className="font-editorial italic text-[#A67B2E]">Wedding Journal</em>
-          </h2>
-
-          <p className="text-xs sm:text-sm text-white/70 font-sans font-light max-w-xl mx-auto leading-relaxed">
-            Receive monthly real wedding stories, venue highlights, and expert bridal photography advice straight to your inbox. No spam, ever.
-          </p>
-
-          {subscribed ? (
-            <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#A67B2E] text-white text-xs font-mono font-semibold animate-in fade-in">
-              <CheckCircle2 className="w-4 h-4" />
-              <span>Thank you for subscribing to CMC Journal!</span>
-            </div>
-          ) : (
-            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto pt-2">
-              <input
-                type="email"
-                required
-                value={emailInput}
-                onChange={(e) => setEmailInput(e.target.value)}
-                placeholder="Enter your email address..."
-                className="flex-1 px-5 py-3 rounded-full bg-white/10 border border-white/20 text-white placeholder:text-white/40 text-xs focus:outline-none focus:border-[#A67B2E]"
-              />
-              <button
-                type="submit"
-                className="px-6 py-3 rounded-full bg-[#A67B2E] hover:bg-[#8F6623] text-white text-xs font-mono font-semibold transition-all inline-flex items-center justify-center gap-2 cursor-pointer shadow-lg"
-              >
-                <span>Join Journal</span>
-                <Send className="w-3.5 h-3.5" />
-              </button>
-            </form>
-          )}
-        </div>
-      </section>
-
-      {/* ── 5. ARTICLE READER MODAL (FULL BLOG READING EXPERIENCE) ── */}
+      {/* ── 4. CLEAN BLOG READER OVERLAY MODAL ── */}
       {activePost && (
-        <BlogReaderModal
+        <CleanBlogReaderModal
           post={activePost}
           onClose={() => setActivePost(null)}
-          onSelectPost={(post) => setActivePost(post)}
         />
       )}
     </main>
   );
 }
 
-// ── FULL BLOG READER MODAL ──
-function BlogReaderModal({
+// ── CLEAN BLOG READER OVERLAY MODAL ──
+function CleanBlogReaderModal({
   post,
   onClose,
-  onSelectPost,
 }: {
   post: BlogPost;
   onClose: () => void;
-  onSelectPost: (post: BlogPost) => void;
 }) {
-  const currentIndex = blogPosts.findIndex((b) => b.id === post.id);
-  const nextPost = blogPosts[(currentIndex + 1) % blogPosts.length];
-
   return (
-    <div className="fixed inset-0 z-[100] bg-[#FAF8F5] text-[#1A1A1A] overflow-y-auto animate-in fade-in duration-300">
-      {/* Sticky Reader Bar */}
-      <div className="sticky top-0 z-50 flex items-center justify-between px-6 py-4 bg-white/90 backdrop-blur-md border-b border-black/10">
-        <span className="text-xs font-mono text-[#A67B2E] uppercase tracking-widest">
+    <div className="fixed inset-0 z-[100] bg-[#FAF8F5] text-[#261E1E] overflow-y-auto animate-in fade-in duration-300">
+      
+      {/* Top Floating Bar */}
+      <div className="sticky top-0 z-50 flex items-center justify-between px-6 py-4 bg-[#FAF8F5]/90 backdrop-blur-md border-b border-black/10">
+        <span className="text-xs font-mono text-[#93191E] uppercase tracking-widest font-semibold">
           CMC JOURNAL · {post.category}
         </span>
         <button
           type="button"
           onClick={onClose}
-          className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#1A1A1A] text-white hover:bg-[#A67B2E] text-xs font-mono transition-all cursor-pointer shadow-md"
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#261E1E] text-white hover:bg-[#93191E] text-xs font-mono transition-all cursor-pointer shadow-md"
         >
-          <span>Close Article</span>
-          <X className="w-4 h-4" />
+          <span>Close</span>
+          <X className="w-3.5 h-3.5" />
         </button>
       </div>
 
-      {/* Article Cover Hero */}
-      <section className="relative h-[75vh] min-h-[480px] w-full overflow-hidden bg-[#0C0D10] text-white flex flex-col justify-end p-6 md:p-14">
-        <img
-          src={post.coverImage}
-          alt={post.title}
-          className="absolute inset-0 h-full w-full object-cover opacity-65"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-
-        <div className="relative z-10 max-w-4xl space-y-4">
-          <div className="flex items-center gap-3 text-xs font-mono text-[#A67B2E]">
+      {/* Main Reading Container */}
+      <article className="max-w-3xl mx-auto px-6 py-12 space-y-8">
+        
+        {/* Post Title & Metadata Header */}
+        <div className="space-y-3 border-b border-black/10 pb-6">
+          <div className="flex items-center gap-3 text-xs font-mono text-[#261E1E]/60">
             <span>{post.date}</span>
             <span>·</span>
             <span>{post.readTime}</span>
           </div>
 
-          <h1 className="font-display text-3xl sm:text-5xl md:text-6xl font-light text-white leading-tight">
+          <h1 className="font-display text-3xl sm:text-5xl font-light text-[#261E1E] leading-tight">
             {post.title}
           </h1>
 
@@ -619,41 +506,40 @@ function BlogReaderModal({
             <img
               src={post.author.avatar}
               alt={post.author.name}
-              className="w-10 h-10 rounded-full object-cover border border-[#A67B2E]"
+              className="w-8 h-8 rounded-full object-cover border border-[#93191E]/30"
             />
-            <div>
-              <p className="text-sm font-medium text-white">{post.author.name}</p>
-              <p className="text-xs font-mono text-white/60">{post.author.role}</p>
-            </div>
+            <span className="text-xs font-mono text-[#261E1E]/80">{post.author.name}</span>
           </div>
         </div>
-      </section>
 
-      {/* Article Body Content */}
-      <article className="py-16 px-6 max-w-3xl mx-auto space-y-10">
+        {/* Cover Photo */}
+        <div className="aspect-[16/10] w-full overflow-hidden rounded-2xl bg-[#EFECE6] shadow-sm">
+          <img src={post.coverImage} alt={post.title} className="h-full w-full object-cover" />
+        </div>
+
         {/* Intro */}
-        <p className="font-editorial text-2xl sm:text-3xl text-[#1A1A1A] font-light leading-relaxed italic border-l-4 border-[#A67B2E] pl-6">
+        <p className="font-editorial text-2xl text-[#261E1E] font-light leading-relaxed italic border-l-3 border-[#93191E] pl-5">
           "{post.content.intro}"
         </p>
 
-        {/* Dynamic Sections */}
+        {/* Story Sections */}
         {post.content.sections.map((sec, idx) => (
-          <div key={idx} className="space-y-4 pt-4">
-            <h2 className="font-display text-2xl sm:text-3xl font-light text-[#1A1A1A]">
+          <div key={idx} className="space-y-4 pt-2">
+            <h2 className="font-display text-2xl font-light text-[#261E1E]">
               {sec.heading}
             </h2>
-            <p className="text-sm sm:text-base text-black/80 font-sans font-light leading-relaxed">
+            <p className="text-sm sm:text-base text-[#261E1E]/85 font-sans font-light leading-relaxed">
               {sec.body}
             </p>
 
             {sec.quote && (
-              <blockquote className="my-6 p-6 rounded-2xl bg-[#EFECE6] font-editorial italic text-xl text-[#1A1A1A] border-l-2 border-[#A67B2E]">
+              <blockquote className="my-5 p-5 rounded-xl bg-white border border-black/5 font-editorial italic text-lg text-[#93191E]">
                 "{sec.quote}"
               </blockquote>
             )}
 
             {sec.image && (
-              <div className="my-6 aspect-[16/10] overflow-hidden rounded-2xl bg-beige shadow-md">
+              <div className="my-5 aspect-[16/10] overflow-hidden rounded-xl bg-[#EFECE6]">
                 <img src={sec.image} alt={sec.heading} className="h-full w-full object-cover" />
               </div>
             )}
@@ -661,41 +547,25 @@ function BlogReaderModal({
         ))}
 
         {/* Conclusion */}
-        <div className="pt-8 border-t border-black/10 space-y-3">
-          <h3 className="font-display text-xl font-light text-[#1A1A1A]">Conclusion</h3>
-          <p className="text-sm sm:text-base text-black/80 font-sans font-light leading-relaxed">
+        <div className="pt-6 border-t border-black/10 space-y-2">
+          <h3 className="font-display text-xl font-light text-[#261E1E]">Final Thoughts</h3>
+          <p className="text-sm sm:text-base text-[#261E1E]/85 font-sans font-light leading-relaxed">
             {post.content.conclusion}
           </p>
         </div>
-      </article>
 
-      {/* Next Article CTA Banner */}
-      <section
-        onClick={() => {
-          window.scrollTo({ top: 0, behavior: "smooth" });
-          onSelectPost(nextPost);
-        }}
-        className="relative h-[50vh] min-h-[360px] w-full overflow-hidden bg-[#1A1A1A] text-white flex flex-col justify-center items-center text-center p-6 cursor-pointer group border-t border-black/10"
-      >
-        <img
-          src={nextPost.coverImage}
-          alt={nextPost.title}
-          className="absolute inset-0 h-full w-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-1000"
-        />
-        <div className="absolute inset-0 bg-black/60" />
-
-        <div className="relative z-10 space-y-3 max-w-xl">
-          <span className="text-xs font-mono text-[#A67B2E] uppercase tracking-widest">
-            READ NEXT ARTICLE
-          </span>
-          <h2 className="font-display text-2xl sm:text-4xl text-white font-light group-hover:text-[#A67B2E] transition-colors leading-tight">
-            {nextPost.title}
-          </h2>
-          <span className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#A67B2E] text-white text-xs font-mono font-semibold pt-2 shadow-lg">
-            <span>Read Article →</span>
-          </span>
+        {/* Close Button at End */}
+        <div className="pt-8 text-center">
+          <button
+            type="button"
+            onClick={onClose}
+            className="px-8 py-3 rounded-full bg-[#93191E] text-white hover:bg-[#261E1E] text-xs font-mono font-semibold transition-all cursor-pointer shadow-md inline-flex items-center gap-2"
+          >
+            <span>Back to Journal</span>
+            <X className="w-4 h-4" />
+          </button>
         </div>
-      </section>
+      </article>
     </div>
   );
 }
