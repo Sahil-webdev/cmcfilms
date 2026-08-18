@@ -248,7 +248,7 @@ export function CoupleShootsPage() {
                 style={{ fontFamily: "'Alex Brush', cursive" }}
               >
                 <span className="text-[#922A2F] block">Couple</span>
-                <span className="text-[#8A8072] block pl-[0.8em] sm:pl-[0.85em] md:pl-[0.9em] -mt-2 sm:-mt-4 md:-mt-6">Shoots</span>
+                <span className="text-[#8A8072] block pl-[1.35em] sm:pl-[1.5em] md:pl-[1.65em] -mt-2 sm:-mt-4 md:-mt-6">Shoots</span>
               </h1>
             </div>
 
