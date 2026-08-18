@@ -228,16 +228,14 @@ export function CoupleShootsPage() {
         {/* Hero Main Content */}
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center pt-8 md:pt-12">
           
-          {/* Left Column: Tall Vertical Real Couple Image Frame */}
+          {/* Left Column: Clean Tall Vertical Real Couple Image (No White Frame) */}
           <div className="lg:col-span-6 flex justify-center lg:justify-start w-full">
-            <div className="relative w-full max-w-lg lg:max-w-xl shadow-2xl bg-white p-3 sm:p-4 rounded-[4px] border border-black/10">
-              <div className="h-[520px] sm:h-[600px] lg:h-[660px] w-full overflow-hidden rounded-[2px] bg-[#D8D3CB]">
-                <img
-                  src={couplesHeroCustom}
-                  alt="Real Couple Shoot"
-                  className="h-full w-full object-cover object-top transition-transform duration-1000 hover:scale-105"
-                />
-              </div>
+            <div className="relative h-[520px] sm:h-[600px] lg:h-[660px] w-full max-w-lg lg:max-w-xl overflow-hidden rounded-2xl shadow-xl bg-[#D8D3CB]">
+              <img
+                src={couplesHeroCustom}
+                alt="Real Couple Shoot"
+                className="h-full w-full object-cover object-top transition-transform duration-1000 hover:scale-105"
+              />
             </div>
           </div>
 
