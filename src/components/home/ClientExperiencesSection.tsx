@@ -10,6 +10,7 @@ import cat3 from "@/assets/cat-3.jpg";
 import story1 from "@/assets/story-1.jpg";
 import story2 from "@/assets/story-2.jpg";
 import story3 from "@/assets/story-3.jpg";
+import clientPortrait from "@/assets/client-portrait.jpg";
 
 interface ClientReview {
   id: string;
@@ -27,10 +28,10 @@ const clientReviews: ClientReview[] = [
     coupleName: "Saba & Usman",
     weddingLocation: "Destination Nikah, Dubai",
     rating: 5,
-    reviewTitle: "Captured moments we didn't even realize were happening!",
+    reviewTitle: "Impactful, genuine & masterfully crafted wedding memories",
     reviewText:
-      "Working with CMC FILMS was the single best decision for our Dubai wedding. The team captured quiet glances and sunset tears effortlessly. Our family gets emotional looking at our album.",
-    avatar: cat1,
+      "A wedding photographer should highlight their positive qualities, specific examples of their work, and how they impacted the overall wedding experience. It should be detailed, specific, and genuine, reflecting the couple's true feelings about the photographer's work and their contribution to the wedding day.",
+    avatar: clientPortrait,
   },
   {
     id: "r2",
