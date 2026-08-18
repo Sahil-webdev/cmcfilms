@@ -14,7 +14,6 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Preloader } from "@/components/Preloader";
-import { SocialSidebar } from "@/components/SocialSidebar";
 
 function NotFoundComponent() {
   return (
@@ -146,7 +145,6 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <Preloader />
       <Navbar />
-      <SocialSidebar />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
       <Footer />

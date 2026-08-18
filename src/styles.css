@@ -256,54 +256,6 @@
   }
 }
 
-/* ——— Floating Social Sidebar ——— */
-
-.social-pill {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background-color: rgb(44, 44, 44);
-  overflow: hidden;
-  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-}
-
-.social-pill:hover {
-  background-color: var(--hover-color, #b79a6b);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-}
-
-.social-pill:active {
-  transform: scale(0.88);
-}
-
-.social-pill:hover .social-svg {
-  animation: social-slide-in 0.3s both;
-}
-
-.social-svg {
-  width: 16px;
-  height: 16px;
-  fill: rgb(255, 255, 255);
-}
-
-.social-svg path {
-  fill: rgb(255, 255, 255);
-}
-
-@keyframes social-slide-in {
-  0% {
-    transform: translateY(-40px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
 
 /* ——— Circuit Grid Background (From Uiverse.io by Gautammsharma) ——— */
 .circuit-background {
