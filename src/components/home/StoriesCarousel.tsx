@@ -100,21 +100,21 @@ export function StoriesCarousel() {
   };
 
   return (
-    <section className="grain relative bg-[#576049] py-14 text-ivory md:py-20 overflow-hidden border-y border-ivory/10">
+    <section className="grain relative bg-[#E0CDCD] py-14 text-[#261E1E] md:py-20 overflow-hidden border-y border-[#8E171E]/15">
       <div className="relative mx-auto max-w-[1600px] px-5 md:px-10">
         <Reveal>
           {/* ── Compact Header Row with Controls ── */}
           <div className="flex items-end justify-between gap-6">
             <div>
               <div className="flex items-center gap-2 mb-2.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#E5CA92]" />
-                <span className="label-xs uppercase tracking-[0.25em] text-[#E5CA92] font-mono text-[10px]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#8E171E]" />
+                <span className="label-xs uppercase tracking-[0.25em] text-[#8E171E] font-mono text-[10px] font-bold">
                   Stories We Tell
                 </span>
               </div>
-              <h2 className="font-display text-[clamp(2rem,4.5vw,3.6rem)] font-light leading-[1] text-[#FAF8F3]">
+              <h2 className="font-display text-[clamp(2rem,4.5vw,3.6rem)] font-light leading-[1] text-[#261E1E]">
                 Every celebration{" "}
-                <em className="font-editorial italic text-[#E5CA92] font-normal">
+                <em className="font-editorial italic text-[#8E171E] font-normal">
                   has its own rhythm.
                 </em>
               </h2>
@@ -126,7 +126,7 @@ export function StoriesCarousel() {
                 type="button"
                 onClick={() => scroll("left")}
                 aria-label="Previous Stories"
-                className="group flex h-10 w-10 items-center justify-center rounded-full border border-ivory/20 bg-ivory/10 backdrop-blur-md transition-all duration-300 hover:border-[#E5CA92] hover:bg-[#E5CA92] hover:text-[#27231F] active:scale-95 cursor-pointer shadow-md"
+                className="group flex h-10 w-10 items-center justify-center rounded-full border border-[#8E171E]/30 bg-white/60 text-[#8E171E] backdrop-blur-md transition-all duration-300 hover:border-[#8E171E] hover:bg-[#8E171E] hover:text-white active:scale-95 cursor-pointer shadow-md"
               >
                 <ChevronLeft className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-0.5" />
               </button>
@@ -135,7 +135,7 @@ export function StoriesCarousel() {
                 type="button"
                 onClick={() => scroll("right")}
                 aria-label="Next Stories"
-                className="group flex h-10 w-10 items-center justify-center rounded-full border border-ivory/20 bg-ivory/10 backdrop-blur-md transition-all duration-300 hover:border-[#E5CA92] hover:bg-[#E5CA92] hover:text-[#27231F] active:scale-95 cursor-pointer shadow-md"
+                className="group flex h-10 w-10 items-center justify-center rounded-full border border-[#8E171E]/30 bg-white/60 text-[#8E171E] backdrop-blur-md transition-all duration-300 hover:border-[#8E171E] hover:bg-[#8E171E] hover:text-white active:scale-95 cursor-pointer shadow-md"
               >
                 <ChevronRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
               </button>
