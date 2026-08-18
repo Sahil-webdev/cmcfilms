@@ -132,15 +132,20 @@ export function ClientExperiencesSection() {
   const activeDotIndex = currentIndex % clientReviews.length;
 
   return (
-    <section className="bg-[#0C0D10] text-ivory py-12 md:py-16 overflow-hidden border-b border-white/10">
+    <section className="bg-[#9DA1C1] text-[#261E1E] py-12 md:py-16 overflow-hidden border-b border-[#93191E]/15">
       <div className="mx-auto max-w-[1600px] px-4 md:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-8 md:mb-10">
-          <SectionLabel>Client Words</SectionLabel>
-          <h2 className="mt-2 font-display text-2xl sm:text-3xl md:text-4xl font-light text-ivory">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#93191E]" />
+            <span className="label-xs uppercase tracking-[0.25em] text-[#93191E] font-mono text-[10px] font-bold">
+              Client Words
+            </span>
+          </div>
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-light text-[#261E1E]">
             Experiences That{" "}
-            <em className="font-editorial italic text-gold">Speak for Themselves</em>
+            <em className="font-editorial italic text-[#93191E] font-normal">Speak for Themselves</em>
           </h2>
         </div>
 
@@ -155,7 +160,7 @@ export function ClientExperiencesSection() {
             type="button"
             onClick={handlePrev}
             aria-label="Previous review"
-            className="absolute left-1 md:-left-3 top-1/2 -translate-y-1/2 z-20 h-9 w-9 md:h-10 md:w-10 rounded-full bg-white/10 hover:bg-gold text-white hover:text-cinema flex items-center justify-center transition-all cursor-pointer shadow-md"
+            className="absolute left-1 md:-left-3 top-1/2 -translate-y-1/2 z-20 h-9 w-9 md:h-10 md:w-10 rounded-full bg-white/70 hover:bg-[#93191E] text-[#93191E] hover:text-white flex items-center justify-center transition-all cursor-pointer shadow-md"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
@@ -164,7 +169,7 @@ export function ClientExperiencesSection() {
             type="button"
             onClick={handleNext}
             aria-label="Next review"
-            className="absolute right-1 md:-right-3 top-1/2 -translate-y-1/2 z-20 h-9 w-9 md:h-10 md:w-10 rounded-full bg-white/10 hover:bg-gold text-white hover:text-cinema flex items-center justify-center transition-all cursor-pointer shadow-md"
+            className="absolute right-1 md:-right-3 top-1/2 -translate-y-1/2 z-20 h-9 w-9 md:h-10 md:w-10 rounded-full bg-white/70 hover:bg-[#93191E] text-[#93191E] hover:text-white flex items-center justify-center transition-all cursor-pointer shadow-md"
           >
             <ArrowRight className="w-4 h-4" />
           </button>
@@ -187,40 +192,40 @@ export function ClientExperiencesSection() {
               {infiniteReviews.map((review, idx) => (
                 <div
                   key={`${review.id}-${idx}`}
-                  className={`${isDesktop ? "w-[340px]" : "w-full"} shrink-0 rounded-2xl bg-[#14151C] border border-white/10 p-5 sm:p-6 flex flex-col justify-between shadow-sm hover:border-gold/40 transition-all duration-300`}
+                  className={`${isDesktop ? "w-[340px]" : "w-full"} shrink-0 rounded-2xl bg-[#FAF8F5] border border-[#93191E]/15 p-5 sm:p-6 flex flex-col justify-between shadow-sm hover:border-[#93191E]/40 transition-all duration-300`}
                 >
                   <div className="space-y-3">
                     {/* Stars */}
-                    <div className="flex items-center gap-1 text-gold">
+                    <div className="flex items-center gap-1 text-[#93191E]">
                       {[...Array(review.rating)].map((_, i) => (
-                        <Star key={i} className="w-3.5 h-3.5 fill-gold text-gold" />
+                        <Star key={i} className="w-3.5 h-3.5 fill-[#93191E] text-[#93191E]" />
                       ))}
                     </div>
 
                     {/* Title */}
-                    <h3 className="font-display text-base font-normal text-ivory leading-snug">
+                    <h3 className="font-display text-base font-normal text-[#261E1E] leading-snug">
                       "{review.reviewTitle}"
                     </h3>
 
                     {/* Text Excerpt */}
-                    <p className="text-xs text-ivory/70 font-sans font-light leading-relaxed line-clamp-3">
+                    <p className="text-xs text-[#261E1E]/80 font-sans font-light leading-relaxed line-clamp-3">
                       {review.reviewText}
                     </p>
                   </div>
 
                   {/* Profile Footer */}
-                  <div className="pt-4 mt-4 border-t border-white/10 flex items-center gap-3">
+                  <div className="pt-4 mt-4 border-t border-[#261E1E]/10 flex items-center gap-3">
                     <img
                       src={review.avatar}
                       alt={review.coupleName}
                       loading="lazy"
-                      className="h-9 w-9 rounded-full object-cover border border-gold/40 shrink-0"
+                      className="h-9 w-9 rounded-full object-cover border border-[#93191E]/30 shrink-0"
                     />
                     <div className="overflow-hidden">
-                      <h4 className="font-display text-xs sm:text-sm text-ivory font-medium">
+                      <h4 className="font-display text-xs sm:text-sm text-[#261E1E] font-medium">
                         {review.coupleName}
                       </h4>
-                      <p className="text-[10px] font-mono text-ivory/50 truncate">
+                      <p className="text-[10px] font-mono text-[#261E1E]/70 truncate">
                         {review.weddingLocation}
                       </p>
                     </div>
@@ -240,7 +245,7 @@ export function ClientExperiencesSection() {
                 onClick={() => setCurrentIndex(clientReviews.length + idx)}
                 aria-label={`Go to slide ${idx + 1}`}
                 className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                  idx === activeDotIndex ? "w-6 bg-gold" : "w-1.5 bg-white/20"
+                  idx === activeDotIndex ? "w-6 bg-[#93191E]" : "w-1.5 bg-[#261E1E]/20"
                 }`}
               />
             ))}
