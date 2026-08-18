@@ -166,38 +166,29 @@ export function ClientExperiencesSection() {
               {infiniteReviews.map((review, idx) => (
                 <div
                   key={`${review.id}-${idx}`}
-                  className={`${isDesktop ? "w-[340px]" : "w-full"} shrink-0 rounded-2xl bg-[#FAF8F5] border border-[#93191E]/15 p-5 sm:p-6 flex flex-col justify-between shadow-sm hover:border-[#93191E]/40 transition-all duration-300`}
+                  className={`${isDesktop ? "w-[340px]" : "w-full"} shrink-0 rounded-2xl bg-[#FAF8F5] border border-[#93191E]/15 p-5 sm:p-6 flex flex-col justify-between shadow-sm hover:border-[#93191E]/40 transition-all duration-300 gap-4`}
                 >
-                  <div className="space-y-4">
-                    {/* 1. TOP PROFILE HEADER & STARS */}
-                    <div className="flex items-center justify-between gap-3 pb-3 border-b border-[#261E1E]/10">
-                      <div className="flex items-center gap-3 overflow-hidden">
-                        <img
-                          src={review.avatar}
-                          alt={review.coupleName}
-                          loading="lazy"
-                          className="h-10 w-10 rounded-full object-cover border border-[#93191E]/30 shrink-0"
-                        />
-                        <div className="overflow-hidden">
-                          <h4 className="font-display text-sm sm:text-base text-[#261E1E] font-medium leading-tight">
-                            {review.coupleName}
-                          </h4>
-                          <p className="text-[10px] font-mono text-[#261E1E]/70 truncate mt-0.5">
-                            {review.weddingLocation}
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* Stars */}
-                      <div className="flex items-center gap-0.5 text-[#93191E] shrink-0">
-                        {[...Array(review.rating)].map((_, i) => (
-                          <Star key={i} className="w-3.5 h-3.5 fill-[#93191E] text-[#93191E]" />
-                        ))}
+                  <div className="space-y-3">
+                    {/* 1. TOP PROFILE HEADER */}
+                    <div className="flex items-center gap-3 overflow-hidden">
+                      <img
+                        src={review.avatar}
+                        alt={review.coupleName}
+                        loading="lazy"
+                        className="h-10 w-10 rounded-full object-cover border border-[#93191E]/30 shrink-0"
+                      />
+                      <div className="overflow-hidden">
+                        <h4 className="font-display text-sm sm:text-base text-[#261E1E] font-medium leading-tight">
+                          {review.coupleName}
+                        </h4>
+                        <p className="text-[10px] font-mono text-[#261E1E]/70 truncate mt-0.5">
+                          {review.weddingLocation}
+                        </p>
                       </div>
                     </div>
 
                     {/* 2. REVIEW TITLE & EXCERPT */}
-                    <div className="space-y-2">
+                    <div className="space-y-2 pt-1">
                       <h3 className="font-display text-base font-normal text-[#261E1E] leading-snug">
                         "{review.reviewTitle}"
                       </h3>
@@ -206,6 +197,13 @@ export function ClientExperiencesSection() {
                         {review.reviewText}
                       </p>
                     </div>
+                  </div>
+
+                  {/* 3. BOTTOM RIGHT STARS */}
+                  <div className="flex justify-end items-center gap-0.5 text-[#93191E]">
+                    {[...Array(review.rating)].map((_, i) => (
+                      <Star key={i} className="w-3.5 h-3.5 fill-[#93191E] text-[#93191E]" />
+                    ))}
                   </div>
                 </div>
               ))}
