@@ -61,24 +61,32 @@ export function ClientExperiencesSection() {
   const [currentIndex, setCurrentIndex] = useState(clientReviews.length);
   const [isTransitioning, setIsTransitioning] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
+  const [viewport, setViewport] = useState<"desktop" | "tablet" | "mobile">("desktop");
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(min-width: 768px)");
-    const updateViewport = () => setIsDesktop(mediaQuery.matches);
+    const handleResize = () => {
+      const w = window.innerWidth;
+      if (w >= 1024) {
+        setViewport("desktop");
+      } else if (w >= 768) {
+        setViewport("tablet");
+      } else {
+        setViewport("mobile");
+      }
+    };
 
-    updateViewport();
-    mediaQuery.addEventListener("change", updateViewport);
-    return () => mediaQuery.removeEventListener("change", updateViewport);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Automatic Step Carousel Timer (3s)
+  // Automatic Step Carousel Timer (3.5s)
   useEffect(() => {
     if (isPaused) return;
 
     const timer = setInterval(() => {
       setCurrentIndex((prev) => prev + 1);
-    }, 3000);
+    }, 3500);
 
     return () => clearInterval(timer);
   }, [isPaused]);
@@ -112,9 +120,19 @@ export function ClientExperiencesSection() {
 
   const activeDotIndex = currentIndex % clientReviews.length;
 
+  const getTransformStyle = () => {
+    if (viewport === "desktop") {
+      return `calc(-${currentIndex} * (25% + 4px))`;
+    }
+    if (viewport === "tablet") {
+      return `calc(-${currentIndex} * (50% + 8px))`;
+    }
+    return `-${currentIndex * 100}%`;
+  };
+
   return (
     <section className="bg-[#9DA1C1] text-[#261E1E] py-12 md:py-16 overflow-hidden border-b border-[#93191E]/15">
-      <div className="mx-auto max-w-[1600px] px-4 md:px-8">
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 md:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-8 md:mb-10">
@@ -126,7 +144,7 @@ export function ClientExperiencesSection() {
 
         {/* ── CAROUSEL CONTAINER ── */}
         <div
-          className="relative px-2"
+          className="relative px-6 sm:px-8 md:px-10"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
@@ -135,7 +153,7 @@ export function ClientExperiencesSection() {
             type="button"
             onClick={handlePrev}
             aria-label="Previous review"
-            className="absolute left-1 md:-left-3 top-1/2 -translate-y-1/2 z-20 h-9 w-9 md:h-10 md:w-10 rounded-full bg-white/70 hover:bg-[#93191E] text-[#93191E] hover:text-white flex items-center justify-center transition-all cursor-pointer shadow-md"
+            className="absolute left-0 md:left-1 top-1/2 -translate-y-1/2 z-20 h-9 w-9 md:h-10 md:w-10 rounded-full bg-white/80 hover:bg-[#93191E] text-[#93191E] hover:text-white flex items-center justify-center transition-all cursor-pointer shadow-md"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
@@ -144,7 +162,7 @@ export function ClientExperiencesSection() {
             type="button"
             onClick={handleNext}
             aria-label="Next review"
-            className="absolute right-1 md:-right-3 top-1/2 -translate-y-1/2 z-20 h-9 w-9 md:h-10 md:w-10 rounded-full bg-white/70 hover:bg-[#93191E] text-[#93191E] hover:text-white flex items-center justify-center transition-all cursor-pointer shadow-md"
+            className="absolute right-0 md:right-1 top-1/2 -translate-y-1/2 z-20 h-9 w-9 md:h-10 md:w-10 rounded-full bg-white/80 hover:bg-[#93191E] text-[#93191E] hover:text-white flex items-center justify-center transition-all cursor-pointer shadow-md"
           >
             <ArrowRight className="w-4 h-4" />
           </button>
@@ -153,21 +171,19 @@ export function ClientExperiencesSection() {
           <div className="overflow-hidden py-1">
             <div
               onTransitionEnd={handleTransitionEnd}
-              className={`flex ${isDesktop ? "gap-5" : ""} ${
+              className={`flex gap-4 ${
                 isTransitioning
                   ? "transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
                   : "transition-none"
               }`}
               style={{
-                transform: isDesktop
-                  ? `translateX(-${currentIndex * (340 + 20)}px)`
-                  : `translateX(-${currentIndex * 100}%)`,
+                transform: `translateX(${getTransformStyle()})`,
               }}
             >
               {infiniteReviews.map((review, idx) => (
                 <div
                   key={`${review.id}-${idx}`}
-                  className={`${isDesktop ? "w-[340px]" : "w-full"} shrink-0 rounded-2xl bg-[#FAF8F5] border border-[#93191E]/15 p-5 sm:p-6 flex flex-col justify-between shadow-sm hover:border-[#93191E]/40 transition-all duration-300 gap-4`}
+                  className="w-full md:w-[calc((100%-16px)/2)] lg:w-[calc((100%-48px)/4)] shrink-0 rounded-2xl bg-[#FAF8F5] border border-[#93191E]/15 p-5 sm:p-6 flex flex-col justify-between shadow-sm hover:border-[#93191E]/40 transition-all duration-300 gap-4"
                 >
                   <div className="space-y-3">
                     {/* 1. TOP PROFILE HEADER */}
