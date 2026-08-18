@@ -354,8 +354,8 @@ export function WeddingStoriesPage() {
         </div>
       </section>
 
-      {/* ── 3. LUXURY MAGAZINE EDITORIAL JOURNAL SECTION ── */}
-      <section className="relative z-10 py-16 md:py-24 px-6 md:px-14 max-w-[1600px] mx-auto space-y-14">
+      {/* ── 3. ELEGANT 2-COLUMN JOURNAL CARDS SECTION (EXACT USER REFERENCE MATCH) ── */}
+      <section className="relative z-10 py-16 md:py-24 px-6 md:px-14 max-w-[1500px] mx-auto space-y-14">
         
         {/* Minimal Header & Filter Tabs */}
         <div className="space-y-6 text-center max-w-3xl mx-auto">
@@ -366,9 +366,6 @@ export function WeddingStoriesPage() {
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-light text-[#261E1E]">
               Stories, Wisdom & <em className="font-editorial italic text-[#93191E] font-normal">Wedding Inspiration</em>
             </h2>
-            <p className="text-xs sm:text-sm text-[#261E1E]/70 font-sans font-light max-w-lg mx-auto leading-relaxed">
-              Curated wedding diaries, expert photography timelines, destination spotlights, and romantic couple stories.
-            </p>
           </div>
 
           {/* Clean Category Filter Tabs */}
@@ -382,7 +379,7 @@ export function WeddingStoriesPage() {
                   onClick={() => setSelectedCategory(cat)}
                   className={`px-5 py-2 rounded-full text-xs font-mono transition-all duration-300 cursor-pointer ${
                     active
-                      ? "bg-[#93191E] text-white shadow-md scale-105"
+                      ? "bg-[#383330] text-white shadow-md"
                       : "bg-[#EFECE6] text-[#261E1E]/75 hover:bg-[#E2DDD5] hover:text-[#261E1E]"
                   }`}
                 >
@@ -393,89 +390,47 @@ export function WeddingStoriesPage() {
           </div>
         </div>
 
-        {/* Magazine Editorial Cards Grid */}
-        <div className="space-y-12">
-          {/* Highlight Featured Article (Large 2-Column Banner) */}
-          {filteredPosts.length > 0 && (
+        {/* 2-Column Story Cards Grid (Exact Design Match) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-14 lg:gap-16 max-w-[1400px] mx-auto">
+          {filteredPosts.map((post) => (
             <article
-              onClick={() => setActivePost(filteredPosts[0])}
-              className="group bg-[#F4F0EA] rounded-3xl p-6 sm:p-8 md:p-10 border border-[#93191E]/10 shadow-sm hover:shadow-2xl transition-all duration-500 cursor-pointer grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
+              key={post.id}
+              onClick={() => setActivePost(post)}
+              className="group cursor-pointer space-y-6 flex flex-col justify-between"
             >
-              <div className="lg:col-span-7 aspect-[16/10] w-full overflow-hidden rounded-2xl bg-[#EFECE6]">
-                <img
-                  src={filteredPosts[0].coverImage}
-                  alt={filteredPosts[0].title}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
-                />
-              </div>
+              <div className="space-y-5">
+                {/* 1. Large Crisp Image (Full Bleed, Sharp Edge) */}
+                <div className="aspect-[16/11] w-full overflow-hidden bg-[#EFECE6]">
+                  <img
+                    src={post.coverImage}
+                    alt={post.title}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  />
+                </div>
 
-              <div className="lg:col-span-5 space-y-4">
-                <span className="inline-block text-xs font-mono font-semibold text-[#93191E] uppercase tracking-widest bg-[#93191E]/10 px-3 py-1 rounded-full">
-                  {filteredPosts[0].category}
-                </span>
-
-                <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl text-[#261E1E] font-light leading-snug group-hover:text-[#93191E] transition-colors">
-                  {filteredPosts[0].title}
+                {/* 2. Centered Title */}
+                <h3 className="font-display text-2xl sm:text-3xl font-light text-[#261E1E] text-center leading-tight transition-colors group-hover:text-[#93191E]">
+                  {post.title}
                 </h3>
 
-                <p className="text-xs sm:text-sm text-[#261E1E]/75 font-sans font-light leading-relaxed">
-                  "{filteredPosts[0].excerpt}"
+                {/* 3. Centered Description */}
+                <p className="text-sm sm:text-base text-[#8A8072] font-sans font-light text-center leading-relaxed max-w-xl mx-auto px-2">
+                  {post.excerpt}
                 </p>
+              </div>
 
-                <div className="pt-2">
-                  <span className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-white bg-[#93191E] hover:bg-[#261E1E] px-5 py-2.5 rounded-full transition-all shadow-md group-hover:translate-x-1">
-                    <span>Read Journal Story</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </span>
-                </div>
+              {/* 4. Centered Dark Pill Read More Button */}
+              <div className="pt-2 flex justify-center">
+                <button
+                  type="button"
+                  className="bg-[#383330] group-hover:bg-[#93191E] text-white font-sans text-xs sm:text-sm px-8 py-2.5 rounded-full transition-all duration-300 shadow-sm cursor-pointer"
+                >
+                  Read More
+                </button>
               </div>
             </article>
-          )}
-
-          {/* Remaining Journal Cards (3 Columns) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredPosts.slice(1).map((post) => (
-              <article
-                key={post.id}
-                onClick={() => setActivePost(post)}
-                className="group bg-[#F6F3EE] p-5 rounded-3xl shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-400 flex flex-col justify-between cursor-pointer space-y-4 border border-[#93191E]/5"
-              >
-                <div className="space-y-4">
-                  {/* Image */}
-                  <div className="aspect-[16/10] w-full overflow-hidden rounded-2xl bg-[#EFECE6] relative">
-                    <img
-                      src={post.coverImage}
-                      alt={post.title}
-                      loading="lazy"
-                      className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                    />
-                    <span className="absolute top-3 left-3 bg-[#261E1E]/80 backdrop-blur-md text-white text-[10px] font-mono px-3 py-1 rounded-full uppercase tracking-wider">
-                      {post.category}
-                    </span>
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="font-display text-xl sm:text-2xl text-[#261E1E] font-normal leading-snug group-hover:text-[#93191E] transition-colors">
-                    {post.title}
-                  </h3>
-
-                  {/* Excerpt */}
-                  <p className="text-xs text-[#261E1E]/75 font-sans font-light leading-relaxed line-clamp-2">
-                    {post.excerpt}
-                  </p>
-                </div>
-
-                {/* Clean Bottom Link */}
-                <div className="pt-3 border-t border-[#261E1E]/10 flex items-center justify-end">
-                  <span className="text-xs font-mono text-[#93191E] font-semibold inline-flex items-center gap-1 group-hover:translate-x-1.5 transition-transform">
-                    <span>Read Story</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </span>
-                </div>
-              </article>
-            ))}
-          </div>
+          ))}
         </div>
       </section>
 
