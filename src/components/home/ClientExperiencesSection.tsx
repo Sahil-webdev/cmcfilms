@@ -234,12 +234,12 @@ export function ClientExperiencesSection() {
   };
 
   return (
-    <section className="bg-[#9DA1C1] text-[#261E1E] py-12 md:py-16 overflow-hidden border-b border-[#93191E]/15">
-      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 md:px-8">
+    <section className="bg-[#9DA1C1] text-[#261E1E] py-6 sm:py-10 md:py-16 overflow-hidden border-b border-[#93191E]/15">
+      <div className="mx-auto max-w-[1600px] px-2 sm:px-6 md:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-8 md:mb-10">
-          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-light text-[#261E1E]">
+        <div className="text-center max-w-2xl mx-auto mb-4 sm:mb-8 md:mb-10">
+          <h2 className="font-display text-xl sm:text-3xl md:text-4xl font-light text-[#261E1E]">
             Experiences That{" "}
             <em className="font-editorial italic text-[#93191E] font-normal">Speak for Themselves</em>
           </h2>
@@ -247,7 +247,7 @@ export function ClientExperiencesSection() {
 
         {/* ── CAROUSEL CONTAINER ── */}
         <div
-          className="relative px-6 sm:px-8 md:px-10"
+          className="relative px-5 sm:px-8 md:px-10"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
@@ -256,18 +256,18 @@ export function ClientExperiencesSection() {
             type="button"
             onClick={handlePrev}
             aria-label="Previous page of reviews"
-            className="absolute left-0 md:left-1 top-1/2 -translate-y-1/2 z-20 h-9 w-9 md:h-10 md:w-10 rounded-full bg-white/80 hover:bg-[#93191E] text-[#93191E] hover:text-white flex items-center justify-center transition-all cursor-pointer shadow-md"
+            className="absolute left-0 md:left-1 top-1/2 -translate-y-1/2 z-20 h-8 w-8 md:h-10 md:w-10 rounded-full bg-white/80 hover:bg-[#93191E] text-[#93191E] hover:text-white flex items-center justify-center transition-all cursor-pointer shadow-md"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="w-3.5 h-3.5 md:w-4 md:h-4" />
           </button>
 
           <button
             type="button"
             onClick={handleNext}
             aria-label="Next page of reviews"
-            className="absolute right-0 md:right-1 top-1/2 -translate-y-1/2 z-20 h-9 w-9 md:h-10 md:w-10 rounded-full bg-white/80 hover:bg-[#93191E] text-[#93191E] hover:text-white flex items-center justify-center transition-all cursor-pointer shadow-md"
+            className="absolute right-0 md:right-1 top-1/2 -translate-y-1/2 z-20 h-8 w-8 md:h-10 md:w-10 rounded-full bg-white/80 hover:bg-[#93191E] text-[#93191E] hover:text-white flex items-center justify-center transition-all cursor-pointer shadow-md"
           >
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-3.5 h-3.5 md:w-4 md:h-4" />
           </button>
 
           {/* Carousel Sliding Track */}
@@ -286,16 +286,16 @@ export function ClientExperiencesSection() {
               {infiniteReviews.map((review, idx) => (
                 <div
                   key={`${review.id}-${idx}`}
-                  className="w-full md:w-[calc((100%-16px)/2)] lg:w-[calc((100%-48px)/4)] shrink-0 rounded-2xl bg-[#FAF8F5] border border-[#93191E]/15 p-5 sm:p-6 flex flex-col justify-between shadow-sm hover:border-[#93191E]/40 transition-all duration-300 gap-4"
+                  className="w-full md:w-[calc((100%-16px)/2)] lg:w-[calc((100%-48px)/4)] shrink-0 rounded-2xl bg-[#FAF8F5] border border-[#93191E]/15 p-4 sm:p-5 md:p-6 flex flex-col justify-between shadow-sm hover:border-[#93191E]/40 transition-all duration-300 gap-3 sm:gap-4"
                 >
-                  <div className="space-y-3">
+                  <div className="space-y-2.5 sm:space-y-3">
                     {/* 1. TOP PROFILE HEADER */}
                     <div className="flex items-center gap-3 overflow-hidden">
                       <img
                         src={review.avatar}
                         alt={review.coupleName}
                         loading="lazy"
-                        className="h-10 w-10 rounded-full object-cover border border-[#93191E]/30 shrink-0"
+                        className="h-9 w-9 sm:h-10 sm:w-10 rounded-full object-cover border border-[#93191E]/30 shrink-0"
                       />
                       <div className="overflow-hidden">
                         <h4 className="font-display text-sm sm:text-base text-[#261E1E] font-medium leading-tight">
@@ -308,8 +308,8 @@ export function ClientExperiencesSection() {
                     </div>
 
                     {/* 2. SINGLE UNIFIED REVIEW PARAGRAPH (Serif Display Font) */}
-                    <div className="pt-1">
-                      <p className="font-display text-sm sm:text-[15px] font-normal text-[#261E1E] leading-relaxed">
+                    <div className="pt-0.5 sm:pt-1">
+                      <p className="font-display text-xs sm:text-[15px] font-normal text-[#261E1E] leading-relaxed">
                         "{review.reviewText}"
                       </p>
                     </div>
@@ -327,7 +327,7 @@ export function ClientExperiencesSection() {
           </div>
 
           {/* Dots Indicator for Pages */}
-          <div className="mt-6 flex justify-center items-center gap-2">
+          <div className="mt-3 sm:mt-6 flex justify-center items-center gap-1.5 sm:gap-2">
             {[...Array(totalPages)].map((_, idx) => (
               <button
                 key={idx}
@@ -335,7 +335,7 @@ export function ClientExperiencesSection() {
                 onClick={() => setCurrentPage(totalPages + idx)}
                 aria-label={`Go to slide ${idx + 1}`}
                 className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                  idx === activeDotIndex ? "w-6 bg-[#93191E]" : "w-1.5 bg-[#261E1E]/20"
+                  idx === activeDotIndex ? "w-5 sm:w-6 bg-[#93191E]" : "w-1.5 bg-[#261E1E]/20"
                 }`}
               />
             ))}
