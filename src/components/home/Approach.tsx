@@ -24,11 +24,16 @@ export function Approach() {
 
         <div className="flex flex-col justify-center">
           <Reveal>
-            <SectionLabel>Our Services</SectionLabel>
-            <h2 className="mt-4 md:mt-8 font-display text-[clamp(2.25rem,5vw,4.5rem)] leading-[1]">
+            <div className="flex items-center gap-2 mb-2.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#93191E]" />
+              <span className="label-xs uppercase tracking-[0.25em] text-[#93191E] font-mono text-[10px] font-bold">
+                Our Services
+              </span>
+            </div>
+            <h2 className="font-display text-[clamp(2.25rem,5vw,4.5rem)] leading-[1] text-[#261E1E]">
               Your Story.
               <br />
-              <em className="font-editorial italic text-taupe">Our Perspective.</em>
+              <em className="font-editorial italic text-[#93191E] font-normal">Our Perspective.</em>
             </h2>
           </Reveal>
 
@@ -43,7 +48,7 @@ export function Approach() {
                   aria-expanded={i === active}
                   className="group flex w-full items-baseline gap-4 md:gap-6 py-4 md:py-6 text-left"
                 >
-                  <span className="label-xs w-8 shrink-0 text-gold">{s.no}</span>
+                  <span className="label-xs w-8 shrink-0 text-[#93191E] font-bold">{s.no}</span>
                   <span className="flex-1">
                     <span
                       className="block font-display text-2xl transition-colors duration-500 md:text-3xl"
