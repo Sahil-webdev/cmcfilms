@@ -153,18 +153,18 @@ export function FooterOption7() {
               CONTACT &amp; STUDIO
             </span>
 
-            <div className="space-y-3 text-sm sm:text-base text-[#AE171E]/90 font-light leading-relaxed" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
+            <div className="space-y-3 text-sm sm:text-base text-[#AE171E] font-normal leading-relaxed" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
               <div className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-[#AE171E] shrink-0 mt-1" />
-                <span>A Block 628, Sixth Floor, Urban Square Mall, Sukher, Udaipur, Rajasthan – 313001, India</span>
+                <MapPin className="w-4.5 h-4.5 text-[#AE171E] shrink-0 mt-0.5" />
+                <span>Urban Square Mall, Sukher, Udaipur, Rajasthan – 313001</span>
               </div>
               <div className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-[#AE171E] shrink-0" />
-                <a href="mailto:cmcfilms771@gmail.com" className="hover:underline transition-all font-mono">cmcfilms771@gmail.com</a>
+                <Mail className="w-4.5 h-4.5 text-[#AE171E] shrink-0" />
+                <a href="mailto:cmcfilms771@gmail.com" className="hover:underline transition-all">cmcfilms771@gmail.com</a>
               </div>
               <div className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-[#AE171E] shrink-0" />
-                <a href="tel:+917425940636" className="hover:underline transition-all font-mono">+91 74259 40636</a>
+                <Phone className="w-4.5 h-4.5 text-[#AE171E] shrink-0" />
+                <a href="tel:+917425940636" className="hover:underline transition-all">+91 74259 40636</a>
               </div>
 
               <div className="pt-2">

@@ -15,7 +15,7 @@ export const studio = {
     "A luxury visual storytelling studio documenting love, emotion and legacy through photography and cinema.",
   email: "cmcfilms771@gmail.com",
   phone: "+91 74259 40636",
-  address: "A Block 628, Sixth Floor, Urban Square Mall, Sukher, Udaipur, Rajasthan – 313001, India",
+  address: "Urban Square Mall, Sukher, Udaipur, Rajasthan – 313001",
   city: "Udaipur, Rajasthan, India",
   socials: [
     { label: "Instagram", href: "#" },
