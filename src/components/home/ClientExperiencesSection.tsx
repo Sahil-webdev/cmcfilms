@@ -137,12 +137,6 @@ export function ClientExperiencesSection() {
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-8 md:mb-10">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#93191E]" />
-            <span className="label-xs uppercase tracking-[0.25em] text-[#93191E] font-mono text-[10px] font-bold">
-              Client Words
-            </span>
-          </div>
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-light text-[#261E1E]">
             Experiences That{" "}
             <em className="font-editorial italic text-[#93191E] font-normal">Speak for Themselves</em>
