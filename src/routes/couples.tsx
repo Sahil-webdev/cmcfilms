@@ -228,10 +228,10 @@ export function CoupleShootsPage() {
         {/* Hero Main Content */}
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center pt-8 md:pt-12">
           
-          {/* Left Column: Straight Real Couple Image Frame (Full Size) */}
-          <div className="lg:col-span-7 flex justify-center lg:justify-start w-full">
-            <div className="relative w-full shadow-2xl bg-white p-3 sm:p-5 rounded-[4px] border border-black/10">
-              <div className="aspect-[4/3.8] sm:aspect-[4/3.5] lg:aspect-[4/3.6] w-full overflow-hidden rounded-[2px] bg-[#D8D3CB]">
+          {/* Left Column: Tall Vertical Real Couple Image Frame */}
+          <div className="lg:col-span-6 flex justify-center lg:justify-start w-full">
+            <div className="relative w-full max-w-lg lg:max-w-xl shadow-2xl bg-white p-3 sm:p-4 rounded-[4px] border border-black/10">
+              <div className="h-[520px] sm:h-[600px] lg:h-[660px] w-full overflow-hidden rounded-[2px] bg-[#D8D3CB]">
                 <img
                   src={couplesHeroCustom}
                   alt="Real Couple Shoot"
@@ -242,7 +242,7 @@ export function CoupleShootsPage() {
           </div>
 
           {/* Right Column: Alex Brush Cursive Title & Editorial Copy */}
-          <div className="lg:col-span-5 space-y-6 pt-4 lg:pt-0">
+          <div className="lg:col-span-6 space-y-6 pt-4 lg:pt-0">
             {/* Dual-tone Title */}
             <div>
               <h1
