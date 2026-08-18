@@ -1,5 +1,4 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, CalendarCheck } from "lucide-react";
 import { studio } from "@/lib/site-data";
 
 /** Floating action sidebar — fixed to the right edge, vertically centered. */
@@ -19,7 +18,10 @@ export function SocialSidebar() {
         className="social-pill group relative flex items-center justify-center"
         style={{ "--hover-color": "#AE171E" } as React.CSSProperties}
       >
-        <CalendarCheck className="w-4 h-4 text-white group-hover:text-white transition-colors" />
+        <svg viewBox="0 0 16 16" className="social-svg" aria-hidden>
+          <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A1 1 0 0 0 3.707 11.293L1 14V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A2 2 0 0 1 5.121 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+          <path d="M4.5 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z" />
+        </svg>
       </Link>
 
       {/* 2. WhatsApp Button */}
