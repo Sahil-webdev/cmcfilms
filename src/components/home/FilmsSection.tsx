@@ -27,17 +27,15 @@ export function FilmsSection() {
       <div className="relative mx-auto max-w-[1600px]">
         {/* ── Top Header ── */}
         <Reveal>
-          <div className="flex items-center gap-3 mb-2">
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#E5CA92]/20 border border-[#E5CA92]/40 text-[#E5CA92]">
-              <Film className="h-2.5 w-2.5" />
-            </span>
-            <span className="label-xs uppercase tracking-[0.25em] text-[#E5CA92] font-mono text-[10px]">
+          <div className="flex items-center gap-2 mb-2.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#93191E]" />
+            <span className="label-xs uppercase tracking-[0.25em] text-[#93191E] font-mono text-[10px] font-bold">
               Wedding Films &amp; Cinema
             </span>
           </div>
 
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <h2 className="font-display text-[clamp(2.2rem,4.8vw,4rem)] font-light leading-[1] text-[#FAF8F3]">
+            <h2 className="font-display text-[clamp(2.2rem,4.8vw,4rem)] font-light leading-[1] text-[#261E1E]">
               Films That Let You{" "}
               <em className="font-editorial italic text-[#93191E] font-normal">
                 Feel It Again.
@@ -46,7 +44,7 @@ export function FilmsSection() {
 
             <Link
               to="/films"
-              className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-[#E5CA92] hover:text-[#FAF8F3] transition-colors duration-300 self-start md:self-end"
+              className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-[#93191E] font-bold hover:text-[#261E1E] transition-colors duration-300 self-start md:self-end"
             >
               View All 4K Films
               <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
