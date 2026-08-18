@@ -52,26 +52,6 @@ const clientReviews: ClientReview[] = [
       "We are camera-shy, but the team made us feel natural during our coastal sunset shoot. They guided us gently without making anything feel staged. 100% recommended!",
     avatar: cat2,
   },
-  {
-    id: "r4",
-    coupleName: "Devendra & Ishita",
-    weddingLocation: "Mehrangarh Fort, Jodhpur",
-    rating: 5,
-    reviewTitle: "Heirloom photography that we will cherish for life",
-    reviewText:
-      "From Haldi petal rain to midnight pheras, CMC FILMS treated our wedding rituals with dignity and artistic mastery. Their attention to candid emotions is unparalleled.",
-    avatar: story3,
-  },
-  {
-    id: "r5",
-    coupleName: "Dhruv & Pippa",
-    weddingLocation: "Oleander Farms, Karjat",
-    rating: 5,
-    reviewTitle: "Handpicked moments of pure intimacy and joy",
-    reviewText:
-      "Our micro-wedding felt like a warm dream. The team caught every unscripted hug and late-night bonfire jam under the stars. They feel like family to us now!",
-    avatar: story2,
-  },
 ];
 
 const infiniteReviews = [...clientReviews, ...clientReviews, ...clientReviews];
