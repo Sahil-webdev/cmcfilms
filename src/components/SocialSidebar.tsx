@@ -10,13 +10,13 @@ export function SocialSidebar() {
       aria-label="Quick actions"
       className="fixed right-4 top-1/2 z-40 hidden -translate-y-1/2 flex-col items-center gap-3 md:flex"
     >
-      {/* 1. Enquiry Button */}
+      {/* 1. Enquiry Button (Royal Blue) */}
       <Link
         to="/contact"
         aria-label="Enquiry"
         title="Enquire For Booking"
-        className="social-pill group relative flex items-center justify-center"
-        style={{ "--hover-color": "#AE171E" } as React.CSSProperties}
+        className="social-pill !bg-[#2563EB] hover:!bg-[#1D4ED8] group relative flex items-center justify-center shadow-lg"
+        style={{ "--hover-color": "#1D4ED8" } as React.CSSProperties}
       >
         <svg viewBox="0 0 16 16" className="social-svg" aria-hidden>
           <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A1 1 0 0 0 3.707 11.293L1 14V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A2 2 0 0 1 5.121 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
