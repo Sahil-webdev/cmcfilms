@@ -27,11 +27,11 @@ export function FooterOption7() {
   return (
     <footer className="relative bg-[#D4DDD8] text-[#AE171E] font-sans selection:bg-[#AE171E] selection:text-white border-t border-[#AE171E]/20 overflow-hidden">
       
-      {/* ── MAIN SPACIOUS & CLEAN FOOTER CONTAINER ── */}
-      <div className="relative z-10 py-14 sm:py-20 px-6 sm:px-12 md:px-16 max-w-[1400px] mx-auto space-y-14">
+      {/* ── MAIN COMPACT & CLEAN FOOTER CONTAINER ── */}
+      <div className="relative z-10 py-8 sm:py-10 px-6 sm:px-12 md:px-16 max-w-[1400px] mx-auto space-y-6">
         
         {/* 4-COLUMN NEAT & AIRY GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12">
           
           {/* COL 1 (4 Cols): BRAND IDENTITY & TAGLINE */}
           <div className="lg:col-span-4 space-y-5">
@@ -182,8 +182,8 @@ export function FooterOption7() {
 
         </div>
 
-        {/* BOTTOM SPACIOUS COPYRIGHT BAR */}
-        <div className="pt-8 border-t border-[#AE171E]/15 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-[#AE171E]/80" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
+        {/* BOTTOM CLEAN COPYRIGHT BAR */}
+        <div className="pt-4 border-t border-[#AE171E]/15 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs sm:text-sm text-[#AE171E]/80" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
           <p>© {new Date().getFullYear()} CMC FILMS. All rights reserved.</p>
           
           <div className="flex items-center gap-6">
