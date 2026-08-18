@@ -7,7 +7,7 @@ export function FloatingSideActions() {
   return (
     <div
       aria-label="Quick contact actions"
-      className="fixed right-0 top-1/2 z-50 flex flex-col items-end gap-2 -translate-y-1/2 select-none pointer-events-none"
+      className="fixed right-0 top-1/2 z-50 hidden md:flex flex-col items-end gap-2 -translate-y-1/2 select-none pointer-events-none"
     >
       {/* 1. TOP ENQUIRY FORM TAB (Individually expands on hover) */}
       <Link
