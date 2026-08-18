@@ -170,8 +170,8 @@ export function ClientExperiencesSection() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Items per page based on viewport (Desktop: 4, Mobile & Tablet: 2)
-  const itemsPerPage = viewport === "desktop" ? 4 : 2;
+  // Items per page based on viewport (Desktop: 4, Tablet: 2, Mobile: 1)
+  const itemsPerPage = viewport === "desktop" ? 4 : viewport === "tablet" ? 2 : 1;
   const totalPages = Math.ceil(clientReviews.length / itemsPerPage);
 
   // Current page state for loop
@@ -227,13 +227,15 @@ export function ClientExperiencesSection() {
       // Each page step shifts 4 items + 4 gaps (100% width + 16px)
       return `calc(-${currentPage} * (100% + 16px))`;
     }
-    // Mobile / Tablet: shifts 2 items + gap (100% width + 12px)
-    return `calc(-${currentPage} * (100% + 12px))`;
+    if (viewport === "tablet") {
+      return `calc(-${currentPage} * (100% + 16px))`;
+    }
+    return `calc(-${currentPage} * (100% + 16px))`;
   };
 
   return (
     <section className="bg-[#9DA1C1] text-[#261E1E] py-12 md:py-16 overflow-hidden border-b border-[#93191E]/15">
-      <div className="mx-auto max-w-[1600px] px-3 sm:px-6 md:px-8">
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 md:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-8 md:mb-10">
@@ -245,7 +247,7 @@ export function ClientExperiencesSection() {
 
         {/* ── CAROUSEL CONTAINER ── */}
         <div
-          className="relative px-5 sm:px-8 md:px-10"
+          className="relative px-6 sm:px-8 md:px-10"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
@@ -254,25 +256,25 @@ export function ClientExperiencesSection() {
             type="button"
             onClick={handlePrev}
             aria-label="Previous page of reviews"
-            className="absolute left-0 md:left-1 top-1/2 -translate-y-1/2 z-20 h-8 w-8 md:h-10 md:w-10 rounded-full bg-white/80 hover:bg-[#93191E] text-[#93191E] hover:text-white flex items-center justify-center transition-all cursor-pointer shadow-md"
+            className="absolute left-0 md:left-1 top-1/2 -translate-y-1/2 z-20 h-9 w-9 md:h-10 md:w-10 rounded-full bg-white/80 hover:bg-[#93191E] text-[#93191E] hover:text-white flex items-center justify-center transition-all cursor-pointer shadow-md"
           >
-            <ArrowLeft className="w-3.5 h-3.5 md:w-4 md:h-4" />
+            <ArrowLeft className="w-4 h-4" />
           </button>
 
           <button
             type="button"
             onClick={handleNext}
             aria-label="Next page of reviews"
-            className="absolute right-0 md:right-1 top-1/2 -translate-y-1/2 z-20 h-8 w-8 md:h-10 md:w-10 rounded-full bg-white/80 hover:bg-[#93191E] text-[#93191E] hover:text-white flex items-center justify-center transition-all cursor-pointer shadow-md"
+            className="absolute right-0 md:right-1 top-1/2 -translate-y-1/2 z-20 h-9 w-9 md:h-10 md:w-10 rounded-full bg-white/80 hover:bg-[#93191E] text-[#93191E] hover:text-white flex items-center justify-center transition-all cursor-pointer shadow-md"
           >
-            <ArrowRight className="w-3.5 h-3.5 md:w-4 md:h-4" />
+            <ArrowRight className="w-4 h-4" />
           </button>
 
           {/* Carousel Sliding Track */}
           <div className="overflow-hidden py-1">
             <div
               onTransitionEnd={handleTransitionEnd}
-              className={`flex gap-3 md:gap-4 ${
+              className={`flex gap-4 ${
                 isTransitioning
                   ? "transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
                   : "transition-none"
@@ -284,30 +286,30 @@ export function ClientExperiencesSection() {
               {infiniteReviews.map((review, idx) => (
                 <div
                   key={`${review.id}-${idx}`}
-                  className="w-[calc((100%-12px)/2)] md:w-[calc((100%-16px)/2)] lg:w-[calc((100%-48px)/4)] shrink-0 rounded-xl sm:rounded-2xl bg-[#FAF8F5] border border-[#93191E]/15 p-3.5 sm:p-5 md:p-6 flex flex-col justify-between shadow-sm hover:border-[#93191E]/40 transition-all duration-300 gap-3 sm:gap-4"
+                  className="w-full md:w-[calc((100%-16px)/2)] lg:w-[calc((100%-48px)/4)] shrink-0 rounded-2xl bg-[#FAF8F5] border border-[#93191E]/15 p-5 sm:p-6 flex flex-col justify-between shadow-sm hover:border-[#93191E]/40 transition-all duration-300 gap-4"
                 >
-                  <div className="space-y-2.5 sm:space-y-3">
+                  <div className="space-y-3">
                     {/* 1. TOP PROFILE HEADER */}
-                    <div className="flex items-center gap-2 sm:gap-3 overflow-hidden">
+                    <div className="flex items-center gap-3 overflow-hidden">
                       <img
                         src={review.avatar}
                         alt={review.coupleName}
                         loading="lazy"
-                        className="h-8 w-8 sm:h-10 sm:w-10 rounded-full object-cover border border-[#93191E]/30 shrink-0"
+                        className="h-10 w-10 rounded-full object-cover border border-[#93191E]/30 shrink-0"
                       />
                       <div className="overflow-hidden">
-                        <h4 className="font-display text-xs sm:text-base text-[#261E1E] font-medium leading-tight truncate">
+                        <h4 className="font-display text-sm sm:text-base text-[#261E1E] font-medium leading-tight">
                           {review.coupleName}
                         </h4>
-                        <p className="text-[9px] sm:text-[10px] font-mono text-[#261E1E]/70 truncate mt-0.5">
+                        <p className="text-[10px] font-mono text-[#261E1E]/70 truncate mt-0.5">
                           {review.weddingLocation}
                         </p>
                       </div>
                     </div>
 
                     {/* 2. SINGLE UNIFIED REVIEW PARAGRAPH (Serif Display Font) */}
-                    <div className="pt-0.5 sm:pt-1">
-                      <p className="font-display text-xs sm:text-[15px] font-normal text-[#261E1E] leading-relaxed">
+                    <div className="pt-1">
+                      <p className="font-display text-sm sm:text-[15px] font-normal text-[#261E1E] leading-relaxed">
                         "{review.reviewText}"
                       </p>
                     </div>
@@ -316,7 +318,7 @@ export function ClientExperiencesSection() {
                   {/* 3. BOTTOM RIGHT STARS (Golden #FFC21E) */}
                   <div className="flex justify-end items-center gap-0.5 text-[#FFC21E]">
                     {[...Array(review.rating)].map((_, i) => (
-                      <Star key={i} className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-[#FFC21E] text-[#FFC21E]" />
+                      <Star key={i} className="w-3.5 h-3.5 fill-[#FFC21E] text-[#FFC21E]" />
                     ))}
                   </div>
                 </div>
