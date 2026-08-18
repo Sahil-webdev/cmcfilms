@@ -330,14 +330,9 @@ const loveStoryTypes = [
 ];
 
 export function WeddingStoriesPage() {
-  const [selectedCategory, setSelectedCategory] = useState("Traditional Weddings");
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [activeStory, setActiveStory] = useState<StoryItem | null>(null);
-
-  const activeCategoryInfo = useMemo(() => {
-    return categoryDataMap[selectedCategory] || categoryDataMap["Traditional Weddings"];
-  }, [selectedCategory]);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     setMousePos({ x: e.clientX, y: e.clientY });
@@ -412,69 +407,7 @@ export function WeddingStoriesPage() {
         </Reveal>
       </section>
 
-      {/* ── SECTION 2: INTERACTIVE STORY CATEGORIES ── */}
-      <section className="relative z-10 py-20 md:py-28 px-6 md:px-14 border-b border-black/5 max-w-[1700px] mx-auto space-y-10">
-        <Reveal className="space-y-1">
-          <span className="label-xs text-[#C5A880] uppercase tracking-widest font-mono">
-            CATEGORY EXPLORATION
-          </span>
-          <h2 className="font-display text-3xl sm:text-4xl font-light text-espresso">
-            Find Your Kind of <em className="font-editorial italic text-[#C5A880]">Story</em>
-          </h2>
-        </Reveal>
 
-        {/* Interactive Layout: Left Category Navigation / Right Image Transition */}
-        <div className="grid md:grid-cols-12 gap-8 lg:gap-14 items-center bg-white p-6 sm:p-10 rounded-3xl border border-espresso/10 shadow-sm">
-          {/* Category List Column */}
-          <div className="md:col-span-5 space-y-2">
-            {Object.keys(categoryDataMap).map((catName) => {
-              const isSelected = selectedCategory === catName;
-              return (
-                <div
-                  key={catName}
-                  onClick={() => setSelectedCategory(catName)}
-                  onMouseEnter={() => setSelectedCategory(catName)}
-                  className={`group py-3 px-4 rounded-xl cursor-pointer transition-all duration-300 flex items-center justify-between ${
-                    isSelected
-                      ? "bg-[#FAF8F5] border-l-4 border-[#C5A880] text-espresso font-medium"
-                      : "text-espresso/60 hover:text-espresso hover:bg-[#FAF8F5]/60"
-                  }`}
-                >
-                  <span className="font-display text-lg sm:text-xl font-light">
-                    {catName}
-                  </span>
-                  <span
-                    className={`text-xs font-mono transition-transform duration-300 ${
-                      isSelected ? "text-[#C5A880] translate-x-1" : "opacity-0 group-hover:opacity-100"
-                    }`}
-                  >
-                    →
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Right Preview Image Column */}
-          <div className="md:col-span-7 space-y-4">
-            <div className="aspect-[16/10] overflow-hidden rounded-2xl bg-beige shadow-md">
-              <img
-                src={activeCategoryInfo.image}
-                alt={activeCategoryInfo.title}
-                className="h-full w-full object-cover transition-all duration-700"
-              />
-            </div>
-            <div className="space-y-2 pt-1">
-              <h3 className="font-display text-2xl font-light text-espresso">
-                {activeCategoryInfo.title}
-              </h3>
-              <p className="text-xs text-taupe font-sans font-light leading-relaxed">
-                "{activeCategoryInfo.desc}"
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ── SECTION 3: FEATURED STORY (Cinematic Large Image + Floating Panel) ── */}
       <section className="relative z-10 py-20 md:py-28 px-4 md:px-10 max-w-[1700px] mx-auto border-b border-black/5">
