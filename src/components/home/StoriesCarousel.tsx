@@ -100,7 +100,7 @@ export function StoriesCarousel() {
   };
 
   return (
-    <section className="grain relative bg-[#E0CDCD] py-14 text-[#261E1E] md:py-20 overflow-hidden border-y border-[#8E171E]/15">
+    <section className="grain relative bg-[#F3F0E6] py-14 text-[#261E1E] md:py-20 overflow-hidden border-y border-[#8E171E]/15">
       <div className="relative mx-auto max-w-[1600px] px-5 md:px-10">
         <Reveal>
           {/* ── Compact Header Row with Controls ── */}
