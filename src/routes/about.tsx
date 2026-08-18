@@ -236,45 +236,6 @@ function AboutPage() {
         </div>
       </section>
 
-      {/* ── 5. FINAL CALL TO ACTION (DARK CINEMA BANNER MATCHING REFERENCE HERO) ── */}
-      <section className="py-24 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto">
-        <div className="relative rounded-3xl overflow-hidden bg-[#0C0D10] text-white p-10 sm:p-16 md:p-20 text-center space-y-6 shadow-2xl border border-white/10">
-          <img
-            src={shoot1}
-            alt="CMC Films Celebration"
-            className="absolute inset-0 h-full w-full object-cover opacity-25"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0C0D10] via-black/60 to-transparent" />
-
-          <div className="relative z-10 max-w-3xl mx-auto space-y-6">
-            <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#C47A65] font-semibold">
-              BEGIN YOUR STORY WITH US
-            </span>
-
-            <h2 className="font-editorial text-3xl sm:text-5xl md:text-6xl font-normal leading-tight">
-              Let's create something <br />
-              <em className="font-normal text-[#C47A65]" style={{ fontFamily: "'Alex Brush', cursive", fontSize: "1.25em" }}>
-                timeless together.
-              </em>
-            </h2>
-
-            <p className="text-xs sm:text-sm text-white/80 font-light max-w-md mx-auto leading-relaxed">
-              We are currently booking wedding & couple shoot dates across India & international destinations.
-            </p>
-
-            <div className="pt-4">
-              <Link
-                to="/contact"
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#C47A65] text-white hover:bg-white hover:text-[#171717] text-xs font-mono font-semibold uppercase tracking-widest transition-all shadow-lg active:scale-95 cursor-pointer"
-              >
-                <span>Enquire For Your Wedding</span>
-                <ArrowUpRight className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
     </main>
   );
 }
