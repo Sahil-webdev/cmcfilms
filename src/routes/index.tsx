@@ -7,7 +7,6 @@ import { StoriesCarousel } from "@/components/home/StoriesCarousel";
 import { FeaturedStory } from "@/components/home/FeaturedStory";
 import { PortfolioEditorial } from "@/components/home/PortfolioEditorial";
 import { FilmsSection } from "@/components/home/FilmsSection";
-import { QuoteSection } from "@/components/home/QuoteSection";
 import { Approach } from "@/components/home/Approach";
 
 import { ClientExperiencesSection } from "@/components/home/ClientExperiencesSection";
@@ -55,7 +54,6 @@ function Home() {
       <FeaturedStory />
       <PortfolioEditorial />
       <FilmsSection />
-      <QuoteSection />
       <Approach />
 
       <ClientExperiencesSection />
