@@ -247,8 +247,8 @@ export function CoupleShootsPage() {
                 className="font-normal leading-[0.9] text-6xl sm:text-7xl md:text-8xl lg:text-9xl -ml-2 drop-shadow-sm select-none"
                 style={{ fontFamily: "'Alex Brush', cursive" }}
               >
-                <span className="text-[#847462] inline-block mr-3">Couple</span>
-                <span className="text-[#1B2E22] inline-block">Shoots</span>
+                <span className="text-[#922A2F] inline-block mr-3">Couple</span>
+                <span className="text-[#8A8072] inline-block">Shoots</span>
               </h1>
             </div>
 
