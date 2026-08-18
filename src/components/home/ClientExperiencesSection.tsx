@@ -188,14 +188,10 @@ export function ClientExperiencesSection() {
                       </div>
                     </div>
 
-                    {/* 2. REVIEW TITLE & EXCERPT */}
-                    <div className="space-y-2 pt-1">
-                      <h3 className="font-display text-base font-normal text-[#261E1E] leading-snug">
-                        "{review.reviewTitle}"
-                      </h3>
-
-                      <p className="text-xs text-[#261E1E]/80 font-sans font-light leading-relaxed line-clamp-3">
-                        {review.reviewText}
+                    {/* 2. SINGLE UNIFIED REVIEW PARAGRAPH (Serif Display Font) */}
+                    <div className="pt-1">
+                      <p className="font-display text-sm sm:text-[15px] font-normal text-[#261E1E] leading-relaxed">
+                        "{review.reviewText}"
                       </p>
                     </div>
                   </div>
