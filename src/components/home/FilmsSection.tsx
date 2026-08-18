@@ -39,7 +39,7 @@ export function FilmsSection() {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <h2 className="font-display text-[clamp(2.2rem,4.8vw,4rem)] font-light leading-[1] text-[#FAF8F3]">
               Films That Let You{" "}
-              <em className="font-editorial italic text-[#E5CA92] font-normal">
+              <em className="font-editorial italic text-[#93191E] font-normal">
                 Feel It Again.
               </em>
             </h2>
