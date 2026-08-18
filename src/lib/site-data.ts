@@ -13,9 +13,10 @@ export const studio = {
   tagline: "Stories of Love. Told Forever.",
   positioning:
     "A luxury visual storytelling studio documenting love, emotion and legacy through photography and cinema.",
-  email: "hello@cmcfilms.studio",
-  phone: "+91 [00000 00000]",
-  city: "Jaipur, India",
+  email: "cmcfilms771@gmail.com",
+  phone: "+91 74259 40636",
+  address: "A Block 628, Sixth Floor, Urban Square Mall, Sukher, Udaipur, Rajasthan – 313001, India",
+  city: "Udaipur, Rajasthan, India",
   socials: [
     { label: "Instagram", href: "#" },
     { label: "YouTube", href: "#" },
