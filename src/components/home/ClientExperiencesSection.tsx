@@ -25,7 +25,7 @@ interface ClientReview {
 const clientReviews: ClientReview[] = [
   {
     id: "r1",
-    coupleName: "Saba & Usman",
+    coupleName: "Kanha Vaishanav",
     weddingLocation: "Destination Nikah, Dubai",
     rating: 5,
     reviewTitle: "Impactful, genuine & masterfully crafted wedding memories",
