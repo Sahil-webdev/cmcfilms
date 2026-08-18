@@ -196,10 +196,10 @@ export function ClientExperiencesSection() {
                     </div>
                   </div>
 
-                  {/* 3. BOTTOM RIGHT STARS */}
-                  <div className="flex justify-end items-center gap-0.5 text-[#93191E]">
+                  {/* 3. BOTTOM RIGHT STARS (Golden #FFC21E) */}
+                  <div className="flex justify-end items-center gap-0.5 text-[#FFC21E]">
                     {[...Array(review.rating)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-[#93191E] text-[#93191E]" />
+                      <Star key={i} className="w-3.5 h-3.5 fill-[#FFC21E] text-[#FFC21E]" />
                     ))}
                   </div>
                 </div>
