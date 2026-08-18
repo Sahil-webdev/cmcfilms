@@ -383,7 +383,7 @@ export function WeddingStoriesPage() {
                   className={`px-4 py-1.5 rounded-full text-xs font-mono transition-all cursor-pointer ${
                     active
                       ? "bg-[#93191E] text-white shadow-sm"
-                      : "bg-white text-[#261E1E]/70 hover:text-[#261E1E] border border-black/10"
+                      : "bg-white text-[#261E1E]/70 hover:text-[#261E1E] shadow-xs"
                   }`}
                 >
                   {cat}
@@ -393,13 +393,13 @@ export function WeddingStoriesPage() {
           </div>
         </div>
 
-        {/* Clean Editorial Blog Cards Grid */}
+        {/* Clean Editorial Blog Cards Grid (Borderless) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
           {filteredPosts.map((post) => (
             <article
               key={post.id}
               onClick={() => setActivePost(post)}
-              className="group bg-white p-4 sm:p-5 rounded-2xl border border-black/10 shadow-sm hover:shadow-md hover:border-[#93191E]/40 transition-all duration-300 flex flex-col justify-between cursor-pointer space-y-4"
+              className="group bg-white p-4 sm:p-5 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between cursor-pointer space-y-4"
             >
               <div className="space-y-4">
                 {/* Image */}
@@ -430,12 +430,12 @@ export function WeddingStoriesPage() {
               </div>
 
               {/* Card Bottom Row */}
-              <div className="pt-3 border-t border-black/5 flex items-center justify-between">
+              <div className="pt-3 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <img
                     src={post.author.avatar}
                     alt={post.author.name}
-                    className="w-6 h-6 rounded-full object-cover border border-[#93191E]/30"
+                    className="w-6 h-6 rounded-full object-cover border-0"
                   />
                   <span className="text-xs font-mono text-[#261E1E]/70">{post.author.name}</span>
                 </div>
