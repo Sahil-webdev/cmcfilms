@@ -392,20 +392,7 @@ export function WeddingStoriesPage() {
         </div>
       </section>
 
-      {/* ── SECTION 1: STORY INTRODUCTION STRIP ── */}
-      <section className="relative z-10 py-16 md:py-24 px-6 md:px-14 border-b border-black/5 max-w-[1600px] mx-auto">
-        <Reveal className="max-w-3xl space-y-3">
-          <span className="label-xs text-[#C5A880] uppercase tracking-[0.25em] font-mono">
-            CMC FILMS JOURNAL
-          </span>
-          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-light text-espresso leading-snug">
-            “Every wedding has its own way of <em className="font-editorial italic text-[#C5A880]">being remembered.</em>”
-          </h2>
-          <p className="text-xs sm:text-sm text-taupe font-sans font-light leading-relaxed">
-            Explore real stories from traditional weddings, destination celebrations, intimate ceremonies, and beautiful beginnings.
-          </p>
-        </Reveal>
-      </section>
+
 
 
 
