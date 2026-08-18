@@ -393,7 +393,7 @@ export function WeddingStoriesPage() {
           </div>
         </div>
 
-        {/* Clean Editorial Blog Cards Grid (Borderless) */}
+        {/* Clean Ultra-Simple Editorial Blog Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
           {filteredPosts.map((post) => (
             <article
@@ -401,7 +401,7 @@ export function WeddingStoriesPage() {
               onClick={() => setActivePost(post)}
               className="group bg-white p-4 sm:p-5 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between cursor-pointer space-y-4"
             >
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {/* Image */}
                 <div className="aspect-[16/10] w-full overflow-hidden rounded-xl bg-[#EFECE6]">
                   <img
@@ -412,10 +412,11 @@ export function WeddingStoriesPage() {
                   />
                 </div>
 
-                {/* Sub-meta */}
-                <div className="flex items-center justify-between text-[11px] font-mono text-[#93191E]">
-                  <span className="uppercase tracking-wider font-semibold">{post.category}</span>
-                  <span className="text-[#261E1E]/50">{post.readTime}</span>
+                {/* Category Tag */}
+                <div>
+                  <span className="text-[11px] font-mono font-semibold text-[#93191E] uppercase tracking-wider">
+                    {post.category}
+                  </span>
                 </div>
 
                 {/* Title */}
@@ -429,19 +430,10 @@ export function WeddingStoriesPage() {
                 </p>
               </div>
 
-              {/* Card Bottom Row */}
-              <div className="pt-3 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <img
-                    src={post.author.avatar}
-                    alt={post.author.name}
-                    className="w-6 h-6 rounded-full object-cover border-0"
-                  />
-                  <span className="text-xs font-mono text-[#261E1E]/70">{post.author.name}</span>
-                </div>
-
+              {/* Clean Bottom Link */}
+              <div className="pt-2 flex items-center justify-end">
                 <span className="text-xs font-mono text-[#93191E] font-semibold inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                  <span>Read</span>
+                  <span>Read Story</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </span>
               </div>
@@ -490,26 +482,15 @@ function CleanBlogReaderModal({
       {/* Main Reading Container */}
       <article className="max-w-3xl mx-auto px-6 py-12 space-y-8">
         
-        {/* Post Title & Metadata Header */}
+        {/* Post Title & Category Header */}
         <div className="space-y-3 border-b border-black/10 pb-6">
-          <div className="flex items-center gap-3 text-xs font-mono text-[#261E1E]/60">
-            <span>{post.date}</span>
-            <span>·</span>
-            <span>{post.readTime}</span>
-          </div>
+          <span className="text-xs font-mono text-[#93191E] uppercase tracking-wider font-semibold">
+            {post.category} · {post.date}
+          </span>
 
           <h1 className="font-display text-3xl sm:text-5xl font-light text-[#261E1E] leading-tight">
             {post.title}
           </h1>
-
-          <div className="flex items-center gap-3 pt-2">
-            <img
-              src={post.author.avatar}
-              alt={post.author.name}
-              className="w-8 h-8 rounded-full object-cover border border-[#93191E]/30"
-            />
-            <span className="text-xs font-mono text-[#261E1E]/80">{post.author.name}</span>
-          </div>
         </div>
 
         {/* Cover Photo */}
