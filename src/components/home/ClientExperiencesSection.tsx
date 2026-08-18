@@ -23,6 +23,7 @@ interface ClientReview {
 }
 
 const clientReviews: ClientReview[] = [
+  // SLIDE 1 (Reviews 1..4)
   {
     id: "r1",
     coupleName: "Kanha Vaishanav",
@@ -53,14 +54,103 @@ const clientReviews: ClientReview[] = [
       "We are camera-shy, but the team made us feel natural during our coastal sunset shoot. They guided us gently without making anything feel staged. 100% recommended!",
     avatar: cat2,
   },
+  {
+    id: "r4",
+    coupleName: "Radhika & Siddharth",
+    weddingLocation: "Jagmandir Island Palace, Udaipur",
+    rating: 5,
+    reviewTitle: "Cinematic grandeur captured with heart and precision",
+    reviewText:
+      "From our royal sangeet to the intimate pheras at dawn, CMC Films crafted a breathtaking cinematic masterpiece that our whole family treasures forever.",
+    avatar: cat3,
+  },
+
+  // SLIDE 2 (Reviews 5..8)
+  {
+    id: "r5",
+    coupleName: "Meera & Devansh",
+    weddingLocation: "Umaid Bhawan Palace, Jodhpur",
+    rating: 5,
+    reviewTitle: "Emotional depth and royal visual storytelling",
+    reviewText:
+      "Their vision, color grading, and candid storytelling are unparalleled. Watching our wedding film gave us goosebumps and happy tears all over again.",
+    avatar: story2,
+  },
+  {
+    id: "r6",
+    coupleName: "Sanjana & Rohan",
+    weddingLocation: "The Leela Palace, Udaipur",
+    rating: 5,
+    reviewTitle: "Professionalism at its finest",
+    reviewText:
+      "The crew blended in effortlessly and captured genuine emotions without interrupting a single special ritual. Outstanding dedication and warmth!",
+    avatar: story3,
+  },
+  {
+    id: "r7",
+    coupleName: "Priyanka & Kabir",
+    weddingLocation: "Fairmont, Jaipur",
+    rating: 5,
+    reviewTitle: "Every picture is a timeless piece of art",
+    reviewText:
+      "The lighting, composition, and editorial aesthetics in our portrait series exceeded all our highest expectations. Truly an extraordinary experience.",
+    avatar: cat1,
+  },
+  {
+    id: "r8",
+    coupleName: "Taniya & Vikram",
+    weddingLocation: "Ananta Resort, Udaipur",
+    rating: 5,
+    reviewTitle: "Unforgettable celebration beautifully immortalized",
+    reviewText:
+      "CMC FILMS turned our dream wedding into an absolute visual film. They captured raw happiness, joyful tears, and all the energetic dancing.",
+    avatar: cat2,
+  },
+
+  // SLIDE 3 (Reviews 9..12)
+  {
+    id: "r9",
+    coupleName: "Ishita & Varun",
+    weddingLocation: "Raffles, Udaipur",
+    rating: 5,
+    reviewTitle: "Masterful lighting and sunset romance",
+    reviewText:
+      "Extremely warm, punctual, and creative team. They knew exactly how to capture the golden hour light over the lake for our couple portraits.",
+    avatar: story1,
+  },
+  {
+    id: "r10",
+    coupleName: "Natasha & Karan",
+    weddingLocation: "Alila Fort Bishangarh",
+    rating: 5,
+    reviewTitle: "High-fashion movie-like wedding trailer",
+    reviewText:
+      "The editorial aesthetics and movie-like trailer they delivered left all our friends and guests completely speechless. Unbelievable artistry!",
+    avatar: story2,
+  },
+  {
+    id: "r11",
+    coupleName: "Riya & Shlok",
+    weddingLocation: "ITC Grand Bharat, Gurgaon",
+    rating: 5,
+    reviewTitle: "Attentive to every delicate ritual and detail",
+    reviewText:
+      "They paid immense attention to every subtle detail — from the intricate bridal lehenga work to the heartfelt laughter of our grandparents.",
+    avatar: cat3,
+  },
+  {
+    id: "r12",
+    coupleName: "Simran & Samar",
+    weddingLocation: "Grand Hyatt, Goa",
+    rating: 5,
+    reviewTitle: "Best decision for our wedding legacy",
+    reviewText:
+      "Choosing CMC FILMS was the best investment of our entire wedding planning! The emotion and passion in their work shines through every photograph.",
+    avatar: story3,
+  },
 ];
 
-const infiniteReviews = [...clientReviews, ...clientReviews, ...clientReviews];
-
 export function ClientExperiencesSection() {
-  const [currentIndex, setCurrentIndex] = useState(clientReviews.length);
-  const [isTransitioning, setIsTransitioning] = useState(true);
-  const [isPaused, setIsPaused] = useState(false);
   const [viewport, setViewport] = useState<"desktop" | "tablet" | "mobile">("desktop");
 
   useEffect(() => {
@@ -80,24 +170,36 @@ export function ClientExperiencesSection() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Automatic Step Carousel Timer (3.5s)
+  // Items per page based on viewport
+  const itemsPerPage = viewport === "desktop" ? 4 : viewport === "tablet" ? 2 : 1;
+  const totalPages = Math.ceil(clientReviews.length / itemsPerPage);
+
+  // Current page state for 3-slide loop
+  const [currentPage, setCurrentPage] = useState(totalPages);
+  const [isTransitioning, setIsTransitioning] = useState(true);
+  const [isPaused, setIsPaused] = useState(false);
+
+  // Triple pages for seamless infinite loop
+  const infiniteReviews = [...clientReviews, ...clientReviews, ...clientReviews];
+
+  // Automatic Step Carousel Timer (4s)
   useEffect(() => {
     if (isPaused) return;
 
     const timer = setInterval(() => {
-      setCurrentIndex((prev) => prev + 1);
-    }, 3500);
+      setCurrentPage((prev) => prev + 1);
+    }, 4000);
 
     return () => clearInterval(timer);
   }, [isPaused]);
 
   const handleTransitionEnd = () => {
-    if (currentIndex >= clientReviews.length * 2) {
+    if (currentPage >= totalPages * 2) {
       setIsTransitioning(false);
-      setCurrentIndex(clientReviews.length);
-    } else if (currentIndex < clientReviews.length) {
+      setCurrentPage(totalPages);
+    } else if (currentPage < totalPages) {
       setIsTransitioning(false);
-      setCurrentIndex(clientReviews.length * 2 - 1);
+      setCurrentPage(totalPages * 2 - 1);
     }
   };
 
@@ -111,23 +213,24 @@ export function ClientExperiencesSection() {
   }, [isTransitioning]);
 
   const handleNext = () => {
-    setCurrentIndex((prev) => prev + 1);
+    setCurrentPage((prev) => prev + 1);
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => prev - 1);
+    setCurrentPage((prev) => prev - 1);
   };
 
-  const activeDotIndex = currentIndex % clientReviews.length;
+  const activeDotIndex = currentPage % totalPages;
 
   const getTransformStyle = () => {
     if (viewport === "desktop") {
-      return `calc(-${currentIndex} * (25% + 4px))`;
+      // Each page step shifts 4 items + 4 gaps (100% width + 16px)
+      return `calc(-${currentPage} * (100% + 16px))`;
     }
     if (viewport === "tablet") {
-      return `calc(-${currentIndex} * (50% + 8px))`;
+      return `calc(-${currentPage} * (100% + 16px))`;
     }
-    return `-${currentIndex * 100}%`;
+    return `calc(-${currentPage} * (100% + 16px))`;
   };
 
   return (
@@ -152,7 +255,7 @@ export function ClientExperiencesSection() {
           <button
             type="button"
             onClick={handlePrev}
-            aria-label="Previous review"
+            aria-label="Previous page of reviews"
             className="absolute left-0 md:left-1 top-1/2 -translate-y-1/2 z-20 h-9 w-9 md:h-10 md:w-10 rounded-full bg-white/80 hover:bg-[#93191E] text-[#93191E] hover:text-white flex items-center justify-center transition-all cursor-pointer shadow-md"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -161,7 +264,7 @@ export function ClientExperiencesSection() {
           <button
             type="button"
             onClick={handleNext}
-            aria-label="Next review"
+            aria-label="Next page of reviews"
             className="absolute right-0 md:right-1 top-1/2 -translate-y-1/2 z-20 h-9 w-9 md:h-10 md:w-10 rounded-full bg-white/80 hover:bg-[#93191E] text-[#93191E] hover:text-white flex items-center justify-center transition-all cursor-pointer shadow-md"
           >
             <ArrowRight className="w-4 h-4" />
@@ -223,13 +326,13 @@ export function ClientExperiencesSection() {
             </div>
           </div>
 
-          {/* Dots Indicator */}
+          {/* Dots Indicator for Pages */}
           <div className="mt-6 flex justify-center items-center gap-2">
-            {clientReviews.map((_, idx) => (
+            {[...Array(totalPages)].map((_, idx) => (
               <button
                 key={idx}
                 type="button"
-                onClick={() => setCurrentIndex(clientReviews.length + idx)}
+                onClick={() => setCurrentPage(totalPages + idx)}
                 aria-label={`Go to slide ${idx + 1}`}
                 className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
                   idx === activeDotIndex ? "w-6 bg-[#93191E]" : "w-1.5 bg-[#261E1E]/20"
