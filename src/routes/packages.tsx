@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useMemo, useEffect } from "react";
-import { Check, Sparkles, ArrowRight, Camera, Film, Clock, HelpCircle, X, Send, ArrowUpRight } from "lucide-react";
+import { useState, useMemo } from "react";
+import { Check, Sparkles, ArrowRight, Camera, Film, Clock, HelpCircle, X, Send } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 
 // Image Imports
@@ -47,9 +47,9 @@ const mainPackages: PackageService[] = [
   {
     id: "pkg-1",
     no: "01",
-    title: "WEDDING PHOTOGRAPHY",
+    title: "Wedding Photography",
     subtitle: "Full Day Traditional & Candid Photography",
-    copy: "Two to three senior photographers, quietly present through every hour of your celebration.",
+    copy: "Two to three senior photographers quietly present through every hour of your celebration.",
     price: "₹1,20,000",
     numericPrice: 120000,
     image: luxuryEditorial,
@@ -63,7 +63,7 @@ const mainPackages: PackageService[] = [
   {
     id: "pkg-2",
     no: "02",
-    title: "WEDDING CINEMATOGRAPHY",
+    title: "Wedding Cinematography",
     subtitle: "4K Cinematic Film & Highlights",
     copy: "A 4K cinematic film cut for feeling — capturing vows, laughter, and emotional pauses.",
     price: "₹1,50,000",
@@ -79,7 +79,7 @@ const mainPackages: PackageService[] = [
   {
     id: "pkg-3",
     no: "03",
-    title: "PRE-WEDDING STORIES",
+    title: "Pre-Wedding Stories",
     subtitle: "Dawn Outdoor Concept Shoot",
     copy: "Outdoor dawn concept shoot in Jaipur, Udaipur, Goa, or royal haveli locations.",
     price: "₹45,000",
@@ -95,8 +95,8 @@ const mainPackages: PackageService[] = [
   {
     id: "pkg-4",
     no: "04",
-    title: "DESTINATION WEDDINGS",
-    subtitle: "Multi-Day Resort & International Nuptials",
+    title: "Destination Weddings",
+    subtitle: "Multi-Day Resort & Palace Nuptials",
     copy: "Full multi-day destination wedding coverage across India & international venues.",
     price: "₹2,80,000",
     numericPrice: 280000,
@@ -111,7 +111,7 @@ const mainPackages: PackageService[] = [
   {
     id: "pkg-5",
     no: "05",
-    title: "COUPLE PORTRAITS",
+    title: "Couple Portraits",
     subtitle: "Editorial Fine-Art Portraiture",
     copy: "Editorial fine-art portraits & romantic couples sessions in studio or scenic outdoor sets.",
     price: "₹35,000",
@@ -127,7 +127,7 @@ const mainPackages: PackageService[] = [
   {
     id: "pkg-6",
     no: "06",
-    title: "MATERNITY PHOTOSHOOT",
+    title: "Maternity Photoshoot",
     subtitle: "Fine-Art Aesthetic Portraiture",
     copy: "Fine-art aesthetic portraiture celebrating new beginnings in studio or outdoor glow.",
     price: "₹30,000",
@@ -171,7 +171,6 @@ const faqs = [
 ];
 
 export function PackagesPage() {
-  const [selectedPkg, setSelectedPkg] = useState<PackageService | null>(null);
   const [enquiryModalPkg, setEnquiryModalPkg] = useState<PackageService | null>(null);
   const [formSent, setFormSent] = useState(false);
 
@@ -200,7 +199,7 @@ export function PackagesPage() {
     <main className="bg-[#FAF8F5] text-[#171717] font-sans selection:bg-[#D8D3CB] selection:text-[#171717] min-h-screen relative">
       
       {/* ── 1. CLEAR HERO BORDERLESS BANNER WITH BOLD TITLE ── */}
-      <section className="relative h-[260px] sm:h-[340px] md:h-[380px] w-full overflow-hidden flex items-center justify-center text-center px-6">
+      <section className="relative h-[260px] sm:h-[320px] md:h-[360px] w-full overflow-hidden flex items-center justify-center text-center px-6">
         <img
           src={hero}
           alt="Our Packages - CMC FILMS"
@@ -215,68 +214,87 @@ export function PackagesPage() {
         </div>
       </section>
 
-      {/* ── 2. OUR PACKAGES GRID (MATCHING SCREENSHOT 2) RIGHT BELOW HERO ── */}
-      <section className="py-14 sm:py-20 px-6 sm:px-12 md:px-16 max-w-[1550px] mx-auto space-y-10">
+      {/* ── 2. SIMPLE, CLEAN 6-PACKAGE CARDS GRID RIGHT BELOW HERO ── */}
+      <section className="py-12 sm:py-16 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto space-y-10">
         
-        {/* Section Title Header */}
-        <div className="text-left space-y-2 border-b border-[#D8D3CB]/60 pb-6">
+        {/* Section Header */}
+        <div className="text-center space-y-2 max-w-2xl mx-auto">
           <span className="text-xs font-mono uppercase tracking-[0.2em] text-[#C47A65] font-bold">
-            CMC FILMS SERVICES &amp; PACKAGES
+            SERVICES &amp; INVESTMENT
           </span>
           <h2 className="font-editorial text-3xl sm:text-5xl text-[#171717] font-normal">
-            Our <em className="italic text-[#C47A65]">Signature Packages</em>
+            Choose Your <em className="italic text-[#C47A65]">Package</em>
           </h2>
-          <p className="text-xs sm:text-sm text-[#55504A] font-light max-w-2xl leading-relaxed">
-            Thoughtfully planned photography and cinema collections tailored for royal weddings, destination celebrations, and intimate stories.
+          <p className="text-xs sm:text-sm text-[#55504A] font-light leading-relaxed">
+            Transparent luxury photography &amp; cinematography offerings designed for your special celebrations.
           </p>
         </div>
 
-        {/* 6 Grid Boxes (Matching Screenshot 2 Layout & Style) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
+        {/* Simple 6 Grid Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {mainPackages.map((pkg) => (
             <div
               key={pkg.id}
-              onClick={() => {
-                setEnquiryModalPkg(pkg);
-                setFormSent(false);
-              }}
-              className="relative overflow-hidden rounded-2xl aspect-[4/5] shadow-md hover:shadow-2xl transition-all duration-500 group cursor-pointer border border-[#D8D3CB]/50 bg-black"
+              className="bg-white border border-[#D8D3CB] rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 space-y-5 flex flex-col justify-between group"
             >
-              {/* Full-Bleed Background Image */}
-              <img
-                src={pkg.image}
-                alt={pkg.title}
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-85 group-hover:opacity-100"
-              />
-
-              {/* Bottom Dark Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
-
-              {/* Top Service Number Badge */}
-              <div className="absolute top-4 left-4 z-10">
-                <span className="bg-white/20 backdrop-blur-md text-white font-mono text-[11px] font-bold px-3 py-1 rounded-full border border-white/30">
-                  {pkg.no}
-                </span>
-              </div>
-
-              {/* Bottom Text & Information Overlay (Matching Screenshot 2) */}
-              <div className="absolute bottom-0 inset-x-0 p-5 sm:p-6 z-10 space-y-1 text-left flex items-end justify-between">
-                <div className="space-y-1 max-w-[82%]">
-                  <span className="text-[10px] font-mono text-[#C47A65] uppercase tracking-widest font-semibold block">
-                    Starting {pkg.price}
+              <div className="space-y-4">
+                {/* Image Box */}
+                <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-[#D8D3CB]">
+                  <img
+                    src={pkg.image}
+                    alt={pkg.title}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <span className="absolute top-3 left-3 bg-[#171717] text-white font-mono text-[11px] font-bold px-3 py-1 rounded-full shadow-xs">
+                    {pkg.no}
                   </span>
-                  <h3 className="font-editorial text-xl sm:text-2xl text-white font-bold uppercase tracking-wide leading-tight drop-shadow-sm">
+                </div>
+
+                {/* Header Title & Subtitle */}
+                <div className="space-y-1">
+                  <h3 className="font-editorial text-2xl text-[#171717] font-bold">
                     {pkg.title}
                   </h3>
-                  <p className="text-[11px] text-white/80 font-light line-clamp-2 leading-snug">
-                    {pkg.copy}
+                  <p className="text-xs font-mono text-[#C47A65] font-semibold">
+                    {pkg.subtitle}
                   </p>
                 </div>
 
-                {/* Bottom Right Floating Badge Icon (Matching Screenshot 2) */}
-                <div className="w-9 h-9 rounded-full bg-white/20 backdrop-blur-md border border-white/40 flex items-center justify-center text-white group-hover:bg-[#C47A65] group-hover:border-[#C47A65] transition-all duration-300 shrink-0 shadow-md">
-                  <ArrowUpRight className="w-5 h-5" />
+                <p className="text-xs text-[#55504A] font-light leading-relaxed">
+                  {pkg.copy}
+                </p>
+
+                {/* Deliverables List */}
+                <ul className="space-y-1.5 pt-2 border-t border-[#D8D3CB]/50 text-xs text-[#55504A]">
+                  {pkg.deliverables.map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <Check className="w-3.5 h-3.5 text-[#C47A65] shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Price & Action Button */}
+              <div className="pt-4 border-t border-[#D8D3CB]/60 flex items-center justify-between gap-3">
+                <div>
+                  <span className="text-[10px] font-mono text-[#68645E] block uppercase">Investment</span>
+                  <span className="font-editorial text-2xl text-[#171717] font-bold">
+                    {pkg.price}
+                  </span>
                 </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEnquiryModalPkg(pkg);
+                    setFormSent(false);
+                  }}
+                  className="px-5 py-2.5 rounded-full bg-[#171717] hover:bg-[#C47A65] text-white font-mono text-xs uppercase tracking-widest font-semibold transition-all duration-300 shadow-xs cursor-pointer flex items-center gap-1.5"
+                >
+                  <span>Enquire</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
               </div>
 
             </div>
@@ -286,7 +304,7 @@ export function PackagesPage() {
       </section>
 
       {/* ── 3. CUSTOM MULTI-SERVICE CALCULATOR SECTION ── */}
-      <section className="py-14 sm:py-20 px-6 sm:px-12 md:px-16 max-w-[1400px] mx-auto border-t border-[#D8D3CB] space-y-8">
+      <section className="py-12 sm:py-16 px-6 sm:px-12 md:px-16 max-w-[1400px] mx-auto border-t border-[#D8D3CB] space-y-8">
         
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <span className="text-xs font-mono uppercase tracking-[0.2em] text-[#C47A65] font-bold">
@@ -329,7 +347,7 @@ export function PackagesPage() {
                     </div>
                   </div>
 
-                  <h3 className="font-editorial text-xl text-[#171717] font-normal uppercase tracking-wide">
+                  <h3 className="font-editorial text-xl text-[#171717] font-bold">
                     {service.title}
                   </h3>
 
@@ -340,7 +358,7 @@ export function PackagesPage() {
 
                 <div className="pt-3 border-t border-[#D8D3CB]/50 flex items-center justify-between">
                   <span className="text-[10px] font-mono text-[#68645E]">Est. Investment</span>
-                  <span className="font-editorial text-lg text-[#C47A65] font-normal">
+                  <span className="font-editorial text-lg text-[#C47A65] font-bold">
                     {service.price}
                   </span>
                 </div>
@@ -355,7 +373,7 @@ export function PackagesPage() {
             <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#C47A65] font-bold block">
               ESTIMATED INVESTMENT ({selectedServices.length} SERVICES SELECTED)
             </span>
-            <span className="font-editorial text-3xl text-white block mt-0.5">
+            <span className="font-editorial text-3xl text-white block mt-0.5 font-bold">
               ₹{calculatedTotalEstimate.toLocaleString("en-IN")}
             </span>
           </div>
@@ -417,7 +435,7 @@ export function PackagesPage() {
               <span className="text-xs font-mono text-[#C47A65] uppercase font-bold">
                 PACKAGE ENQUIRY · {enquiryModalPkg.no}
               </span>
-              <h3 className="font-editorial text-2xl sm:text-3xl font-normal text-[#171717]">
+              <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-[#171717]">
                 {enquiryModalPkg.title}
               </h3>
               <p className="text-xs font-mono text-[#68645E]">
