@@ -727,22 +727,22 @@ export function PackagesPage() {
           {/* ── 4. FAQ ACCORDION SECTION ── */}
           <section className="py-10 sm:py-16 px-4 sm:px-12 md:px-16 max-w-[1300px] mx-auto space-y-6 sm:space-y-8 border-t border-[#D8D3CB]">
             <div className="text-center space-y-1.5">
-              <span className="text-xs font-mono text-[#C47A65] uppercase tracking-[0.2em] font-semibold">
+              <span className="text-xs font-mono text-[#C47A65] uppercase tracking-[0.2em] font-bold">
                 QUESTIONS &amp; ANSWERS
               </span>
-              <h2 className="font-editorial text-2xl sm:text-4xl font-normal text-[#171717]">
-                Frequently Asked <em className="italic text-[#C47A65]">Questions</em>
+              <h2 className="font-sans text-2xl sm:text-4xl font-bold text-[#171717] tracking-tight">
+                Frequently Asked Questions
               </h2>
             </div>
 
             <div className="space-y-3 max-w-3xl mx-auto">
               {faqs.map((faq, idx) => (
                 <div key={idx} className="bg-white p-4 sm:p-5 rounded-xl border border-[#D8D3CB]/80 space-y-1.5 shadow-xs text-left">
-                  <h3 className="font-editorial text-base sm:text-lg text-[#171717] font-normal flex items-start gap-2.5">
+                  <h3 className="font-sans text-sm sm:text-base text-[#171717] font-semibold flex items-start gap-2.5">
                     <HelpCircle className="w-4 h-4 text-[#C47A65] shrink-0 mt-0.5" />
                     <span>{faq.q}</span>
                   </h3>
-                  <p className="text-xs text-[#55504A] font-light leading-relaxed pl-6">
+                  <p className="text-xs sm:text-sm text-[#55504A] font-light leading-relaxed pl-6">
                     {faq.a}
                   </p>
                 </div>
