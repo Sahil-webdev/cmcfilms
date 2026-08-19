@@ -1,24 +1,18 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useMemo, useEffect, useRef } from "react";
-import { ArrowUpRight, ArrowDown, ArrowLeft, ArrowRight, X } from "lucide-react";
+import { useState, useMemo, useEffect } from "react";
+import { ArrowLeft, ArrowRight, X } from "lucide-react";
 
-// Shoot Assets Imports (src/assets/shoot)
-import shoot1 from "@/assets/shoot/IMG_5570.JPG";
-import shoot2 from "@/assets/shoot/IMG_5603.JPG";
-import shoot3 from "@/assets/shoot/IMG_5636.JPG";
-import shoot4 from "@/assets/shoot/IMG_5712.JPG";
-import shoot5 from "@/assets/shoot/IMG_6666.JPG";
-import shoot6 from "@/assets/shoot/IMG_6668.JPG";
-import shoot7 from "@/assets/shoot/IMG_6671.JPG";
-import shoot8 from "@/assets/shoot/IMG_6672.JPG";
-import shoot9 from "@/assets/shoot/_04A4901.JPG";
-import shoot10 from "@/assets/shoot/_04A5018.JPG";
-import shoot11 from "@/assets/shoot/_04A5022.JPG";
-import shoot12 from "@/assets/shoot/_04A5023.JPG";
-import shoot13 from "@/assets/shoot/_04A5025.JPG";
-import shoot14 from "@/assets/shoot/_04A5033.JPG";
-import shoot15 from "@/assets/shoot/_04A5034.JPG";
-import shoot16 from "@/assets/shoot/_04A5036.JPG";
+// Pinterest Folder Assets (src/assets/pinterest)
+import pin1 from "@/assets/pinterest/pin1.jpg";
+import pin2 from "@/assets/pinterest/pin2.jpg";
+import pin3 from "@/assets/pinterest/pin3.jpg";
+import pin4 from "@/assets/pinterest/pin4.jpg";
+import pin5 from "@/assets/pinterest/pin5.jpg";
+import pin6 from "@/assets/pinterest/pin6.jpg";
+import pin7 from "@/assets/pinterest/pin7.jpg";
+import pin8 from "@/assets/pinterest/pin8.jpg";
+
+// Hero Custom Asset (PRESERVED)
 import couplesHeroCustom from "@/assets/couples-hero-custom.jpg";
 
 const title = "Couple Shoots & Pre-Weddings — CMC FILMS";
@@ -68,9 +62,9 @@ const coupleStoriesList: CoupleStoryItem[] = [
     city: "Jaipur",
     shootType: "Pre-Wedding",
     year: "2026",
-    heroImage: shoot1,
-    supportingImage: shoot2,
-    galleryImages: [shoot1, shoot2, shoot3, shoot4, shoot5, shoot6],
+    heroImage: pin1,
+    supportingImage: pin2,
+    galleryImages: [pin1, pin2, pin3, pin4, pin5, pin6],
     introText:
       "Aarav and Meera wanted nothing elaborate. Just Jaipur before the streets became busy, some winter dawn light, and enough time to forget about the camera. We spent hours walking through Amer and calm haveli courtyards as early sun touched pink stone walls.",
     credits: {
@@ -88,9 +82,9 @@ const coupleStoriesList: CoupleStoryItem[] = [
     city: "Udaipur",
     shootType: "Couple Session",
     year: "2026",
-    heroImage: shoot3,
-    supportingImage: shoot4,
-    galleryImages: [shoot7, shoot8, shoot9, shoot10, shoot11],
+    heroImage: pin3,
+    supportingImage: pin4,
+    galleryImages: [pin7, pin8, pin1, pin2, pin3],
     introText:
       "Riya and Kabir shared ten years of memories before stepping onto a wooden lakeboat in Udaipur. As dusk descended over the Aravalli hills, mirror reflections on Lake Pichola created an unmatched quiet harmony.",
     credits: {
@@ -108,9 +102,9 @@ const coupleStoriesList: CoupleStoryItem[] = [
     city: "Goa",
     shootType: "Pre-Wedding",
     year: "2026",
-    heroImage: shoot5,
-    supportingImage: shoot6,
-    galleryImages: [shoot12, shoot13, shoot14, shoot15, shoot16],
+    heroImage: pin5,
+    supportingImage: pin6,
+    galleryImages: [pin4, pin5, pin6, pin7, pin8],
     introText:
       "Two weeks after their celebration, Ishita and Arjun escaped to southern Goa shores. No schedules, no heavy outfits — just barefoot ocean walks as warm sea breeze and evening waves rustled beside them.",
     credits: {
@@ -128,9 +122,9 @@ const coupleStoriesList: CoupleStoryItem[] = [
     city: "Mumbai",
     shootType: "Pre-Wedding",
     year: "2025",
-    heroImage: shoot7,
-    supportingImage: shoot8,
-    galleryImages: [shoot1, shoot3, shoot5, shoot7, shoot9],
+    heroImage: pin7,
+    supportingImage: pin8,
+    galleryImages: [pin1, pin3, pin5, pin7, pin2],
     introText:
       "Standing amidst sunset waves as sea breeze painted the horizon in soft rose gold tones. The vast open shores allowed them to feel like the only two souls on earth.",
     credits: {
@@ -148,9 +142,9 @@ const coupleStoriesList: CoupleStoryItem[] = [
     city: "Jaipur",
     shootType: "Post-Wedding",
     year: "2025",
-    heroImage: shoot9,
-    supportingImage: shoot10,
-    galleryImages: [shoot2, shoot4, shoot6, shoot8, shoot10],
+    heroImage: pin2,
+    supportingImage: pin4,
+    galleryImages: [pin2, pin4, pin6, pin8, pin1],
     introText:
       "Quiet heritage haveli trails surrounded by royal archways and soft morning light. Historic stone courtyards gave them a calm, intimate canopy far away from urban noise.",
     credits: {
@@ -168,18 +162,16 @@ export function CoupleShootsPage() {
   const [activeStoryModal, setActiveStoryModal] = useState<CoupleStoryItem | null>(null);
   const [activeLightboxPhoto, setActiveLightboxPhoto] = useState<string | null>(null);
 
-  const featuredCouple = coupleStoriesList[0];
-
   const collagePhotos = [
-    { src: shoot1, title: "Amer Dawn Vows", alt: "Real Couple Shoot 1" },
-    { src: shoot2, title: "Haveli Sunlight", alt: "Real Couple Shoot 2" },
-    { src: shoot3, title: "Royal Courtyard", alt: "Real Couple Shoot 3" },
-    { src: shoot4, title: "Sunset Reflections", alt: "Real Couple Shoot 4" },
-    { src: shoot5, title: "Palace Gardens", alt: "Real Couple Shoot 5" },
-    { src: shoot6, title: "Golden Hour Glow", alt: "Real Couple Shoot 6" },
-    { src: shoot7, title: "Barefoot Shoreline", alt: "Real Couple Shoot 7" },
-    { src: shoot8, title: "Quiet Companionship", alt: "Real Couple Shoot 8" },
-    { src: shoot9, title: "Heritage Architecture", alt: "Real Couple Shoot 9" },
+    { src: pin1, title: "Amer Dawn Vows", alt: "Pinterest Shoot 1" },
+    { src: pin2, title: "Haveli Sunlight", alt: "Pinterest Shoot 2" },
+    { src: pin3, title: "Royal Courtyard", alt: "Pinterest Shoot 3" },
+    { src: pin4, title: "Sunset Reflections", alt: "Pinterest Shoot 4" },
+    { src: pin5, title: "Palace Gardens", alt: "Pinterest Shoot 5" },
+    { src: pin6, title: "Golden Hour Glow", alt: "Pinterest Shoot 6" },
+    { src: pin7, title: "Barefoot Shoreline", alt: "Pinterest Shoot 7" },
+    { src: pin8, title: "Quiet Companionship", alt: "Pinterest Shoot 8" },
+    { src: pin1, title: "Heritage Architecture", alt: "Pinterest Shoot 9" },
   ];
 
   const filteredStories = useMemo(() => {
@@ -190,7 +182,7 @@ export function CoupleShootsPage() {
   return (
     <main className="bg-[#F3F0EA] text-[#171717] font-sans selection:bg-[#D8D3CB] selection:text-[#171717] min-h-screen relative">
       
-      {/* ── 1. SIGNATURE ARTISTIC HERO (Matching Reference Design) ── */}
+      {/* ── 1. SIGNATURE ARTISTIC HERO (PRESERVED HERO IMAGE) ── */}
       <section className="relative pt-24 sm:pt-28 pb-16 sm:pb-24 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto border-b border-[#D8D3CB] overflow-hidden">
         
         {/* Background Scrolling Marquee Text */}
@@ -228,12 +220,12 @@ export function CoupleShootsPage() {
         {/* Hero Main Content */}
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center pt-8 md:pt-12">
           
-          {/* Left Column: Clean Tall Vertical Real Couple Image (No White Frame) */}
+          {/* Left Column: Clean Tall Vertical Real Couple Image (UNTOUCHED PRESERVED HERO IMAGE) */}
           <div className="lg:col-span-6 flex justify-center lg:justify-start w-full">
             <div className="relative h-[520px] sm:h-[600px] lg:h-[660px] w-full max-w-lg lg:max-w-xl overflow-hidden rounded-2xl shadow-xl bg-[#D8D3CB]">
               <img
                 src={couplesHeroCustom}
-                alt="Real Couple Shoot"
+                alt="Real Couple Shoot Hero"
                 className="h-full w-full object-cover object-top transition-transform duration-1000 hover:scale-105"
               />
             </div>
@@ -241,7 +233,6 @@ export function CoupleShootsPage() {
 
           {/* Right Column: Alex Brush Cursive Title & Editorial Copy */}
           <div className="lg:col-span-6 space-y-6 pt-4 lg:pt-0">
-            {/* Dual-tone Title */}
             <div>
               <h1
                 className="font-normal leading-[0.85] text-6xl sm:text-7xl md:text-8xl lg:text-9xl select-none"
@@ -252,12 +243,10 @@ export function CoupleShootsPage() {
               </h1>
             </div>
 
-            {/* Subheadline */}
             <h2 className="font-sans font-normal text-xl sm:text-2xl md:text-3xl text-[#3D3A36] tracking-tight leading-snug">
               Artistic Storytelling Celebrating YOU!
             </h2>
 
-            {/* Description Copy */}
             <div className="space-y-4 text-xs sm:text-sm md:text-base text-[#68645E] font-sans font-light leading-relaxed">
               <p>
                 Welcome to CMC FILMS, where we infuse magic into your wedding memories turning them into timeless tales of love, romance, and companionship.
@@ -275,7 +264,7 @@ export function CoupleShootsPage() {
 
       </section>
 
-      {/* ── 1.5 PHOTO COLLAGE GRID (3x3 Clean Grid Matching Reference Design) ── */}
+      {/* ── 1.5 PHOTO COLLAGE GRID (PINTEREST IMAGES GRID) ── */}
       <section className="py-16 sm:py-24 px-6 sm:px-12 md:px-16 max-w-[1440px] mx-auto border-b border-[#D8D3CB]">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {collagePhotos.map((photo, idx) => (
@@ -321,7 +310,7 @@ export function CoupleShootsPage() {
         </div>
       )}
 
-      {/* ── 6. LOCATION FILTERED STORIES SLIDER CAROUSEL ── */}
+      {/* ── 6. LOCATION FILTERED STORIES SLIDER CAROUSEL (PINTEREST IMAGES) ── */}
       <CoupleStoriesCarouselSection
         stories={filteredStories}
         selectedCityFilter={selectedCityFilter}
@@ -329,7 +318,7 @@ export function CoupleShootsPage() {
         onSelectStory={setActiveStoryModal}
       />
 
-      {/* ── 9. DEDICATED COUPLE STORY PAGE MODAL ── */}
+      {/* ── 9. DEDICATED COUPLE STORY PAGE MODAL (PINTEREST IMAGES) ── */}
       {activeStoryModal && (
         <IndividualCoupleStoryModal
           story={activeStoryModal}
@@ -390,7 +379,7 @@ function IndividualCoupleStoryModal({
           </p>
         </div>
 
-        {/* Short Introduction (120-180 words) */}
+        {/* Short Introduction */}
         <div className="max-w-2xl py-4">
           <p className="font-sans text-base sm:text-lg text-[#171717] font-light leading-relaxed">
             {story.introText}
@@ -398,7 +387,7 @@ function IndividualCoupleStoryModal({
         </div>
       </section>
 
-      {/* Gallery Flow (Disciplined Grid Rhythm) */}
+      {/* Gallery Flow */}
       <section className="py-12 px-6 max-w-[1440px] mx-auto space-y-16">
         
         {/* 1. Full-Width Image */}
@@ -406,19 +395,19 @@ function IndividualCoupleStoryModal({
           <img src={story.galleryImages[0] || story.heroImage} alt="Gallery 1" className="h-full w-full object-cover" />
         </div>
 
-        {/* 2. Two Portraits Side by Side (4:5) */}
+        {/* 2. Two Portraits Side by Side */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           <div className="aspect-[4/5] overflow-hidden bg-[#D8D3CB]">
-            <img src={story.galleryImages[1] || shoot2} alt="Gallery 2" className="h-full w-full object-cover" />
+            <img src={story.galleryImages[1] || pin2} alt="Gallery 2" className="h-full w-full object-cover" />
           </div>
           <div className="aspect-[4/5] overflow-hidden bg-[#D8D3CB]">
-            <img src={story.galleryImages[2] || shoot3} alt="Gallery 3" className="h-full w-full object-cover" />
+            <img src={story.galleryImages[2] || pin3} alt="Gallery 3" className="h-full w-full object-cover" />
           </div>
         </div>
 
-        {/* 3. One Landscape Image (3:2) */}
+        {/* 3. One Landscape Image */}
         <div className="aspect-[3/2] max-w-4xl mx-auto overflow-hidden bg-[#D8D3CB]">
-          <img src={story.galleryImages[3] || shoot4} alt="Gallery 4" className="h-full w-full object-cover" />
+          <img src={story.galleryImages[3] || pin4} alt="Gallery 4" className="h-full w-full object-cover" />
         </div>
 
         {/* 4. Short Text Passage */}
@@ -428,9 +417,9 @@ function IndividualCoupleStoryModal({
           </p>
         </div>
 
-        {/* 5. One Vertical Image with Generous Whitespace */}
+        {/* 5. One Vertical Image */}
         <div className="max-w-md mx-auto aspect-[3/4] overflow-hidden bg-[#D8D3CB]">
-          <img src={story.galleryImages[4] || shoot5} alt="Gallery 5" className="h-full w-full object-cover" />
+          <img src={story.galleryImages[4] || pin5} alt="Gallery 5" className="h-full w-full object-cover" />
         </div>
 
         {/* 6. Three-Image Sequence */}
@@ -444,35 +433,9 @@ function IndividualCoupleStoryModal({
 
         {/* 7. Full-Width Closing Image */}
         <div className="aspect-[2/1] w-full overflow-hidden bg-[#D8D3CB]">
-          <img src={story.galleryImages[5] || shoot6} alt="Closing image" className="h-full w-full object-cover" />
+          <img src={story.galleryImages[5] || pin6} alt="Closing image" className="h-full w-full object-cover" />
         </div>
 
-      </section>
-
-      {/* Credits Section */}
-      <section className="py-16 px-6 max-w-[1440px] mx-auto border-t border-b border-[#D8D3CB]">
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-6 text-xs font-mono uppercase tracking-widest text-[#68645E]">
-          <div>
-            <span className="block text-[#171717] font-semibold mb-1">Location</span>
-            <span>{story.credits.location}</span>
-          </div>
-          <div>
-            <span className="block text-[#171717] font-semibold mb-1">Photography</span>
-            <span>{story.credits.photography}</span>
-          </div>
-          <div>
-            <span className="block text-[#171717] font-semibold mb-1">Film</span>
-            <span>{story.credits.film}</span>
-          </div>
-          <div>
-            <span className="block text-[#171717] font-semibold mb-1">Styling</span>
-            <span>{story.credits.styling}</span>
-          </div>
-          <div>
-            <span className="block text-[#171717] font-semibold mb-1">Year</span>
-            <span>{story.credits.year}</span>
-          </div>
-        </div>
       </section>
 
       {/* Next Story Banner */}
@@ -481,22 +444,13 @@ function IndividualCoupleStoryModal({
           window.scrollTo({ top: 0, behavior: "smooth" });
           onNextStory(nextStory);
         }}
-        className="py-24 px-6 max-w-[1440px] mx-auto cursor-pointer group space-y-6"
+        className="py-24 px-6 border-t border-[#D8D3CB] bg-[#E8E4DC] hover:bg-[#DDD8CE] transition-colors cursor-pointer group"
       >
-        <span className="text-xs font-mono uppercase tracking-widest text-[#68645E]">
-          NEXT STORY
-        </span>
-
-        <div className="aspect-[16/9] w-full overflow-hidden bg-[#D8D3CB]">
-          <img
-            src={nextStory.heroImage}
-            alt={nextStory.couple}
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.01]"
-          />
-        </div>
-
-        <div className="flex justify-between items-end pt-2">
+        <div className="max-w-[1440px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
           <div>
+            <span className="text-xs font-mono uppercase tracking-widest text-[#68645E]">
+              NEXT EDITORIAL STORY
+            </span>
             <h3 className="font-editorial text-4xl text-[#171717] group-hover:text-[#68645E] transition-colors">
               {nextStory.couple}
             </h3>
@@ -531,13 +485,11 @@ function CoupleStoriesCarouselSection({
   const [isPaused, setIsPaused] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
 
-  // Triple array for seamless infinite sliding
   const infiniteStories = useMemo(
     () => [...stories, ...stories, ...stories],
     [stories]
   );
 
-  // Reset index when filter changes
   useEffect(() => {
     setCurrentIndex(stories.length);
   }, [stories.length, selectedCityFilter]);
@@ -550,7 +502,6 @@ function CoupleStoriesCarouselSection({
     return () => mediaQuery.removeEventListener("change", updateViewport);
   }, []);
 
-  // Auto-play interval (2.5 seconds)
   useEffect(() => {
     if (isPaused || stories.length === 0) return;
     const timer = setInterval(() => {
@@ -559,7 +510,6 @@ function CoupleStoriesCarouselSection({
     return () => clearInterval(timer);
   }, [isPaused, stories.length]);
 
-  // Handle seamless infinite reset
   const handleTransitionEnd = () => {
     if (currentIndex >= stories.length * 2) {
       setIsTransitioning(false);
@@ -592,7 +542,6 @@ function CoupleStoriesCarouselSection({
   return (
     <section className="py-20 md:py-28 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto border-b border-[#D8D3CB] space-y-12 overflow-hidden">
       
-      {/* Horizontal Line Filter Bar */}
       <div className="flex flex-wrap items-center gap-8 border-b border-[#D8D3CB] pb-4 text-xs font-mono uppercase tracking-widest">
         {["All", "Jaipur", "Udaipur", "Goa", "Mumbai"].map((loc) => (
           <button
@@ -610,13 +559,11 @@ function CoupleStoriesCarouselSection({
         ))}
       </div>
 
-      {/* ── CAROUSEL CONTAINER ── */}
       <div
         className="relative px-2 sm:px-4"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
-        {/* Navigation Arrow Buttons */}
         <button
           type="button"
           onClick={handlePrev}
@@ -635,7 +582,6 @@ function CoupleStoriesCarouselSection({
           <ArrowRight className="w-5 h-5" />
         </button>
 
-        {/* Sliding Track Container */}
         <div className="overflow-hidden py-2">
           <div
             onTransitionEnd={handleTransitionEnd}
@@ -656,7 +602,6 @@ function CoupleStoriesCarouselSection({
                 onClick={() => onSelectStory(story)}
                 className={`${isDesktop ? "w-[420px]" : "w-full"} shrink-0 cursor-pointer group space-y-4`}
               >
-                {/* Photo Frame */}
                 <div className="aspect-[4/5] w-full overflow-hidden bg-[#D8D3CB] rounded-[4px] shadow-md border border-black/5">
                   <img
                     src={story.heroImage}
@@ -665,7 +610,6 @@ function CoupleStoriesCarouselSection({
                   />
                 </div>
 
-                {/* Card Info */}
                 <div className="flex justify-between items-end pt-1">
                   <div>
                     <h3 className="font-editorial text-3xl text-[#171717] group-hover:text-[#68645E] transition-colors">
@@ -684,7 +628,6 @@ function CoupleStoriesCarouselSection({
           </div>
         </div>
 
-        {/* Dots Navigation Bar */}
         <div className="mt-10 flex justify-center items-center gap-2">
           {stories.map((_, idx) => (
             <button
