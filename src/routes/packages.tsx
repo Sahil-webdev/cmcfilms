@@ -11,6 +11,7 @@ import haldi from "@/assets/haldi.jpg";
 import couplesHeroCustom from "@/assets/couples-hero-custom.jpg";
 import maternity from "@/assets/maternity.jpg";
 import pin1 from "@/assets/pinterest/pin1.jpg";
+import pin7 from "@/assets/pinterest/pin7.jpg";
 
 const title = "Investment & Packages — CMC FILMS";
 const description =
@@ -52,7 +53,7 @@ const mainPackages: PackageService[] = [
     copy: "Two to three senior photographers quietly present through every hour of your celebration.",
     price: "₹1,20,000",
     numericPrice: 120000,
-    image: luxuryEditorial,
+    image: couplesHeroCustom,
     deliverables: [
       "2 Senior Photographers + 1 Candid Specialist",
       "Full High-Res Edited Digital Photo Gallery (800+ Images)",
@@ -84,7 +85,7 @@ const mainPackages: PackageService[] = [
     copy: "Outdoor dawn concept shoot in Jaipur, Udaipur, Goa, or royal haveli locations.",
     price: "₹45,000",
     numericPrice: 45000,
-    image: couplesHeroCustom,
+    image: pin7,
     deliverables: [
       "1 Creative Photographer + 1 Reel Specialist",
       "40 Retouched High-Fashion Fine-Art Portraits",
