@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useMemo, useEffect, useRef } from "react";
-import { Check, Sparkles, ArrowRight, ArrowLeft, Camera, Film, Clock, HelpCircle, X, Send, Pause, Play, ChevronRight, ChevronLeft } from "lucide-react";
+import { useState, useMemo, useEffect } from "react";
+import { Check, Sparkles, ArrowRight, Camera, Film, Clock, HelpCircle, X, Send, ArrowUpRight } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 
 // Image Imports
@@ -9,6 +9,8 @@ import luxuryEditorial from "@/assets/luxury-editorial.jpg";
 import coastal from "@/assets/coastal.jpg";
 import haldi from "@/assets/haldi.jpg";
 import couplesHeroCustom from "@/assets/couples-hero-custom.jpg";
+import maternity from "@/assets/maternity.jpg";
+import pin1 from "@/assets/pinterest/pin1.jpg";
 
 const title = "Investment & Packages — CMC FILMS";
 const description =
@@ -29,131 +31,124 @@ export const Route = createFileRoute("/packages")({
   component: PackagesPage,
 });
 
-export interface PackageTier {
+export interface PackageService {
   id: string;
-  name: string;
+  no: string;
+  title: string;
   subtitle: string;
-  tagline: string;
+  copy: string;
   price: string;
   numericPrice: number;
-  unit: string;
-  badge?: string;
-  isPopular?: boolean;
-  category: "Destination" | "Royal" | "Intimate" | "Couple Shoot";
-  coverImage: string;
-  coverageHours: string;
-  crewDetails: string;
+  image: string;
   deliverables: string[];
-  features: string[];
 }
 
-const packageTiers: PackageTier[] = [
+const mainPackages: PackageService[] = [
   {
-    id: "pkg-01",
-    name: "Royal Heritage Collection",
-    subtitle: "3-Day Grand Palace Nuptials",
-    tagline: "Our flagship cinema & photography archive for multi-day royal palace celebrations.",
-    price: "₹3,50,000",
-    numericPrice: 350000,
-    unit: "per 3-day event",
-    badge: "MOST POPULAR",
-    isPopular: true,
-    category: "Royal",
-    coverImage: luxuryEditorial,
-    coverageHours: "Unlimited Coverage (3 Days)",
-    crewDetails: "2 Lead Directors + 3 Senior Cinematographers + 2 Senior Photographers",
+    id: "pkg-1",
+    no: "01",
+    title: "WEDDING PHOTOGRAPHY",
+    subtitle: "Full Day Traditional & Candid Photography",
+    copy: "Two to three senior photographers, quietly present through every hour of your celebration.",
+    price: "₹1,20,000",
+    numericPrice: 120000,
+    image: luxuryEditorial,
     deliverables: [
-      "4K Cinematic Feature Film (45 Mins)",
-      "60-Second Instagram Teaser (within 72 hrs)",
-      "2 Heirloom Handcrafted Leather Photo Albums",
-      "Full High-Res Edited Digital Photo Gallery",
-      "Raw Footage Delivered on High-Speed SSD",
-    ],
-    features: [
-      "Aerial 4K Drone Coverage",
-      "Lighting & Sound Technicians",
-      "Complimentary Pre-Wedding Session",
+      "2 Senior Photographers + 1 Candid Specialist",
+      "Full High-Res Edited Digital Photo Gallery (800+ Images)",
+      "1 Handcrafted Leather Fine-Art Photo Album",
+      "Raw Digital Master Files",
     ],
   },
   {
-    id: "pkg-02",
-    name: "Destination Cinema Experience",
-    subtitle: "2-Day Oceanfront & Resort Nuptials",
-    tagline: "Tailored for beach, coastal resort, and international destination weddings.",
-    price: "₹2,40,000",
-    numericPrice: 240000,
-    unit: "per 2-day event",
-    category: "Destination",
-    coverImage: coastal,
-    coverageHours: "Full 2-Day Comprehensive Coverage",
-    crewDetails: "1 Lead Director + 2 Senior Cinematographers + 2 Senior Photographers",
+    id: "pkg-2",
+    no: "02",
+    title: "WEDDING CINEMATOGRAPHY",
+    subtitle: "4K Cinematic Film & Highlights",
+    copy: "A 4K cinematic film cut for feeling — capturing vows, laughter, and emotional pauses.",
+    price: "₹1,50,000",
+    numericPrice: 150000,
+    image: coastal,
     deliverables: [
-      "30-Minute Cinematic Highlight Film",
-      "2-Minute Extended Teaser Trailer",
-      "1 Premium Fine-Art Hardcover Photo Album",
+      "1 Lead Director + 2 Senior 4K Cinematographers",
+      "30-Minute Cinematic Highlight Feature Film",
+      "60-Second Teaser Reel for Instagram (within 72 hrs)",
+      "Sound Recorders for Vows & Speeches",
+    ],
+  },
+  {
+    id: "pkg-3",
+    no: "03",
+    title: "PRE-WEDDING STORIES",
+    subtitle: "Dawn Outdoor Concept Shoot",
+    copy: "Outdoor dawn concept shoot in Jaipur, Udaipur, Goa, or royal haveli locations.",
+    price: "₹45,000",
+    numericPrice: 45000,
+    image: couplesHeroCustom,
+    deliverables: [
+      "1 Creative Photographer + 1 Reel Specialist",
+      "40 Retouched High-Fashion Fine-Art Portraits",
+      "60-Second Cinematic Concept Teaser",
+      "Location Guidance & Styling Consultation",
+    ],
+  },
+  {
+    id: "pkg-4",
+    no: "04",
+    title: "DESTINATION WEDDINGS",
+    subtitle: "Multi-Day Resort & International Nuptials",
+    copy: "Full multi-day destination wedding coverage across India & international venues.",
+    price: "₹2,80,000",
+    numericPrice: 280000,
+    image: hero,
+    deliverables: [
+      "Comprehensive Multi-Day Photography & Cinema Team",
+      "Aerial 4K Drone Coverage",
+      "2 Fine-Art Albums + SSD Master Drive",
+      "Travel & Stay Included (Within India)",
+    ],
+  },
+  {
+    id: "pkg-5",
+    no: "05",
+    title: "COUPLE PORTRAITS",
+    subtitle: "Editorial Fine-Art Portraiture",
+    copy: "Editorial fine-art portraits & romantic couples sessions in studio or scenic outdoor sets.",
+    price: "₹35,000",
+    numericPrice: 35000,
+    image: pin1,
+    deliverables: [
+      "1 Senior Creative Portrait Photographer",
+      "25 Retouched High-Resolution Images",
       "Online Private Client Photo Gallery",
-    ],
-    features: [
-      "Aerial 4K Drone Coverage",
-      "Professional Sound Recorders",
-      "Travel Included (India)",
+      "Wardrobe & Color Palette Guidance",
     ],
   },
   {
-    id: "pkg-03",
-    name: "Intimate Keepsake Story",
-    subtitle: "1-Day Ceremony & Reception",
-    tagline: "Unobtrusive, heartfelt documentation for intimate single-day celebrations.",
-    price: "₹1,40,000",
-    numericPrice: 140000,
-    unit: "per 1-day event",
-    category: "Intimate",
-    coverImage: haldi,
-    coverageHours: "Up to 12 Hours Continuous Coverage",
-    crewDetails: "1 Lead Photographer + 1 Lead Cinematographer",
+    id: "pkg-6",
+    no: "06",
+    title: "MATERNITY PHOTOSHOOT",
+    subtitle: "Fine-Art Aesthetic Portraiture",
+    copy: "Fine-art aesthetic portraiture celebrating new beginnings in studio or outdoor glow.",
+    price: "₹30,000",
+    numericPrice: 30000,
+    image: maternity,
     deliverables: [
-      "15 to 20-Minute Cinematic Story Film",
-      "1-Minute Reel Teaser",
-      "High-Res Edited Digital Photo Gallery (400+ Images)",
-    ],
-    features: [
-      "Unscripted Candid Focus",
-      "Full Private Cloud Drive",
-      "Music Consultation",
-    ],
-  },
-  {
-    id: "pkg-04",
-    name: "Editorial Couple & Pre-Wedding",
-    subtitle: "Full-Day Concept Couple Session",
-    tagline: "A relaxed, artistic outdoor shoot capturing your pure romantic chemistry.",
-    price: "₹65,000",
-    numericPrice: 65000,
-    unit: "per session",
-    category: "Couple Shoot",
-    coverImage: couplesHeroCustom,
-    coverageHours: "Full Day (Dawn to Sunset)",
-    crewDetails: "1 Senior Creative Photographer + 1 Reel Cinematographer",
-    deliverables: [
-      "40 High-Fashion Retouched Fine-Art Portraits",
-      "60-Second Cinematic Mood Reel (4K)",
-      "High-Res Digital Photo Gallery",
-    ],
-    features: [
-      "Location Guidance (Jaipur/Udaipur/Goa)",
-      "Wardrobe & Color Styling",
-      "Low-Pressure Candid Posing",
+      "1 Senior Photographer",
+      "20 High-Res Retouched Fine-Art Portraits",
+      "Low-Pressure Comfortable Posing Direction",
+      "10-Day Delivery",
     ],
   },
 ];
 
 const studioServices = [
-  { id: "srv-1", no: "01", title: "Wedding Photography", copy: "Two to three senior photographers quietly present through every ceremony.", price: 120000 },
-  { id: "srv-2", no: "02", title: "Wedding Cinematography", copy: "A 4K film cut for feeling — capturing vows, laughter, & quiet romantic pauses.", price: 150000 },
-  { id: "srv-3", no: "03", title: "Pre-Wedding Stories", copy: "Outdoor dawn concept shoot in Jaipur, Udaipur, Goa, or royal havelis.", price: 45000 },
-  { id: "srv-4", no: "04", title: "Destination Weddings", copy: "Full multi-day destination coverage across India & international venues.", price: 280000 },
-  { id: "srv-5", no: "05", title: "Couple Portraits", copy: "Editorial fine-art portraits & romantic couples sessions.", price: 35000 },
-  { id: "srv-6", no: "06", title: "Maternity Photoshoot", copy: "Fine-art aesthetic portraiture celebrating new beginnings.", price: 30000 },
+  { id: "srv-1", no: "01", title: "Wedding Photography", price: 120000 },
+  { id: "srv-2", no: "02", title: "Wedding Cinematography", price: 150000 },
+  { id: "srv-3", no: "03", title: "Pre-Wedding Stories", price: 45000 },
+  { id: "srv-4", no: "04", title: "Destination Weddings", price: 280000 },
+  { id: "srv-5", no: "05", title: "Couple Portraits", price: 35000 },
+  { id: "srv-6", no: "06", title: "Maternity Photoshoot", price: 30000 },
 ];
 
 const faqs = [
@@ -176,38 +171,12 @@ const faqs = [
 ];
 
 export function PackagesPage() {
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
-  const [activeSlideIndex, setActiveSlideIndex] = useState<number>(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState<boolean>(true);
-  const [enquiryModalPkg, setEnquiryModalPkg] = useState<PackageTier | null>(null);
+  const [selectedPkg, setSelectedPkg] = useState<PackageService | null>(null);
+  const [enquiryModalPkg, setEnquiryModalPkg] = useState<PackageService | null>(null);
   const [formSent, setFormSent] = useState(false);
 
   // Custom Multi-Service Calculator State
   const [selectedServices, setSelectedServices] = useState<string[]>(["srv-1", "srv-2"]);
-
-  const categories = ["All", "Royal", "Destination", "Intimate", "Couple Shoot"];
-
-  const filteredPackages = useMemo(() => {
-    if (selectedCategory === "All") return packageTiers;
-    return packageTiers.filter((p) => p.category === selectedCategory);
-  }, [selectedCategory]);
-
-  useEffect(() => {
-    setActiveSlideIndex(0);
-  }, [selectedCategory]);
-
-  // Auto-Swipe Interval Timer (3 Seconds)
-  useEffect(() => {
-    if (!isAutoPlaying || filteredPackages.length <= 1) return;
-
-    const timer = setInterval(() => {
-      setActiveSlideIndex((prev) => (prev + 1) % filteredPackages.length);
-    }, 3000);
-
-    return () => clearInterval(timer);
-  }, [isAutoPlaying, filteredPackages.length]);
-
-  const currentPackage = filteredPackages[activeSlideIndex] || filteredPackages[0];
 
   const toggleService = (id: string) => {
     setSelectedServices((prev) =>
@@ -227,27 +196,17 @@ export function PackagesPage() {
     setFormSent(true);
   };
 
-  const prevSlide = () => {
-    setActiveSlideIndex((prev) =>
-      prev === 0 ? filteredPackages.length - 1 : prev - 1
-    );
-  };
-
-  const nextSlide = () => {
-    setActiveSlideIndex((prev) => (prev + 1) % filteredPackages.length);
-  };
-
   return (
     <main className="bg-[#FAF8F5] text-[#171717] font-sans selection:bg-[#D8D3CB] selection:text-[#171717] min-h-screen relative">
       
-      {/* ── 1. CLEAR HERO SECTION WITH BOLD 'OUR PACKAGES' TITLE ── */}
-      <section className="relative h-[300px] sm:h-[380px] md:h-[420px] w-full overflow-hidden flex items-center justify-center text-center px-6">
+      {/* ── 1. CLEAR HERO BORDERLESS BANNER WITH BOLD TITLE ── */}
+      <section className="relative h-[260px] sm:h-[340px] md:h-[380px] w-full overflow-hidden flex items-center justify-center text-center px-6">
         <img
           src={hero}
           alt="Our Packages - CMC FILMS"
           className="absolute inset-0 h-full w-full object-cover opacity-90 object-center"
         />
-        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute inset-0 bg-black/35" />
 
         <div className="relative z-10 pt-8">
           <h1 className="font-editorial text-4xl sm:text-6xl md:text-7xl text-white font-bold tracking-wider uppercase drop-shadow-md">
@@ -256,227 +215,101 @@ export function PackagesPage() {
         </div>
       </section>
 
-      {/* ── 2. STICKY CATEGORY FILTER BAR ── */}
-      <section className="py-3.5 px-4 sm:px-12 bg-[#F3EEE7] border-b border-[#D8D3CB] sticky top-16 md:top-20 z-40 backdrop-blur-md bg-opacity-95 overflow-hidden">
-        <div className="max-w-[1500px] mx-auto flex items-center justify-between gap-3 md:gap-4 flex-nowrap md:flex-wrap">
-          <span className="text-xs font-mono uppercase tracking-widest text-[#171717] font-bold shrink-0">
-            CATEGORY:
-          </span>
-
-          <div className="flex items-center gap-2 overflow-x-auto md:overflow-x-visible md:flex-wrap pb-1 md:pb-0 scrollbar-none snap-x max-w-full">
-            {categories.map((cat) => {
-              const active = selectedCategory === cat;
-              return (
-                <button
-                  key={cat}
-                  type="button"
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`px-4 py-1.5 rounded-full text-xs font-mono transition-all duration-300 cursor-pointer shrink-0 snap-start whitespace-nowrap ${
-                    active
-                      ? "bg-[#171717] text-white shadow-md font-semibold"
-                      : "bg-white text-[#171717]/75 hover:bg-[#E5E0D8] hover:text-[#171717] border border-[#D8D3CB]/60"
-                  }`}
-                >
-                  {cat === "All" ? "All Collections" : cat}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ── 3. AUTO-SWIPING COMPACT CAROUSEL SHOWCASE ── */}
-      <section className="py-10 sm:py-14 px-6 sm:px-12 md:px-16 max-w-[1400px] mx-auto space-y-6">
+      {/* ── 2. OUR PACKAGES GRID (MATCHING SCREENSHOT 2) RIGHT BELOW HERO ── */}
+      <section className="py-14 sm:py-20 px-6 sm:px-12 md:px-16 max-w-[1550px] mx-auto space-y-10">
         
-        {/* Carousel Header & Controls Bar */}
-        <div className="flex items-center justify-between border-b border-[#D8D3CB]/60 pb-4 flex-wrap gap-3">
-          <div className="flex items-center gap-3">
-            <span className="text-xs font-mono uppercase tracking-[0.2em] text-[#C47A65] font-bold">
-              PACKAGE {activeSlideIndex + 1} OF {filteredPackages.length}
-            </span>
-
-            {/* Auto-Play Toggle Indicator */}
-            <button
-              type="button"
-              onClick={() => setIsAutoPlaying((prev) => !prev)}
-              className={`px-2.5 py-1 rounded-full text-[10px] font-mono flex items-center gap-1.5 transition-all cursor-pointer ${
-                isAutoPlaying
-                  ? "bg-[#C47A65]/20 text-[#C47A65] border border-[#C47A65]/40 font-bold"
-                  : "bg-[#171717]/10 text-[#171717]/60 border border-[#171717]/20"
-              }`}
-              title={isAutoPlaying ? "Click to Pause Auto-Swipe" : "Click to Resume Auto-Swipe"}
-            >
-              {isAutoPlaying ? (
-                <>
-                  <Pause className="w-3 h-3" />
-                  <span>AUTO-SWIPING</span>
-                </>
-              ) : (
-                <>
-                  <Play className="w-3 h-3" />
-                  <span>PAUSED</span>
-                </>
-              )}
-            </button>
-          </div>
-
-          {/* Navigation Prev/Next Arrows */}
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={prevSlide}
-              aria-label="Previous package"
-              className="h-10 w-10 rounded-full bg-white hover:bg-[#171717] text-[#171717] hover:text-white border border-[#D8D3CB] flex items-center justify-center transition-all duration-300 shadow-xs cursor-pointer"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-
-            <button
-              type="button"
-              onClick={nextSlide}
-              aria-label="Next package"
-              className="h-10 w-10 rounded-full bg-white hover:bg-[#171717] text-[#171717] hover:text-white border border-[#D8D3CB] flex items-center justify-center transition-all duration-300 shadow-xs cursor-pointer"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
+        {/* Section Title Header */}
+        <div className="text-left space-y-2 border-b border-[#D8D3CB]/60 pb-6">
+          <span className="text-xs font-mono uppercase tracking-[0.2em] text-[#C47A65] font-bold">
+            CMC FILMS SERVICES &amp; PACKAGES
+          </span>
+          <h2 className="font-editorial text-3xl sm:text-5xl text-[#171717] font-normal">
+            Our <em className="italic text-[#C47A65]">Signature Packages</em>
+          </h2>
+          <p className="text-xs sm:text-sm text-[#55504A] font-light max-w-2xl leading-relaxed">
+            Thoughtfully planned photography and cinema collections tailored for royal weddings, destination celebrations, and intimate stories.
+          </p>
         </div>
 
-        {/* Compact Auto-Swiping Card Box */}
-        {currentPackage && (
-          <div
-            onMouseEnter={() => setIsAutoPlaying(false)}
-            onMouseLeave={() => setIsAutoPlaying(true)}
-            className="bg-white rounded-3xl p-6 sm:p-10 border border-[#D8D3CB] shadow-md grid grid-cols-1 md:grid-cols-12 gap-8 items-center transition-all duration-700 animate-in fade-in"
-          >
-            {/* Left Photo Banner */}
-            <div className="md:col-span-5 relative">
-              <div className="aspect-[4/3] w-full overflow-hidden rounded-2xl bg-[#D8D3CB] shadow-sm group">
-                <img
-                  src={currentPackage.coverImage}
-                  alt={currentPackage.name}
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                {currentPackage.badge && (
-                  <span className="absolute top-3 left-3 bg-[#C47A65] text-white text-[9px] font-mono font-bold tracking-widest uppercase px-3 py-1 rounded-full shadow-xs">
-                    {currentPackage.badge}
-                  </span>
-                )}
-              </div>
-            </div>
+        {/* 6 Grid Boxes (Matching Screenshot 2 Layout & Style) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
+          {mainPackages.map((pkg) => (
+            <div
+              key={pkg.id}
+              onClick={() => {
+                setEnquiryModalPkg(pkg);
+                setFormSent(false);
+              }}
+              className="relative overflow-hidden rounded-2xl aspect-[4/5] shadow-md hover:shadow-2xl transition-all duration-500 group cursor-pointer border border-[#D8D3CB]/50 bg-black"
+            >
+              {/* Full-Bleed Background Image */}
+              <img
+                src={pkg.image}
+                alt={pkg.title}
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-85 group-hover:opacity-100"
+              />
 
-            {/* Right Card Content */}
-            <div className="md:col-span-7 space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 border-b border-[#D8D3CB]/60 pb-4">
-                <div>
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#C47A65] font-bold">
-                    {currentPackage.subtitle}
-                  </span>
-                  <h3 className="font-editorial text-2xl sm:text-4xl text-[#171717] font-normal leading-snug">
-                    {currentPackage.name}
-                  </h3>
-                </div>
+              {/* Bottom Dark Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
 
-                <div className="sm:text-right shrink-0">
-                  <span className="font-editorial text-3xl sm:text-5xl text-[#171717] block">
-                    {currentPackage.price}
-                  </span>
-                  <span className="text-[10px] font-mono text-[#68645E]">
-                    {currentPackage.unit}
-                  </span>
-                </div>
-              </div>
-
-              {/* Coverage Info Strip */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-[#FAF8F5] p-3 rounded-xl border border-[#D8D3CB]/60 text-xs font-mono text-[#171717]">
-                <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-[#C47A65] shrink-0" />
-                  <span>{currentPackage.coverageHours}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Camera className="w-4 h-4 text-[#C47A65] shrink-0" />
-                  <span>{currentPackage.crewDetails}</span>
-                </div>
-              </div>
-
-              {/* Inclusions */}
-              <div className="space-y-2">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-[#C47A65] font-bold block">
-                  DELIVERABLES:
+              {/* Top Service Number Badge */}
+              <div className="absolute top-4 left-4 z-10">
+                <span className="bg-white/20 backdrop-blur-md text-white font-mono text-[11px] font-bold px-3 py-1 rounded-full border border-white/30">
+                  {pkg.no}
                 </span>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#55504A]">
-                  {currentPackage.deliverables.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-2">
-                      <Check className="w-3.5 h-3.5 text-[#C47A65] shrink-0 mt-0.5" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
               </div>
 
-              {/* Action Button */}
-              <div className="pt-2 flex items-center justify-between gap-4">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setEnquiryModalPkg(currentPackage);
-                    setFormSent(false);
-                  }}
-                  className="bg-[#171717] hover:bg-[#C47A65] text-white px-8 py-3 rounded-full font-mono text-xs uppercase tracking-widest transition-all duration-300 shadow-xs cursor-pointer flex items-center gap-2"
-                >
-                  <span>Check Availability &amp; Enquire</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+              {/* Bottom Text & Information Overlay (Matching Screenshot 2) */}
+              <div className="absolute bottom-0 inset-x-0 p-5 sm:p-6 z-10 space-y-1 text-left flex items-end justify-between">
+                <div className="space-y-1 max-w-[82%]">
+                  <span className="text-[10px] font-mono text-[#C47A65] uppercase tracking-widest font-semibold block">
+                    Starting {pkg.price}
+                  </span>
+                  <h3 className="font-editorial text-xl sm:text-2xl text-white font-bold uppercase tracking-wide leading-tight drop-shadow-sm">
+                    {pkg.title}
+                  </h3>
+                  <p className="text-[11px] text-white/80 font-light line-clamp-2 leading-snug">
+                    {pkg.copy}
+                  </p>
+                </div>
+
+                {/* Bottom Right Floating Badge Icon (Matching Screenshot 2) */}
+                <div className="w-9 h-9 rounded-full bg-white/20 backdrop-blur-md border border-white/40 flex items-center justify-center text-white group-hover:bg-[#C47A65] group-hover:border-[#C47A65] transition-all duration-300 shrink-0 shadow-md">
+                  <ArrowUpRight className="w-5 h-5" />
+                </div>
               </div>
 
             </div>
-
-          </div>
-        )}
-
-        {/* Carousel Indicators Bar */}
-        <div className="flex justify-center items-center gap-2 pt-2">
-          {filteredPackages.map((_, idx) => (
-            <button
-              key={idx}
-              type="button"
-              onClick={() => setActiveSlideIndex(idx)}
-              aria-label={`Jump to package ${idx + 1}`}
-              className={`h-2 rounded-full transition-all duration-500 cursor-pointer ${
-                idx === activeSlideIndex
-                  ? "w-8 bg-[#171717]"
-                  : "w-2 bg-[#171717]/20 hover:bg-[#171717]/40"
-              }`}
-            />
           ))}
         </div>
 
       </section>
 
-      {/* ── 4. COMPACT STUDIO SERVICES & CUSTOM CALCULATOR SECTION ── */}
-      <section className="py-12 sm:py-16 px-6 sm:px-12 md:px-16 max-w-[1400px] mx-auto border-t border-[#D8D3CB] space-y-8">
+      {/* ── 3. CUSTOM MULTI-SERVICE CALCULATOR SECTION ── */}
+      <section className="py-14 sm:py-20 px-6 sm:px-12 md:px-16 max-w-[1400px] mx-auto border-t border-[#D8D3CB] space-y-8">
         
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <span className="text-xs font-mono uppercase tracking-[0.2em] text-[#C47A65] font-bold">
-            STUDIO SERVICES &amp; CALCULATOR
+            CUSTOMIZATION CALCULATOR
           </span>
           <h2 className="font-editorial text-2xl sm:text-4xl text-[#171717] font-normal">
             Build Your <em className="italic text-[#C47A65]">Custom Package</em>
           </h2>
           <p className="text-xs text-[#55504A] font-light">
-            Select from the 6 core services offered by CMC FILMS to calculate a tailored investment estimate.
+            Select multiple services from the 6 core offerings to estimate your tailored wedding collection investment.
           </p>
         </div>
 
-        {/* 6 Services Grid (01 to 06) */}
+        {/* 6 Services Selection Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {studioServices.map((service) => {
-            const isSelected = selectedServices.includes(service.id);
+          {mainPackages.map((service) => {
+            const isSelected = selectedServices.includes(`srv-${service.no.replace(/^0/, '')}`);
+            const srvId = `srv-${service.no.replace(/^0/, '')}`;
             return (
               <div
                 key={service.id}
-                onClick={() => toggleService(service.id)}
-                className={`bg-white p-6 rounded-2xl border transition-all duration-300 cursor-pointer space-y-3 flex flex-col justify-between relative ${
+                onClick={() => toggleService(srvId)}
+                className={`bg-white p-5 rounded-2xl border transition-all duration-300 cursor-pointer space-y-3 flex flex-col justify-between relative ${
                   isSelected
                     ? "border-[#C47A65] ring-2 ring-[#C47A65]/30 shadow-md"
                     : "border-[#D8D3CB]/70 hover:border-[#171717]"
@@ -496,7 +329,7 @@ export function PackagesPage() {
                     </div>
                   </div>
 
-                  <h3 className="font-editorial text-xl text-[#171717] font-normal">
+                  <h3 className="font-editorial text-xl text-[#171717] font-normal uppercase tracking-wide">
                     {service.title}
                   </h3>
 
@@ -508,7 +341,7 @@ export function PackagesPage() {
                 <div className="pt-3 border-t border-[#D8D3CB]/50 flex items-center justify-between">
                   <span className="text-[10px] font-mono text-[#68645E]">Est. Investment</span>
                   <span className="font-editorial text-lg text-[#C47A65] font-normal">
-                    +₹{service.price.toLocaleString("en-IN")}
+                    {service.price}
                   </span>
                 </div>
               </div>
@@ -530,11 +363,7 @@ export function PackagesPage() {
           <button
             type="button"
             onClick={() => {
-              setEnquiryModalPkg({
-                ...currentPackage,
-                name: "Custom Multi-Service Collection",
-                price: `₹${calculatedTotalEstimate.toLocaleString("en-IN")}`,
-              });
+              setEnquiryModalPkg(mainPackages[0]);
               setFormSent(false);
             }}
             className="w-full sm:w-auto bg-[#C47A65] hover:bg-white hover:text-[#171717] text-white px-7 py-3 rounded-full font-mono text-xs uppercase tracking-widest transition-all duration-300 font-semibold cursor-pointer shrink-0"
@@ -545,8 +374,8 @@ export function PackagesPage() {
 
       </section>
 
-      {/* ── 5. COMPACT FAQ ACCORDION SECTION ── */}
-      <section className="py-12 sm:py-16 px-6 sm:px-12 md:px-16 max-w-[1300px] mx-auto space-y-8">
+      {/* ── 4. FAQ ACCORDION SECTION ── */}
+      <section className="py-12 sm:py-16 px-6 sm:px-12 md:px-16 max-w-[1300px] mx-auto space-y-8 border-t border-[#D8D3CB]">
         <div className="text-center space-y-2">
           <span className="text-xs font-mono text-[#C47A65] uppercase tracking-[0.2em] font-semibold">
             QUESTIONS &amp; ANSWERS
@@ -571,7 +400,7 @@ export function PackagesPage() {
         </div>
       </section>
 
-      {/* ── 6. PACKAGE ENQUIRY MODAL ── */}
+      {/* ── 5. PACKAGE ENQUIRY & DETAILS MODAL ── */}
       {enquiryModalPkg && (
         <div className="fixed inset-0 z-[100] bg-black/75 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto animate-in fade-in">
           <div className="bg-[#FAF8F5] text-[#171717] max-w-xl w-full p-6 sm:p-10 rounded-3xl border border-[#D8D3CB] shadow-2xl relative space-y-6 my-8">
@@ -586,21 +415,36 @@ export function PackagesPage() {
 
             <div className="space-y-1 border-b border-[#D8D3CB] pb-4">
               <span className="text-xs font-mono text-[#C47A65] uppercase font-bold">
-                PACKAGE ENQUIRY
+                PACKAGE ENQUIRY · {enquiryModalPkg.no}
               </span>
               <h3 className="font-editorial text-2xl sm:text-3xl font-normal text-[#171717]">
-                {enquiryModalPkg.name}
+                {enquiryModalPkg.title}
               </h3>
               <p className="text-xs font-mono text-[#68645E]">
                 {enquiryModalPkg.price}
               </p>
             </div>
 
+            {/* Inclusions List inside Modal */}
+            <div className="space-y-2 bg-white p-4 rounded-xl border border-[#D8D3CB]/60 text-xs">
+              <span className="font-mono text-[#C47A65] font-bold uppercase block text-[10px]">
+                KEY DELIVERABLES:
+              </span>
+              <ul className="space-y-1 text-[#55504A]">
+                {enquiryModalPkg.deliverables.map((item, dIdx) => (
+                  <li key={dIdx} className="flex items-start gap-2">
+                    <Check className="w-3.5 h-3.5 text-[#C47A65] shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
             {formSent ? (
               <div className="py-8 text-center space-y-3">
                 <h4 className="font-editorial text-3xl text-[#C47A65]">Enquiry Sent!</h4>
                 <p className="text-xs sm:text-sm text-[#55504A] font-light">
-                  We have received your enquiry for {enquiryModalPkg.name}. Our team will contact you shortly.
+                  We have received your enquiry for {enquiryModalPkg.title}. Our team will contact you shortly.
                 </p>
                 <button
                   type="button"
@@ -642,7 +486,7 @@ export function PackagesPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-[#171717] font-semibold mb-1">Wedding Date</label>
+                    <label className="block text-[#171717] font-semibold mb-1">Event Date</label>
                     <input
                       type="date"
                       className="w-full p-3 rounded-xl bg-white border border-[#D8D3CB] font-sans text-xs focus:outline-none focus:border-[#C47A65]"
