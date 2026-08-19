@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
-import { Star, Quote, Heart, ArrowRight, Sparkles, Play, Award, CheckCircle2 } from "lucide-react";
+import { Star, Quote, ArrowRight, Sparkles } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 
 // Image Imports
@@ -9,13 +9,11 @@ import luxuryEditorial from "@/assets/luxury-editorial.jpg";
 import coastal from "@/assets/coastal.jpg";
 import haldi from "@/assets/haldi.jpg";
 import story1 from "@/assets/story-1.jpg";
-import story2 from "@/assets/story-2.jpg";
-import story3 from "@/assets/story-3.jpg";
-import couplesHeroCustom from "@/assets/couples-hero-custom.jpg";
 import pin1 from "@/assets/pinterest/pin1.jpg";
 import pin2 from "@/assets/pinterest/pin2.jpg";
 import pin3 from "@/assets/pinterest/pin3.jpg";
 import pin4 from "@/assets/pinterest/pin4.jpg";
+import pin5 from "@/assets/pinterest/pin5.jpg";
 
 const title = "Kind Words & Reviews — CMC FILMS";
 const description =
@@ -150,8 +148,8 @@ export function TestimonialsPage() {
   return (
     <main className="bg-[#FAF8F5] text-[#171717] font-sans selection:bg-[#D8D3CB] selection:text-[#171717] min-h-screen relative">
       
-      {/* ── 1. HERO SECTION (DARK CINEMA WITH CURSIVE WATERMARK OVERLAY) ── */}
-      <section className="relative h-[520px] sm:h-[580px] md:h-[640px] w-full bg-[#0C0D10] overflow-hidden flex items-center justify-center text-center px-6">
+      {/* ── 1. HERO SECTION ── */}
+      <section className="relative h-[480px] sm:h-[540px] md:h-[600px] w-full bg-[#0C0D10] overflow-hidden flex items-center justify-center text-center px-6">
         <img
           src={hero}
           alt="CMC FILMS Testimonials Hero"
@@ -159,7 +157,7 @@ export function TestimonialsPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/50 to-[#0C0D10]" />
 
-        {/* Centered Cursive Overlay & Main Title */}
+        {/* Centered Title */}
         <div className="relative z-10 space-y-3 max-w-3xl">
           <div className="relative flex items-center justify-center">
             <span
@@ -183,71 +181,14 @@ export function TestimonialsPage() {
         </div>
       </section>
 
-      {/* ── 2. FEATURED SPOTLIGHT REVIEW ── */}
-      <section className="py-20 sm:py-28 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto border-b border-[#D8D3CB]">
-        <div className="bg-white rounded-3xl p-8 sm:p-12 md:p-16 border border-[#D8D3CB]/80 shadow-md grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-          
-          {/* Left: High-Res Featured Photo */}
-          <div className="lg:col-span-5 relative">
-            <div className="aspect-[4/5] w-full overflow-hidden rounded-2xl bg-[#D8D3CB] shadow-lg">
-              <img
-                src={luxuryEditorial}
-                alt="Ananya & Siddharth Testimonial"
-                className="h-full w-full object-cover transition-transform duration-1000 hover:scale-105"
-              />
-            </div>
-            <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-md text-white text-[10px] font-mono uppercase tracking-widest px-3 py-1 rounded-full">
-              FEATURED STORY
-            </div>
-          </div>
-
-          {/* Right: Featured Quote & Review */}
-          <div className="lg:col-span-7 space-y-6">
-            <div className="flex items-center gap-1.5 text-[#C47A65]">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} className="w-5 h-5 fill-current text-[#C47A65]" />
-              ))}
-            </div>
-
-            <Quote className="w-12 h-12 text-[#C47A65]/30" />
-
-            <h2 className="font-editorial text-2xl sm:text-4xl text-[#171717] font-normal leading-snug">
-              “They captured moments we didn't even know happened. Watching our wedding film brought happy tears all over again.”
-            </h2>
-
-            <p className="text-sm sm:text-base text-[#55504A] font-light leading-relaxed">
-              “From our very first conversation with Sahil and the CMC FILMS team, we knew we were in safe hands. They were remarkably unobtrusive during our 3-day royal palace celebration in Jaipur. When we received our 4K feature film and photo album, we were speechless. The color grading and emotional narrative were worthy of a cinema release.”
-            </p>
-
-            <div className="pt-4 border-t border-[#D8D3CB]/60 flex items-center justify-between flex-wrap gap-4">
-              <div>
-                <h3 className="font-editorial text-2xl text-[#171717]">Ananya &amp; Siddharth</h3>
-                <p className="text-xs font-mono uppercase tracking-widest text-[#68645E]">
-                  City Palace, Jaipur · Royal Palace Wedding
-                </p>
-              </div>
-              <span className="text-xs font-mono text-[#C47A65] bg-[#FAF8F5] px-4 py-2 rounded-full border border-[#D8D3CB]/60">
-                Full 3-Day Collection
-              </span>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* ── 3. FILTERABLE REVIEWS MASONRY GRID ── */}
-      <section className="py-20 sm:py-28 px-6 sm:px-12 md:px-16 max-w-[1600px] mx-auto space-y-14">
-        
-        {/* Category Pills Header */}
-        <div className="text-center space-y-4 max-w-3xl mx-auto">
-          <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#C47A65] font-bold">
-            CLIENT EXPERIENCES
+      {/* ── 2. FILTER PILLS STRIP ── */}
+      <section className="py-8 px-6 sm:px-12 bg-[#F3EEE7] border-b border-[#D8D3CB] sticky top-16 md:top-20 z-40 backdrop-blur-md bg-opacity-95">
+        <div className="max-w-[1500px] mx-auto flex items-center justify-between gap-4 flex-wrap">
+          <span className="text-xs font-mono uppercase tracking-widest text-[#171717] font-bold">
+            FILTER BY EXPERIENCE:
           </span>
-          <h2 className="font-editorial text-3xl sm:text-5xl text-[#171717]">
-            Words From Our Couples
-          </h2>
 
-          <div className="flex flex-wrap items-center justify-center gap-2.5 pt-2">
+          <div className="flex flex-wrap items-center gap-2">
             {categories.map((cat) => {
               const active = selectedCategory === cat;
               return (
@@ -257,8 +198,8 @@ export function TestimonialsPage() {
                   onClick={() => setSelectedCategory(cat)}
                   className={`px-5 py-2 rounded-full text-xs font-mono transition-all duration-300 cursor-pointer ${
                     active
-                      ? "bg-[#171717] text-white shadow-md"
-                      : "bg-[#EFECE6] text-[#171717]/75 hover:bg-[#E2DDD5] hover:text-[#171717]"
+                      ? "bg-[#171717] text-white shadow-md font-semibold"
+                      : "bg-white text-[#171717]/75 hover:bg-[#E5E0D8] hover:text-[#171717] border border-[#D8D3CB]/60"
                   }`}
                 >
                   {cat === "All" ? "All Stories" : cat}
@@ -267,58 +208,109 @@ export function TestimonialsPage() {
             })}
           </div>
         </div>
-
-        {/* Reviews Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredTestimonials.map((item) => (
-            <Reveal key={item.id}>
-              <div className="bg-white p-8 rounded-3xl border border-[#D8D3CB]/70 shadow-sm hover:shadow-xl transition-all duration-500 space-y-6 flex flex-col justify-between h-full">
-                
-                <div className="space-y-4">
-                  {/* Photo Thumbnail & Stars Header */}
-                  <div className="flex items-center gap-4">
-                    <div className="w-16 h-16 rounded-full overflow-hidden shrink-0 border-2 border-[#D8D3CB] bg-[#D8D3CB]">
-                      <img src={item.image} alt={item.couple} className="w-full h-full object-cover" />
-                    </div>
-                    <div>
-                      <h3 className="font-editorial text-2xl text-[#171717]">{item.couple}</h3>
-                      <p className="text-[11px] font-mono uppercase tracking-wider text-[#68645E]">
-                        {item.location}
-                      </p>
-                      <div className="flex items-center gap-1 text-[#C47A65] mt-1">
-                        {Array.from({ length: item.rating }).map((_, i) => (
-                          <Star key={i} className="w-3.5 h-3.5 fill-current" />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Highlight Quote */}
-                  <h4 className="font-editorial text-lg text-[#171717] italic font-normal leading-snug text-[#C47A65]">
-                    “{item.highlightQuote}”
-                  </h4>
-
-                  {/* Full Review */}
-                  <p className="text-xs sm:text-sm text-[#55504A] font-light leading-relaxed">
-                    {item.fullReview}
-                  </p>
-                </div>
-
-                {/* Bottom Service Badge */}
-                <div className="pt-4 border-t border-[#D8D3CB]/50 flex items-center justify-between text-[11px] font-mono text-[#68645E]">
-                  <span>{item.eventType}</span>
-                  <span className="text-[#C47A65] font-semibold">{item.year}</span>
-                </div>
-
-              </div>
-            </Reveal>
-          ))}
-        </div>
-
       </section>
 
+      {/* ── 3. INDIVIDUAL SECTION-BY-SECTION TESTIMONIAL STRIPS ── */}
+      <div className="divide-y divide-[#D8D3CB]">
+        {filteredTestimonials.map((item, idx) => {
+          const isEven = idx % 2 === 0;
+
+          return (
+            <section
+              key={item.id}
+              className={`py-20 sm:py-28 px-6 sm:px-12 md:px-16 transition-colors duration-500 ${
+                isEven ? "bg-[#FAF8F5]" : "bg-[#F3EEE7]"
+              }`}
+            >
+              <div className="max-w-[1500px] mx-auto">
+                <Reveal>
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+                    
+                    {/* PHOTO COLUMN (Left for Even, Right for Odd) */}
+                    <div
+                      className={`lg:col-span-5 relative ${
+                        isEven ? "lg:order-1" : "lg:order-2"
+                      }`}
+                    >
+                      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-[#D8D3CB] shadow-xl border border-black/10 group">
+                        <img
+                          src={item.image}
+                          alt={item.couple}
+                          className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                        />
+                        <div className="absolute bottom-4 left-4 right-4 bg-black/60 backdrop-blur-md p-4 rounded-xl text-white flex items-center justify-between">
+                          <div>
+                            <span className="font-editorial text-2xl text-white block">
+                              {item.couple}
+                            </span>
+                            <span className="text-[10px] font-mono uppercase tracking-widest text-white/80">
+                              {item.location}
+                            </span>
+                          </div>
+                          <span className="text-xs font-mono text-[#C47A65] bg-white px-3 py-1 rounded-full font-bold">
+                            {item.year}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* CONTENT COLUMN (Right for Even, Left for Odd) */}
+                    <div
+                      className={`lg:col-span-7 space-y-6 relative ${
+                        isEven ? "lg:order-2" : "lg:order-1"
+                      }`}
+                    >
+                      {/* Section Number & Rating */}
+                      <div className="flex items-center justify-between flex-wrap gap-4 border-b border-[#D8D3CB]/60 pb-4">
+                        <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#C47A65] font-bold">
+                          TESTIMONIAL 0{idx + 1} · {item.eventType}
+                        </span>
+
+                        <div className="flex items-center gap-1.5 text-[#C47A65]">
+                          {Array.from({ length: item.rating }).map((_, i) => (
+                            <Star key={i} className="w-4 h-4 fill-current" />
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Large Highlight Quote */}
+                      <h2 className="font-editorial text-2xl sm:text-4xl text-[#171717] font-normal leading-tight">
+                        “{item.highlightQuote}”
+                      </h2>
+
+                      {/* Full Detailed Review */}
+                      <p className="text-sm sm:text-base text-[#55504A] font-light leading-relaxed">
+                        “{item.fullReview}”
+                      </p>
+
+                      {/* Author Info & Collection Badge */}
+                      <div className="pt-6 border-t border-[#D8D3CB]/60 flex items-center justify-between flex-wrap gap-4">
+                        <div>
+                          <h3 className="font-editorial text-3xl text-[#171717]">
+                            {item.couple}
+                          </h3>
+                          <p className="text-xs font-mono uppercase tracking-widest text-[#68645E] mt-0.5">
+                            {item.location} · {item.city}
+                          </p>
+                        </div>
+
+                        <span className="text-xs font-mono text-[#171717] bg-white px-4 py-2 rounded-full border border-[#D8D3CB] shadow-xs">
+                          {item.serviceType}
+                        </span>
+                      </div>
+
+                    </div>
+
+                  </div>
+                </Reveal>
+              </div>
+            </section>
+          );
+        })}
+      </div>
+
       {/* ── 4. KEY TRUST & STATS BANNER ── */}
-      <section className="py-16 sm:py-20 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto border-t border-b border-[#D8D3CB]">
+      <section className="py-16 sm:py-20 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto border-b border-[#D8D3CB]">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           <div className="space-y-1">
             <span className="font-editorial text-4xl sm:text-5xl text-[#C47A65] font-light">150+</span>
