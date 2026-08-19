@@ -150,29 +150,29 @@ export function FooterOption7() {
               className="text-xs sm:text-sm font-mono uppercase tracking-[0.22em] text-[#AE171E] font-bold block"
               style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
             >
-              STUDIO LOCATIONS
+              GET IN TOUCH
             </span>
 
             <div className="space-y-3.5 text-xs sm:text-sm text-[#AE171E] font-normal leading-relaxed" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
-              {/* Studio 1 */}
+              {/* Branch 1 (Fatehnagar) */}
               <div className="space-y-1">
                 <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#AE171E]">
                   <MapPin className="w-3.5 h-3.5 text-[#AE171E] shrink-0" />
-                  <span>STUDIO 1 (SUKHER)</span>
-                </div>
-                <p className="pl-5 text-[#AE171E]/90 text-xs leading-normal">
-                  Urban Square Mall, Sukher, Udaipur, Rajasthan – 313001
-                </p>
-              </div>
-
-              {/* Studio 2 */}
-              <div className="space-y-1 pt-0.5">
-                <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#AE171E]">
-                  <MapPin className="w-3.5 h-3.5 text-[#AE171E] shrink-0" />
-                  <span>STUDIO 2 (FATEHNAGAR)</span>
+                  <span>BRANCH 1</span>
                 </div>
                 <p className="pl-5 text-[#AE171E]/90 text-xs leading-normal">
                   Intali Road, Chungi Naka, Fatehnagar, Udaipur, Rajasthan
+                </p>
+              </div>
+
+              {/* Branch 2 (Sukher) */}
+              <div className="space-y-1 pt-0.5">
+                <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#AE171E]">
+                  <MapPin className="w-3.5 h-3.5 text-[#AE171E] shrink-0" />
+                  <span>BRANCH 2</span>
+                </div>
+                <p className="pl-5 text-[#AE171E]/90 text-xs leading-normal">
+                  Urban Square Mall, Sukher, Udaipur, Rajasthan – 313001
                 </p>
               </div>
 
