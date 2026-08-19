@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
-import { Check, Sparkles, ArrowRight, Camera, Film, Clock, HelpCircle, X, Send, ArrowUpRight, ArrowLeft, Search, Filter, RotateCcw, ChevronDown, ChevronUp, MapPin, Award } from "lucide-react";
+import { Check, Sparkles, ArrowRight, Camera, Film, Clock, HelpCircle, X, Send, ArrowUpRight, ArrowLeft, Search, Filter, RotateCcw, ChevronDown, ChevronUp, MapPin, Award, SlidersHorizontal, Phone, MessageSquare } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 
 // Image Imports
@@ -359,6 +359,7 @@ export function PackagesPage() {
   const [enquiryModalItem, setEnquiryModalItem] = useState<{ name: string; price: string } | null>(null);
   const [formSent, setFormSent] = useState(false);
   const [expandedDesc, setExpandedDesc] = useState(false);
+  const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
 
   // Search & Filter State inside Detail View
   const [searchQuery, setSearchQuery] = useState("");
@@ -403,10 +404,10 @@ export function PackagesPage() {
       
       {/* ── IF A CARD IS CLICKED: DEDICATED DETAIL PAGE VIEW MATCHING SCREENSHOTS ── */}
       {activeDetailService ? (
-        <div className="pt-24 sm:pt-28 pb-20 px-4 sm:px-8 md:px-12 max-w-[1550px] mx-auto space-y-8 animate-in fade-in duration-300">
+        <div className="pt-20 sm:pt-28 pb-20 px-3 sm:px-8 md:px-12 max-w-[1550px] mx-auto space-y-6 sm:space-y-8 animate-in fade-in duration-300">
           
           {/* Breadcrumb Bar */}
-          <div className="flex items-center justify-between border-b border-[#D8D3CB]/60 pb-4 text-xs font-mono text-[#68645E]">
+          <div className="flex items-center justify-between border-b border-[#D8D3CB]/60 pb-3 text-xs font-mono text-[#68645E]">
             <div className="flex items-center gap-2">
               <button
                 type="button"
@@ -417,20 +418,20 @@ export function PackagesPage() {
                 <span>All Packages</span>
               </button>
               <span>/</span>
-              <span className="text-[#C47A65] font-semibold">{activeDetailService.title}</span>
+              <span className="text-[#C47A65] font-semibold truncate max-w-[150px] sm:max-w-none">{activeDetailService.title}</span>
             </div>
 
             <button
               type="button"
               onClick={() => setActiveDetailService(null)}
-              className="bg-[#171717] text-white px-4 py-1.5 rounded-full hover:bg-[#C47A65] transition-all cursor-pointer"
+              className="bg-[#171717] text-white px-3.5 py-1 rounded-full text-[11px] font-mono hover:bg-[#C47A65] transition-all cursor-pointer shrink-0"
             >
               ← Back
             </button>
           </div>
 
           {/* 1. Landscape Hero Banner Image (Matching Top Banner in Screenshots) */}
-          <div className="relative h-[220px] sm:h-[300px] md:h-[360px] w-full rounded-3xl overflow-hidden shadow-lg border border-[#D8D3CB]/60 bg-black">
+          <div className="relative h-[180px] sm:h-[260px] md:h-[340px] w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-md border border-[#D8D3CB]/60 bg-black">
             <img
               src={activeDetailService.image}
               alt={activeDetailService.title}
@@ -438,40 +439,55 @@ export function PackagesPage() {
             />
             <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
             
-            <div className="absolute bottom-6 sm:bottom-10 left-6 sm:left-10 z-10 max-w-xl text-left space-y-1">
-              <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.2em] text-[#C47A65] font-bold">
+            <div className="absolute bottom-4 sm:bottom-8 left-4 sm:left-8 z-10 max-w-xl text-left space-y-1">
+              <span className="text-[9px] sm:text-xs font-mono uppercase tracking-[0.2em] text-[#C47A65] font-bold">
                 PLAN YOUR SHOOT TO
               </span>
-              <h1 className="font-editorial text-3xl sm:text-5xl text-white font-bold tracking-tight uppercase">
+              <h1 className="font-editorial text-2xl sm:text-4xl md:text-5xl text-white font-bold tracking-tight uppercase leading-tight">
                 {activeDetailService.title}
               </h1>
             </div>
           </div>
 
           {/* 2. Package Summary Description Box (Matching Description Box in Screenshots) */}
-          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-[#D8D3CB] shadow-sm space-y-3 text-left">
-            <h2 className="font-editorial text-2xl sm:text-3xl text-[#171717] font-bold">
+          <div className="bg-white p-4 sm:p-7 rounded-2xl border border-[#D8D3CB] shadow-xs space-y-2.5 text-left">
+            <h2 className="font-editorial text-xl sm:text-3xl text-[#171717] font-bold">
               {activeDetailService.title} Packages
             </h2>
             <p className="text-xs sm:text-sm text-[#55504A] font-light leading-relaxed">
               {expandedDesc
                 ? activeDetailService.fullDescription
-                : `${activeDetailService.fullDescription.slice(0, 180)}...`}
+                : `${activeDetailService.fullDescription.slice(0, 160)}...`}
             </p>
             <button
               type="button"
               onClick={() => setExpandedDesc((prev) => !prev)}
-              className="text-xs font-mono text-[#C47A65] font-bold hover:underline flex items-center gap-1 cursor-pointer"
+              className="text-xs font-mono text-[#C47A65] font-bold hover:underline flex items-center gap-1 cursor-pointer pt-1"
             >
               <span>{expandedDesc ? "Read Less ▲" : "Read More ▼"}</span>
             </button>
           </div>
 
+          {/* Mobile Filter Toggle Button (For Mobile Screens) */}
+          <div className="lg:hidden">
+            <button
+              type="button"
+              onClick={() => setMobileFilterOpen((prev) => !prev)}
+              className="w-full py-3 px-4 bg-white border border-[#D8D3CB] rounded-xl flex items-center justify-between text-xs font-mono font-bold text-[#171717] shadow-xs"
+            >
+              <div className="flex items-center gap-2">
+                <SlidersHorizontal className="w-4 h-4 text-[#C47A65]" />
+                <span>Search &amp; Filter Packages ({filteredOfferings.length})</span>
+              </div>
+              {mobileFilterOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+            </button>
+          </div>
+
           {/* 3. Split 2-Column Section (Filter Sidebar + Main Packages List) (Matching Screenshot 1 & 2) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start pt-2">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start pt-1">
             
-            {/* Left Filter Sidebar (Matching Screenshot Filter Sidebar) */}
-            <div className="lg:col-span-3 bg-white p-6 rounded-2xl border border-[#D8D3CB] shadow-sm space-y-6 text-left sticky top-24">
+            {/* Left Filter Sidebar (Collapsible on Mobile, Sticky on Desktop) */}
+            <div className={`lg:col-span-3 bg-white p-5 sm:p-6 rounded-2xl border border-[#D8D3CB] shadow-xs space-y-5 text-left sticky top-24 ${mobileFilterOpen ? "block" : "hidden lg:block"}`}>
               <div className="flex items-center justify-between border-b border-[#D8D3CB]/60 pb-3">
                 <span className="text-xs font-mono font-bold text-[#171717]">
                   {filteredOfferings.length} out of {activeDetailService.offerings.length} packages
@@ -483,7 +499,7 @@ export function PackagesPage() {
                     setSelectedDuration([]);
                     setSelectedCategoryFilter("All");
                   }}
-                  className="text-[11px] font-mono text-[#C47A65] hover:underline flex items-center gap-1 cursor-pointer"
+                  className="text-[11px] font-mono text-[#C47A65] hover:underline flex items-center gap-1 cursor-pointer font-semibold"
                 >
                   <RotateCcw className="w-3 h-3" />
                   <span>Reset</span>
@@ -554,45 +570,45 @@ export function PackagesPage() {
               </div>
             </div>
 
-            {/* Right Packages List (Matching Screenshot 1 & 2 Main List Layout) */}
-            <div className="lg:col-span-9 space-y-6 text-left">
+            {/* Right Packages List (Optimized for Mobile View matching DevTools screenshot) */}
+            <div className="lg:col-span-9 space-y-5 sm:space-y-6 text-left">
               {filteredOfferings.map((offering) => (
                 <div
                   key={offering.id}
-                  className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D8D3CB] shadow-sm hover:shadow-md transition-all duration-300 grid grid-cols-1 md:grid-cols-12 gap-6 items-center"
+                  className="bg-white rounded-2xl p-4 sm:p-6 border border-[#D8D3CB] shadow-xs hover:shadow-md transition-all duration-300 flex flex-col md:grid md:grid-cols-12 gap-4 sm:gap-6 items-center"
                 >
-                  {/* Left Thumbnail Image */}
-                  <div className="md:col-span-4 relative aspect-[16/10] overflow-hidden rounded-xl bg-[#D8D3CB]">
+                  {/* Top / Left Thumbnail Image */}
+                  <div className="w-full md:col-span-4 relative aspect-[16/10] overflow-hidden rounded-xl bg-[#D8D3CB] shrink-0">
                     <img
                       src={offering.image}
                       alt={offering.name}
                       className="h-full w-full object-cover hover:scale-105 transition-transform duration-500"
                     />
-                    <span className="absolute top-2 left-2 bg-[#171717] text-white font-mono text-[10px] font-bold px-2.5 py-0.5 rounded-full">
+                    <span className="absolute top-2 left-2 bg-[#171717] text-white font-mono text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-xs">
                       {offering.categoryTag}
                     </span>
                   </div>
 
                   {/* Middle Information Column */}
-                  <div className="md:col-span-5 space-y-2.5">
+                  <div className="w-full md:col-span-5 space-y-2 text-left">
                     <div>
-                      <h3 className="font-editorial text-xl sm:text-2xl text-[#171717] font-bold">
+                      <h3 className="font-editorial text-lg sm:text-2xl text-[#171717] font-bold leading-tight">
                         {offering.name}
                       </h3>
-                      <span className="text-xs font-mono text-[#C47A65] font-semibold block">
+                      <span className="text-xs font-mono text-[#C47A65] font-semibold block mt-0.5">
                         {offering.duration}
                       </span>
                     </div>
 
-                    <div className="text-[11px] text-[#55504A] space-y-1 font-sans">
+                    <div className="text-[11px] text-[#55504A] space-y-0.5 font-sans">
                       <p><strong>Destinations:</strong> {offering.destinations}</p>
                       <p><strong>Themes:</strong> {offering.themes}</p>
                     </div>
 
                     {/* Inclusions Strip with Icons */}
-                    <div className="pt-1 flex flex-wrap gap-2 text-[10px] font-mono text-[#68645E]">
+                    <div className="pt-1 flex flex-wrap gap-1.5 text-[10px] font-mono text-[#68645E]">
                       {offering.inclusions.slice(0, 3).map((inc, iIdx) => (
-                        <span key={iIdx} className="bg-[#FAF8F5] border border-[#D8D3CB]/60 px-2.5 py-1 rounded-md flex items-center gap-1">
+                        <span key={iIdx} className="bg-[#FAF8F5] border border-[#D8D3CB]/60 px-2 py-0.5 rounded-md flex items-center gap-1">
                           <Check className="w-3 h-3 text-[#C47A65]" />
                           <span>{inc}</span>
                         </span>
@@ -600,25 +616,26 @@ export function PackagesPage() {
                     </div>
                   </div>
 
-                  {/* Right Pricing & CTA Column (Matching Screenshot 1 & 2 Right Side) */}
-                  <div className="md:col-span-3 text-left md:text-right border-t md:border-t-0 md:border-l border-[#D8D3CB]/60 pt-4 md:pt-0 md:pl-6 space-y-4">
+                  {/* Right / Bottom Pricing & CTA Column (Matching Mobile Screenshot Layout) */}
+                  <div className="w-full md:col-span-3 text-left md:text-right border-t md:border-t-0 md:border-l border-[#D8D3CB]/60 pt-3 md:pt-0 md:pl-6 flex flex-row md:flex-col items-center md:items-end justify-between gap-3">
                     <div>
-                      <span className="text-[10px] font-mono text-[#68645E] block uppercase">Starting from</span>
-                      <span className="font-editorial text-2xl font-bold text-[#C47A65] block">
+                      <span className="text-[9px] sm:text-[10px] font-mono text-[#68645E] block uppercase">Starting from</span>
+                      <span className="font-editorial text-xl sm:text-2xl font-bold text-[#C47A65] block leading-none mt-0.5">
                         {offering.price}
                       </span>
+                      <span className="text-[9px] font-mono text-[#68645E] block mt-0.5 md:hidden">Per Event</span>
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="flex flex-row md:flex-col items-center gap-2 shrink-0">
                       <button
                         type="button"
                         onClick={() => {
                           setEnquiryModalItem({ name: offering.name, price: offering.price });
                           setFormSent(false);
                         }}
-                        className="w-full py-2.5 rounded-full bg-[#C47A65] hover:bg-[#171717] text-white font-mono text-xs uppercase font-bold transition-all shadow-xs cursor-pointer"
+                        className="py-2 px-3.5 sm:px-5 rounded-full bg-[#C47A65] hover:bg-[#171717] text-white font-mono text-[11px] uppercase font-bold transition-all shadow-xs cursor-pointer whitespace-nowrap"
                       >
-                        Enquire Package
+                        Book Now
                       </button>
 
                       <button
@@ -627,7 +644,7 @@ export function PackagesPage() {
                           setEnquiryModalItem({ name: offering.name, price: offering.price });
                           setFormSent(false);
                         }}
-                        className="w-full py-2 rounded-full border border-[#C47A65] text-[#C47A65] hover:bg-[#C47A65] hover:text-white font-mono text-xs font-semibold transition-all cursor-pointer"
+                        className="py-2 px-3.5 sm:px-5 rounded-full border border-[#C47A65] text-[#C47A65] hover:bg-[#C47A65] hover:text-white font-mono text-[11px] font-semibold transition-all cursor-pointer whitespace-nowrap"
                       >
                         View Details
                       </button>
@@ -645,7 +662,7 @@ export function PackagesPage() {
         /* ── MAIN OVERVIEW PAGE (HERO + 6 CARD BOXES + CALCULATOR + FAQS) ── */
         <>
           {/* ── 1. CLEAR HERO BORDERLESS BANNER WITH BOLD TITLE ── */}
-          <section className="relative h-[240px] sm:h-[300px] md:h-[340px] w-full overflow-hidden flex items-center justify-center text-center px-6">
+          <section className="relative h-[220px] sm:h-[300px] md:h-[340px] w-full overflow-hidden flex items-center justify-center text-center px-6">
             <img
               src={hero}
               alt="Our Packages - CMC FILMS"
@@ -653,19 +670,19 @@ export function PackagesPage() {
             />
             <div className="absolute inset-0 bg-black/35" />
 
-            <div className="relative z-10 pt-8">
-              <h1 className="font-editorial text-4xl sm:text-6xl md:text-7xl text-white font-bold tracking-wider uppercase drop-shadow-md">
+            <div className="relative z-10 pt-6 sm:pt-8">
+              <h1 className="font-editorial text-3xl sm:text-6xl md:text-7xl text-white font-bold tracking-wider uppercase drop-shadow-md">
                 Our Packages
               </h1>
             </div>
           </section>
 
-          {/* ── 2. EXACT 4-COLUMN IMAGE CARDS GRID (CLICKING ANY BOX OPENS DEDICATED DETAIL VIEW MATCHING SCREENSHOT) ── */}
-          <section className="py-10 sm:py-16 px-4 sm:px-8 md:px-12 max-w-[1550px] mx-auto space-y-8">
+          {/* ── 2. EXACT 4-COLUMN IMAGE CARDS GRID (OPTIMIZED FOR MOBILE) ── */}
+          <section className="py-8 sm:py-16 px-4 sm:px-8 md:px-12 max-w-[1550px] mx-auto space-y-6 sm:space-y-8">
             
             {/* Title Header */}
             <div className="text-left space-y-1 max-w-xl">
-              <h2 className="font-editorial text-2xl sm:text-4xl text-[#171717] font-bold uppercase tracking-tight">
+              <h2 className="font-editorial text-xl sm:text-4xl text-[#171717] font-bold uppercase tracking-tight">
                 Our Packages
               </h2>
               <p className="text-xs sm:text-sm text-[#55504A] font-light">
@@ -673,16 +690,16 @@ export function PackagesPage() {
               </p>
             </div>
 
-            {/* 4-Column Image Grid matching user screenshot */}
+            {/* 4-Column Responsive Grid (Optimized for Mobile View) */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
               {servicesData.map((pkg) => (
                 <div
                   key={pkg.id}
                   onClick={() => {
                     setActiveDetailService(pkg);
-                    window.scrollTo({ top: 300, behavior: "smooth" });
+                    window.scrollTo({ top: 250, behavior: "smooth" });
                   }}
-                  className="relative overflow-hidden rounded-xl sm:rounded-2xl aspect-[1.1/1] sm:aspect-square group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 bg-black border border-black/10"
+                  className="relative overflow-hidden rounded-xl sm:rounded-2xl aspect-[1.25/1] sm:aspect-square group cursor-pointer shadow-xs hover:shadow-xl transition-all duration-500 bg-black border border-black/10"
                 >
                   {/* Full Image Fill */}
                   <img
@@ -696,10 +713,10 @@ export function PackagesPage() {
 
                   {/* Bottom Title Text Overlay (Left) */}
                   <div className="absolute bottom-3 left-3.5 right-12 z-10 text-left">
-                    <span className="font-mono text-[10px] sm:text-xs font-bold text-white uppercase tracking-wider leading-snug drop-shadow-sm block">
+                    <span className="font-mono text-xs sm:text-sm font-bold text-white uppercase tracking-wider leading-snug drop-shadow-sm block">
                       {pkg.title}
                     </span>
-                    <span className="text-[10px] font-mono text-white/70 block mt-0.5">
+                    <span className="text-[10px] font-mono text-white/80 block mt-0.5">
                       Starting {pkg.price}
                     </span>
                   </div>
@@ -716,7 +733,7 @@ export function PackagesPage() {
           </section>
 
           {/* ── 3. CUSTOM MULTI-SERVICE CALCULATOR SECTION ── */}
-          <section className="py-12 sm:py-16 px-6 sm:px-12 md:px-16 max-w-[1400px] mx-auto border-t border-[#D8D3CB] space-y-8">
+          <section className="py-10 sm:py-16 px-4 sm:px-12 md:px-16 max-w-[1400px] mx-auto border-t border-[#D8D3CB] space-y-6 sm:space-y-8">
             
             <div className="text-center max-w-2xl mx-auto space-y-2">
               <span className="text-xs font-mono uppercase tracking-[0.2em] text-[#C47A65] font-bold">
@@ -731,7 +748,7 @@ export function PackagesPage() {
             </div>
 
             {/* 6 Services Selection Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4">
               {servicesData.map((service) => {
                 const isSelected = selectedServices.includes(`srv-${service.no.replace(/^0/, '')}`);
                 const srvId = `srv-${service.no.replace(/^0/, '')}`;
@@ -739,7 +756,7 @@ export function PackagesPage() {
                   <div
                     key={service.id}
                     onClick={() => toggleService(srvId)}
-                    className={`bg-white p-5 rounded-2xl border transition-all duration-300 cursor-pointer space-y-3 flex flex-col justify-between relative ${
+                    className={`bg-white p-4 sm:p-5 rounded-2xl border transition-all duration-300 cursor-pointer space-y-3 flex flex-col justify-between relative ${
                       isSelected
                         ? "border-[#C47A65] ring-2 ring-[#C47A65]/30 shadow-md"
                         : "border-[#D8D3CB]/70 hover:border-[#171717]"
@@ -759,7 +776,7 @@ export function PackagesPage() {
                         </div>
                       </div>
 
-                      <h3 className="font-editorial text-xl text-[#171717] font-bold">
+                      <h3 className="font-editorial text-lg sm:text-xl text-[#171717] font-bold">
                         {service.title}
                       </h3>
 
@@ -768,9 +785,9 @@ export function PackagesPage() {
                       </p>
                     </div>
 
-                    <div className="pt-3 border-t border-[#D8D3CB]/50 flex items-center justify-between">
+                    <div className="pt-2.5 border-t border-[#D8D3CB]/50 flex items-center justify-between">
                       <span className="text-[10px] font-mono text-[#68645E]">Est. Investment</span>
-                      <span className="font-editorial text-lg text-[#C47A65] font-bold">
+                      <span className="font-editorial text-base sm:text-lg text-[#C47A65] font-bold">
                         {service.price}
                       </span>
                     </div>
@@ -780,12 +797,12 @@ export function PackagesPage() {
             </div>
 
             {/* Live Investment Summary Bar */}
-            <div className="bg-[#171717] text-white p-6 rounded-2xl shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4 max-w-3xl mx-auto">
-              <div>
+            <div className="bg-[#171717] text-white p-5 sm:p-6 rounded-2xl shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4 max-w-3xl mx-auto">
+              <div className="text-center sm:text-left">
                 <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#C47A65] font-bold block">
                   ESTIMATED INVESTMENT ({selectedServices.length} SERVICES SELECTED)
                 </span>
-                <span className="font-editorial text-3xl text-white block mt-0.5 font-bold">
+                <span className="font-editorial text-2xl sm:text-3xl text-white block mt-0.5 font-bold">
                   ₹{calculatedTotalEstimate.toLocaleString("en-IN")}
                 </span>
               </div>
@@ -796,7 +813,7 @@ export function PackagesPage() {
                   setEnquiryModalItem({ name: "Custom Multi-Service Selection", price: `₹${calculatedTotalEstimate.toLocaleString("en-IN")}` });
                   setFormSent(false);
                 }}
-                className="w-full sm:w-auto bg-[#C47A65] hover:bg-white hover:text-[#171717] text-white px-7 py-3 rounded-full font-mono text-xs uppercase tracking-widest transition-all duration-300 font-semibold cursor-pointer shrink-0"
+                className="w-full sm:w-auto bg-[#C47A65] hover:bg-white hover:text-[#171717] text-white px-6 py-3 rounded-full font-mono text-xs uppercase tracking-widest transition-all duration-300 font-semibold cursor-pointer shrink-0"
               >
                 Enquire Custom Selection →
               </button>
@@ -805,8 +822,8 @@ export function PackagesPage() {
           </section>
 
           {/* ── 4. FAQ ACCORDION SECTION ── */}
-          <section className="py-12 sm:py-16 px-6 sm:px-12 md:px-16 max-w-[1300px] mx-auto space-y-8 border-t border-[#D8D3CB]">
-            <div className="text-center space-y-2">
+          <section className="py-10 sm:py-16 px-4 sm:px-12 md:px-16 max-w-[1300px] mx-auto space-y-6 sm:space-y-8 border-t border-[#D8D3CB]">
+            <div className="text-center space-y-1.5">
               <span className="text-xs font-mono text-[#C47A65] uppercase tracking-[0.2em] font-semibold">
                 QUESTIONS &amp; ANSWERS
               </span>
@@ -817,9 +834,9 @@ export function PackagesPage() {
 
             <div className="space-y-3 max-w-3xl mx-auto">
               {faqs.map((faq, idx) => (
-                <div key={idx} className="bg-white p-5 rounded-xl border border-[#D8D3CB]/80 space-y-1.5 shadow-xs">
-                  <h3 className="font-editorial text-lg text-[#171717] font-normal flex items-start gap-2.5">
-                    <HelpCircle className="w-4 h-4 text-[#C47A65] shrink-0 mt-1" />
+                <div key={idx} className="bg-white p-4 sm:p-5 rounded-xl border border-[#D8D3CB]/80 space-y-1.5 shadow-xs text-left">
+                  <h3 className="font-editorial text-base sm:text-lg text-[#171717] font-normal flex items-start gap-2.5">
+                    <HelpCircle className="w-4 h-4 text-[#C47A65] shrink-0 mt-0.5" />
                     <span>{faq.q}</span>
                   </h3>
                   <p className="text-xs text-[#55504A] font-light leading-relaxed pl-6">
@@ -834,22 +851,22 @@ export function PackagesPage() {
 
       {/* ── PACKAGE ENQUIRY & DETAILS MODAL ── */}
       {enquiryModalItem && (
-        <div className="fixed inset-0 z-[100] bg-black/75 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto animate-in fade-in">
-          <div className="bg-[#FAF8F5] text-[#171717] max-w-xl w-full p-6 sm:p-10 rounded-3xl border border-[#D8D3CB] shadow-2xl relative space-y-6 my-8">
+        <div className="fixed inset-0 z-[100] bg-black/75 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 overflow-y-auto animate-in fade-in">
+          <div className="bg-[#FAF8F5] text-[#171717] max-w-xl w-full p-5 sm:p-10 rounded-3xl border border-[#D8D3CB] shadow-2xl relative space-y-5 my-6 text-left">
             
             <button
               type="button"
               onClick={() => setEnquiryModalItem(null)}
-              className="absolute top-6 right-6 text-[#68645E] hover:text-[#C47A65] p-1 rounded-full text-xs font-mono"
+              className="absolute top-5 right-5 text-[#68645E] hover:text-[#C47A65] p-1 rounded-full text-xs font-mono cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <div className="space-y-1 border-b border-[#D8D3CB] pb-4">
-              <span className="text-xs font-mono text-[#C47A65] uppercase font-bold">
+            <div className="space-y-1 border-b border-[#D8D3CB] pb-3">
+              <span className="text-[10px] font-mono text-[#C47A65] uppercase font-bold">
                 PACKAGE ENQUIRY
               </span>
-              <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-[#171717]">
+              <h3 className="font-editorial text-xl sm:text-3xl font-bold text-[#171717]">
                 {enquiryModalItem.name}
               </h3>
               <p className="text-xs font-mono text-[#68645E]">
@@ -858,28 +875,28 @@ export function PackagesPage() {
             </div>
 
             {formSent ? (
-              <div className="py-8 text-center space-y-3">
-                <h4 className="font-editorial text-3xl text-[#C47A65]">Enquiry Sent!</h4>
+              <div className="py-6 text-center space-y-3">
+                <h4 className="font-editorial text-2xl sm:text-3xl text-[#C47A65]">Enquiry Sent!</h4>
                 <p className="text-xs sm:text-sm text-[#55504A] font-light">
                   We have received your enquiry for {enquiryModalItem.name}. Our team will contact you shortly.
                 </p>
                 <button
                   type="button"
                   onClick={() => setEnquiryModalItem(null)}
-                  className="mt-4 px-6 py-2 rounded-full bg-[#171717] text-white text-xs font-mono font-semibold"
+                  className="mt-3 px-6 py-2 rounded-full bg-[#171717] text-white text-xs font-mono font-semibold"
                 >
                   Close Window
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleEnquirySubmit} className="space-y-4 text-xs font-mono">
+              <form onSubmit={handleEnquirySubmit} className="space-y-3.5 text-xs font-mono">
                 <div>
                   <label className="block text-[#171717] font-semibold mb-1">Your Name *</label>
                   <input
                     required
                     type="text"
                     placeholder="Enter your full name..."
-                    className="w-full p-3 rounded-xl bg-white border border-[#D8D3CB] font-sans text-xs focus:outline-none focus:border-[#C47A65]"
+                    className="w-full p-2.5 rounded-xl bg-white border border-[#D8D3CB] font-sans text-xs focus:outline-none focus:border-[#C47A65]"
                   />
                 </div>
 
@@ -889,7 +906,7 @@ export function PackagesPage() {
                     required
                     type="email"
                     placeholder="name@example.com"
-                    className="w-full p-3 rounded-xl bg-white border border-[#D8D3CB] font-sans text-xs focus:outline-none focus:border-[#C47A65]"
+                    className="w-full p-2.5 rounded-xl bg-white border border-[#D8D3CB] font-sans text-xs focus:outline-none focus:border-[#C47A65]"
                   />
                 </div>
 
@@ -899,14 +916,14 @@ export function PackagesPage() {
                     <input
                       type="tel"
                       placeholder="+91 00000 00000"
-                      className="w-full p-3 rounded-xl bg-white border border-[#D8D3CB] font-sans text-xs focus:outline-none focus:border-[#C47A65]"
+                      className="w-full p-2.5 rounded-xl bg-white border border-[#D8D3CB] font-sans text-xs focus:outline-none focus:border-[#C47A65]"
                     />
                   </div>
                   <div>
                     <label className="block text-[#171717] font-semibold mb-1">Event Date</label>
                     <input
                       type="date"
-                      className="w-full p-3 rounded-xl bg-white border border-[#D8D3CB] font-sans text-xs focus:outline-none focus:border-[#C47A65]"
+                      className="w-full p-2.5 rounded-xl bg-white border border-[#D8D3CB] font-sans text-xs focus:outline-none focus:border-[#C47A65]"
                     />
                   </div>
                 </div>
@@ -916,13 +933,13 @@ export function PackagesPage() {
                   <input
                     type="text"
                     placeholder="City / Venue name (e.g. Udaipur, Jaipur)"
-                    className="w-full p-3 rounded-xl bg-white border border-[#D8D3CB] font-sans text-xs focus:outline-none focus:border-[#C47A65]"
+                    className="w-full p-2.5 rounded-xl bg-white border border-[#D8D3CB] font-sans text-xs focus:outline-none focus:border-[#C47A65]"
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-full bg-[#171717] hover:bg-[#C47A65] text-white font-mono text-xs uppercase tracking-widest font-semibold transition-all shadow-md cursor-pointer flex items-center justify-center gap-2 mt-4"
+                  className="w-full py-3 rounded-full bg-[#171717] hover:bg-[#C47A65] text-white font-mono text-xs uppercase tracking-widest font-semibold transition-all shadow-md cursor-pointer flex items-center justify-center gap-2 mt-3"
                 >
                   <span>Submit Package Enquiry</span>
                   <Send className="w-3.5 h-3.5" />
