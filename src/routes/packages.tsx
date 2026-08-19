@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useMemo, useEffect } from "react";
-import { Check, Sparkles, Star, ArrowRight, ArrowLeft, ShieldCheck, Camera, Film, Clock, HelpCircle, X, Send, Award, Sliders, ChevronRight } from "lucide-react";
+import { Check, Sparkles, Star, ArrowRight, ArrowLeft, ShieldCheck, Camera, Film, Clock, HelpCircle, X, Send, Award, Sliders } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 
 // Image Imports
@@ -103,7 +103,7 @@ const packageTiers: PackageTier[] = [
     ],
   },
   {
-    id: "pkg-[#03]",
+    id: "pkg-03",
     name: "Intimate Keepsake Story",
     subtitle: "1-Day Ceremony & Reception",
     tagline: "Unobtrusive, heartfelt documentation for intimate single-day celebrations.",
@@ -222,59 +222,78 @@ export function PackagesPage() {
   };
 
   return (
-    <main className="bg-[#0C0D10] text-[#FAF8F5] font-sans selection:bg-[#93191E] selection:text-white relative overflow-hidden min-h-screen">
+    <main className="bg-[#FAF8F5] text-[#171717] font-sans selection:bg-[#D8D3CB] selection:text-[#171717] min-h-screen relative">
       
-      {/* ── 1. HERO SECTION WITH AMBIENT WINE GLOW ── */}
-      <section className="relative pt-32 sm:pt-40 pb-20 px-6 sm:px-12 md:px-16 max-w-[1600px] mx-auto text-center space-y-6 overflow-hidden">
-        
-        {/* Ambient Wine Radial Glow background */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#93191E]/20 rounded-full blur-[140px] pointer-events-none" />
+      {/* ── 1. HERO SECTION (DARK CINEMA WITH CURSIVE WATERMARK OVERLAY) ── */}
+      <section className="relative h-[480px] sm:h-[540px] md:h-[600px] w-full bg-[#0C0D10] overflow-hidden flex items-center justify-center text-center px-6">
+        <img
+          src={hero}
+          alt="CMC FILMS Packages Hero"
+          className="absolute inset-0 h-full w-full object-cover opacity-35 scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/50 to-[#0C0D10]" />
 
-        <Reveal>
-          <div className="space-y-4 max-w-3xl mx-auto relative z-10">
-            <span className="text-xs font-mono uppercase tracking-[0.3em] text-[#C47A65] font-semibold bg-[#93191E]/20 border border-[#93191E]/40 px-4 py-1.5 rounded-full inline-block">
-              TRANSPARENT LUXURY COLLECTIONS
+        {/* Centered Title */}
+        <div className="relative z-10 space-y-3 max-w-3xl">
+          <div className="relative flex items-center justify-center">
+            <span
+              className="text-white/20 select-none pointer-events-none text-7xl sm:text-9xl md:text-[12rem] leading-none absolute -top-10 sm:-top-20 font-normal"
+              style={{ fontFamily: "'Alex Brush', cursive" }}
+            >
+              Collections
             </span>
-            <h1 className="font-editorial text-4xl sm:text-6xl md:text-7xl text-white font-normal leading-tight">
-              Investment &amp; <em className="italic text-[#C47A65]">Packages</em>
+            <h1 className="font-editorial text-4xl sm:text-6xl md:text-7xl text-white font-normal relative z-10 tracking-tight">
+              Investment &amp; Packages
             </h1>
-            <p className="text-sm sm:text-base text-white/75 font-light max-w-xl mx-auto leading-relaxed">
-              Thoughtfully curated photography and cinema archives designed for royal palace nuptials, destination celebrations, and intimate vows.
-            </p>
           </div>
-        </Reveal>
+          
+          <p className="text-xs sm:text-sm font-mono uppercase tracking-[0.25em] text-[#C47A65] pt-4 font-semibold">
+            TRANSPARENT LUXURY COLLECTIONS
+          </p>
 
-        {/* Category Pills Filter */}
-        <div className="pt-6 relative z-10 flex flex-wrap items-center justify-center gap-2.5">
-          {categories.map((cat) => {
-            const active = selectedCategory === cat;
-            return (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-6 py-2.5 rounded-full text-xs font-mono transition-all duration-300 cursor-pointer ${
-                  active
-                    ? "bg-[#93191E] text-white shadow-lg shadow-[#93191E]/30 font-semibold"
-                    : "bg-white/10 text-white/70 hover:bg-white/20 hover:text-white border border-white/10"
-                }`}
-              >
-                {cat === "All" ? "All Collections" : cat}
-              </button>
-            );
-          })}
+          <p className="text-sm sm:text-base text-white/80 font-light max-w-xl mx-auto leading-relaxed pt-2">
+            Thoughtfully curated photography and cinema archives designed for royal palace nuptials, destination celebrations, and intimate vows.
+          </p>
         </div>
-
       </section>
 
-      {/* ── 2. UNIQUE & ATTRACTIVE 3D PACKAGE CAROUSEL ── */}
-      <section className="py-12 md:py-20 px-4 sm:px-8 md:px-16 max-w-[1600px] mx-auto relative z-10 space-y-12">
+      {/* ── 2. FILTER PILLS STRIP ── */}
+      <section className="py-6 px-6 sm:px-12 bg-[#F3EEE7] border-b border-[#D8D3CB] sticky top-16 md:top-20 z-40 backdrop-blur-md bg-opacity-95">
+        <div className="max-w-[1500px] mx-auto flex items-center justify-between gap-4 flex-wrap">
+          <span className="text-xs font-mono uppercase tracking-widest text-[#171717] font-bold">
+            SELECT EVENT TYPE:
+          </span>
+
+          <div className="flex flex-wrap items-center gap-2">
+            {categories.map((cat) => {
+              const active = selectedCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`px-5 py-2 rounded-full text-xs font-mono transition-all duration-300 cursor-pointer ${
+                    active
+                      ? "bg-[#171717] text-white shadow-md font-semibold"
+                      : "bg-white text-[#171717]/75 hover:bg-[#E5E0D8] hover:text-[#171717] border border-[#D8D3CB]/60"
+                  }`}
+                >
+                  {cat === "All" ? "All Collections" : cat}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 3. UNIQUE INTERACTIVE PACKAGE CAROUSEL (IVORY THEME) ── */}
+      <section className="py-16 sm:py-24 px-4 sm:px-8 md:px-16 max-w-[1500px] mx-auto space-y-12">
         
         {/* Carousel Container */}
         <div className="relative flex flex-col items-center">
           
           {/* Navigation Arrow Controls */}
-          <div className="w-full flex items-center justify-between absolute top-1/2 -translate-y-1/2 inset-x-0 z-30 pointer-events-none px-2 sm:px-6">
+          <div className="w-full flex items-center justify-between absolute top-1/2 -translate-y-1/2 inset-x-0 z-30 pointer-events-none px-2 sm:px-4">
             <button
               type="button"
               onClick={() =>
@@ -283,7 +302,7 @@ export function PackagesPage() {
                 )
               }
               aria-label="Previous package"
-              className="pointer-events-auto h-12 w-12 rounded-full bg-[#171717]/80 hover:bg-[#93191E] border border-white/20 text-white flex items-center justify-center transition-all duration-300 shadow-2xl active:scale-95 cursor-pointer backdrop-blur-md"
+              className="pointer-events-auto h-12 w-12 rounded-full bg-[#171717] hover:bg-[#C47A65] text-white flex items-center justify-center transition-all duration-300 shadow-xl active:scale-95 cursor-pointer"
             >
               <ArrowLeft className="w-5 h-5" />
             </button>
@@ -294,124 +313,116 @@ export function PackagesPage() {
                 setActiveSlideIndex((prev) => (prev + 1) % filteredPackages.length)
               }
               aria-label="Next package"
-              className="pointer-events-auto h-12 w-12 rounded-full bg-[#171717]/80 hover:bg-[#93191E] border border-white/20 text-white flex items-center justify-center transition-all duration-300 shadow-2xl active:scale-95 cursor-pointer backdrop-blur-md"
+              className="pointer-events-auto h-12 w-12 rounded-full bg-[#171717] hover:bg-[#C47A65] text-white flex items-center justify-center transition-all duration-300 shadow-xl active:scale-95 cursor-pointer"
             >
               <ArrowRight className="w-5 h-5" />
             </button>
           </div>
 
           {/* Cards Display Showcase */}
-          <div className="w-full max-w-5xl overflow-hidden py-6 px-2">
-            <div className="grid grid-cols-1 gap-8">
-              
-              {/* Featured Active Card */}
-              {currentPackage && (
-                <div
-                  key={currentPackage.id}
-                  className="bg-[#17171B] border border-[#93191E]/50 rounded-3xl p-6 sm:p-12 shadow-2xl relative overflow-hidden transition-all duration-700 animate-in fade-in zoom-in-95 space-y-8"
-                >
-                  {/* Subtle Corner Glow */}
-                  <div className="absolute -top-20 -right-20 w-64 h-64 bg-[#93191E]/30 rounded-full blur-3xl pointer-events-none" />
-
-                  {/* Header Row */}
-                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6 border-b border-white/10 pb-8">
-                    <div className="space-y-2">
-                      {currentPackage.badge && (
-                        <span className="bg-[#93191E] text-white text-[10px] font-mono font-bold tracking-widest uppercase px-3.5 py-1 rounded-full inline-block shadow-md">
-                          {currentPackage.badge}
-                        </span>
-                      )}
-                      <h2 className="font-editorial text-3xl sm:text-5xl text-white font-normal">
-                        {currentPackage.name}
-                      </h2>
-                      <p className="text-xs font-mono uppercase tracking-widest text-[#C47A65]">
-                        {currentPackage.subtitle}
-                      </p>
-                    </div>
-
-                    <div className="text-left sm:text-right">
-                      <span className="font-editorial text-4xl sm:text-6xl text-white block">
-                        {currentPackage.price}
+          <div className="w-full max-w-4xl overflow-hidden py-4 px-2">
+            {currentPackage && (
+              <div
+                key={currentPackage.id}
+                className="bg-white border border-[#D8D3CB] rounded-3xl p-6 sm:p-12 shadow-xl relative overflow-hidden transition-all duration-500 animate-in fade-in zoom-in-95 space-y-8"
+              >
+                {/* Header Row */}
+                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6 border-b border-[#D8D3CB]/60 pb-8">
+                  <div className="space-y-2">
+                    {currentPackage.badge && (
+                      <span className="bg-[#C47A65] text-white text-[10px] font-mono font-bold tracking-widest uppercase px-3.5 py-1 rounded-full inline-block shadow-xs">
+                        {currentPackage.badge}
                       </span>
-                      <span className="text-xs font-mono text-white/60">
-                        {currentPackage.unit}
-                      </span>
-                    </div>
+                    )}
+                    <h2 className="font-editorial text-3xl sm:text-5xl text-[#171717] font-normal">
+                      {currentPackage.name}
+                    </h2>
+                    <p className="text-xs font-mono uppercase tracking-widest text-[#C47A65]">
+                      {currentPackage.subtitle}
+                    </p>
                   </div>
 
-                  {/* Coverage & Crew Details Strip */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-white/5 p-4 sm:p-6 rounded-2xl border border-white/10 text-xs font-mono text-white/90">
-                    <div className="flex items-center gap-3">
-                      <Clock className="w-5 h-5 text-[#C47A65] shrink-0" />
-                      <span>{currentPackage.coverageHours}</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Camera className="w-5 h-5 text-[#C47A65] shrink-0" />
-                      <span>{currentPackage.crewDetails}</span>
-                    </div>
-                  </div>
-
-                  {/* Deliverables & Services Grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2">
-                    
-                    {/* Deliverables */}
-                    <div className="space-y-4">
-                      <h4 className="text-xs font-mono uppercase tracking-widest text-[#C47A65] font-bold">
-                        FILM &amp; PHOTO DELIVERABLES
-                      </h4>
-                      <ul className="space-y-3">
-                        {currentPackage.deliverables.map((item, idx) => (
-                          <li key={idx} className="flex items-start gap-3 text-xs sm:text-sm text-white/90 font-light">
-                            <Check className="w-4 h-4 text-[#93191E] shrink-0 mt-0.5" />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    {/* Features */}
-                    <div className="space-y-4">
-                      <h4 className="text-xs font-mono uppercase tracking-widest text-[#C47A65] font-bold">
-                        INCLUDED SPECIAL SERVICES
-                      </h4>
-                      <ul className="space-y-3">
-                        {currentPackage.features.map((feat, idx) => (
-                          <li key={idx} className="flex items-start gap-3 text-xs sm:text-sm text-white/80 font-light">
-                            <Sparkles className="w-4 h-4 text-[#C47A65] shrink-0 mt-0.5" />
-                            <span>{feat}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                  </div>
-
-                  {/* Action Button */}
-                  <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setEnquiryModalPkg(currentPackage);
-                        setFormSent(false);
-                      }}
-                      className="w-full sm:w-auto px-10 py-4 rounded-full bg-[#93191E] hover:bg-white hover:text-[#171717] text-white font-mono text-xs uppercase tracking-widest font-semibold transition-all duration-300 shadow-xl cursor-pointer flex items-center justify-center gap-2"
-                    >
-                      <span>Check Availability &amp; Enquire</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </button>
-
-                    <span className="text-xs font-mono text-white/60">
-                      Package {activeSlideIndex + 1} of {filteredPackages.length}
+                  <div className="text-left sm:text-right">
+                    <span className="font-editorial text-4xl sm:text-6xl text-[#171717] block">
+                      {currentPackage.price}
                     </span>
+                    <span className="text-xs font-mono text-[#68645E]">
+                      {currentPackage.unit}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Coverage & Crew Details Strip */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-[#FAF8F5] p-4 sm:p-6 rounded-2xl border border-[#D8D3CB]/60 text-xs font-mono text-[#171717]">
+                  <div className="flex items-center gap-3">
+                    <Clock className="w-5 h-5 text-[#C47A65] shrink-0" />
+                    <span>{currentPackage.coverageHours}</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Camera className="w-5 h-5 text-[#C47A65] shrink-0" />
+                    <span>{currentPackage.crewDetails}</span>
+                  </div>
+                </div>
+
+                {/* Deliverables & Services Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2">
+                  
+                  {/* Deliverables */}
+                  <div className="space-y-4">
+                    <h4 className="text-xs font-mono uppercase tracking-widest text-[#C47A65] font-bold">
+                      FILM &amp; PHOTO DELIVERABLES
+                    </h4>
+                    <ul className="space-y-3">
+                      {currentPackage.deliverables.map((item, idx) => (
+                        <li key={idx} className="flex items-start gap-3 text-xs sm:text-sm text-[#55504A] font-light">
+                          <Check className="w-4 h-4 text-[#C47A65] shrink-0 mt-0.5" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Features */}
+                  <div className="space-y-4">
+                    <h4 className="text-xs font-mono uppercase tracking-widest text-[#C47A65] font-bold">
+                      INCLUDED SPECIAL SERVICES
+                    </h4>
+                    <ul className="space-y-3">
+                      {currentPackage.features.map((feat, idx) => (
+                        <li key={idx} className="flex items-start gap-3 text-xs sm:text-sm text-[#55504A] font-light">
+                          <Sparkles className="w-4 h-4 text-[#C47A65] shrink-0 mt-0.5" />
+                          <span>{feat}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
 
                 </div>
-              )}
 
-            </div>
+                {/* Action Button */}
+                <div className="pt-6 border-t border-[#D8D3CB]/60 flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEnquiryModalPkg(currentPackage);
+                      setFormSent(false);
+                    }}
+                    className="w-full sm:w-auto px-10 py-4 rounded-full bg-[#171717] hover:bg-[#C47A65] text-white font-mono text-xs uppercase tracking-widest font-semibold transition-all duration-300 shadow-md cursor-pointer flex items-center justify-center gap-2"
+                  >
+                    <span>Check Availability &amp; Enquire</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+
+                  <span className="text-xs font-mono text-[#68645E]">
+                    Collection {activeSlideIndex + 1} of {filteredPackages.length}
+                  </span>
+                </div>
+
+              </div>
+            )}
           </div>
 
-          {/* Carousel Dots & Selector Pills */}
+          {/* Carousel Dots Indicator */}
           <div className="flex items-center gap-3 pt-6">
             {filteredPackages.map((pkg, idx) => (
               <button
@@ -421,8 +432,8 @@ export function PackagesPage() {
                 aria-label={`Jump to ${pkg.name}`}
                 className={`h-2.5 rounded-full transition-all duration-500 cursor-pointer ${
                   idx === activeSlideIndex
-                    ? "w-8 bg-[#93191E] shadow-md shadow-[#93191E]/50"
-                    : "w-2.5 bg-white/20 hover:bg-white/40"
+                    ? "w-8 bg-[#171717]"
+                    : "w-2.5 bg-[#171717]/20 hover:bg-[#171717]/40"
                 }`}
               />
             ))}
@@ -432,22 +443,22 @@ export function PackagesPage() {
 
       </section>
 
-      {/* ── 3. INTERACTIVE "BUILD YOUR CUSTOM COLLECTION" PRICING ESTIMATOR ── */}
-      <section className="py-20 sm:py-28 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto border-t border-white/10 relative z-10 space-y-12">
+      {/* ── 4. INTERACTIVE "BUILD YOUR CUSTOM COLLECTION" PRICING ESTIMATOR ── */}
+      <section className="py-20 sm:py-28 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto border-t border-[#D8D3CB] space-y-12">
         
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#C47A65] font-bold">
             CUSTOMIZATION CALCULATOR
           </span>
-          <h2 className="font-editorial text-3xl sm:text-5xl text-white font-normal">
+          <h2 className="font-editorial text-3xl sm:text-5xl text-[#171717] font-normal">
             Estimate Your <em className="italic text-[#C47A65]">Custom Collection</em>
           </h2>
-          <p className="text-xs sm:text-sm text-white/70 font-light">
+          <p className="text-xs sm:text-sm text-[#55504A] font-light">
             Select your preferred base coverage and add bespoke services to build a personalized package proposal.
           </p>
         </div>
 
-        <div className="bg-[#17171B] p-8 sm:p-12 rounded-3xl border border-white/10 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+        <div className="bg-[#F3EEE7] p-8 sm:p-12 rounded-3xl border border-[#D8D3CB] max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
           
           {/* Base Selection */}
           <div className="md:col-span-6 space-y-6">
@@ -458,7 +469,7 @@ export function PackagesPage() {
               <select
                 value={basePrice}
                 onChange={(e) => setBasePrice(Number(e.target.value))}
-                className="w-full bg-[#0C0D10] text-white border border-white/20 p-3.5 rounded-xl font-mono text-xs outline-none focus:border-[#93191E]"
+                className="w-full bg-white text-[#171717] border border-[#D8D3CB] p-3.5 rounded-xl font-mono text-xs outline-none focus:border-[#C47A65]"
               >
                 <option value={350000}>3-Day Royal Palace Collection (₹3,50,000)</option>
                 <option value={240000}>2-Day Destination Cinema (₹2,40,000)</option>
@@ -481,12 +492,12 @@ export function PackagesPage() {
                       onClick={() => toggleAddOn(add.id)}
                       className={`p-3 rounded-xl border flex items-center justify-between text-xs font-mono cursor-pointer transition-all ${
                         checked
-                          ? "bg-[#93191E]/20 border-[#93191E] text-white"
-                          : "bg-white/5 border-white/10 text-white/70 hover:bg-white/10"
+                          ? "bg-[#C47A65]/15 border-[#C47A65] text-[#171717] font-semibold"
+                          : "bg-white border-[#D8D3CB] text-[#55504A] hover:bg-[#FAF8F5]"
                       }`}
                     >
                       <div className="flex items-center gap-2.5">
-                        <div className={`w-4 h-4 rounded border flex items-center justify-center ${checked ? "bg-[#93191E] border-[#93191E]" : "border-white/30"}`}>
+                        <div className={`w-4 h-4 rounded border flex items-center justify-center ${checked ? "bg-[#C47A65] border-[#C47A65]" : "border-[#D8D3CB]"}`}>
                           {checked && <Check className="w-3 h-3 text-white" />}
                         </div>
                         <span>{add.label}</span>
@@ -500,8 +511,8 @@ export function PackagesPage() {
           </div>
 
           {/* Dynamic Calculated Total Card */}
-          <div className="md:col-span-6 bg-[#0C0D10] p-8 rounded-2xl border border-white/10 space-y-6 text-center">
-            <span className="text-xs font-mono uppercase tracking-widest text-white/60">
+          <div className="md:col-span-6 bg-white p-8 rounded-2xl border border-[#D8D3CB] shadow-md space-y-6 text-center">
+            <span className="text-xs font-mono uppercase tracking-widest text-[#68645E]">
               ESTIMATED INVESTMENT
             </span>
 
@@ -509,7 +520,7 @@ export function PackagesPage() {
               <span className="font-editorial text-4xl sm:text-5xl text-[#C47A65] block font-normal">
                 ₹{calculatedTotalEstimate.toLocaleString("en-IN")}
               </span>
-              <span className="text-[11px] font-mono text-white/50 block">
+              <span className="text-[11px] font-mono text-[#68645E] block">
                 Includes all selected add-ons &amp; Taxes
               </span>
             </div>
@@ -524,7 +535,7 @@ export function PackagesPage() {
                 });
                 setFormSent(false);
               }}
-              className="w-full py-4 rounded-full bg-[#93191E] hover:bg-white hover:text-[#171717] text-white font-mono text-xs uppercase tracking-widest font-semibold transition-all duration-300 shadow-lg cursor-pointer"
+              className="w-full py-4 rounded-full bg-[#171717] hover:bg-[#C47A65] text-white font-mono text-xs uppercase tracking-widest font-semibold transition-all duration-300 shadow-md cursor-pointer"
             >
               Request Custom Proposal
             </button>
@@ -534,25 +545,25 @@ export function PackagesPage() {
 
       </section>
 
-      {/* ── 4. FAQ ACCORDION SECTION ── */}
+      {/* ── 5. FAQ ACCORDION SECTION ── */}
       <section className="py-20 sm:py-28 px-6 sm:px-12 md:px-16 max-w-[1400px] mx-auto space-y-12">
         <div className="text-center space-y-3">
           <span className="text-xs font-mono text-[#C47A65] uppercase tracking-[0.25em] font-semibold">
             QUESTIONS &amp; ANSWERS
           </span>
-          <h2 className="font-editorial text-3xl sm:text-5xl font-normal text-white">
+          <h2 className="font-editorial text-3xl sm:text-5xl font-normal text-[#171717]">
             Frequently Asked <em className="italic text-[#C47A65]">Questions</em>
           </h2>
         </div>
 
         <div className="space-y-4 max-w-3xl mx-auto">
           {faqs.map((faq, idx) => (
-            <div key={idx} className="bg-[#17171B] p-6 sm:p-8 rounded-2xl border border-white/10 space-y-2">
-              <h3 className="font-editorial text-xl sm:text-2xl text-white font-normal flex items-start gap-3">
+            <div key={idx} className="bg-white p-6 sm:p-8 rounded-2xl border border-[#D8D3CB]/80 space-y-2 shadow-xs">
+              <h3 className="font-editorial text-xl sm:text-2xl text-[#171717] font-normal flex items-start gap-3">
                 <HelpCircle className="w-5 h-5 text-[#C47A65] shrink-0 mt-1" />
                 <span>{faq.q}</span>
               </h3>
-              <p className="text-xs sm:text-sm text-white/70 font-light leading-relaxed pl-8">
+              <p className="text-xs sm:text-sm text-[#55504A] font-light leading-relaxed pl-8">
                 {faq.a}
               </p>
             </div>
@@ -560,27 +571,27 @@ export function PackagesPage() {
         </div>
       </section>
 
-      {/* ── 5. PACKAGE ENQUIRY MODAL ── */}
+      {/* ── 6. PACKAGE ENQUIRY MODAL ── */}
       {enquiryModalPkg && (
-        <div className="fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto animate-in fade-in">
-          <div className="bg-[#17171B] text-white max-w-xl w-full p-6 sm:p-10 rounded-3xl border border-white/20 shadow-2xl relative space-y-6 my-8">
+        <div className="fixed inset-0 z-[100] bg-black/75 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto animate-in fade-in">
+          <div className="bg-[#FAF8F5] text-[#171717] max-w-xl w-full p-6 sm:p-10 rounded-3xl border border-[#D8D3CB] shadow-2xl relative space-y-6 my-8">
             
             <button
               type="button"
               onClick={() => setEnquiryModalPkg(null)}
-              className="absolute top-6 right-6 text-white/60 hover:text-[#C47A65] p-1 rounded-full text-xs font-mono"
+              className="absolute top-6 right-6 text-[#68645E] hover:text-[#C47A65] p-1 rounded-full text-xs font-mono"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <div className="space-y-1 border-b border-white/10 pb-4">
+            <div className="space-y-1 border-b border-[#D8D3CB] pb-4">
               <span className="text-xs font-mono text-[#C47A65] uppercase font-bold">
                 PACKAGE ENQUIRY
               </span>
-              <h3 className="font-editorial text-2xl sm:text-3xl font-normal text-white">
+              <h3 className="font-editorial text-2xl sm:text-3xl font-normal text-[#171717]">
                 {enquiryModalPkg.name}
               </h3>
-              <p className="text-xs font-mono text-white/60">
+              <p className="text-xs font-mono text-[#68645E]">
                 {enquiryModalPkg.price}
               </p>
             </div>
@@ -588,13 +599,13 @@ export function PackagesPage() {
             {formSent ? (
               <div className="py-8 text-center space-y-3">
                 <h4 className="font-editorial text-3xl text-[#C47A65]">Enquiry Sent!</h4>
-                <p className="text-xs sm:text-sm text-white/80 font-light">
+                <p className="text-xs sm:text-sm text-[#55504A] font-light">
                   We have received your enquiry for {enquiryModalPkg.name}. Our team will contact you shortly.
                 </p>
                 <button
                   type="button"
                   onClick={() => setEnquiryModalPkg(null)}
-                  className="mt-4 px-6 py-2 rounded-full bg-white text-[#171717] text-xs font-mono font-semibold"
+                  className="mt-4 px-6 py-2 rounded-full bg-[#171717] text-white text-xs font-mono font-semibold"
                 >
                   Close Window
                 </button>
@@ -602,55 +613,55 @@ export function PackagesPage() {
             ) : (
               <form onSubmit={handleEnquirySubmit} className="space-y-4 text-xs font-mono">
                 <div>
-                  <label className="block text-white font-semibold mb-1">Your Name *</label>
+                  <label className="block text-[#171717] font-semibold mb-1">Your Name *</label>
                   <input
                     required
                     type="text"
                     placeholder="Enter your full name..."
-                    className="w-full p-3 rounded-xl bg-[#0C0D10] border border-white/20 font-sans text-xs focus:outline-none focus:border-[#93191E]"
+                    className="w-full p-3 rounded-xl bg-white border border-[#D8D3CB] font-sans text-xs focus:outline-none focus:border-[#C47A65]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-white font-semibold mb-1">Email Address *</label>
+                  <label className="block text-[#171717] font-semibold mb-1">Email Address *</label>
                   <input
                     required
                     type="email"
                     placeholder="name@example.com"
-                    className="w-full p-3 rounded-xl bg-[#0C0D10] border border-white/20 font-sans text-xs focus:outline-none focus:border-[#93191E]"
+                    className="w-full p-3 rounded-xl bg-white border border-[#D8D3CB] font-sans text-xs focus:outline-none focus:border-[#C47A65]"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-white font-semibold mb-1">Phone / WhatsApp</label>
+                    <label className="block text-[#171717] font-semibold mb-1">Phone / WhatsApp</label>
                     <input
                       type="tel"
                       placeholder="+91 00000 00000"
-                      className="w-full p-3 rounded-xl bg-[#0C0D10] border border-white/20 font-sans text-xs focus:outline-none focus:border-[#93191E]"
+                      className="w-full p-3 rounded-xl bg-white border border-[#D8D3CB] font-sans text-xs focus:outline-none focus:border-[#C47A65]"
                     />
                   </div>
                   <div>
-                    <label className="block text-white font-semibold mb-1">Wedding Date</label>
+                    <label className="block text-[#171717] font-semibold mb-1">Wedding Date</label>
                     <input
                       type="date"
-                      className="w-full p-3 rounded-xl bg-[#0C0D10] border border-white/20 font-sans text-xs focus:outline-none focus:border-[#93191E]"
+                      className="w-full p-3 rounded-xl bg-white border border-[#D8D3CB] font-sans text-xs focus:outline-none focus:border-[#C47A65]"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-white font-semibold mb-1">Event Location / Venue</label>
+                  <label className="block text-[#171717] font-semibold mb-1">Event Location / Venue</label>
                   <input
                     type="text"
                     placeholder="City / Venue name (e.g. Udaipur, Jaipur)"
-                    className="w-full p-3 rounded-xl bg-[#0C0D10] border border-white/20 font-sans text-xs focus:outline-none focus:border-[#93191E]"
+                    className="w-full p-3 rounded-xl bg-white border border-[#D8D3CB] font-sans text-xs focus:outline-none focus:border-[#C47A65]"
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-full bg-[#93191E] hover:bg-white hover:text-[#171717] text-white font-mono text-xs uppercase tracking-widest font-semibold transition-all shadow-md cursor-pointer flex items-center justify-center gap-2 mt-4"
+                  className="w-full py-3.5 rounded-full bg-[#171717] hover:bg-[#C47A65] text-white font-mono text-xs uppercase tracking-widest font-semibold transition-all shadow-md cursor-pointer flex items-center justify-center gap-2 mt-4"
                 >
                   <span>Submit Package Enquiry</span>
                   <Send className="w-3.5 h-3.5" />
