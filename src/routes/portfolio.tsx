@@ -390,16 +390,16 @@ export function WeddingStoriesPage() {
           </div>
         </div>
 
-        {/* 2-Column Story Cards Grid (Exact Design Match) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-14 lg:gap-16 max-w-[1400px] mx-auto">
+        {/* 4-Column Story Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-[1750px] mx-auto">
           {filteredPosts.map((post) => (
             <article
               key={post.id}
               onClick={() => setActivePost(post)}
-              className="group cursor-pointer space-y-6 flex flex-col justify-between"
+              className="group cursor-pointer space-y-4 flex flex-col justify-between"
             >
-              <div className="space-y-5">
-                {/* 1. Large Crisp Image (Full Bleed, Sharp Edge) */}
+              <div className="space-y-3.5">
+                {/* 1. Crisp Image */}
                 <div className="aspect-[16/11] w-full overflow-hidden bg-[#EFECE6]">
                   <img
                     src={post.coverImage}
@@ -410,12 +410,12 @@ export function WeddingStoriesPage() {
                 </div>
 
                 {/* 2. Centered Title */}
-                <h3 className="font-display text-2xl sm:text-3xl font-light text-[#261E1E] text-center leading-tight transition-colors group-hover:text-[#93191E]">
+                <h3 className="font-display text-lg sm:text-xl font-light text-[#261E1E] text-center leading-snug transition-colors group-hover:text-[#93191E]">
                   {post.title}
                 </h3>
 
                 {/* 3. Centered Description */}
-                <p className="text-sm sm:text-base text-[#8A8072] font-sans font-light text-center leading-relaxed max-w-xl mx-auto px-2">
+                <p className="text-xs sm:text-sm text-[#8A8072] font-sans font-light text-center leading-relaxed line-clamp-3 px-1">
                   {post.excerpt}
                 </p>
               </div>
@@ -424,7 +424,7 @@ export function WeddingStoriesPage() {
               <div className="pt-2 flex justify-center">
                 <button
                   type="button"
-                  className="bg-[#383330] group-hover:bg-[#93191E] text-white font-sans text-xs sm:text-sm px-8 py-2.5 rounded-full transition-all duration-300 shadow-sm cursor-pointer"
+                  className="bg-[#383330] group-hover:bg-[#93191E] text-white font-sans text-xs px-6 py-2 rounded-full transition-all duration-300 shadow-sm cursor-pointer"
                 >
                   Read More
                 </button>
