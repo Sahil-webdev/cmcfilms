@@ -7,7 +7,6 @@ import story3 from "@/assets/story-3.jpg";
 import featured from "@/assets/featured.jpg";
 import maternity from "@/assets/maternity.jpg";
 
-/** Editable studio details — replace with real values when available. */
 export const studio = {
   name: "CMC FILMS",
   tagline: "Stories of Love. Told Forever.",
@@ -16,6 +15,17 @@ export const studio = {
   email: "cmcfilms771@gmail.com",
   phone: "+91 74259 40636",
   address: "Urban Square Mall, Sukher, Udaipur, Rajasthan – 313001",
+  address2: "Intali Road, Chungi Naka, Fatehnagar, Udaipur, Rajasthan",
+  locations: [
+    {
+      title: "Sukher Studio",
+      address: "Urban Square Mall, Sukher, Udaipur, Rajasthan – 313001",
+    },
+    {
+      title: "Fatehnagar Studio",
+      address: "Intali Road, Chungi Naka, Fatehnagar, Udaipur, Rajasthan",
+    },
+  ],
   city: "Udaipur, Rajasthan, India",
   socials: [
     { label: "Instagram", href: "#" },

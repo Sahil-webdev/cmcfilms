@@ -150,26 +150,48 @@ export function FooterOption7() {
               className="text-xs sm:text-sm font-mono uppercase tracking-[0.22em] text-[#AE171E] font-bold block"
               style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
             >
-              CONTACT &amp; STUDIO
+              STUDIO LOCATIONS
             </span>
 
-            <div className="space-y-3 text-sm sm:text-base text-[#AE171E] font-normal leading-relaxed" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
-              <div className="flex items-start gap-2.5">
-                <MapPin className="w-4.5 h-4.5 text-[#AE171E] shrink-0 mt-0.5" />
-                <span>Urban Square Mall, Sukher, Udaipur, Rajasthan – 313001</span>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <Mail className="w-4.5 h-4.5 text-[#AE171E] shrink-0" />
-                <a href="mailto:cmcfilms771@gmail.com" className="hover:underline transition-all">cmcfilms771@gmail.com</a>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <Phone className="w-4.5 h-4.5 text-[#AE171E] shrink-0" />
-                <a href="tel:+917425940636" className="hover:underline transition-all">+91 74259 40636</a>
+            <div className="space-y-3.5 text-xs sm:text-sm text-[#AE171E] font-normal leading-relaxed" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
+              {/* Studio 1 */}
+              <div className="space-y-1">
+                <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#AE171E]">
+                  <MapPin className="w-3.5 h-3.5 text-[#AE171E] shrink-0" />
+                  <span>STUDIO 1 (SUKHER)</span>
+                </div>
+                <p className="pl-5 text-[#AE171E]/90 text-xs leading-normal">
+                  Urban Square Mall, Sukher, Udaipur, Rajasthan – 313001
+                </p>
               </div>
 
-              <div className="pt-2">
+              {/* Studio 2 */}
+              <div className="space-y-1 pt-0.5">
+                <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#AE171E]">
+                  <MapPin className="w-3.5 h-3.5 text-[#AE171E] shrink-0" />
+                  <span>STUDIO 2 (FATEHNAGAR)</span>
+                </div>
+                <p className="pl-5 text-[#AE171E]/90 text-xs leading-normal">
+                  Intali Road, Chungi Naka, Fatehnagar, Udaipur, Rajasthan
+                </p>
+              </div>
+
+              {/* Contact Info */}
+              <div className="pt-2.5 border-t border-[#AE171E]/15 space-y-2">
+                <div className="flex items-center gap-2.5">
+                  <Mail className="w-4 h-4 text-[#AE171E] shrink-0" />
+                  <a href="mailto:cmcfilms771@gmail.com" className="hover:underline transition-all">cmcfilms771@gmail.com</a>
+                </div>
+                <div className="flex items-center gap-2.5">
+                  <Phone className="w-4 h-4 text-[#AE171E] shrink-0" />
+                  <a href="tel:+917425940636" className="hover:underline transition-all">+91 74259 40636</a>
+                </div>
+              </div>
+
+              <div className="pt-1">
                 <Link
-                  to="/contact"
+                  to="/about"
+                  hash="contact"
                   className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#AE171E] text-white hover:bg-black transition-all text-xs sm:text-sm font-bold uppercase tracking-wider shadow-md active:scale-95 cursor-pointer"
                   style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
                 >
