@@ -239,21 +239,9 @@ function FilmsVideoHero() {
 
 export function WeddingFilmsPage() {
   const [activeCategoryFilter, setActiveCategoryFilter] = useState<string>("ALL");
-  const [mostLovedIndex, setMostLovedIndex] = useState(0);
   const [activeFilmModal, setActiveFilmModal] = useState<FilmItem | null>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  const filteredIndexFilms = useMemo(() => {
-    if (activeCategoryFilter === "ALL") return filmsData;
-    return filmsData.filter((f) => f.category === activeCategoryFilter);
-  }, [activeCategoryFilter]);
-
-  const mostLovedList = useMemo(() => {
-    return filmsData.filter((f) => f.isMostLoved);
-  }, []);
-
-  const currentMostLoved = mostLovedList[mostLovedIndex] || mostLovedList[0];
 
   const handleMouseMove = (e: React.MouseEvent) => {
     setMousePos({ x: e.clientX, y: e.clientY });
@@ -361,100 +349,6 @@ export function WeddingFilmsPage() {
 
         </div>
       </section>
-
-      {/* ── SECTION 3 — MOST LOVED FILMS (Dark Background #171512 with Crossfade Showcase) ── */}
-      <section className="py-24 md:py-36 px-6 md:px-16 bg-[#171512] text-[#F2EFE8] border-b border-white/10">
-        <div className="max-w-[1600px] mx-auto space-y-12">
-          
-          <div className="space-y-1 border-b border-white/10 pb-6">
-            <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#A67B2E]">
-              CURATED SELECTION
-            </span>
-            <h2 className="font-display text-4xl sm:text-5xl font-light text-[#F2EFE8]">
-              Most <em className="font-editorial italic text-[#A67B2E]">Loved</em>
-            </h2>
-          </div>
-
-          {/* Featured Most Loved Container */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-center">
-            
-            {/* Left: Large Featured Film Image */}
-            <div
-              onClick={() => setActiveFilmModal(currentMostLoved)}
-              className="md:col-span-7 group relative aspect-[16/10] overflow-hidden rounded-[4px] bg-black shadow-2xl cursor-pointer border border-white/10"
-            >
-              <img
-                src={currentMostLoved.coverImage}
-                alt={currentMostLoved.couple}
-                className="h-full w-full object-cover opacity-85 transition-all duration-700 group-hover:scale-[1.02]"
-              />
-              <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors flex items-center justify-center">
-                <div className="h-16 w-16 rounded-full bg-[#A67B2E] text-[#171512] flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
-                  <Play className="w-6 h-6 fill-current ml-1" />
-                </div>
-              </div>
-              <span className="absolute bottom-4 left-4 text-[10px] font-mono text-white/90 bg-black/60 px-3 py-1 rounded-[2px]">
-                {currentMostLoved.duration} · {currentMostLoved.timestamp}
-              </span>
-            </div>
-
-            {/* Right: Large Index & Info */}
-            <div className="md:col-span-5 space-y-6">
-              <span className="text-2xl font-mono text-[#A67B2E]">
-                0{mostLovedIndex + 1} / 0{mostLovedList.length}
-              </span>
-
-              <h3 className="font-display text-4xl sm:text-6xl font-light text-[#F2EFE8]">
-                {currentMostLoved.couple}
-              </h3>
-
-              <p className="font-editorial text-xl italic text-[#A67B2E]">
-                "{currentMostLoved.filmTitle}"
-              </p>
-
-              <p className="text-xs font-mono text-[#F2EFE8]/60">
-                {currentMostLoved.location} · {currentMostLoved.style} · {currentMostLoved.year}
-              </p>
-
-              <div className="pt-2">
-                <button
-                  type="button"
-                  onClick={() => setActiveFilmModal(currentMostLoved)}
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#A67B2E] text-[#171512] font-mono text-xs font-semibold hover:bg-white transition-all active:scale-95 cursor-pointer shadow-lg"
-                >
-                  <span>Watch Film →</span>
-                </button>
-              </div>
-            </div>
-
-          </div>
-
-          {/* Minimal Interactive List */}
-          <div className="pt-8 border-t border-white/10 flex flex-wrap items-center gap-6 sm:gap-10">
-            {mostLovedList.map((item, idx) => {
-              const isSelected = idx === mostLovedIndex;
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => setMostLovedIndex(idx)}
-                  onMouseEnter={() => setMostLovedIndex(idx)}
-                  className={`text-sm sm:text-base font-mono transition-all cursor-pointer ${
-                    isSelected
-                      ? "text-[#A67B2E] border-b border-[#A67B2E] pb-1 font-semibold"
-                      : "text-[#F2EFE8]/50 hover:text-[#F2EFE8]"
-                  }`}
-                >
-                  0{idx + 1} {item.couple.replace("&", "+")}
-                </button>
-              );
-            })}
-          </div>
-
-        </div>
-      </section>
-
-
 
       {/* ── FINAL SCREEN & CTA ── */}
       <section className="py-36 md:py-48 px-6 text-center bg-[#F2EFE8]">
