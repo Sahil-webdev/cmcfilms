@@ -236,7 +236,7 @@ export function PackagesPage() {
                 setEnquiryModalPkg(pkg);
                 setFormSent(false);
               }}
-              className="relative overflow-hidden rounded-2xl sm:rounded-3xl aspect-[1.1/1] sm:aspect-square group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 bg-black border border-black/10"
+              className="relative overflow-hidden rounded-xl sm:rounded-2xl aspect-[1.1/1] sm:aspect-square group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 bg-black border border-black/10"
             >
               {/* Full Image Fill */}
               <img
