@@ -711,13 +711,10 @@ export function PackagesPage() {
                   {/* Bottom Gradient Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
 
-                  {/* Centered Title Text & Starting Price Overlay */}
-                  <div className="absolute bottom-3.5 sm:bottom-4 inset-x-0 px-4 z-10 text-center space-y-0.5">
-                    <span className="font-mono text-xs sm:text-sm font-bold text-white uppercase tracking-wider leading-snug drop-shadow-md block">
+                  {/* Centered Normal Title Text Overlay */}
+                  <div className="absolute bottom-3.5 sm:bottom-4 inset-x-0 px-4 z-10 text-center">
+                    <span className="font-sans text-xs sm:text-sm font-normal text-white uppercase tracking-wider leading-snug drop-shadow-md block">
                       {pkg.title}
-                    </span>
-                    <span className="text-[10px] sm:text-xs font-mono text-white/80 block drop-shadow-xs">
-                      Starting {pkg.price}
                     </span>
                   </div>
 
