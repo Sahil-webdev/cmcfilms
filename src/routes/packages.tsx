@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useMemo, useEffect } from "react";
-import { Check, Sparkles, Star, ArrowRight, ArrowLeft, ShieldCheck, Camera, Film, Clock, HelpCircle, X, Send, Award, Sliders } from "lucide-react";
+import { Check, Sparkles, ArrowRight, ArrowLeft, Camera, Film, Clock, HelpCircle, X, Send, Award, Sliders, CheckCircle2 } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 
 // Image Imports
@@ -152,6 +152,15 @@ const packageTiers: PackageTier[] = [
   },
 ];
 
+const studioServices = [
+  { id: "srv-1", no: "01", title: "Wedding Photography", copy: "Two to three senior photographers quietly present through every ceremony.", price: 120000 },
+  { id: "srv-2", no: "02", title: "Wedding Cinematography", copy: "A 4K film cut for feeling — capturing vows, laughter, & quiet romantic pauses.", price: 150000 },
+  { id: "srv-3", no: "03", title: "Pre-Wedding Stories", copy: "Outdoor dawn concept shoot in Jaipur, Udaipur, Goa, or royal havelis.", price: 45000 },
+  { id: "srv-4", no: "04", title: "Destination Weddings", copy: "Full multi-day destination coverage across India & international venues.", price: 280000 },
+  { id: "srv-5", no: "05", title: "Couple Portraits", copy: "Editorial fine-art portraits & romantic couples sessions.", price: 35000 },
+  { id: "srv-6", no: "06", title: "Maternity Photoshoot", copy: "Fine-art aesthetic portraiture celebrating new beginnings.", price: 30000 },
+];
+
 const faqs = [
   {
     q: "How early should we book CMC FILMS for our wedding?",
@@ -171,14 +180,6 @@ const faqs = [
   },
 ];
 
-const customAddOns = [
-  { id: "add-1", label: "Aerial 4K Drone Coverage", price: 25000 },
-  { id: "add-2", label: "Pre-Wedding Dawn Session", price: 35000 },
-  { id: "add-3", label: "Extra Day Event Coverage", price: 65000 },
-  { id: "add-4", label: "2nd Heirloom Leather Album", price: 30000 },
-  { id: "add-5", label: "Same-Day Edit Reception Teaser", price: 20000 },
-];
-
 export function PackagesPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [activeSlideIndex, setActiveSlideIndex] = useState<number>(0);
@@ -186,16 +187,7 @@ export function PackagesPage() {
   const [formSent, setFormSent] = useState(false);
 
   // Custom Multi-Service Calculator State
-  const [selectedAddOns, setSelectedAddOns] = useState<string[]>(["srv-1", "srv-2"]);
-
-  const allServicesList = [
-    { id: "srv-1", price: 120000 },
-    { id: "srv-2", price: 150000 },
-    { id: "srv-3", price: 45000 },
-    { id: "srv-4", price: 280000 },
-    { id: "srv-5", price: 35000 },
-    { id: "srv-6", price: 30000 },
-  ];
+  const [selectedServices, setSelectedServices] = useState<string[]>(["srv-1", "srv-2"]);
 
   const categories = ["All", "Royal", "Destination", "Intimate", "Couple Shoot"];
 
@@ -210,18 +202,18 @@ export function PackagesPage() {
 
   const currentPackage = filteredPackages[activeSlideIndex] || filteredPackages[0];
 
-  const toggleAddOn = (id: string) => {
-    setSelectedAddOns((prev) =>
+  const toggleService = (id: string) => {
+    setSelectedServices((prev) =>
       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
     );
   };
 
   const calculatedTotalEstimate = useMemo(() => {
-    return selectedAddOns.reduce((sum, serviceId) => {
-      const s = allServicesList.find((item) => item.id === serviceId);
+    return selectedServices.reduce((sum, sId) => {
+      const s = studioServices.find((item) => item.id === sId);
       return sum + (s ? s.price : 0);
     }, 0);
-  }, [selectedAddOns]);
+  }, [selectedServices]);
 
   const handleEnquirySubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -235,7 +227,7 @@ export function PackagesPage() {
       <section className="relative h-[480px] sm:h-[540px] md:h-[600px] w-full bg-[#0C0D10] overflow-hidden flex items-center justify-center text-center px-6">
         <img
           src={hero}
-          alt="CMC FILMS Packages Hero"
+          alt="CMC FILMS Investment & Packages Hero"
           className="absolute inset-0 h-full w-full object-cover opacity-35 scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/50 to-[#0C0D10]" />
@@ -264,7 +256,7 @@ export function PackagesPage() {
         </div>
       </section>
 
-      {/* ── 2. FILTER PILLS STRIP ── */}
+      {/* ── 2. STICKY CATEGORY FILTER BAR ── */}
       <section className="py-6 px-6 sm:px-12 bg-[#F3EEE7] border-b border-[#D8D3CB] sticky top-16 md:top-20 z-40 backdrop-blur-md bg-opacity-95">
         <div className="max-w-[1500px] mx-auto flex items-center justify-between gap-4 flex-wrap">
           <span className="text-xs font-mono uppercase tracking-widest text-[#171717] font-bold">
@@ -293,14 +285,22 @@ export function PackagesPage() {
         </div>
       </section>
 
-      {/* ── 3. UNIQUE INTERACTIVE PACKAGE CAROUSEL (IVORY THEME) ── */}
-      <section className="py-16 sm:py-24 px-4 sm:px-8 md:px-16 max-w-[1500px] mx-auto space-y-12">
+      {/* ── 3. EDITORIAL MAGAZINE CAROUSEL SHOWCASE ── */}
+      <section className="py-16 sm:py-24 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto border-b border-[#D8D3CB] space-y-10">
         
-        {/* Carousel Container */}
-        <div className="relative flex flex-col items-center">
-          
-          {/* Navigation Arrow Controls */}
-          <div className="w-full flex items-center justify-between absolute top-1/2 -translate-y-1/2 inset-x-0 z-30 pointer-events-none px-2 sm:px-4">
+        {/* Header Controls Bar */}
+        <div className="flex items-center justify-between border-b border-[#D8D3CB]/60 pb-6 flex-wrap gap-4">
+          <div>
+            <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#C47A65] font-bold">
+              FEATURED COLLECTION {activeSlideIndex + 1} OF {filteredPackages.length}
+            </span>
+            <h2 className="font-editorial text-3xl sm:text-4xl text-[#171717]">
+              Curated <em className="italic text-[#C47A65]">Cinema &amp; Photography</em>
+            </h2>
+          </div>
+
+          {/* Navigation Controls */}
+          <div className="flex items-center gap-3">
             <button
               type="button"
               onClick={() =>
@@ -309,7 +309,7 @@ export function PackagesPage() {
                 )
               }
               aria-label="Previous package"
-              className="pointer-events-auto h-12 w-12 rounded-full bg-[#171717] hover:bg-[#C47A65] text-white flex items-center justify-center transition-all duration-300 shadow-xl active:scale-95 cursor-pointer"
+              className="h-12 w-12 rounded-full bg-white hover:bg-[#171717] text-[#171717] hover:text-white border border-[#D8D3CB] flex items-center justify-center transition-all duration-300 shadow-sm active:scale-95 cursor-pointer"
             >
               <ArrowLeft className="w-5 h-5" />
             </button>
@@ -320,138 +320,108 @@ export function PackagesPage() {
                 setActiveSlideIndex((prev) => (prev + 1) % filteredPackages.length)
               }
               aria-label="Next package"
-              className="pointer-events-auto h-12 w-12 rounded-full bg-[#171717] hover:bg-[#C47A65] text-white flex items-center justify-center transition-all duration-300 shadow-xl active:scale-95 cursor-pointer"
+              className="h-12 w-12 rounded-full bg-white hover:bg-[#171717] text-[#171717] hover:text-white border border-[#D8D3CB] flex items-center justify-center transition-all duration-300 shadow-sm active:scale-95 cursor-pointer"
             >
               <ArrowRight className="w-5 h-5" />
             </button>
           </div>
+        </div>
 
-          {/* Cards Display Showcase */}
-          <div className="w-full max-w-4xl overflow-hidden py-4 px-2">
-            {currentPackage && (
-              <div
-                key={currentPackage.id}
-                className="bg-white border border-[#D8D3CB] rounded-3xl p-6 sm:p-12 shadow-xl relative overflow-hidden transition-all duration-500 animate-in fade-in zoom-in-95 space-y-8"
-              >
-                {/* Header Row */}
-                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6 border-b border-[#D8D3CB]/60 pb-8">
-                  <div className="space-y-2">
-                    {currentPackage.badge && (
-                      <span className="bg-[#C47A65] text-white text-[10px] font-mono font-bold tracking-widest uppercase px-3.5 py-1 rounded-full inline-block shadow-xs">
-                        {currentPackage.badge}
-                      </span>
-                    )}
-                    <h2 className="font-editorial text-3xl sm:text-5xl text-[#171717] font-normal">
-                      {currentPackage.name}
-                    </h2>
-                    <p className="text-xs font-mono uppercase tracking-widest text-[#C47A65]">
-                      {currentPackage.subtitle}
-                    </p>
+        {/* Featured Split-Screen Card */}
+        {currentPackage && (
+          <div className="bg-white rounded-3xl p-8 sm:p-12 md:p-14 border border-[#D8D3CB] shadow-lg grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center animate-in fade-in duration-500">
+            
+            {/* Left Photo Column */}
+            <div className="lg:col-span-5 relative">
+              <div className="aspect-[4/5] w-full overflow-hidden rounded-2xl bg-[#D8D3CB] shadow-md group">
+                <img
+                  src={currentPackage.coverImage}
+                  alt={currentPackage.name}
+                  className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                />
+                {currentPackage.badge && (
+                  <div className="absolute top-4 left-4 bg-[#C47A65] text-white text-[10px] font-mono font-bold tracking-widest uppercase px-3 py-1 rounded-full shadow-md">
+                    {currentPackage.badge}
                   </div>
+                )}
+              </div>
+            </div>
 
-                  <div className="text-left sm:text-right">
-                    <span className="font-editorial text-4xl sm:text-6xl text-[#171717] block">
-                      {currentPackage.price}
-                    </span>
-                    <span className="text-xs font-mono text-[#68645E]">
-                      {currentPackage.unit}
-                    </span>
-                  </div>
+            {/* Right Content Column */}
+            <div className="lg:col-span-7 space-y-6">
+              
+              {/* Title & Price Header */}
+              <div className="space-y-2 border-b border-[#D8D3CB]/60 pb-6 flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+                <div>
+                  <h3 className="font-editorial text-3xl sm:text-5xl text-[#171717] font-normal">
+                    {currentPackage.name}
+                  </h3>
+                  <p className="text-xs font-mono uppercase tracking-widest text-[#C47A65] mt-1">
+                    {currentPackage.subtitle}
+                  </p>
                 </div>
 
-                {/* Coverage & Crew Details Strip */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-[#FAF8F5] p-4 sm:p-6 rounded-2xl border border-[#D8D3CB]/60 text-xs font-mono text-[#171717]">
-                  <div className="flex items-center gap-3">
-                    <Clock className="w-5 h-5 text-[#C47A65] shrink-0" />
-                    <span>{currentPackage.coverageHours}</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Camera className="w-5 h-5 text-[#C47A65] shrink-0" />
-                    <span>{currentPackage.crewDetails}</span>
-                  </div>
-                </div>
-
-                {/* Deliverables & Services Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2">
-                  
-                  {/* Deliverables */}
-                  <div className="space-y-4">
-                    <h4 className="text-xs font-mono uppercase tracking-widest text-[#C47A65] font-bold">
-                      FILM &amp; PHOTO DELIVERABLES
-                    </h4>
-                    <ul className="space-y-3">
-                      {currentPackage.deliverables.map((item, idx) => (
-                        <li key={idx} className="flex items-start gap-3 text-xs sm:text-sm text-[#55504A] font-light">
-                          <Check className="w-4 h-4 text-[#C47A65] shrink-0 mt-0.5" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Features */}
-                  <div className="space-y-4">
-                    <h4 className="text-xs font-mono uppercase tracking-widest text-[#C47A65] font-bold">
-                      INCLUDED SPECIAL SERVICES
-                    </h4>
-                    <ul className="space-y-3">
-                      {currentPackage.features.map((feat, idx) => (
-                        <li key={idx} className="flex items-start gap-3 text-xs sm:text-sm text-[#55504A] font-light">
-                          <Sparkles className="w-4 h-4 text-[#C47A65] shrink-0 mt-0.5" />
-                          <span>{feat}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                </div>
-
-                {/* Action Button */}
-                <div className="pt-6 border-t border-[#D8D3CB]/60 flex flex-col sm:flex-row items-center justify-between gap-4">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setEnquiryModalPkg(currentPackage);
-                      setFormSent(false);
-                    }}
-                    className="w-full sm:w-auto px-10 py-4 rounded-full bg-[#171717] hover:bg-[#C47A65] text-white font-mono text-xs uppercase tracking-widest font-semibold transition-all duration-300 shadow-md cursor-pointer flex items-center justify-center gap-2"
-                  >
-                    <span>Check Availability &amp; Enquire</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-
-                  <span className="text-xs font-mono text-[#68645E]">
-                    Collection {activeSlideIndex + 1} of {filteredPackages.length}
+                <div className="sm:text-right">
+                  <span className="font-editorial text-4xl sm:text-5xl text-[#171717] block">
+                    {currentPackage.price}
+                  </span>
+                  <span className="text-[11px] font-mono text-[#68645E]">
+                    {currentPackage.unit}
                   </span>
                 </div>
-
               </div>
-            )}
-          </div>
 
-          {/* Carousel Dots Indicator */}
-          <div className="flex items-center gap-3 pt-6">
-            {filteredPackages.map((pkg, idx) => (
-              <button
-                key={pkg.id}
-                type="button"
-                onClick={() => setActiveSlideIndex(idx)}
-                aria-label={`Jump to ${pkg.name}`}
-                className={`h-2.5 rounded-full transition-all duration-500 cursor-pointer ${
-                  idx === activeSlideIndex
-                    ? "w-8 bg-[#171717]"
-                    : "w-2.5 bg-[#171717]/20 hover:bg-[#171717]/40"
-                }`}
-              />
-            ))}
-          </div>
+              {/* Coverage Info Strip */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-[#FAF8F5] p-4 rounded-xl border border-[#D8D3CB]/60 text-xs font-mono text-[#171717]">
+                <div className="flex items-center gap-2.5">
+                  <Clock className="w-4.5 h-4.5 text-[#C47A65] shrink-0" />
+                  <span>{currentPackage.coverageHours}</span>
+                </div>
+                <div className="flex items-center gap-2.5">
+                  <Camera className="w-4.5 h-4.5 text-[#C47A65] shrink-0" />
+                  <span>{currentPackage.crewDetails}</span>
+                </div>
+              </div>
 
-        </div>
+              {/* Deliverables List */}
+              <div className="space-y-3">
+                <span className="text-xs font-mono uppercase tracking-widest text-[#C47A65] font-bold block">
+                  DELIVERABLES &amp; INCLUSIONS:
+                </span>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm text-[#55504A]">
+                  {currentPackage.deliverables.map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-[#C47A65] shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Action Button */}
+              <div className="pt-4 border-t border-[#D8D3CB]/60 flex items-center justify-between flex-wrap gap-4">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEnquiryModalPkg(currentPackage);
+                    setFormSent(false);
+                  }}
+                  className="bg-[#171717] hover:bg-[#C47A65] text-white px-10 py-4 rounded-full font-mono text-xs uppercase tracking-widest transition-all duration-300 shadow-md cursor-pointer flex items-center gap-2"
+                >
+                  <span>Enquire For This Collection</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+        )}
 
       </section>
 
-      {/* ── 4. INTERACTIVE "BUILD YOUR CUSTOM COLLECTION" PRICING ESTIMATOR ── */}
-      <section className="py-20 sm:py-28 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto border-t border-[#D8D3CB] space-y-12">
+      {/* ── 4. HIGH-END 01-06 INTERACTIVE SERVICES CONFIGURATOR ── */}
+      <section className="py-20 sm:py-28 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto border-b border-[#D8D3CB] space-y-12">
         
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#C47A65] font-bold">
@@ -461,118 +431,83 @@ export function PackagesPage() {
             Build Your <em className="italic text-[#C47A65]">Custom Package</em>
           </h2>
           <p className="text-xs sm:text-sm text-[#55504A] font-light">
-            Select the exact services you need for your celebration to calculate an instant custom estimate.
+            Select the exact services offered by CMC FILMS to calculate a personalized investment estimate.
           </p>
         </div>
 
-        <div className="bg-[#F3EEE7] p-6 sm:p-10 md:p-12 rounded-3xl border border-[#D8D3CB] max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-          
-          {/* Services Selection Grid (01 to 06) */}
-          <div className="md:col-span-7 space-y-6">
-            <div className="space-y-1">
-              <label className="text-xs font-mono uppercase tracking-widest text-[#C47A65] font-bold block">
-                SELECT YOUR REQUIRED SERVICES:
-              </label>
-              <p className="text-xs text-[#68645E]">Choose one or multiple services offered by CMC FILMS</p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-              {[
-                { id: "srv-1", no: "01", title: "Wedding Photography", copy: "2-3 senior photographers through every ceremony", price: 120000 },
-                { id: "srv-2", no: "02", title: "Wedding Cinematography", copy: "Cinematic 4K film cut for feeling & vow audio", price: 150000 },
-                { id: "srv-3", no: "03", title: "Pre-Wedding Stories", copy: "Dawn outdoor concept shoot in Jaipur/Udaipur/Goa", price: 45000 },
-                { id: "srv-4", no: "04", title: "Destination Weddings", copy: "Full multi-day royal palace or oceanfront coverage", price: 280000 },
-                { id: "srv-5", no: "05", title: "Couple Portraits", copy: "Editorial fine-art portraits & romantic sessions", price: 35000 },
-                { id: "srv-6", no: "06", title: "Maternity Photoshoot", copy: "Fine-art aesthetic portraiture for expecting parents", price: 30000 },
-              ].map((service) => {
-                const checked = selectedAddOns.includes(service.id);
-                return (
-                  <div
-                    key={service.id}
-                    onClick={() => toggleAddOn(service.id)}
-                    className={`p-4 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between space-y-2 ${
-                      checked
-                        ? "bg-[#C47A65]/15 border-[#C47A65] shadow-xs"
-                        : "bg-white border-[#D8D3CB] hover:bg-[#FAF8F5]"
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-xs font-bold text-[#C47A65]">{service.no}</span>
-                      <div className={`w-4 h-4 rounded border flex items-center justify-center ${checked ? "bg-[#C47A65] border-[#C47A65]" : "border-[#D8D3CB]"}`}>
-                        {checked && <Check className="w-3 h-3 text-white" />}
-                      </div>
-                    </div>
-
-                    <div>
-                      <h4 className="font-editorial text-lg text-[#171717] font-normal">{service.title}</h4>
-                      <p className="text-[11px] text-[#55504A] font-light leading-snug mt-0.5">{service.copy}</p>
-                    </div>
-
-                    <span className="text-xs font-mono text-[#C47A65] font-semibold pt-1 block">
-                      +₹{service.price.toLocaleString("en-IN")}
+        {/* 6 Services Grid (01 to 06) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {studioServices.map((service) => {
+            const isSelected = selectedServices.includes(service.id);
+            return (
+              <div
+                key={service.id}
+                onClick={() => toggleService(service.id)}
+                className={`bg-white p-8 rounded-3xl border transition-all duration-300 cursor-pointer space-y-4 flex flex-col justify-between relative ${
+                  isSelected
+                    ? "border-[#C47A65] ring-2 ring-[#C47A65]/30 shadow-lg"
+                    : "border-[#D8D3CB]/70 hover:border-[#171717] hover:shadow-md"
+                }`}
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="font-editorial text-3xl text-[#C47A65] font-normal">
+                      {service.no}
                     </span>
+                    <div
+                      className={`w-6 h-6 rounded-full border flex items-center justify-center transition-colors ${
+                        isSelected ? "bg-[#C47A65] border-[#C47A65] text-white" : "border-[#D8D3CB]"
+                      }`}
+                    >
+                      {isSelected && <Check className="w-3.5 h-3.5" />}
+                    </div>
                   </div>
-                );
-              })}
-            </div>
-          </div>
 
-          {/* Dynamic Calculated Total & Enquiry Card */}
-          <div className="md:col-span-5 bg-white p-8 rounded-3xl border border-[#D8D3CB] shadow-md space-y-6 text-center sticky top-28">
-            <span className="text-xs font-mono uppercase tracking-widest text-[#68645E] font-bold">
-              ESTIMATED CUSTOM INVESTMENT
+                  <h3 className="font-editorial text-2xl text-[#171717] font-normal">
+                    {service.title}
+                  </h3>
+
+                  <p className="text-xs text-[#55504A] font-light leading-relaxed">
+                    {service.copy}
+                  </p>
+                </div>
+
+                <div className="pt-4 border-t border-[#D8D3CB]/50 flex items-center justify-between">
+                  <span className="text-xs font-mono text-[#68645E]">Est. Investment</span>
+                  <span className="font-editorial text-xl text-[#C47A65] font-normal">
+                    +₹{service.price.toLocaleString("en-IN")}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Sticky Live Investment Summary Bar */}
+        <div className="bg-[#171717] text-white p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 max-w-4xl mx-auto">
+          <div>
+            <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#C47A65] font-bold block">
+              ESTIMATED INVESTMENT ({selectedServices.length} SERVICES SELECTED)
             </span>
-
-            <div className="space-y-1">
-              <span className="font-editorial text-4xl sm:text-5xl text-[#C47A65] block font-normal">
-                ₹{calculatedTotalEstimate.toLocaleString("en-IN")}
-              </span>
-              <span className="text-[11px] font-mono text-[#68645E] block">
-                {selectedAddOns.length} Service(s) Selected · Includes Taxes
-              </span>
-            </div>
-
-            <div className="border-t border-[#D8D3CB]/60 pt-4 text-left space-y-2">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-[#C47A65] font-bold block">
-                SELECTED SERVICES SUMMARY:
-              </span>
-              <ul className="space-y-1 text-xs font-mono text-[#171717]">
-                {selectedAddOns.map((id) => {
-                  const s = [
-                    { id: "srv-1", title: "Wedding Photography" },
-                    { id: "srv-2", title: "Wedding Cinematography" },
-                    { id: "srv-3", title: "Pre-Wedding Stories" },
-                    { id: "srv-4", title: "Destination Weddings" },
-                    { id: "srv-5", title: "Couple Portraits" },
-                    { id: "srv-6", title: "Maternity Photoshoot" },
-                    { id: "add-1", title: "Aerial 4K Drone Coverage" },
-                  ].find((item) => item.id === id);
-                  return s ? (
-                    <li key={id} className="flex items-center gap-1.5">
-                      <span className="text-[#C47A65]">✓</span>
-                      <span>{s.title}</span>
-                    </li>
-                  ) : null;
-                })}
-              </ul>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => {
-                setEnquiryModalPkg({
-                  ...currentPackage,
-                  name: "Custom Multi-Service Proposal",
-                  price: `₹${calculatedTotalEstimate.toLocaleString("en-IN")}`,
-                });
-                setFormSent(false);
-              }}
-              className="w-full py-4 rounded-full bg-[#171717] hover:bg-[#C47A65] text-white font-mono text-xs uppercase tracking-widest font-semibold transition-all duration-300 shadow-md cursor-pointer"
-            >
-              Request Custom Proposal
-            </button>
+            <span className="font-editorial text-3xl sm:text-5xl text-white block mt-1">
+              ₹{calculatedTotalEstimate.toLocaleString("en-IN")}
+            </span>
           </div>
 
+          <button
+            type="button"
+            onClick={() => {
+              setEnquiryModalPkg({
+                ...currentPackage,
+                name: "Custom Multi-Service Collection",
+                price: `₹${calculatedTotalEstimate.toLocaleString("en-IN")}`,
+              });
+              setFormSent(false);
+            }}
+            className="w-full sm:w-auto bg-[#C47A65] hover:bg-white hover:text-[#171717] text-white px-8 py-3.5 rounded-full font-mono text-xs uppercase tracking-widest transition-all duration-300 font-semibold cursor-pointer shrink-0"
+          >
+            Enquire Custom Selection →
+          </button>
         </div>
 
       </section>
