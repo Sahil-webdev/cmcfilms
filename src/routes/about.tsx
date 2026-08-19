@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { ArrowUpRight, Camera, Film, Sparkles, Award, Heart, ShieldCheck, Users } from "lucide-react";
 
 // Image Imports
