@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useMemo, useEffect } from "react";
-import { Check, Sparkles, ArrowRight, ArrowLeft, Camera, Film, Clock, HelpCircle, X, Send, Award, CheckCircle2, ChevronRight, ChevronLeft, Plus } from "lucide-react";
+import { useState, useMemo, useEffect, useRef } from "react";
+import { Check, Sparkles, ArrowRight, ArrowLeft, Camera, Film, Clock, HelpCircle, X, Send, Pause, Play, ChevronRight, ChevronLeft } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 
 // Image Imports
@@ -56,7 +56,7 @@ const packageTiers: PackageTier[] = [
     price: "₹3,50,000",
     numericPrice: 350000,
     unit: "per 3-day event",
-    badge: "MOST POPULAR CHOICE",
+    badge: "MOST POPULAR",
     isPopular: true,
     category: "Royal",
     coverImage: luxuryEditorial,
@@ -67,13 +67,12 @@ const packageTiers: PackageTier[] = [
       "60-Second Instagram Teaser (within 72 hrs)",
       "2 Heirloom Handcrafted Leather Photo Albums",
       "Full High-Res Edited Digital Photo Gallery",
-      "Raw Footage Delivered on High-Speed SSD Drive",
+      "Raw Footage Delivered on High-Speed SSD",
     ],
     features: [
-      "Aerial 4K Drone Coverage (Subject to venue permissions)",
-      "Dedicated Lighting & Sound Design Technicians",
-      "Complimentary Pre-Wedding Dawn Session in Jaipur/Udaipur",
-      "Same-Day Edit Teaser Video for Reception Screening",
+      "Aerial 4K Drone Coverage",
+      "Lighting & Sound Technicians",
+      "Complimentary Pre-Wedding Session",
     ],
   },
   {
@@ -95,10 +94,9 @@ const packageTiers: PackageTier[] = [
       "Online Private Client Photo Gallery",
     ],
     features: [
-      "Aerial 4K Drone Photography & Videography",
-      "Professional Sound Recorders for Vows & Speeches",
-      "Color-Graded High-Resolution Digital Master",
-      "Travel & Stay Included (Within India)",
+      "Aerial 4K Drone Coverage",
+      "Professional Sound Recorders",
+      "Travel Included (India)",
     ],
   },
   {
@@ -119,10 +117,9 @@ const packageTiers: PackageTier[] = [
       "High-Res Edited Digital Photo Gallery (400+ Images)",
     ],
     features: [
-      "Unscripted Candid Photography Focus",
-      "Color-Corrected High-Resolution Images",
-      "Full Digital Delivery via Private Cloud Drive",
-      "Personalized Music Selection Consultation",
+      "Unscripted Candid Focus",
+      "Full Private Cloud Drive",
+      "Music Consultation",
     ],
   },
   {
@@ -143,10 +140,9 @@ const packageTiers: PackageTier[] = [
       "High-Res Digital Photo Gallery",
     ],
     features: [
-      "Location Guidance (Amer Haveli, Lake Pichola, or Goa)",
-      "Wardrobe & Color Palette Styling Consultation",
-      "Low-Pressure Candid Posing Direction",
-      "Delivery within 10 Working Days",
+      "Location Guidance (Jaipur/Udaipur/Goa)",
+      "Wardrobe & Color Styling",
+      "Low-Pressure Candid Posing",
     ],
   },
 ];
@@ -181,7 +177,8 @@ const faqs = [
 
 export function PackagesPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
-  const [activePkgIndex, setActivePkgIndex] = useState<number>(0);
+  const [activeSlideIndex, setActiveSlideIndex] = useState<number>(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState<boolean>(true);
   const [enquiryModalPkg, setEnquiryModalPkg] = useState<PackageTier | null>(null);
   const [formSent, setFormSent] = useState(false);
 
@@ -196,10 +193,21 @@ export function PackagesPage() {
   }, [selectedCategory]);
 
   useEffect(() => {
-    setActivePkgIndex(0);
+    setActiveSlideIndex(0);
   }, [selectedCategory]);
 
-  const activePackage = filteredPackages[activePkgIndex] || filteredPackages[0];
+  // Auto-Swipe Interval Timer (3 Seconds)
+  useEffect(() => {
+    if (!isAutoPlaying || filteredPackages.length <= 1) return;
+
+    const timer = setInterval(() => {
+      setActiveSlideIndex((prev) => (prev + 1) % filteredPackages.length);
+    }, 3000);
+
+    return () => clearInterval(timer);
+  }, [isAutoPlaying, filteredPackages.length]);
+
+  const currentPackage = filteredPackages[activeSlideIndex] || filteredPackages[0];
 
   const toggleService = (id: string) => {
     setSelectedServices((prev) =>
@@ -219,11 +227,21 @@ export function PackagesPage() {
     setFormSent(true);
   };
 
+  const prevSlide = () => {
+    setActiveSlideIndex((prev) =>
+      prev === 0 ? filteredPackages.length - 1 : prev - 1
+    );
+  };
+
+  const nextSlide = () => {
+    setActiveSlideIndex((prev) => (prev + 1) % filteredPackages.length);
+  };
+
   return (
     <main className="bg-[#FAF8F5] text-[#171717] font-sans selection:bg-[#D8D3CB] selection:text-[#171717] min-h-screen relative">
       
-      {/* ── 1. HERO SECTION (DARK CINEMA WITH CURSIVE WATERMARK OVERLAY) ── */}
-      <section className="relative h-[480px] sm:h-[540px] md:h-[600px] w-full bg-[#0C0D10] overflow-hidden flex items-center justify-center text-center px-6">
+      {/* ── 1. COMPACT HERO SECTION (DARK CINEMA WITH CURSIVE WATERMARK) ── */}
+      <section className="relative h-[320px] sm:h-[380px] w-full bg-[#0C0D10] overflow-hidden flex items-center justify-center text-center px-6">
         <img
           src={hero}
           alt="CMC FILMS Investment & Packages Hero"
@@ -231,35 +249,34 @@ export function PackagesPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/50 to-[#0C0D10]" />
 
-        {/* Centered Title */}
-        <div className="relative z-10 space-y-3 max-w-3xl">
+        <div className="relative z-10 space-y-2 max-w-3xl">
           <div className="relative flex items-center justify-center">
             <span
-              className="text-white/20 select-none pointer-events-none text-7xl sm:text-9xl md:text-[12rem] leading-none absolute -top-10 sm:-top-20 font-normal"
+              className="text-white/20 select-none pointer-events-none text-6xl sm:text-8xl md:text-9xl leading-none absolute -top-8 font-normal"
               style={{ fontFamily: "'Alex Brush', cursive" }}
             >
               Collections
             </span>
-            <h1 className="font-editorial text-4xl sm:text-6xl md:text-7xl text-white font-normal relative z-10 tracking-tight">
+            <h1 className="font-editorial text-3xl sm:text-5xl text-white font-normal relative z-10 tracking-tight">
               Investment &amp; Packages
             </h1>
           </div>
           
-          <p className="text-xs sm:text-sm font-mono uppercase tracking-[0.25em] text-[#C47A65] pt-4 font-semibold">
+          <p className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#C47A65] pt-2 font-semibold">
             TRANSPARENT LUXURY ARCHIVES
           </p>
 
-          <p className="text-sm sm:text-base text-white/80 font-light max-w-xl mx-auto leading-relaxed pt-2">
+          <p className="text-xs sm:text-sm text-white/80 font-light max-w-lg mx-auto leading-relaxed pt-1">
             Thoughtfully structured photography &amp; cinema archives designed for royal palace nuptials, destination celebrations, and intimate vows.
           </p>
         </div>
       </section>
 
       {/* ── 2. STICKY CATEGORY FILTER BAR ── */}
-      <section className="py-6 px-6 sm:px-12 bg-[#F3EEE7] border-b border-[#D8D3CB] sticky top-16 md:top-20 z-40 backdrop-blur-md bg-opacity-95">
+      <section className="py-4 px-6 sm:px-12 bg-[#F3EEE7] border-b border-[#D8D3CB] sticky top-16 md:top-20 z-40 backdrop-blur-md bg-opacity-95">
         <div className="max-w-[1500px] mx-auto flex items-center justify-between gap-4 flex-wrap">
           <span className="text-xs font-mono uppercase tracking-widest text-[#171717] font-bold">
-            SELECT EVENT TYPE:
+            CATEGORY:
           </span>
 
           <div className="flex flex-wrap items-center gap-2">
@@ -270,7 +287,7 @@ export function PackagesPage() {
                   key={cat}
                   type="button"
                   onClick={() => setSelectedCategory(cat)}
-                  className={`px-5 py-2 rounded-full text-xs font-mono transition-all duration-300 cursor-pointer ${
+                  className={`px-4 py-1.5 rounded-full text-xs font-mono transition-all duration-300 cursor-pointer ${
                     active
                       ? "bg-[#171717] text-white shadow-md font-semibold"
                       : "bg-white text-[#171717]/75 hover:bg-[#E5E0D8] hover:text-[#171717] border border-[#D8D3CB]/60"
@@ -284,166 +301,148 @@ export function PackagesPage() {
         </div>
       </section>
 
-      {/* ── 3. LUXURY EDITORIAL LOOKBOOK SHOWCASE (INTERACTIVE SPLIT-SCREEN SLIDER) ── */}
-      <section className="py-20 sm:py-28 px-6 sm:px-12 md:px-16 max-w-[1550px] mx-auto border-b border-[#D8D3CB] space-y-12">
+      {/* ── 3. AUTO-SWIPING COMPACT CAROUSEL SHOWCASE ── */}
+      <section className="py-10 sm:py-14 px-6 sm:px-12 md:px-16 max-w-[1400px] mx-auto space-y-6">
         
-        {/* Top Header Row */}
-        <div className="flex items-center justify-between border-b border-[#D8D3CB]/60 pb-6 flex-wrap gap-4">
-          <div>
-            <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#C47A65] font-bold">
-              COLLECTION 0{activePkgIndex + 1} / 0{filteredPackages.length}
+        {/* Carousel Header & Controls Bar */}
+        <div className="flex items-center justify-between border-b border-[#D8D3CB]/60 pb-4 flex-wrap gap-3">
+          <div className="flex items-center gap-3">
+            <span className="text-xs font-mono uppercase tracking-[0.2em] text-[#C47A65] font-bold">
+              PACKAGE {activeSlideIndex + 1} OF {filteredPackages.length}
             </span>
-            <h2 className="font-editorial text-3xl sm:text-5xl text-[#171717] font-normal">
-              Featured <em className="italic text-[#C47A65]">Wedding Collections</em>
-            </h2>
+
+            {/* Auto-Play Toggle Indicator */}
+            <button
+              type="button"
+              onClick={() => setIsAutoPlaying((prev) => !prev)}
+              className={`px-2.5 py-1 rounded-full text-[10px] font-mono flex items-center gap-1.5 transition-all cursor-pointer ${
+                isAutoPlaying
+                  ? "bg-[#C47A65]/20 text-[#C47A65] border border-[#C47A65]/40 font-bold"
+                  : "bg-[#171717]/10 text-[#171717]/60 border border-[#171717]/20"
+              }`}
+              title={isAutoPlaying ? "Click to Pause Auto-Swipe" : "Click to Resume Auto-Swipe"}
+            >
+              {isAutoPlaying ? (
+                <>
+                  <Pause className="w-3 h-3" />
+                  <span>AUTO-SWIPING</span>
+                </>
+              ) : (
+                <>
+                  <Play className="w-3 h-3" />
+                  <span>PAUSED</span>
+                </>
+              )}
+            </button>
           </div>
 
-          {/* Interactive Collection Switcher Pills */}
-          <div className="flex items-center gap-2 flex-wrap">
-            {filteredPackages.map((pkg, idx) => (
-              <button
-                key={pkg.id}
-                type="button"
-                onClick={() => setActivePkgIndex(idx)}
-                className={`px-4 py-2 rounded-full text-xs font-mono transition-all cursor-pointer ${
-                  idx === activePkgIndex
-                    ? "bg-[#C47A65] text-white font-bold shadow-md"
-                    : "bg-white text-[#171717]/80 hover:bg-[#E5E0D8] border border-[#D8D3CB]/60"
-                }`}
-              >
-                0{idx + 1}. {pkg.name.split(" ")[0]}
-              </button>
-            ))}
+          {/* Navigation Prev/Next Arrows */}
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={prevSlide}
+              aria-label="Previous package"
+              className="h-10 w-10 rounded-full bg-white hover:bg-[#171717] text-[#171717] hover:text-white border border-[#D8D3CB] flex items-center justify-center transition-all duration-300 shadow-xs cursor-pointer"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+
+            <button
+              type="button"
+              onClick={nextSlide}
+              aria-label="Next package"
+              className="h-10 w-10 rounded-full bg-white hover:bg-[#171717] text-[#171717] hover:text-white border border-[#D8D3CB] flex items-center justify-center transition-all duration-300 shadow-xs cursor-pointer"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
           </div>
         </div>
 
-        {/* Featured Split-Screen Magazine Layout */}
-        {activePackage && (
-          <div className="bg-white rounded-3xl p-8 sm:p-12 md:p-16 border border-[#D8D3CB] shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center animate-in fade-in duration-500">
-            
-            {/* Left Photo Column */}
-            <div className="lg:col-span-5 relative">
-              <div className="aspect-[3/4] w-full overflow-hidden rounded-2xl bg-[#D8D3CB] shadow-lg group">
+        {/* Compact Auto-Swiping Card Box */}
+        {currentPackage && (
+          <div
+            onMouseEnter={() => setIsAutoPlaying(false)}
+            onMouseLeave={() => setIsAutoPlaying(true)}
+            className="bg-white rounded-3xl p-6 sm:p-10 border border-[#D8D3CB] shadow-md grid grid-cols-1 md:grid-cols-12 gap-8 items-center transition-all duration-700 animate-in fade-in"
+          >
+            {/* Left Photo Banner */}
+            <div className="md:col-span-5 relative">
+              <div className="aspect-[4/3] w-full overflow-hidden rounded-2xl bg-[#D8D3CB] shadow-sm group">
                 <img
-                  src={activePackage.coverImage}
-                  alt={activePackage.name}
-                  className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                  src={currentPackage.coverImage}
+                  alt={currentPackage.name}
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                {activePackage.badge && (
-                  <div className="absolute top-4 left-4 bg-[#C47A65] text-white text-[10px] font-mono font-bold tracking-widest uppercase px-3 py-1 rounded-full shadow-md">
-                    {activePackage.badge}
-                  </div>
+                {currentPackage.badge && (
+                  <span className="absolute top-3 left-3 bg-[#C47A65] text-white text-[9px] font-mono font-bold tracking-widest uppercase px-3 py-1 rounded-full shadow-xs">
+                    {currentPackage.badge}
+                  </span>
                 )}
               </div>
             </div>
 
-            {/* Right Details Column */}
-            <div className="lg:col-span-7 space-y-6">
-              
-              <div className="space-y-2 border-b border-[#D8D3CB]/60 pb-6 flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+            {/* Right Card Content */}
+            <div className="md:col-span-7 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 border-b border-[#D8D3CB]/60 pb-4">
                 <div>
-                  <span className="text-xs font-mono uppercase tracking-widest text-[#C47A65] font-bold block">
-                    {activePackage.subtitle}
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#C47A65] font-bold">
+                    {currentPackage.subtitle}
                   </span>
-                  <h3 className="font-editorial text-3xl sm:text-5xl text-[#171717] font-normal leading-tight">
-                    {activePackage.name}
+                  <h3 className="font-editorial text-2xl sm:text-4xl text-[#171717] font-normal leading-snug">
+                    {currentPackage.name}
                   </h3>
-                  <p className="text-xs sm:text-sm text-[#55504A] font-light leading-relaxed mt-2">
-                    {activePackage.tagline}
-                  </p>
                 </div>
 
                 <div className="sm:text-right shrink-0">
-                  <span className="font-editorial text-4xl sm:text-6xl text-[#171717] block">
-                    {activePackage.price}
+                  <span className="font-editorial text-3xl sm:text-5xl text-[#171717] block">
+                    {currentPackage.price}
                   </span>
-                  <span className="text-[11px] font-mono text-[#68645E]">
-                    {activePackage.unit}
+                  <span className="text-[10px] font-mono text-[#68645E]">
+                    {currentPackage.unit}
                   </span>
                 </div>
               </div>
 
-              {/* Crew & Hours Badges */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-[#FAF8F5] p-4 rounded-xl border border-[#D8D3CB]/60 text-xs font-mono text-[#171717]">
-                <div className="flex items-center gap-2.5">
-                  <Clock className="w-4.5 h-4.5 text-[#C47A65] shrink-0" />
-                  <span>{activePackage.coverageHours}</span>
+              {/* Coverage Info Strip */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-[#FAF8F5] p-3 rounded-xl border border-[#D8D3CB]/60 text-xs font-mono text-[#171717]">
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-[#C47A65] shrink-0" />
+                  <span>{currentPackage.coverageHours}</span>
                 </div>
-                <div className="flex items-center gap-2.5">
-                  <Camera className="w-4.5 h-4.5 text-[#C47A65] shrink-0" />
-                  <span>{activePackage.crewDetails}</span>
+                <div className="flex items-center gap-2">
+                  <Camera className="w-4 h-4 text-[#C47A65] shrink-0" />
+                  <span>{currentPackage.crewDetails}</span>
                 </div>
               </div>
 
-              {/* Deliverables Grid */}
-              <div className="space-y-3">
-                <span className="text-xs font-mono uppercase tracking-widest text-[#C47A65] font-bold block">
-                  DELIVERABLES &amp; INCLUSIONS:
+              {/* Inclusions */}
+              <div className="space-y-2">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[#C47A65] font-bold block">
+                  DELIVERABLES:
                 </span>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm text-[#55504A]">
-                  {activePackage.deliverables.map((item, idx) => (
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#55504A]">
+                  {currentPackage.deliverables.map((item, idx) => (
                     <li key={idx} className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-[#C47A65] shrink-0 mt-0.5" />
+                      <Check className="w-3.5 h-3.5 text-[#C47A65] shrink-0 mt-0.5" />
                       <span>{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              {/* Special Features */}
-              <div className="space-y-3 pt-2">
-                <span className="text-xs font-mono uppercase tracking-widest text-[#171717] font-bold block">
-                  SPECIAL INCLUDED SERVICES:
-                </span>
-                <div className="flex flex-wrap gap-2">
-                  {activePackage.features.map((feat, idx) => (
-                    <span
-                      key={idx}
-                      className="text-xs font-mono bg-[#FAF8F5] text-[#55504A] border border-[#D8D3CB]/60 px-3.5 py-1.5 rounded-full flex items-center gap-1.5"
-                    >
-                      <Sparkles className="w-3 h-3 text-[#C47A65]" />
-                      <span>{feat}</span>
-                    </span>
-                  ))}
-                </div>
-              </div>
-
               {/* Action Button */}
-              <div className="pt-6 border-t border-[#D8D3CB]/60 flex items-center justify-between flex-wrap gap-4">
+              <div className="pt-2 flex items-center justify-between gap-4">
                 <button
                   type="button"
                   onClick={() => {
-                    setEnquiryModalPkg(activePackage);
+                    setEnquiryModalPkg(currentPackage);
                     setFormSent(false);
                   }}
-                  className="bg-[#171717] hover:bg-[#C47A65] text-white px-10 py-4 rounded-full font-mono text-xs uppercase tracking-widest transition-all duration-300 shadow-md cursor-pointer flex items-center gap-2"
+                  className="bg-[#171717] hover:bg-[#C47A65] text-white px-8 py-3 rounded-full font-mono text-xs uppercase tracking-widest transition-all duration-300 shadow-xs cursor-pointer flex items-center gap-2"
                 >
-                  <span>Enquire For This Collection</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <span>Check Availability &amp; Enquire</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </button>
-
-                <div className="flex items-center gap-3">
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setActivePkgIndex((prev) =>
-                        prev === 0 ? filteredPackages.length - 1 : prev - 1
-                      )
-                    }
-                    className="h-10 w-10 rounded-full border border-[#D8D3CB] flex items-center justify-center hover:bg-[#171717] hover:text-white transition-all"
-                  >
-                    <ArrowLeft className="w-4 h-4" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setActivePkgIndex((prev) => (prev + 1) % filteredPackages.length)
-                    }
-                    className="h-10 w-10 rounded-full border border-[#D8D3CB] flex items-center justify-center hover:bg-[#171717] hover:text-white transition-all"
-                  >
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                </div>
               </div>
 
             </div>
@@ -451,63 +450,80 @@ export function PackagesPage() {
           </div>
         )}
 
+        {/* Carousel Indicators Bar */}
+        <div className="flex justify-center items-center gap-2 pt-2">
+          {filteredPackages.map((_, idx) => (
+            <button
+              key={idx}
+              type="button"
+              onClick={() => setActiveSlideIndex(idx)}
+              aria-label={`Jump to package ${idx + 1}`}
+              className={`h-2 rounded-full transition-all duration-500 cursor-pointer ${
+                idx === activeSlideIndex
+                  ? "w-8 bg-[#171717]"
+                  : "w-2 bg-[#171717]/20 hover:bg-[#171717]/40"
+              }`}
+            />
+          ))}
+        </div>
+
       </section>
 
-      {/* ── 4. "01 TO 06" STUDIO SERVICES & CUSTOM CALCULATOR SECTION ── */}
-      <section className="py-20 sm:py-28 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto border-b border-[#D8D3CB] space-y-12">
+      {/* ── 4. COMPACT STUDIO SERVICES & CUSTOM CALCULATOR SECTION ── */}
+      <section className="py-12 sm:py-16 px-6 sm:px-12 md:px-16 max-w-[1400px] mx-auto border-t border-[#D8D3CB] space-y-8">
         
-        <div className="text-center max-w-3xl mx-auto space-y-3">
-          <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#C47A65] font-bold">
+        <div className="text-center max-w-2xl mx-auto space-y-2">
+          <span className="text-xs font-mono uppercase tracking-[0.2em] text-[#C47A65] font-bold">
             STUDIO SERVICES &amp; CALCULATOR
           </span>
-          <h2 className="font-editorial text-3xl sm:text-5xl text-[#171717] font-normal">
-            Build Your <em className="italic text-[#C47A65]">Custom Collection</em>
+          <h2 className="font-editorial text-2xl sm:text-4xl text-[#171717] font-normal">
+            Build Your <em className="italic text-[#C47A65]">Custom Package</em>
           </h2>
-          <p className="text-xs sm:text-sm text-[#55504A] font-light">
+          <p className="text-xs text-[#55504A] font-light">
             Select from the 6 core services offered by CMC FILMS to calculate a tailored investment estimate.
           </p>
         </div>
 
         {/* 6 Services Grid (01 to 06) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {studioServices.map((service) => {
             const isSelected = selectedServices.includes(service.id);
             return (
               <div
                 key={service.id}
                 onClick={() => toggleService(service.id)}
-                className={`bg-white p-8 rounded-3xl border transition-all duration-300 cursor-pointer space-y-4 flex flex-col justify-between relative ${
+                className={`bg-white p-6 rounded-2xl border transition-all duration-300 cursor-pointer space-y-3 flex flex-col justify-between relative ${
                   isSelected
-                    ? "border-[#C47A65] ring-2 ring-[#C47A65]/30 shadow-lg"
-                    : "border-[#D8D3CB]/70 hover:border-[#171717] hover:shadow-md"
+                    ? "border-[#C47A65] ring-2 ring-[#C47A65]/30 shadow-md"
+                    : "border-[#D8D3CB]/70 hover:border-[#171717]"
                 }`}
               >
-                <div className="space-y-3">
+                <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="font-editorial text-4xl text-[#C47A65] font-normal">
+                    <span className="font-editorial text-2xl text-[#C47A65] font-normal">
                       {service.no}
                     </span>
                     <div
-                      className={`w-6 h-6 rounded-full border flex items-center justify-center transition-colors ${
+                      className={`w-5 h-5 rounded-full border flex items-center justify-center transition-colors ${
                         isSelected ? "bg-[#C47A65] border-[#C47A65] text-white" : "border-[#D8D3CB]"
                       }`}
                     >
-                      {isSelected && <Check className="w-3.5 h-3.5" />}
+                      {isSelected && <Check className="w-3 h-3" />}
                     </div>
                   </div>
 
-                  <h3 className="font-editorial text-2xl text-[#171717] font-normal">
+                  <h3 className="font-editorial text-xl text-[#171717] font-normal">
                     {service.title}
                   </h3>
 
-                  <p className="text-xs text-[#55504A] font-light leading-relaxed">
+                  <p className="text-[11px] text-[#55504A] font-light leading-snug">
                     {service.copy}
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-[#D8D3CB]/50 flex items-center justify-between">
-                  <span className="text-xs font-mono text-[#68645E]">Est. Investment</span>
-                  <span className="font-editorial text-xl text-[#C47A65] font-normal">
+                <div className="pt-3 border-t border-[#D8D3CB]/50 flex items-center justify-between">
+                  <span className="text-[10px] font-mono text-[#68645E]">Est. Investment</span>
+                  <span className="font-editorial text-lg text-[#C47A65] font-normal">
                     +₹{service.price.toLocaleString("en-IN")}
                   </span>
                 </div>
@@ -517,12 +533,12 @@ export function PackagesPage() {
         </div>
 
         {/* Live Investment Summary Bar */}
-        <div className="bg-[#171717] text-white p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 max-w-4xl mx-auto">
+        <div className="bg-[#171717] text-white p-6 rounded-2xl shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4 max-w-3xl mx-auto">
           <div>
             <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#C47A65] font-bold block">
               ESTIMATED INVESTMENT ({selectedServices.length} SERVICES SELECTED)
             </span>
-            <span className="font-editorial text-3xl sm:text-5xl text-white block mt-1">
+            <span className="font-editorial text-3xl text-white block mt-0.5">
               ₹{calculatedTotalEstimate.toLocaleString("en-IN")}
             </span>
           </div>
@@ -531,13 +547,13 @@ export function PackagesPage() {
             type="button"
             onClick={() => {
               setEnquiryModalPkg({
-                ...activePackage,
+                ...currentPackage,
                 name: "Custom Multi-Service Collection",
                 price: `₹${calculatedTotalEstimate.toLocaleString("en-IN")}`,
               });
               setFormSent(false);
             }}
-            className="w-full sm:w-auto bg-[#C47A65] hover:bg-white hover:text-[#171717] text-white px-8 py-3.5 rounded-full font-mono text-xs uppercase tracking-widest transition-all duration-300 font-semibold cursor-pointer shrink-0"
+            className="w-full sm:w-auto bg-[#C47A65] hover:bg-white hover:text-[#171717] text-white px-7 py-3 rounded-full font-mono text-xs uppercase tracking-widest transition-all duration-300 font-semibold cursor-pointer shrink-0"
           >
             Enquire Custom Selection →
           </button>
@@ -545,25 +561,25 @@ export function PackagesPage() {
 
       </section>
 
-      {/* ── 5. FAQ ACCORDION SECTION ── */}
-      <section className="py-20 sm:py-28 px-6 sm:px-12 md:px-16 max-w-[1400px] mx-auto space-y-12">
-        <div className="text-center space-y-3">
-          <span className="text-xs font-mono text-[#C47A65] uppercase tracking-[0.25em] font-semibold">
+      {/* ── 5. COMPACT FAQ ACCORDION SECTION ── */}
+      <section className="py-12 sm:py-16 px-6 sm:px-12 md:px-16 max-w-[1300px] mx-auto space-y-8">
+        <div className="text-center space-y-2">
+          <span className="text-xs font-mono text-[#C47A65] uppercase tracking-[0.2em] font-semibold">
             QUESTIONS &amp; ANSWERS
           </span>
-          <h2 className="font-editorial text-3xl sm:text-5xl font-normal text-[#171717]">
+          <h2 className="font-editorial text-2xl sm:text-4xl font-normal text-[#171717]">
             Frequently Asked <em className="italic text-[#C47A65]">Questions</em>
           </h2>
         </div>
 
-        <div className="space-y-4 max-w-3xl mx-auto">
+        <div className="space-y-3 max-w-3xl mx-auto">
           {faqs.map((faq, idx) => (
-            <div key={idx} className="bg-white p-6 sm:p-8 rounded-2xl border border-[#D8D3CB]/80 space-y-2 shadow-xs">
-              <h3 className="font-editorial text-xl sm:text-2xl text-[#171717] font-normal flex items-start gap-3">
-                <HelpCircle className="w-5 h-5 text-[#C47A65] shrink-0 mt-1" />
+            <div key={idx} className="bg-white p-5 rounded-xl border border-[#D8D3CB]/80 space-y-1.5 shadow-xs">
+              <h3 className="font-editorial text-lg text-[#171717] font-normal flex items-start gap-2.5">
+                <HelpCircle className="w-4 h-4 text-[#C47A65] shrink-0 mt-1" />
                 <span>{faq.q}</span>
               </h3>
-              <p className="text-xs sm:text-sm text-[#55504A] font-light leading-relaxed pl-8">
+              <p className="text-xs text-[#55504A] font-light leading-relaxed pl-6">
                 {faq.a}
               </p>
             </div>
