@@ -185,9 +185,17 @@ export function PackagesPage() {
   const [enquiryModalPkg, setEnquiryModalPkg] = useState<PackageTier | null>(null);
   const [formSent, setFormSent] = useState(false);
 
-  // Custom Investment Builder State
-  const [basePrice, setBasePrice] = useState<number>(350000);
-  const [selectedAddOns, setSelectedAddOns] = useState<string[]>(["add-1"]);
+  // Custom Multi-Service Calculator State
+  const [selectedAddOns, setSelectedAddOns] = useState<string[]>(["srv-1", "srv-2"]);
+
+  const allServicesList = [
+    { id: "srv-1", price: 120000 },
+    { id: "srv-2", price: 150000 },
+    { id: "srv-3", price: 45000 },
+    { id: "srv-4", price: 280000 },
+    { id: "srv-5", price: 35000 },
+    { id: "srv-6", price: 30000 },
+  ];
 
   const categories = ["All", "Royal", "Destination", "Intimate", "Couple Shoot"];
 
@@ -209,12 +217,11 @@ export function PackagesPage() {
   };
 
   const calculatedTotalEstimate = useMemo(() => {
-    const addOnSum = selectedAddOns.reduce((sum, addId) => {
-      const addObj = customAddOns.find((a) => a.id === addId);
-      return sum + (addObj ? addObj.price : 0);
+    return selectedAddOns.reduce((sum, serviceId) => {
+      const s = allServicesList.find((item) => item.id === serviceId);
+      return sum + (s ? s.price : 0);
     }, 0);
-    return basePrice + addOnSum;
-  }, [basePrice, selectedAddOns]);
+  }, [selectedAddOns]);
 
   const handleEnquirySubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -448,72 +455,72 @@ export function PackagesPage() {
         
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#C47A65] font-bold">
-            CUSTOMIZATION CALCULATOR
+            CUSTOM COLLECTION CALCULATOR
           </span>
           <h2 className="font-editorial text-3xl sm:text-5xl text-[#171717] font-normal">
-            Estimate Your <em className="italic text-[#C47A65]">Custom Collection</em>
+            Build Your <em className="italic text-[#C47A65]">Custom Package</em>
           </h2>
           <p className="text-xs sm:text-sm text-[#55504A] font-light">
-            Select your preferred base coverage and add bespoke services to build a personalized package proposal.
+            Select the exact services you need for your celebration to calculate an instant custom estimate.
           </p>
         </div>
 
-        <div className="bg-[#F3EEE7] p-8 sm:p-12 rounded-3xl border border-[#D8D3CB] max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+        <div className="bg-[#F3EEE7] p-6 sm:p-10 md:p-12 rounded-3xl border border-[#D8D3CB] max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
           
-          {/* Base Selection */}
-          <div className="md:col-span-6 space-y-6">
-            <div>
-              <label className="text-xs font-mono uppercase tracking-widest text-[#C47A65] font-semibold block mb-2">
-                1. SELECT BASE COVERAGE
+          {/* Services Selection Grid (01 to 06) */}
+          <div className="md:col-span-7 space-y-6">
+            <div className="space-y-1">
+              <label className="text-xs font-mono uppercase tracking-widest text-[#C47A65] font-bold block">
+                SELECT YOUR REQUIRED SERVICES:
               </label>
-              <select
-                value={basePrice}
-                onChange={(e) => setBasePrice(Number(e.target.value))}
-                className="w-full bg-white text-[#171717] border border-[#D8D3CB] p-3.5 rounded-xl font-mono text-xs outline-none focus:border-[#C47A65]"
-              >
-                <option value={350000}>3-Day Royal Palace Collection (₹3,50,000)</option>
-                <option value={240000}>2-Day Destination Cinema (₹2,40,000)</option>
-                <option value={140000}>1-Day Intimate Story (₹1,40,000)</option>
-                <option value={65000}>Pre-Wedding Concept Shoot (₹65,000)</option>
-              </select>
+              <p className="text-xs text-[#68645E]">Choose one or multiple services offered by CMC FILMS</p>
             </div>
 
-            <div className="space-y-3">
-              <label className="text-xs font-mono uppercase tracking-widest text-[#C47A65] font-semibold block">
-                2. CHOOSE BESPOKE ADD-ONS
-              </label>
-
-              <div className="space-y-2.5">
-                {customAddOns.map((add) => {
-                  const checked = selectedAddOns.includes(add.id);
-                  return (
-                    <div
-                      key={add.id}
-                      onClick={() => toggleAddOn(add.id)}
-                      className={`p-3 rounded-xl border flex items-center justify-between text-xs font-mono cursor-pointer transition-all ${
-                        checked
-                          ? "bg-[#C47A65]/15 border-[#C47A65] text-[#171717] font-semibold"
-                          : "bg-white border-[#D8D3CB] text-[#55504A] hover:bg-[#FAF8F5]"
-                      }`}
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <div className={`w-4 h-4 rounded border flex items-center justify-center ${checked ? "bg-[#C47A65] border-[#C47A65]" : "border-[#D8D3CB]"}`}>
-                          {checked && <Check className="w-3 h-3 text-white" />}
-                        </div>
-                        <span>{add.label}</span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              {[
+                { id: "srv-1", no: "01", title: "Wedding Photography", copy: "2-3 senior photographers through every ceremony", price: 120000 },
+                { id: "srv-2", no: "02", title: "Wedding Cinematography", copy: "Cinematic 4K film cut for feeling & vow audio", price: 150000 },
+                { id: "srv-3", no: "03", title: "Pre-Wedding Stories", copy: "Dawn outdoor concept shoot in Jaipur/Udaipur/Goa", price: 45000 },
+                { id: "srv-4", no: "04", title: "Destination Weddings", copy: "Full multi-day royal palace or oceanfront coverage", price: 280000 },
+                { id: "srv-5", no: "05", title: "Couple Portraits", copy: "Editorial fine-art portraits & romantic sessions", price: 35000 },
+                { id: "srv-6", no: "06", title: "Maternity Photoshoot", copy: "Fine-art aesthetic portraiture for expecting parents", price: 30000 },
+              ].map((service) => {
+                const checked = selectedAddOns.includes(service.id);
+                return (
+                  <div
+                    key={service.id}
+                    onClick={() => toggleAddOn(service.id)}
+                    className={`p-4 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between space-y-2 ${
+                      checked
+                        ? "bg-[#C47A65]/15 border-[#C47A65] shadow-xs"
+                        : "bg-white border-[#D8D3CB] hover:bg-[#FAF8F5]"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-xs font-bold text-[#C47A65]">{service.no}</span>
+                      <div className={`w-4 h-4 rounded border flex items-center justify-center ${checked ? "bg-[#C47A65] border-[#C47A65]" : "border-[#D8D3CB]"}`}>
+                        {checked && <Check className="w-3 h-3 text-white" />}
                       </div>
-                      <span className="text-[#C47A65]">+₹{add.price.toLocaleString("en-IN")}</span>
                     </div>
-                  );
-                })}
-              </div>
+
+                    <div>
+                      <h4 className="font-editorial text-lg text-[#171717] font-normal">{service.title}</h4>
+                      <p className="text-[11px] text-[#55504A] font-light leading-snug mt-0.5">{service.copy}</p>
+                    </div>
+
+                    <span className="text-xs font-mono text-[#C47A65] font-semibold pt-1 block">
+                      +₹{service.price.toLocaleString("en-IN")}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
-          {/* Dynamic Calculated Total Card */}
-          <div className="md:col-span-6 bg-white p-8 rounded-2xl border border-[#D8D3CB] shadow-md space-y-6 text-center">
-            <span className="text-xs font-mono uppercase tracking-widest text-[#68645E]">
-              ESTIMATED INVESTMENT
+          {/* Dynamic Calculated Total & Enquiry Card */}
+          <div className="md:col-span-5 bg-white p-8 rounded-3xl border border-[#D8D3CB] shadow-md space-y-6 text-center sticky top-28">
+            <span className="text-xs font-mono uppercase tracking-widest text-[#68645E] font-bold">
+              ESTIMATED CUSTOM INVESTMENT
             </span>
 
             <div className="space-y-1">
@@ -521,8 +528,33 @@ export function PackagesPage() {
                 ₹{calculatedTotalEstimate.toLocaleString("en-IN")}
               </span>
               <span className="text-[11px] font-mono text-[#68645E] block">
-                Includes all selected add-ons &amp; Taxes
+                {selectedAddOns.length} Service(s) Selected · Includes Taxes
               </span>
+            </div>
+
+            <div className="border-t border-[#D8D3CB]/60 pt-4 text-left space-y-2">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-[#C47A65] font-bold block">
+                SELECTED SERVICES SUMMARY:
+              </span>
+              <ul className="space-y-1 text-xs font-mono text-[#171717]">
+                {selectedAddOns.map((id) => {
+                  const s = [
+                    { id: "srv-1", title: "Wedding Photography" },
+                    { id: "srv-2", title: "Wedding Cinematography" },
+                    { id: "srv-3", title: "Pre-Wedding Stories" },
+                    { id: "srv-4", title: "Destination Weddings" },
+                    { id: "srv-5", title: "Couple Portraits" },
+                    { id: "srv-6", title: "Maternity Photoshoot" },
+                    { id: "add-1", title: "Aerial 4K Drone Coverage" },
+                  ].find((item) => item.id === id);
+                  return s ? (
+                    <li key={id} className="flex items-center gap-1.5">
+                      <span className="text-[#C47A65]">✓</span>
+                      <span>{s.title}</span>
+                    </li>
+                  ) : null;
+                })}
+              </ul>
             </div>
 
             <button
@@ -530,7 +562,7 @@ export function PackagesPage() {
               onClick={() => {
                 setEnquiryModalPkg({
                   ...currentPackage,
-                  name: "Custom Package Proposal",
+                  name: "Custom Multi-Service Proposal",
                   price: `₹${calculatedTotalEstimate.toLocaleString("en-IN")}`,
                 });
                 setFormSent(false);
