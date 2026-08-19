@@ -101,16 +101,26 @@ export function Navbar() {
               );
             })}
 
-            {/* Packages — Coming Soon (disabled, no navigation) */}
-            <span
-              title="Coming Soon"
+            {/* Packages — Fully Active Navigation Link */}
+            <Link
+              to="/packages"
               className={cn(
-                "relative py-1 text-xs md:text-[13px] font-mono uppercase tracking-wider font-medium cursor-not-allowed select-none opacity-50",
-                scrolled ? "text-espresso/50" : "text-white/50",
+                "relative py-1 text-xs md:text-[13px] font-mono uppercase tracking-wider font-medium transition-all duration-300",
+                "after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-gold after:transition-all after:duration-300",
+                location.pathname === "/packages"
+                  ? "text-gold after:w-full font-semibold"
+                  : "after:w-0 hover:after:w-full",
+                scrolled
+                  ? location.pathname === "/packages"
+                    ? "text-gold"
+                    : "text-espresso/85 hover:text-espresso"
+                  : location.pathname === "/packages"
+                    ? "text-gold"
+                    : "text-white/95 hover:text-gold drop-shadow-sm",
               )}
             >
               Packages
-            </span>
+            </Link>
           </nav>
 
           {/* Mobile Spacer (Keeps header layout balanced) */}
@@ -230,7 +240,7 @@ export function Navbar() {
 
           {/* Book Experience Text Link */}
           <Link
-            to="/contact"
+            to="/packages"
             onClick={() => setOpen(false)}
             className="group relative flex items-center justify-between transition-all duration-300 py-1 mt-2"
             style={{
