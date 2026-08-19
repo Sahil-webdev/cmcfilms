@@ -40,8 +40,9 @@ export const navLinks = [
   { label: "Wedding Stories", to: "/portfolio" },
   { label: "Wedding Films", to: "/films" },
   { label: "Couple Shoot", to: "/couples" },
-  { label: "About", to: "/about" },
   { label: "Testimonials", to: "/#testimonials" },
+  { label: "Packages", to: "/packages" },
+  { label: "About", to: "/about" },
 ] as const;
 
 export const PACKAGES_COMING_SOON = false;
