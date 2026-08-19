@@ -240,35 +240,19 @@ export function PackagesPage() {
   return (
     <main className="bg-[#FAF8F5] text-[#171717] font-sans selection:bg-[#D8D3CB] selection:text-[#171717] min-h-screen relative">
       
-      {/* ── 1. COMPACT HERO SECTION (DARK CINEMA WITH CURSIVE WATERMARK) ── */}
-      <section className="relative h-[320px] sm:h-[380px] w-full bg-[#0C0D10] overflow-hidden flex items-center justify-center text-center px-6">
+      {/* ── 1. CLEAR HERO SECTION WITH BOLD 'OUR PACKAGES' TITLE ── */}
+      <section className="relative h-[300px] sm:h-[380px] md:h-[420px] w-full overflow-hidden flex items-center justify-center text-center px-6">
         <img
           src={hero}
-          alt="CMC FILMS Investment & Packages Hero"
-          className="absolute inset-0 h-full w-full object-cover opacity-35 scale-105"
+          alt="Our Packages - CMC FILMS"
+          className="absolute inset-0 h-full w-full object-cover opacity-90 object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/50 to-[#0C0D10]" />
+        <div className="absolute inset-0 bg-black/30" />
 
-        <div className="relative z-10 space-y-2 max-w-3xl">
-          <div className="relative flex items-center justify-center">
-            <span
-              className="text-white/20 select-none pointer-events-none text-6xl sm:text-8xl md:text-9xl leading-none absolute -top-8 font-normal"
-              style={{ fontFamily: "'Alex Brush', cursive" }}
-            >
-              Collections
-            </span>
-            <h1 className="font-editorial text-3xl sm:text-5xl text-white font-normal relative z-10 tracking-tight">
-              Investment &amp; Packages
-            </h1>
-          </div>
-          
-          <p className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#C47A65] pt-2 font-semibold">
-            TRANSPARENT LUXURY ARCHIVES
-          </p>
-
-          <p className="text-xs sm:text-sm text-white/80 font-light max-w-lg mx-auto leading-relaxed pt-1">
-            Thoughtfully structured photography &amp; cinema archives designed for royal palace nuptials, destination celebrations, and intimate vows.
-          </p>
+        <div className="relative z-10 pt-8">
+          <h1 className="font-editorial text-4xl sm:text-6xl md:text-7xl text-white font-bold tracking-wider uppercase drop-shadow-md">
+            Our Packages
+          </h1>
         </div>
       </section>
 
