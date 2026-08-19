@@ -620,7 +620,7 @@ export function PackagesPage() {
                   <div className="w-full md:col-span-3 text-left md:text-right border-t md:border-t-0 md:border-l border-[#D8D3CB]/60 pt-3 md:pt-0 md:pl-6 flex flex-row md:flex-col items-center md:items-end justify-between gap-3">
                     <div>
                       <span className="text-[9px] sm:text-[10px] font-mono text-[#68645E] block uppercase">Starting from</span>
-                      <span className="font-editorial text-xl sm:text-2xl font-bold text-[#C47A65] block leading-none mt-0.5">
+                      <span className="font-sans text-xl sm:text-2xl font-extrabold text-[#00A651] block leading-none mt-1 tracking-tight">
                         {offering.price}
                       </span>
                       <span className="text-[9px] font-mono text-[#68645E] block mt-0.5 md:hidden">Per Event</span>
