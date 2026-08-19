@@ -40,7 +40,7 @@ export const navLinks = [
   { label: "Wedding Stories", to: "/portfolio" },
   { label: "Wedding Films", to: "/films" },
   { label: "Couple Shoot", to: "/couples" },
-  { label: "Testimonials", to: "/#testimonials" },
+  { label: "Testimonials", to: "/testimonials" },
   { label: "Packages", to: "/packages" },
   { label: "About", to: "/about" },
 ] as const;
