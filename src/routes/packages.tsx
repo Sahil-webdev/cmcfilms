@@ -711,19 +711,14 @@ export function PackagesPage() {
                   {/* Bottom Gradient Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
 
-                  {/* Bottom Title Text Overlay (Left) */}
-                  <div className="absolute bottom-3 left-3.5 right-12 z-10 text-left">
-                    <span className="font-mono text-xs sm:text-sm font-bold text-white uppercase tracking-wider leading-snug drop-shadow-sm block">
+                  {/* Centered Title Text & Starting Price Overlay */}
+                  <div className="absolute bottom-3.5 sm:bottom-4 inset-x-0 px-4 z-10 text-center space-y-0.5">
+                    <span className="font-mono text-xs sm:text-sm font-bold text-white uppercase tracking-wider leading-snug drop-shadow-md block">
                       {pkg.title}
                     </span>
-                    <span className="text-[10px] font-mono text-white/80 block mt-0.5">
+                    <span className="text-[10px] sm:text-xs font-mono text-white/80 block drop-shadow-xs">
                       Starting {pkg.price}
                     </span>
-                  </div>
-
-                  {/* Bottom Right Floating Badge Icon */}
-                  <div className="absolute bottom-3 right-3 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/30 backdrop-blur-md flex items-center justify-center text-white group-hover:bg-white group-hover:text-[#171717] transition-all duration-300 shadow-md">
-                    <ArrowUpRight className="w-4 h-4" />
                   </div>
 
                 </div>
