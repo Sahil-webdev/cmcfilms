@@ -12,6 +12,7 @@ import couplesHeroCustom from "@/assets/couples-hero-custom.jpg";
 import maternity from "@/assets/maternity.jpg";
 import pin1 from "@/assets/pinterest/pin1.jpg";
 import pin7 from "@/assets/pinterest/pin7.jpg";
+import pin8 from "@/assets/pinterest/pin8.jpg";
 
 const title = "Investment & Packages — CMC FILMS";
 const description =
@@ -117,7 +118,7 @@ const mainPackages: PackageService[] = [
     copy: "Editorial fine-art portraits & romantic couples sessions in studio or scenic outdoor sets.",
     price: "₹35,000",
     numericPrice: 35000,
-    image: pin1,
+    image: pin8,
     deliverables: [
       "1 Senior Creative Portrait Photographer",
       "25 Retouched High-Resolution Images",
