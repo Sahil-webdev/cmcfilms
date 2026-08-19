@@ -32,7 +32,6 @@ export const navLinks = [
   { label: "Couple Shoot", to: "/couples" },
   { label: "About", to: "/about" },
   { label: "Testimonials", to: "/#testimonials" },
-  { label: "Packages", to: "/packages" },
 ] as const;
 
 export const PACKAGES_COMING_SOON = false;
