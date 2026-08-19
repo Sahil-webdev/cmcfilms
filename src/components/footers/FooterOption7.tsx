@@ -111,8 +111,8 @@ export function FooterOption7() {
                 <Link to="/about" className="hover:underline transition-all">About Studio</Link>
               </li>
               <li>
-                <Link to="/contact" className="hover:underline transition-all font-medium inline-flex items-center gap-1">
-                  <span>Work With Us</span>
+                <Link to="/packages" className="hover:underline transition-all font-medium inline-flex items-center gap-1">
+                  <span>Packages & Investment</span>
                   <ArrowUpRight className="w-4 h-4 text-[#AE171E]" />
                 </Link>
               </li>

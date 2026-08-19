@@ -32,11 +32,10 @@ export const navLinks = [
   { label: "Couple Shoot", to: "/couples" },
   { label: "About", to: "/about" },
   { label: "Testimonials", to: "/#testimonials" },
-  { label: "Contact", to: "/contact" },
+  { label: "Packages", to: "/packages" },
 ] as const;
 
-// Packages link is disabled (coming soon) — intentionally not in navLinks
-export const PACKAGES_COMING_SOON = true;
+export const PACKAGES_COMING_SOON = false;
 
 export const categories = [
   { no: "01", name: "Weddings", image: cat1 },

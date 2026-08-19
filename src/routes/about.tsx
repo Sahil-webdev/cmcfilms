@@ -236,7 +236,111 @@ function AboutPage() {
         </div>
       </section>
 
+      {/* ── 5. EMBEDDED CONTACT & ENQUIRY FORM SECTION ── */}
+      <section className="py-20 sm:py-28 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto space-y-12">
+        <AboutContactForm />
+      </section>
+
     </main>
+  );
+}
+
+// ── ABOUT PAGE CONTACT ENQUIRY FORM ──
+function AboutContactForm() {
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const fields = [
+    { name: "name", label: "Your Name", type: "text", required: true },
+    { name: "partner", label: "Partner's Name", type: "text" },
+    { name: "email", label: "Email Address", type: "email", required: true },
+    { name: "phone", label: "Phone Number", type: "tel" },
+    { name: "date", label: "Wedding Date", type: "date" },
+    { name: "city", label: "Wedding City", type: "text" },
+    { name: "venue", label: "Venue", type: "text" },
+    { name: "eventType", label: "Event Type", type: "text" },
+    { name: "referral", label: "How Did You Find Us?", type: "text" },
+  ] as const;
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    if (!data.get("name") || !data.get("email")) {
+      setError("Please share at least your name and email.");
+      return;
+    }
+    setError(null);
+    setSent(true);
+  };
+
+  return (
+    <div className="bg-white p-8 sm:p-12 md:p-16 rounded-3xl border border-[#D8D3CB]/70 shadow-sm max-w-5xl mx-auto space-y-10">
+      <div className="space-y-3 border-b border-[#D8D3CB]/50 pb-6">
+        <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#C47A65] font-bold">
+          GET IN TOUCH
+        </span>
+        <h2 className="font-editorial text-4xl sm:text-6xl text-[#171717]">
+          Tell Us Your Story
+        </h2>
+        <p className="text-sm sm:text-base text-[#55504A] font-light leading-relaxed max-w-xl">
+          Share a little about your celebration. We reply personally to every inquiry, usually within 24 to 48 hours.
+        </p>
+      </div>
+
+      {sent ? (
+        <div className="border border-[#C47A65] bg-[#FAF8F5] p-10 rounded-2xl text-center space-y-3 animate-in fade-in">
+          <h3 className="font-editorial text-4xl text-[#171717]">Thank You!</h3>
+          <p className="text-sm text-[#55504A] font-light max-w-md mx-auto leading-relaxed">
+            Your enquiry has been received by CMC FILMS. We will reach out to you directly at the email provided.
+          </p>
+        </div>
+      ) : (
+        <form onSubmit={onSubmit} noValidate className="space-y-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
+            {fields.map((f) => (
+              <label key={f.name} className="block space-y-2">
+                <span className="text-xs font-mono uppercase tracking-widest text-[#171717] font-semibold">
+                  {f.label}
+                  {"required" in f && f.required ? <span className="text-[#C47A65]"> *</span> : null}
+                </span>
+                <input
+                  name={f.name}
+                  type={f.type}
+                  required={"required" in f ? f.required : false}
+                  className="w-full border-b border-[#D8D3CB] bg-transparent pb-2 font-display text-lg text-[#171717] outline-none transition-colors focus:border-[#C47A65]"
+                />
+              </label>
+            ))}
+          </div>
+
+          <label className="block space-y-2 pt-2">
+            <span className="text-xs font-mono uppercase tracking-widest text-[#171717] font-semibold">
+              Tell Us About Your Celebration & Vision
+            </span>
+            <textarea
+              name="story"
+              rows={4}
+              className="w-full resize-none border-b border-[#D8D3CB] bg-transparent pb-2 font-display text-lg text-[#171717] outline-none transition-colors focus:border-[#C47A65]"
+            />
+          </label>
+
+          {error && <p className="text-xs font-mono text-red-600">{error}</p>}
+
+          <div className="pt-4 flex items-center justify-between flex-wrap gap-4">
+            <button
+              type="submit"
+              className="bg-[#171717] hover:bg-[#C47A65] text-white px-10 py-4 rounded-full font-mono text-xs uppercase tracking-widest transition-all duration-300 shadow-md cursor-pointer"
+            >
+              Send Enquiry
+            </button>
+
+            <div className="text-xs font-mono text-[#68645E]">
+              Email: <a href="mailto:cmcfilms771@gmail.com" className="hover:text-[#171717] underline">cmcfilms771@gmail.com</a> · Phone: +91 74259 40636
+            </div>
+          </div>
+        </form>
+      )}
+    </div>
   );
 }
 
