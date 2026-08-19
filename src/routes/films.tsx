@@ -274,13 +274,13 @@ export function WeddingFilmsPage() {
           </div>
         </Reveal>
 
-        {/* 2-Column Video Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
-          {filmsData.slice(0, 6).map((film) => (
+        {/* 3-Column Video Grid Layout */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          {filmsData.map((film) => (
             <Reveal key={film.id}>
               <div
                 onClick={() => setActiveFilmModal(film)}
-                className="group relative aspect-[16/10] w-full overflow-hidden rounded-[2px] bg-[#171512] shadow-xl cursor-pointer border border-black/5"
+                className="group relative aspect-[16/10] w-full overflow-hidden rounded-lg bg-[#171512] shadow-xl cursor-pointer border border-black/5"
               >
                 {/* Film Cover Image */}
                 <img
@@ -292,23 +292,23 @@ export function WeddingFilmsPage() {
                 {/* Gradient Overlay for Text Readability & Hover Effect */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10 group-hover:from-black/85 group-hover:via-black/40 transition-all duration-500 flex items-center justify-center">
                   {/* Center Play Button */}
-                  <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-white/20 backdrop-blur-md border border-white/40 flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:bg-white text-white group-hover:text-[#171512] transition-all duration-300">
-                    <Play className="w-6 h-6 fill-current ml-0.5" />
+                  <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-white/20 backdrop-blur-md border border-white/40 flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:bg-white text-white group-hover:text-[#171512] transition-all duration-300">
+                    <Play className="w-5 h-5 fill-current ml-0.5" />
                   </div>
                 </div>
 
                 {/* Bottom Overlay Text — Studio Name & Large Serif Couple Names */}
-                <div className="absolute bottom-5 left-6 right-6 text-white space-y-1 pointer-events-none">
-                  <p className="text-[10px] font-mono tracking-[0.3em] uppercase text-white/75 font-bold">
+                <div className="absolute bottom-4 left-5 right-5 text-white space-y-0.5 pointer-events-none">
+                  <p className="text-[9px] font-mono tracking-[0.3em] uppercase text-white/75 font-bold">
                     CMC FILMS
                   </p>
-                  <h3 className="font-display uppercase tracking-wider text-2xl sm:text-3xl md:text-4xl font-normal text-white drop-shadow-md leading-tight">
+                  <h3 className="font-display uppercase tracking-wider text-xl sm:text-2xl font-normal text-white drop-shadow-md leading-tight">
                     {film.couple}
                   </h3>
                 </div>
 
                 {/* Top Duration Badge */}
-                <span className="absolute top-4 right-4 text-[10px] font-mono text-white/90 bg-black/60 backdrop-blur-sm px-3 py-1 rounded-[2px]">
+                <span className="absolute top-3 right-3 text-[10px] font-mono text-white/90 bg-black/60 backdrop-blur-sm px-2.5 py-0.5 rounded-[2px]">
                   {film.duration} · {film.location}
                 </span>
               </div>
