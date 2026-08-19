@@ -210,7 +210,7 @@ export function TestimonialsPage() {
         </div>
       </section>
 
-      {/* ── 3. INDIVIDUAL SECTION-BY-SECTION TESTIMONIAL STRIPS ── */}
+      {/* ── 3. INDIVIDUAL COMPACT SECTION-BY-SECTION TESTIMONIAL STRIPS ── */}
       <div className="divide-y divide-[#D8D3CB]">
         {filteredTestimonials.map((item, idx) => {
           const isEven = idx % 2 === 0;
@@ -218,83 +218,83 @@ export function TestimonialsPage() {
           return (
             <section
               key={item.id}
-              className={`py-20 sm:py-28 px-6 sm:px-12 md:px-16 transition-colors duration-500 ${
+              className={`py-10 sm:py-14 px-6 sm:px-12 md:px-16 transition-colors duration-500 ${
                 isEven ? "bg-[#FAF8F5]" : "bg-[#F3EEE7]"
               }`}
             >
-              <div className="max-w-[1500px] mx-auto">
+              <div className="max-w-[1400px] mx-auto">
                 <Reveal>
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
                     
-                    {/* PHOTO COLUMN (Left for Even, Right for Odd) */}
+                    {/* COMPACT PHOTO COLUMN (Left for Even, Right for Odd) */}
                     <div
-                      className={`lg:col-span-5 relative ${
+                      className={`lg:col-span-4 relative ${
                         isEven ? "lg:order-1" : "lg:order-2"
                       }`}
                     >
-                      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-[#D8D3CB] shadow-xl border border-black/10 group">
+                      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-[#D8D3CB] shadow-md border border-black/10 group">
                         <img
                           src={item.image}
                           alt={item.couple}
-                          className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                         />
-                        <div className="absolute bottom-4 left-4 right-4 bg-black/60 backdrop-blur-md p-4 rounded-xl text-white flex items-center justify-between">
+                        <div className="absolute bottom-3 left-3 right-3 bg-black/60 backdrop-blur-md p-3 rounded-lg text-white flex items-center justify-between">
                           <div>
-                            <span className="font-editorial text-2xl text-white block">
+                            <span className="font-editorial text-lg text-white block">
                               {item.couple}
                             </span>
-                            <span className="text-[10px] font-mono uppercase tracking-widest text-white/80">
+                            <span className="text-[9px] font-mono uppercase tracking-widest text-white/80">
                               {item.location}
                             </span>
                           </div>
-                          <span className="text-xs font-mono text-[#C47A65] bg-white px-3 py-1 rounded-full font-bold">
+                          <span className="text-[10px] font-mono text-[#C47A65] bg-white px-2.5 py-0.5 rounded-full font-bold">
                             {item.year}
                           </span>
                         </div>
                       </div>
                     </div>
 
-                    {/* CONTENT COLUMN (Right for Even, Left for Odd) */}
+                    {/* COMPACT CONTENT COLUMN (Right for Even, Left for Odd) */}
                     <div
-                      className={`lg:col-span-7 space-y-6 relative ${
+                      className={`lg:col-span-8 space-y-4 relative ${
                         isEven ? "lg:order-2" : "lg:order-1"
                       }`}
                     >
                       {/* Section Number & Rating */}
-                      <div className="flex items-center justify-between flex-wrap gap-4 border-b border-[#D8D3CB]/60 pb-4">
-                        <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#C47A65] font-bold">
+                      <div className="flex items-center justify-between flex-wrap gap-2 border-b border-[#D8D3CB]/60 pb-3">
+                        <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#C47A65] font-bold">
                           TESTIMONIAL 0{idx + 1} · {item.eventType}
                         </span>
 
-                        <div className="flex items-center gap-1.5 text-[#C47A65]">
+                        <div className="flex items-center gap-1 text-[#C47A65]">
                           {Array.from({ length: item.rating }).map((_, i) => (
-                            <Star key={i} className="w-4 h-4 fill-current" />
+                            <Star key={i} className="w-3.5 h-3.5 fill-current" />
                           ))}
                         </div>
                       </div>
 
-                      {/* Large Highlight Quote */}
-                      <h2 className="font-editorial text-2xl sm:text-4xl text-[#171717] font-normal leading-tight">
+                      {/* Compact Highlight Quote */}
+                      <h2 className="font-editorial text-xl sm:text-2xl text-[#171717] font-normal leading-snug">
                         “{item.highlightQuote}”
                       </h2>
 
-                      {/* Full Detailed Review */}
-                      <p className="text-sm sm:text-base text-[#55504A] font-light leading-relaxed">
+                      {/* Compact Full Review */}
+                      <p className="text-xs sm:text-sm text-[#55504A] font-light leading-relaxed">
                         “{item.fullReview}”
                       </p>
 
                       {/* Author Info & Collection Badge */}
-                      <div className="pt-6 border-t border-[#D8D3CB]/60 flex items-center justify-between flex-wrap gap-4">
+                      <div className="pt-3 border-t border-[#D8D3CB]/60 flex items-center justify-between flex-wrap gap-3">
                         <div>
-                          <h3 className="font-editorial text-3xl text-[#171717]">
+                          <h3 className="font-editorial text-xl text-[#171717]">
                             {item.couple}
                           </h3>
-                          <p className="text-xs font-mono uppercase tracking-widest text-[#68645E] mt-0.5">
+                          <p className="text-[10px] font-mono uppercase tracking-widest text-[#68645E]">
                             {item.location} · {item.city}
                           </p>
                         </div>
 
-                        <span className="text-xs font-mono text-[#171717] bg-white px-4 py-2 rounded-full border border-[#D8D3CB] shadow-xs">
+                        <span className="text-[10px] font-mono text-[#171717] bg-white px-3 py-1 rounded-full border border-[#D8D3CB] shadow-xs">
                           {item.serviceType}
                         </span>
                       </div>
