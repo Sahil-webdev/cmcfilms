@@ -273,13 +273,13 @@ export function PackagesPage() {
       </section>
 
       {/* ── 2. STICKY CATEGORY FILTER BAR ── */}
-      <section className="py-4 px-6 sm:px-12 bg-[#F3EEE7] border-b border-[#D8D3CB] sticky top-16 md:top-20 z-40 backdrop-blur-md bg-opacity-95">
-        <div className="max-w-[1500px] mx-auto flex items-center justify-between gap-4 flex-wrap">
-          <span className="text-xs font-mono uppercase tracking-widest text-[#171717] font-bold">
+      <section className="py-3.5 px-4 sm:px-12 bg-[#F3EEE7] border-b border-[#D8D3CB] sticky top-16 md:top-20 z-40 backdrop-blur-md bg-opacity-95 overflow-hidden">
+        <div className="max-w-[1500px] mx-auto flex items-center justify-between gap-3 md:gap-4 flex-nowrap md:flex-wrap">
+          <span className="text-xs font-mono uppercase tracking-widest text-[#171717] font-bold shrink-0">
             CATEGORY:
           </span>
 
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex items-center gap-2 overflow-x-auto md:overflow-x-visible md:flex-wrap pb-1 md:pb-0 scrollbar-none snap-x max-w-full">
             {categories.map((cat) => {
               const active = selectedCategory === cat;
               return (
@@ -287,7 +287,7 @@ export function PackagesPage() {
                   key={cat}
                   type="button"
                   onClick={() => setSelectedCategory(cat)}
-                  className={`px-4 py-1.5 rounded-full text-xs font-mono transition-all duration-300 cursor-pointer ${
+                  className={`px-4 py-1.5 rounded-full text-xs font-mono transition-all duration-300 cursor-pointer shrink-0 snap-start whitespace-nowrap ${
                     active
                       ? "bg-[#171717] text-white shadow-md font-semibold"
                       : "bg-white text-[#171717]/75 hover:bg-[#E5E0D8] hover:text-[#171717] border border-[#D8D3CB]/60"
