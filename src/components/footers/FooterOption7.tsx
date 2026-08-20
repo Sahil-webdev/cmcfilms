@@ -154,27 +154,37 @@ export function FooterOption7() {
             </span>
 
             <div className="space-y-3.5 text-xs sm:text-sm text-[#AE171E] font-normal leading-relaxed" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
-              {/* Branch 1 (Sukher) */}
-              <div className="space-y-1">
-                <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#AE171E]">
+              {/* Branch 1 (Sukher - Links directly to Urban Square Mall Google Maps) */}
+              <a
+                href="https://www.google.com/maps/place/Urban+Square+Mall+Udaipur/@24.6317049,73.7099062,906m/data=!3m1!1e3!4m14!1m7!3m6!1s0x3967e4454c5665ed:0x6ac6da1ef58461b8!2sUrban+Square+Mall+Udaipur!8m2!3d24.6320909!4d73.7126013!16s%2Fg%2F11bzvydvr7!3m5!1s0x3967e4454c5665ed:0x6ac6da1ef58461b8!8m2!3d24.6320909!4d73.7126013!16s%2Fg%2F11bzvydvr7?authuser=0&entry=ttu&g_ep=EgoyMDI2MDgxNy4wIKXMDSoASAFQAw%3D%3D"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="space-y-1 block group/b1 cursor-pointer transition-all"
+              >
+                <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#AE171E] group-hover/b1:underline">
                   <MapPin className="w-3.5 h-3.5 text-[#AE171E] shrink-0" />
                   <span>BRANCH 1</span>
                 </div>
-                <p className="pl-5 text-[#AE171E]/90 text-xs leading-normal">
+                <p className="pl-5 text-[#AE171E]/90 text-xs leading-normal group-hover/b1:underline">
                   Urban Square Mall, Sukher, Udaipur, Rajasthan – 313001
                 </p>
-              </div>
+              </a>
 
-              {/* Branch 2 (Fatehnagar) */}
-              <div className="space-y-1 pt-0.5">
-                <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#AE171E]">
+              {/* Branch 2 (Fatehnagar - Links to Google Maps Search) */}
+              <a
+                href="https://www.google.com/maps/search/Intali+Road,+Chungi+Naka,+Fatehnagar,+Udaipur,+Rajasthan"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="space-y-1 pt-0.5 block group/b2 cursor-pointer transition-all"
+              >
+                <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#AE171E] group-hover/b2:underline">
                   <MapPin className="w-3.5 h-3.5 text-[#AE171E] shrink-0" />
                   <span>BRANCH 2</span>
                 </div>
-                <p className="pl-5 text-[#AE171E]/90 text-xs leading-normal">
+                <p className="pl-5 text-[#AE171E]/90 text-xs leading-normal group-hover/b2:underline">
                   Intali Road, Chungi Naka, Fatehnagar, Udaipur, Rajasthan
                 </p>
-              </div>
+              </a>
 
               {/* Contact Info */}
               <div className="pt-2.5 border-t border-[#AE171E]/15 space-y-2">
