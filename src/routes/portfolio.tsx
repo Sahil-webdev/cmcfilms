@@ -360,9 +360,6 @@ export function WeddingStoriesPage() {
         {/* Minimal Header & Filter Tabs */}
         <div className="space-y-6 text-center max-w-3xl mx-auto">
           <div className="space-y-2">
-            <span className="text-xs font-mono text-[#93191E] uppercase tracking-[0.25em] font-semibold">
-              CMC FILMS JOURNAL
-            </span>
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-light text-[#261E1E]">
               Stories, Wisdom & <em className="font-editorial italic text-[#93191E] font-normal">Wedding Inspiration</em>
             </h2>
