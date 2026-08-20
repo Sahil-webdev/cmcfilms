@@ -101,7 +101,7 @@ export function FilmsSection() {
   };
 
   return (
-    <section className="bg-[#B3A395] text-[#171717] py-14 sm:py-20 px-4 sm:px-8 relative overflow-hidden border-b border-[#171717]/10 select-none">
+    <section className="bg-[#E0CDCD] text-[#171717] py-14 sm:py-20 px-4 sm:px-8 relative overflow-hidden border-b border-[#171717]/10 select-none">
       <div className="max-w-[1700px] mx-auto space-y-8 sm:space-y-10">
         
         {/* Section Title */}
