@@ -158,43 +158,11 @@ export function PortfolioEditorial() {
   return (
     <section className="bg-background px-4 py-10 md:px-8 md:py-24 border-b border-espresso/10">
       <div className="mx-auto max-w-[1750px]">
-        {/* Header Title & Filter Pills */}
-        <Reveal className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6 border-b border-[#261E1E]/15 pb-4 mb-6 md:pb-8 md:mb-10">
-          <div>
-            <div className="flex items-center gap-2 mb-2.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#93191E]" />
-              <span className="label-xs uppercase tracking-[0.25em] text-[#93191E] font-mono text-[10px] font-bold">
-                Selected Gallery Work
-              </span>
-            </div>
-            <h2 className="font-display text-[clamp(2.2rem,5vw,4.25rem)] leading-tight font-light text-[#261E1E]">
-              The Visual <em className="font-editorial italic text-[#93191E] font-normal">Editorial Masonry</em>
-            </h2>
-            <p className="mt-2 text-xs text-[#261E1E]/70 font-sans">
-              Mixed portrait and landscape story frames. Click any photo for full-screen view.
-            </p>
-          </div>
-
-          {/* Filter Pills */}
-          <div className="flex flex-wrap items-center gap-2">
-            {categoryTabs.map((tab) => {
-              const isActive = activeTab === tab;
-              return (
-                <button
-                  key={tab}
-                  type="button"
-                  onClick={() => setActiveTab(tab)}
-                  className={`label-xs px-4 py-2.5 rounded-full transition-all duration-300 cursor-pointer border ${
-                    isActive
-                      ? "bg-[#93191E] text-white border-[#93191E] shadow-md"
-                      : "bg-transparent text-[#261E1E]/80 border-[#261E1E]/20 hover:border-[#93191E] hover:text-[#93191E]"
-                  }`}
-                >
-                  {tab}
-                </button>
-              );
-            })}
-          </div>
+        {/* Clean Header Title */}
+        <Reveal className="border-b border-[#261E1E]/15 pb-4 mb-6 md:pb-6 md:mb-8 text-left">
+          <h2 className="font-display text-[clamp(2.2rem,5vw,4.25rem)] leading-tight font-light text-[#261E1E]">
+            The Visual <em className="font-editorial italic text-[#93191E] font-normal">Editorial Masonry</em>
+          </h2>
         </Reveal>
 
         {/* ── MASONRY COLUMNS GRID (Pure Clean Images, No Hover Effects, Tight Gap) ── */}

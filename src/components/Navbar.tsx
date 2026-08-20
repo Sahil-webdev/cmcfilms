@@ -82,10 +82,10 @@ export function Navbar() {
                   key={l.label}
                   to={l.to}
                   className={cn(
-                    "relative py-1 text-xs md:text-[13px] font-mono uppercase tracking-wider font-medium transition-all duration-300",
+                    "relative py-1 text-xs md:text-[13px] font-poppins uppercase tracking-wider font-semibold transition-all duration-300",
                     "after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-gold after:transition-all after:duration-300",
                     isActive
-                      ? "text-gold after:w-full font-semibold"
+                      ? "text-gold after:w-full font-bold"
                       : "after:w-0 hover:after:w-full",
                     scrolled
                       ? isActive
