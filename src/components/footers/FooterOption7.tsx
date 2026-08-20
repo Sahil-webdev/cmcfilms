@@ -91,28 +91,28 @@ export function FooterOption7() {
           {/* COL 2 (2.5 Cols): EXPLORE */}
           <div className="lg:col-span-3 space-y-4">
             <span
-              className="text-xs sm:text-sm font-mono uppercase tracking-[0.22em] text-[#AE171E] font-bold block"
+              className="text-xs sm:text-sm font-mono uppercase tracking-[0.22em] text-[#AE171E] font-bold block mb-2"
               style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
             >
               EXPLORE
             </span>
 
-            <ul className="space-y-3 text-sm sm:text-base font-normal text-[#AE171E]/90" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
+            <ul className="space-y-3.5 sm:space-y-4 text-sm sm:text-base font-normal text-[#AE171E]/90" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
               <li>
-                <Link to="/portfolio" className="hover:underline transition-all">Wedding Stories</Link>
+                <Link to="/portfolio" className="hover:underline transition-all inline-block py-0.5">Wedding Stories</Link>
               </li>
               <li>
-                <Link to="/films" className="hover:underline transition-all">Wedding Films</Link>
+                <Link to="/films" className="hover:underline transition-all inline-block py-0.5">Wedding Films</Link>
               </li>
               <li>
-                <Link to="/couples" className="hover:underline transition-all">Couple Shoots</Link>
+                <Link to="/couples" className="hover:underline transition-all inline-block py-0.5">Couple Shoots</Link>
               </li>
               <li>
-                <Link to="/about" className="hover:underline transition-all">About Studio</Link>
+                <Link to="/about" className="hover:underline transition-all inline-block py-0.5">About Studio</Link>
               </li>
               <li>
-                <Link to="/packages" className="hover:underline transition-all font-medium inline-flex items-center gap-1">
-                  <span>Packages & Investment</span>
+                <Link to="/packages" className="hover:underline transition-all font-medium inline-flex items-center gap-1 py-0.5">
+                  <span>Packages &amp; Investment</span>
                   <ArrowUpRight className="w-4 h-4 text-[#AE171E]" />
                 </Link>
               </li>
@@ -122,24 +122,24 @@ export function FooterOption7() {
           {/* COL 3 (2.5 Cols): SERVICES */}
           <div className="lg:col-span-2 space-y-4">
             <span
-              className="text-xs sm:text-sm font-mono uppercase tracking-[0.22em] text-[#AE171E] font-bold block"
+              className="text-xs sm:text-sm font-mono uppercase tracking-[0.22em] text-[#AE171E] font-bold block mb-2"
               style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
             >
               SERVICES
             </span>
 
-            <ul className="space-y-3 text-sm sm:text-base font-normal text-[#AE171E]/90" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
+            <ul className="space-y-3.5 sm:space-y-4 text-sm sm:text-base font-normal text-[#AE171E]/90" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
               <li>
-                <Link to="/portfolio" className="hover:underline transition-all">Wedding Photography</Link>
+                <Link to="/portfolio" className="hover:underline transition-all inline-block py-0.5">Wedding Photography</Link>
               </li>
               <li>
-                <Link to="/films" className="hover:underline transition-all">Cinematic Films</Link>
+                <Link to="/films" className="hover:underline transition-all inline-block py-0.5">Cinematic Films</Link>
               </li>
               <li>
-                <Link to="/couples" className="hover:underline transition-all">Pre-Wedding Shoots</Link>
+                <Link to="/couples" className="hover:underline transition-all inline-block py-0.5">Pre-Wedding Shoots</Link>
               </li>
               <li>
-                <Link to="/portfolio" className="hover:underline transition-all">Destination Weddings</Link>
+                <Link to="/portfolio" className="hover:underline transition-all inline-block py-0.5">Destination Weddings</Link>
               </li>
             </ul>
           </div>
