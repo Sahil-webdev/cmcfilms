@@ -1,9 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Hero } from "@/components/home/Hero";
-import { HeroMarqueeStrip } from "@/components/home/HeroMarqueeStrip";
-
-import { StoriesCarousel } from "@/components/home/StoriesCarousel";
-import { FeaturedStory } from "@/components/home/FeaturedStory";
 import { PortfolioEditorial } from "@/components/home/PortfolioEditorial";
 import { FilmsSection } from "@/components/home/FilmsSection";
 import { Approach } from "@/components/home/Approach";
@@ -46,7 +42,6 @@ function Home() {
   return (
     <main>
       <Hero />
-      <FeaturedStory />
       <PortfolioEditorial />
       <FilmsSection />
       <Approach />
