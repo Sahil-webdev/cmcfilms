@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Play, X, ArrowLeft, ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import poster from "@/assets/featured.jpg";
@@ -91,7 +91,26 @@ const posterFilms: MoviePosterFilm[] = [
 
 export function FilmsSection() {
   const [activeVideo, setActiveVideo] = useState<MoviePosterFilm | null>(null);
+  const [isPaused, setIsPaused] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  // Auto swipe every 4 seconds
+  useEffect(() => {
+    if (isPaused) return;
+
+    const interval = setInterval(() => {
+      if (scrollContainerRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+        if (scrollLeft + clientWidth >= scrollWidth - 15) {
+          scrollContainerRef.current.scrollTo({ left: 0, behavior: "smooth" });
+        } else {
+          scrollContainerRef.current.scrollBy({ left: 320, behavior: "smooth" });
+        }
+      }
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [isPaused]);
 
   const scroll = (direction: "left" | "right") => {
     if (scrollContainerRef.current) {
@@ -111,8 +130,14 @@ export function FilmsSection() {
           </h2>
         </Reveal>
 
-        {/* Poster Slider Carousel Wrapper */}
-        <div className="relative group">
+        {/* Poster Slider Carousel Wrapper (Auto-swipes every 4 seconds, pauses on hover) */}
+        <div
+          className="relative group"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setIsPaused(false)}
+        >
           
           {/* Left Arrow Button */}
           <button
