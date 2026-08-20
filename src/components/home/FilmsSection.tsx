@@ -160,13 +160,6 @@ export function FilmsSection() {
                   {/* Gradient Overlay for Text Visibility */}
                   <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/75" />
 
-                  {/* Top Tagline */}
-                  <div className="absolute top-4 inset-x-0 text-center z-10">
-                    <span className="text-[10px] font-mono tracking-[0.25em] text-white/80 uppercase font-semibold">
-                      {film.tagline}
-                    </span>
-                  </div>
-
                   {/* Center/Top Poster Title (Matching Screenshot Typography) */}
                   <div className="absolute top-12 sm:top-14 inset-x-4 text-center z-10">
                     <h3 className="font-editorial italic text-3xl sm:text-4xl text-white font-normal drop-shadow-lg tracking-wide">
