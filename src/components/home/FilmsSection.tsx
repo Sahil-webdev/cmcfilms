@@ -141,10 +141,12 @@ export function FilmsSection() {
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {posterFilms.map((film) => (
-              <div
+              <a
                 key={film.id}
+                href="https://www.youtube.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-[260px] sm:w-[300px] md:w-[320px] shrink-0 flex flex-col items-center gap-3.5 group/card cursor-pointer"
-                onClick={() => setActiveVideo(film)}
               >
                 {/* Movie Poster Card */}
                 <div className="relative aspect-[2/3] w-full rounded-xl overflow-hidden bg-black/40 shadow-xl border border-white/20 transition-all duration-500 group-hover/card:shadow-2xl group-hover/card:scale-[1.02]">
@@ -191,17 +193,12 @@ export function FilmsSection() {
                 </div>
 
                 {/* Bottom Dark Pill Button "Watch Film" (Exact Match to Screenshot) */}
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setActiveVideo(film);
-                  }}
-                  className="bg-[#33302C] hover:bg-[#171717] text-white font-poppins text-xs font-semibold px-6 py-2.5 rounded-full transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer"
+                <span
+                  className="bg-[#33302C] group-hover/card:bg-[#171717] text-white font-poppins text-xs font-semibold px-6 py-2.5 rounded-full transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer inline-block"
                 >
                   Watch Film
-                </button>
-              </div>
+                </span>
+              </a>
             ))}
           </div>
 
