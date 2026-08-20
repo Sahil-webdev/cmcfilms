@@ -24,12 +24,6 @@ export function Approach() {
 
         <div className="flex flex-col justify-center">
           <Reveal>
-            <div className="flex items-center gap-2 mb-2.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#93191E]" />
-              <span className="label-xs uppercase tracking-[0.25em] text-[#93191E] font-mono text-[10px] font-bold">
-                Our Services
-              </span>
-            </div>
             <h2 className="font-display text-[clamp(2.25rem,5vw,4.5rem)] leading-[1] text-[#261E1E]">
               Your Story.
               <br />
