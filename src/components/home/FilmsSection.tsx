@@ -1,135 +1,210 @@
-import { useState } from "react";
-import { Link } from "@tanstack/react-router";
-import { Play, X, Film, ArrowUpRight } from "lucide-react";
+import { useState, useRef } from "react";
+import { Play, X, ArrowLeft, ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import poster from "@/assets/featured.jpg";
 import t1 from "@/assets/cat-1.jpg";
 import t2 from "@/assets/cat-2.jpg";
 import t3 from "@/assets/cat-3.jpg";
 import luxuryEditorial from "@/assets/luxury-editorial.jpg";
+import heroImg from "@/assets/hero.jpg";
 
-const films = [
-  { title: "Ananya & Arjun", place: "Udaipur", year: "2026", len: "06:12", img: t1, tag: "Feature Film" },
-  { title: "Tara & Nikhil", place: "Jaipur", year: "2026", len: "04:48", img: t2, tag: "Teaser" },
-  { title: "Saira & Aman", place: "Goa", year: "2025", len: "05:20", img: t3, tag: "Destination Cinema" },
-  { title: "Meera & Kabir", place: "Jodhpur", year: "2026", len: "03:55", img: luxuryEditorial, tag: "Highlight Film" },
+interface MoviePosterFilm {
+  id: string;
+  title: string;
+  subTitle: string;
+  posterTitle: string;
+  tagline: string;
+  location: string;
+  year: string;
+  duration: string;
+  image: string;
+}
+
+const posterFilms: MoviePosterFilm[] = [
+  {
+    id: "f1",
+    title: "Ananya & Arjun",
+    subTitle: "The Royal Pichola Vows",
+    posterTitle: "Deewangi",
+    tagline: "A CMC FILMS Film",
+    location: "Udaipur, Rajasthan",
+    year: "2026",
+    duration: "06:12",
+    image: t1,
+  },
+  {
+    id: "f2",
+    title: "Tara & Nikhil",
+    subTitle: "Forest Heritage Symphony",
+    posterTitle: "Viggotbagged",
+    tagline: "A CMC FILMS Film",
+    location: "Jaipur, Rajasthan",
+    year: "2026",
+    duration: "04:48",
+    image: t2,
+  },
+  {
+    id: "f3",
+    title: "Saira & Aman",
+    subTitle: "Intimate Coastal Romance",
+    posterTitle: "The AngLou",
+    tagline: "A CMC FILMS Film",
+    location: "Goa Coast",
+    year: "2025",
+    duration: "05:20",
+    image: t3,
+  },
+  {
+    id: "f4",
+    title: "Meera & Kabir",
+    subTitle: "Royal Palace Saga",
+    posterTitle: "A Saga in Udaipur",
+    tagline: "A CMC FILMS Film",
+    location: "Udaipur Palace",
+    year: "2026",
+    duration: "03:55",
+    image: luxuryEditorial,
+  },
+  {
+    id: "f5",
+    title: "Riya & Dev",
+    subTitle: "Misty Horizon Love",
+    posterTitle: "Ishqbaazi",
+    tagline: "A CMC FILMS Film",
+    location: "Jaisalmer Dunes",
+    year: "2026",
+    duration: "05:10",
+    image: poster,
+  },
+  {
+    id: "f6",
+    title: "Kavya & Rohan",
+    subTitle: "Sunset Palace Serenade",
+    posterTitle: "Noor-E-Ishq",
+    tagline: "A CMC FILMS Film",
+    location: "Jaipur Heritage",
+    year: "2026",
+    duration: "04:15",
+    image: heroImg,
+  },
 ];
 
 export function FilmsSection() {
-  const [activeVideo, setActiveVideo] = useState<{ title: string; place: string } | null>(null);
+  const [activeVideo, setActiveVideo] = useState<MoviePosterFilm | null>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (direction: "left" | "right") => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = direction === "left" ? -350 : 350;
+      scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    }
+  };
 
   return (
-    <section className="grain relative bg-[#E0CDCD] px-5 py-14 text-[#261E1E] md:px-10 md:py-20 overflow-hidden border-y border-[#93191E]/15">
-      {/* Ambient background depth for royal sapphire blue */}
-      <div className="pointer-events-none absolute -top-40 -right-20 h-[500px] w-[500px] rounded-full bg-[#E5CA92]/10 blur-[130px]" />
-      <div className="pointer-events-none absolute -bottom-40 -left-20 h-[500px] w-[500px] rounded-full bg-cinema/40 blur-[140px]" />
-
-      <div className="relative mx-auto max-w-[1600px]">
-        {/* ── Top Header ── */}
-        <Reveal>
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <h2 className="font-display text-[clamp(2.2rem,4.8vw,4rem)] font-light leading-[1] text-[#261E1E]">
-              Films That Let You{" "}
-              <em className="font-editorial italic text-[#93191E] font-normal">
-                Feel It Again.
-              </em>
-            </h2>
-          </div>
+    <section className="bg-[#B3A395] text-[#171717] py-14 sm:py-20 px-4 sm:px-8 relative overflow-hidden border-b border-[#171717]/10 select-none">
+      <div className="max-w-[1700px] mx-auto space-y-8 sm:space-y-10">
+        
+        {/* Section Title */}
+        <Reveal className="text-center space-y-2">
+          <h2 className="font-display text-2xl sm:text-4xl md:text-5xl text-[#171717] font-light tracking-tight">
+            Films That Let You <em className="font-editorial italic font-normal text-[#5C2325]">Feel It Again.</em>
+          </h2>
         </Reveal>
 
-        {/* ── Featured Hero Film Preview ── */}
-        <Reveal className="group mt-8 block cursor-pointer" delay={100}>
-          <div
-            onClick={() => setActiveVideo({ title: "Ananya & Arjun — The Royal Pichola Vows", place: "Udaipur, Rajasthan" })}
-            className="relative aspect-[16/9] md:aspect-[2.35/1] w-full overflow-hidden rounded-sm bg-cinema/80 shadow-2xl border border-ivory/15 transition-all duration-700 group-hover:border-[#E5CA92]/70"
+        {/* Poster Slider Carousel Wrapper */}
+        <div className="relative group">
+          
+          {/* Left Arrow Button */}
+          <button
+            type="button"
+            onClick={() => scroll("left")}
+            aria-label="Scroll left"
+            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/60 hover:bg-black text-white flex items-center justify-center backdrop-blur-md transition-all duration-300 shadow-xl cursor-pointer opacity-80 hover:opacity-100 hover:scale-105"
           >
-            <img
-              src={poster}
-              alt="Poster frame from a destination wedding film"
-              loading="lazy"
-              className="h-full w-full object-cover opacity-85 transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105 group-hover:opacity-95"
-            />
+            <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+          </button>
 
-            {/* Gradient Overlays */}
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-cinema/95 via-cinema/25 to-cinema/40" />
+          {/* Right Arrow Button */}
+          <button
+            type="button"
+            onClick={() => scroll("right")}
+            aria-label="Scroll right"
+            className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/60 hover:bg-black text-white flex items-center justify-center backdrop-blur-md transition-all duration-300 shadow-xl cursor-pointer opacity-80 hover:opacity-100 hover:scale-105"
+          >
+            <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
+          </button>
 
-            {/* Glowing Play Button Center */}
-            <span className="absolute inset-0 flex items-center justify-center">
-              <span className="flex h-16 w-16 md:h-20 md:w-20 items-center justify-center rounded-full border border-ivory/40 bg-cinema/60 backdrop-blur-md transition-all duration-500 group-hover:scale-110 group-hover:bg-[#E5CA92] group-hover:border-[#E5CA92] group-hover:text-[#27231F] text-[#FAF8F3] shadow-2xl">
-                <Play className="h-5 w-5 md:h-7 md:w-7 translate-x-0.5 fill-current" strokeWidth={1.5} />
-              </span>
-            </span>
+          {/* Poster Cards Row */}
+          <div
+            ref={scrollContainerRef}
+            className="flex gap-4 sm:gap-6 overflow-x-auto scroll-smooth pb-4 px-2 no-bar items-stretch"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
+            {posterFilms.map((film) => (
+              <div
+                key={film.id}
+                className="w-[260px] sm:w-[300px] md:w-[320px] shrink-0 flex flex-col items-center gap-3.5 group/card cursor-pointer"
+                onClick={() => setActiveVideo(film)}
+              >
+                {/* Movie Poster Card */}
+                <div className="relative aspect-[2/3] w-full rounded-xl overflow-hidden bg-black/40 shadow-xl border border-white/20 transition-all duration-500 group-hover/card:shadow-2xl group-hover/card:scale-[1.02]">
+                  {/* Poster Background Image */}
+                  <img
+                    src={film.image}
+                    alt={film.title}
+                    className="h-full w-full object-cover opacity-90 transition-transform duration-700 group-hover/card:scale-105"
+                  />
+                  
+                  {/* Gradient Overlay for Text Visibility */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/75" />
 
-            {/* Bottom Title Info */}
-            <div className="absolute bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-6 flex flex-col md:flex-row md:items-end justify-between gap-2">
-              <div>
-                <span className="font-mono text-[11px] text-[#E5CA92]">Udaipur · City Palace Lakefront</span>
-                <h3 className="font-display text-xl md:text-3xl text-[#FAF8F3] font-light mt-0.5">
-                  Ananya &amp; Arjun — The Royal Pichola Vows
-                </h3>
-              </div>
+                  {/* Top Tagline */}
+                  <div className="absolute top-4 inset-x-0 text-center z-10">
+                    <span className="text-[10px] font-mono tracking-[0.25em] text-white/80 uppercase font-semibold">
+                      {film.tagline}
+                    </span>
+                  </div>
 
-              <span className="label-xs font-mono text-[11px] text-ivory/80 bg-cinema/60 px-3 py-1 rounded-full border border-ivory/20 backdrop-blur-md self-start md:self-end">
-                Duration · 06:12
-              </span>
-            </div>
-          </div>
-        </Reveal>
+                  {/* Center/Top Poster Title (Matching Screenshot Typography) */}
+                  <div className="absolute top-12 sm:top-14 inset-x-4 text-center z-10">
+                    <h3 className="font-editorial italic text-3xl sm:text-4xl text-white font-normal drop-shadow-lg tracking-wide">
+                      {film.posterTitle}
+                    </h3>
+                  </div>
 
-        {/* ── Category Tags ── */}
-        <div className="mt-8 flex items-center justify-between border-b border-ivory/15 pb-3">
-          <div className="flex gap-4 md:gap-8 font-mono text-xs uppercase tracking-wider text-ivory/70">
-            <span className="text-[#E5CA92] border-b-2 border-[#E5CA92] pb-3 -mb-3 font-medium">
-              Featured Reels
-            </span>
-            <span className="hover:text-ivory transition-colors cursor-pointer">Teasers</span>
-            <span className="hover:text-ivory transition-colors cursor-pointer">Destination Stories</span>
-          </div>
+                  {/* Bottom Couple & Location Subtitle */}
+                  <div className="absolute bottom-4 inset-x-4 text-center z-10 space-y-0.5">
+                    <p className="font-poppins text-sm sm:text-base font-semibold text-white drop-shadow-md">
+                      {film.title}
+                    </p>
+                    <p className="font-mono text-[10px] text-white/80 uppercase tracking-widest">
+                      {film.location} • {film.duration}
+                    </p>
+                  </div>
 
-          <span className="label-xs text-ivory/50 font-mono text-[10px] hidden sm:inline-block">
-            4K UHD Cinematography
-          </span>
-        </div>
-
-        {/* ── More Film Cards Strip ── */}
-        <div className="no-bar mt-5 flex gap-3.5 md:gap-5 overflow-x-auto pb-2">
-          {films.map((f) => (
-            <div
-              key={f.title}
-              onClick={() => setActiveVideo({ title: f.title, place: f.place })}
-              className="group relative w-[75vw] shrink-0 sm:w-[42vw] lg:w-[23vw] cursor-pointer"
-            >
-              <div className="relative aspect-video overflow-hidden rounded-sm bg-cinema/80 shadow-lg border border-ivory/15 transition-all duration-500 group-hover:border-[#E5CA92] group-hover:shadow-2xl">
-                <img
-                  src={f.img}
-                  alt={`${f.title} film still`}
-                  loading="lazy"
-                  className="h-full w-full object-cover opacity-85 transition-transform duration-700 group-hover:scale-106"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-cinema/90 via-cinema/20 to-transparent" />
-
-                {/* Small play icon on hover */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#E5CA92] text-[#27231F] shadow-lg">
-                    <Play className="h-4 w-4 fill-current translate-x-0.5" />
-                  </span>
+                  {/* Hover Play Glow Overlay */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 bg-black/30 backdrop-blur-[2px]">
+                    <span className="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center shadow-2xl scale-95 group-hover/card:scale-110 transition-transform">
+                      <Play className="w-5 h-5 fill-current translate-x-0.5" />
+                    </span>
+                  </div>
                 </div>
 
-                <span className="absolute top-2.5 right-2.5 font-mono text-[9px] text-ivory/80 bg-cinema/70 px-2 py-0.5 rounded-xs border border-ivory/20 backdrop-blur-sm">
-                  {f.len}
-                </span>
-
-                <div className="absolute bottom-2.5 left-2.5 right-2.5">
-                  <p className="font-mono text-[9px] uppercase tracking-wider text-[#E5CA92]">
-                    {f.place} · {f.year}
-                  </p>
-                  <p className="font-display text-base text-[#FAF8F3] font-light leading-snug truncate">
-                    {f.title}
-                  </p>
-                </div>
+                {/* Bottom Dark Pill Button "Watch Film" (Exact Match to Screenshot) */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setActiveVideo(film);
+                  }}
+                  className="bg-[#33302C] hover:bg-[#171717] text-white font-poppins text-xs font-semibold px-6 py-2.5 rounded-full transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer"
+                >
+                  Watch Film
+                </button>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+
         </div>
       </div>
 
@@ -138,21 +213,21 @@ export function FilmsSection() {
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-cinema/95 p-4 backdrop-blur-xl animate-fade-in"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 backdrop-blur-xl animate-in fade-in"
           onClick={() => setActiveVideo(null)}
         >
           <div
-            className="relative w-full max-w-5xl overflow-hidden rounded-sm border border-ivory/20 bg-cinema shadow-2xl"
+            className="relative w-full max-w-5xl overflow-hidden rounded-2xl border border-white/20 bg-[#171717] shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-ivory/15 bg-cinema/90 px-6 py-4">
+            <div className="flex items-center justify-between border-b border-white/15 bg-[#171717] px-6 py-4">
               <div>
-                <span className="label-xs text-xs font-mono text-[#E5CA92] uppercase">
-                  CMC FILMS 4K Cinema
+                <span className="text-[10px] font-mono text-[#C47A65] uppercase font-bold tracking-widest">
+                  CMC FILMS 4K CINEMA
                 </span>
-                <h3 className="font-display text-xl text-ivory font-light">
-                  {activeVideo.title}
+                <h3 className="font-poppins text-lg sm:text-xl text-white font-semibold">
+                  {activeVideo.title} — {activeVideo.subTitle}
                 </h3>
               </div>
 
@@ -160,7 +235,7 @@ export function FilmsSection() {
                 type="button"
                 onClick={() => setActiveVideo(null)}
                 aria-label="Close video player"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-ivory/20 bg-ivory/10 text-ivory transition-colors hover:border-[#E5CA92] hover:bg-[#E5CA92] hover:text-[#27231F] cursor-pointer"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white transition-colors hover:bg-white hover:text-black cursor-pointer"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -177,12 +252,6 @@ export function FilmsSection() {
               >
                 Your browser does not support the video tag.
               </video>
-            </div>
-
-            {/* Footer */}
-            <div className="flex items-center justify-between border-t border-ivory/15 bg-cinema/90 px-6 py-3 font-mono text-xs text-ivory/70">
-              <span>{activeVideo.place}</span>
-              <span className="text-[#E5CA92]">Shot on RED / Sony FX Cinematic 4K</span>
             </div>
           </div>
         </div>
