@@ -173,23 +173,6 @@ export function FilmsSection() {
                       {film.posterTitle}
                     </h3>
                   </div>
-
-                  {/* Bottom Couple & Location Subtitle */}
-                  <div className="absolute bottom-4 inset-x-4 text-center z-10 space-y-0.5">
-                    <p className="font-poppins text-sm sm:text-base font-semibold text-white drop-shadow-md">
-                      {film.title}
-                    </p>
-                    <p className="font-mono text-[10px] text-white/80 uppercase tracking-widest">
-                      {film.location} • {film.duration}
-                    </p>
-                  </div>
-
-                  {/* Hover Play Glow Overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 bg-black/30 backdrop-blur-[2px]">
-                    <span className="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center shadow-2xl scale-95 group-hover/card:scale-110 transition-transform">
-                      <Play className="w-5 h-5 fill-current translate-x-0.5" />
-                    </span>
-                  </div>
                 </div>
 
                 {/* Bottom Dark Pill Button "Watch Film" (Exact Match to Screenshot) */}
