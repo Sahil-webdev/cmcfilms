@@ -44,8 +44,8 @@ function Home() {
     <main>
       <Hero />
       <StudioIntroduction />
-      <PortfolioEditorial />
       <FilmsSection />
+      <PortfolioEditorial />
       <Approach />
 
       <ClientExperiencesSection />
