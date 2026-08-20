@@ -443,7 +443,7 @@ export function PackagesPage() {
               <span className="text-[9px] sm:text-xs font-mono uppercase tracking-[0.2em] text-[#C47A65] font-bold">
                 PLAN YOUR SHOOT TO
               </span>
-              <h1 className="font-editorial text-2xl sm:text-4xl md:text-5xl text-white font-bold tracking-tight uppercase leading-tight">
+              <h1 className="font-poppins text-2xl sm:text-4xl md:text-5xl text-white font-semibold tracking-tight uppercase leading-tight">
                 {activeDetailService.title}
               </h1>
             </div>
@@ -451,7 +451,7 @@ export function PackagesPage() {
 
           {/* 2. Package Summary Description Box (Matching Description Box in Screenshots) */}
           <div className="bg-white p-4 sm:p-7 rounded-2xl border border-[#D8D3CB] shadow-xs space-y-2.5 text-left">
-            <h2 className="font-editorial text-xl sm:text-3xl text-[#171717] font-bold">
+            <h2 className="font-poppins text-xl sm:text-3xl text-[#171717] font-semibold">
               {activeDetailService.title} Packages
             </h2>
             <p className="text-xs sm:text-sm text-[#55504A] font-light leading-relaxed">
@@ -592,7 +592,7 @@ export function PackagesPage() {
                   {/* Middle Information Column */}
                   <div className="w-full md:col-span-5 space-y-2 text-left">
                     <div>
-                      <h3 className="font-editorial text-lg sm:text-2xl text-[#171717] font-bold leading-tight">
+                      <h3 className="font-poppins text-lg sm:text-2xl text-[#171717] font-semibold leading-tight">
                         {offering.name}
                       </h3>
                       <span className="text-xs font-mono text-[#C47A65] font-semibold block mt-0.5">
@@ -671,7 +671,7 @@ export function PackagesPage() {
             <div className="absolute inset-0 bg-black/35" />
 
             <div className="relative z-10 pt-6 sm:pt-8">
-              <h1 className="font-editorial text-3xl sm:text-6xl md:text-7xl text-white font-bold tracking-wider uppercase drop-shadow-md">
+              <h1 className="font-poppins text-3xl sm:text-6xl md:text-7xl text-white font-bold tracking-wider uppercase drop-shadow-md">
                 Our Packages
               </h1>
             </div>
@@ -682,7 +682,7 @@ export function PackagesPage() {
             
             {/* Title Header */}
             <div className="text-left space-y-1 max-w-xl">
-              <h2 className="font-editorial text-xl sm:text-4xl text-[#171717] font-bold uppercase tracking-tight">
+              <h2 className="font-poppins text-xl sm:text-4xl text-[#171717] font-bold uppercase tracking-tight">
                 Our Packages
               </h2>
               <p className="text-xs sm:text-sm text-[#55504A] font-light">
