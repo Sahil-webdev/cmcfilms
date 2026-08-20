@@ -197,18 +197,6 @@ export function FooterOption7() {
                   <a href="tel:+917425940636" className="hover:underline transition-all">+91 74259 40636</a>
                 </div>
               </div>
-
-              <div className="pt-1">
-                <Link
-                  to="/about"
-                  hash="contact"
-                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#AE171E] text-white hover:bg-black transition-all text-xs sm:text-sm font-bold uppercase tracking-wider shadow-md active:scale-95 cursor-pointer"
-                  style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
-                >
-                  <span>Enquire For Date</span>
-                  <ArrowUpRight className="w-4 h-4 text-white" />
-                </Link>
-              </div>
             </div>
           </div>
 
