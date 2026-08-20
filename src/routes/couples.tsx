@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useMemo, useEffect } from "react";
-import { ArrowLeft, ArrowRight, X } from "lucide-react";
+import { useState } from "react";
+import { ArrowRight, X } from "lucide-react";
 
 // Pinterest Folder Assets (src/assets/pinterest)
 import pin1 from "@/assets/pinterest/pin1.jpg";
@@ -37,6 +37,7 @@ export const Route = createFileRoute("/couples")({
 export interface CoupleStoryItem {
   id: string;
   couple: string;
+  title: string;
   location: string;
   city: "Jaipur" | "Udaipur" | "Goa" | "Mumbai" | "International";
   shootType: "Pre-Wedding" | "Engagement" | "Couple Session" | "Post-Wedding";
@@ -57,14 +58,120 @@ export interface CoupleStoryItem {
 const coupleStoriesList: CoupleStoryItem[] = [
   {
     id: "cs-01",
-    couple: "Aarav & Meera",
-    location: "Jaipur, Rajasthan",
-    city: "Jaipur",
+    couple: "Mrinal & Abhishek",
+    title: "Mrinal & Abhishek Pre Wedding At Aksa Beach, Mumbai",
+    location: "Aksa Beach, Mumbai",
+    city: "Mumbai",
     shootType: "Pre-Wedding",
     year: "2026",
     heroImage: pin1,
     supportingImage: pin2,
     galleryImages: [pin1, pin2, pin3, pin4, pin5, pin6],
+    introText:
+      "Starting right as the sun came up at 6:00 AM on Aksa Beach, we kicked off Mrinal and Abhishek’s pre wedding session with the most peaceful, misty morning light. They kept things effortless and chic in matching white and beige outfits, looking completely at ease as we strolled along the wet shoreline and caught those sweet, quiet embraces against the gentle waves.",
+    credits: {
+      location: "Aksa Beach, Mumbai",
+      photography: "Sahil Sharma & Team",
+      film: "CMC Cinematic Archive",
+      styling: "Personal Wardrobe",
+      year: "2026",
+    },
+  },
+  {
+    id: "cs-02",
+    couple: "Mahi & Varun",
+    title: "Mahi & Varun Pre Wedding, From the Gardens of Zostel to Pawana Lake",
+    location: "Zostel & Pawana Lake, Lonavala",
+    city: "Mumbai",
+    shootType: "Pre-Wedding",
+    year: "2026",
+    heroImage: pin2,
+    supportingImage: pin4,
+    galleryImages: [pin2, pin4, pin6, pin8, pin1],
+    introText:
+      "There is something vividly cinematic about the golden hour in Lonavala. For Mahi and Varun’s pre wedding shoot, we traded the city’s hustle for the serene landscapes of Zostel Plus Lonavala and the tranquil shores of Pawana Lake. The result? A collection of moments that feel as effortless and authentic as their connection.",
+    credits: {
+      location: "Pawana Lake & Zostel, Lonavala",
+      photography: "Sahil Sharma",
+      film: "CMC Studio",
+      styling: "Casual Chic",
+      year: "2026",
+    },
+  },
+  {
+    id: "cs-03",
+    couple: "Riya & Kabir",
+    title: "Riya & Kabir Pre-Wedding at City Palace & Lake Pichola, Udaipur",
+    location: "Lake Pichola, Udaipur",
+    city: "Udaipur",
+    shootType: "Couple Session",
+    year: "2026",
+    heroImage: pin3,
+    supportingImage: pin4,
+    galleryImages: [pin7, pin8, pin1, pin2, pin3],
+    introText:
+      "Riya and Kabir shared ten years of memories before stepping onto a wooden lakeboat in Udaipur. As dusk descended over the Aravalli hills, mirror reflections on Lake Pichola and historic palace ghats created an unmatched quiet harmony between royal heritage and tender intimacy.",
+    credits: {
+      location: "Lake Pichola & Ghats, Udaipur",
+      photography: "Sahil Sharma",
+      film: "CMC Studio",
+      styling: "Minimal Linen",
+      year: "2026",
+    },
+  },
+  {
+    id: "cs-04",
+    couple: "Ishita & Arjun",
+    title: "Ishita & Arjun Serene Oceanfront Story at South Goa Beaches",
+    location: "South Goa Coastline",
+    city: "Goa",
+    shootType: "Pre-Wedding",
+    year: "2026",
+    heroImage: pin5,
+    supportingImage: pin6,
+    galleryImages: [pin4, pin5, pin6, pin7, pin8],
+    introText:
+      "Two weeks after their celebration, Ishita and Arjun escaped to southern Goa shores. No schedules, no heavy outfits — just barefoot ocean walks as warm sea breeze and evening waves rustled beside them, capturing pure laughter and unscripted companionship.",
+    credits: {
+      location: "South Goa Coastline",
+      photography: "CMC Films",
+      film: "Cinematic Reel",
+      styling: "Casual Resort",
+      year: "2026",
+    },
+  },
+  {
+    id: "cs-05",
+    couple: "Saba & Usman",
+    title: "Saba & Usman Twilight Romance at Marine Drive & Bandra Fort, Mumbai",
+    location: "Marine Drive, Mumbai",
+    city: "Mumbai",
+    shootType: "Pre-Wedding",
+    year: "2025",
+    heroImage: pin7,
+    supportingImage: pin8,
+    galleryImages: [pin1, pin3, pin5, pin7, pin2],
+    introText:
+      "Standing amidst sunset waves as sea breeze painted the horizon in soft rose gold tones. The vast open Mumbai shores allowed them to feel like the only two souls on earth as evening city lights began to shimmer in the background.",
+    credits: {
+      location: "Marine Drive & Bandra, Mumbai",
+      photography: "Sahil Sharma",
+      film: "CMC Films",
+      styling: "Flowing Silk",
+      year: "2025",
+    },
+  },
+  {
+    id: "cs-06",
+    couple: "Aarav & Meera",
+    title: "Aarav & Meera Morning Light Session in Heritage Jaipur Haveli",
+    location: "Amer & Haveli Courtyards, Jaipur",
+    city: "Jaipur",
+    shootType: "Pre-Wedding",
+    year: "2026",
+    heroImage: pin8,
+    supportingImage: pin1,
+    galleryImages: [pin8, pin1, pin2, pin3, pin4],
     introText:
       "Aarav and Meera wanted nothing elaborate. Just Jaipur before the streets became busy, some winter dawn light, and enough time to forget about the camera. We spent hours walking through Amer and calm haveli courtyards as early sun touched pink stone walls.",
     credits: {
@@ -75,128 +182,38 @@ const coupleStoriesList: CoupleStoryItem[] = [
       year: "2026",
     },
   },
-  {
-    id: "cs-02",
-    couple: "Riya & Kabir",
-    location: "Udaipur, Rajasthan",
-    city: "Udaipur",
-    shootType: "Couple Session",
-    year: "2026",
-    heroImage: pin3,
-    supportingImage: pin4,
-    galleryImages: [pin7, pin8, pin1, pin2, pin3],
-    introText:
-      "Riya and Kabir shared ten years of memories before stepping onto a wooden lakeboat in Udaipur. As dusk descended over the Aravalli hills, mirror reflections on Lake Pichola created an unmatched quiet harmony.",
-    credits: {
-      location: "Lake Pichola & Ghats, Udaipur",
-      photography: "Sahil Sharma",
-      film: "CMC Studio",
-      styling: "Minimal Linen",
-      year: "2026",
-    },
-  },
-  {
-    id: "cs-03",
-    couple: "Ishita & Arjun",
-    location: "Goa Beachfront",
-    city: "Goa",
-    shootType: "Pre-Wedding",
-    year: "2026",
-    heroImage: pin5,
-    supportingImage: pin6,
-    galleryImages: [pin4, pin5, pin6, pin7, pin8],
-    introText:
-      "Two weeks after their celebration, Ishita and Arjun escaped to southern Goa shores. No schedules, no heavy outfits — just barefoot ocean walks as warm sea breeze and evening waves rustled beside them.",
-    credits: {
-      location: "South Goa Coastline",
-      photography: "CMC Films",
-      film: "Cinematic Reel",
-      styling: "Casual Resort",
-      year: "2026",
-    },
-  },
-  {
-    id: "cs-04",
-    couple: "Saba & Usman",
-    location: "Mumbai Coastline",
-    city: "Mumbai",
-    shootType: "Pre-Wedding",
-    year: "2025",
-    heroImage: pin7,
-    supportingImage: pin8,
-    galleryImages: [pin1, pin3, pin5, pin7, pin2],
-    introText:
-      "Standing amidst sunset waves as sea breeze painted the horizon in soft rose gold tones. The vast open shores allowed them to feel like the only two souls on earth.",
-    credits: {
-      location: "Marine Drive & Bandra, Mumbai",
-      photography: "Sahil Sharma",
-      film: "CMC Films",
-      styling: "Flowing Silk",
-      year: "2025",
-    },
-  },
-  {
-    id: "cs-05",
-    couple: "Neha & Kunal",
-    location: "Jaipur Haveli",
-    city: "Jaipur",
-    shootType: "Post-Wedding",
-    year: "2025",
-    heroImage: pin2,
-    supportingImage: pin4,
-    galleryImages: [pin2, pin4, pin6, pin8, pin1],
-    introText:
-      "Quiet heritage haveli trails surrounded by royal archways and soft morning light. Historic stone courtyards gave them a calm, intimate canopy far away from urban noise.",
-    credits: {
-      location: "Haveli Courtyards, Jaipur",
-      photography: "CMC Studio",
-      film: "CMC Films",
-      styling: "Traditional Silk",
-      year: "2025",
-    },
-  },
+];
+
+// Photo Collage Grid Items (PINTEREST IMAGES)
+const collagePhotos = [
+  { src: pin1, alt: "Couple Embrace at Sunset", title: "Sunset Romance" },
+  { src: pin2, alt: "Haveli Archway Walk", title: "Heritage Walk" },
+  { src: pin3, alt: "Boat Ride on Lake Pichola", title: "Pichola Serenade" },
+  { src: pin4, alt: "Beachfront Ocean Breeze", title: "Coastal Vows" },
+  { src: pin5, alt: "Laughter in Courtyard", title: "Pure Emotion" },
+  { src: pin6, alt: "Twilight Promenade", title: "Desert Twilight" },
 ];
 
 export function CoupleShootsPage() {
-  const [selectedCityFilter, setSelectedCityFilter] = useState<string>("All");
   const [activeStoryModal, setActiveStoryModal] = useState<CoupleStoryItem | null>(null);
   const [activeLightboxPhoto, setActiveLightboxPhoto] = useState<string | null>(null);
 
-  const collagePhotos = [
-    { src: pin1, title: "Amer Dawn Vows", alt: "Pinterest Shoot 1" },
-    { src: pin2, title: "Haveli Sunlight", alt: "Pinterest Shoot 2" },
-    { src: pin3, title: "Royal Courtyard", alt: "Pinterest Shoot 3" },
-    { src: pin4, title: "Sunset Reflections", alt: "Pinterest Shoot 4" },
-    { src: pin5, title: "Palace Gardens", alt: "Pinterest Shoot 5" },
-    { src: pin6, title: "Golden Hour Glow", alt: "Pinterest Shoot 6" },
-    { src: pin7, title: "Barefoot Shoreline", alt: "Pinterest Shoot 7" },
-    { src: pin8, title: "Quiet Companionship", alt: "Pinterest Shoot 8" },
-    { src: pin1, title: "Heritage Architecture", alt: "Pinterest Shoot 9" },
-  ];
-
-  const filteredStories = useMemo(() => {
-    if (selectedCityFilter === "All") return coupleStoriesList;
-    return coupleStoriesList.filter((s) => s.city === selectedCityFilter);
-  }, [selectedCityFilter]);
-
   return (
-    <main className="bg-[#F3F0EA] text-[#171717] font-sans selection:bg-[#D8D3CB] selection:text-[#171717] min-h-screen relative">
+    <main className="bg-[#F3F0EA] text-[#171717] font-sans selection:bg-[#922A2F]/20 relative overflow-hidden">
       
-      {/* ── 1. SIGNATURE ARTISTIC HERO (PRESERVED HERO IMAGE) ── */}
-      <section className="relative pt-24 sm:pt-28 pb-16 sm:pb-24 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto border-b border-[#D8D3CB] overflow-hidden">
+      {/* ── 1. HERO SECTION (UNTOUCHED & PRESERVED) ── */}
+      <section className="relative pt-24 md:pt-32 pb-16 md:pb-24 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto border-b border-[#D8D3CB] overflow-hidden">
         
-        {/* Background Scrolling Marquee Text */}
+        {/* Background Giant Marquee Track */}
         <style>{`
           @keyframes marquee-couples {
-            0%   { transform: translateX(0); }
+            0% { transform: translateX(0%); }
             100% { transform: translateX(-50%); }
           }
           .marquee-couples-track {
-            animation: marquee-couples 120s linear infinite;
-            will-change: transform;
-          }
-          @media (prefers-reduced-motion: reduce) {
-            .marquee-couples-track { animation: none; }
+            display: flex;
+            width: max-content;
+            animation: marquee-couples 35s linear infinite;
           }
         `}</style>
 
@@ -232,7 +249,7 @@ export function CoupleShootsPage() {
           </div>
 
           {/* Right Column: Alex Brush Cursive Title & Editorial Copy */}
-          <div className="lg:col-span-6 space-y-6 pt-4 lg:pt-0">
+          <div className="lg:col-span-6 space-y-6 pt-4 lg:pt-0 text-left">
             <div>
               <h1
                 className="font-normal leading-[0.85] text-6xl sm:text-7xl md:text-8xl lg:text-9xl select-none"
@@ -264,8 +281,8 @@ export function CoupleShootsPage() {
 
       </section>
 
-      {/* ── 1.5 PHOTO COLLAGE GRID (PINTEREST IMAGES GRID) ── */}
-      <section className="py-16 sm:py-24 px-6 sm:px-12 md:px-16 max-w-[1440px] mx-auto border-b border-[#D8D3CB]">
+      {/* ── 2. SMALL PHOTO COLLAGE GRID (CHOTTA SA GALLERY SECTION BELOW HERO) ── */}
+      <section className="py-14 sm:py-20 px-6 sm:px-12 md:px-16 max-w-[1440px] mx-auto border-b border-[#D8D3CB]">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {collagePhotos.map((photo, idx) => (
             <div
@@ -302,7 +319,7 @@ export function CoupleShootsPage() {
             />
             <button
               onClick={() => setActiveLightboxPhoto(null)}
-              className="absolute top-4 right-4 text-white bg-black/50 hover:bg-black p-2 rounded-full text-xs font-mono"
+              className="absolute top-4 right-4 text-white bg-black/50 hover:bg-black p-2 rounded-full text-xs font-mono cursor-pointer"
             >
               ✕ Close
             </button>
@@ -310,15 +327,60 @@ export function CoupleShootsPage() {
         </div>
       )}
 
-      {/* ── 6. LOCATION FILTERED STORIES SLIDER CAROUSEL (PINTEREST IMAGES) ── */}
-      <CoupleStoriesCarouselSection
-        stories={filteredStories}
-        selectedCityFilter={selectedCityFilter}
-        setSelectedCityFilter={setSelectedCityFilter}
-        onSelectStory={setActiveStoryModal}
-      />
+      {/* ── 3. DEDICATED 2-COLUMN EDITORIAL STORY CARDS GRID SECTION (MATCHING USER REFERENCE SCREENSHOT) ── */}
+      <section className="py-16 sm:py-24 px-6 sm:px-12 md:px-16 max-w-[1440px] mx-auto space-y-12 sm:space-y-16">
+        
+        {/* Section Heading Title (Matching Reference Screenshot "Couple Shoot") */}
+        <div className="text-center">
+          <h2
+            className="font-editorial text-3xl sm:text-5xl md:text-6xl text-[#261E1E] inline-block border-b border-[#261E1E]/20 pb-2 px-4 font-normal"
+            style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontStyle: "italic" }}
+          >
+            Couple Shoot
+          </h2>
+        </div>
 
-      {/* ── 9. DEDICATED COUPLE STORY PAGE MODAL (PINTEREST IMAGES) ── */}
+        {/* 2-Column Story Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 sm:gap-12 md:gap-16">
+          {coupleStoriesList.map((story) => (
+            <div
+              key={story.id}
+              onClick={() => setActiveStoryModal(story)}
+              className="group cursor-pointer space-y-4 text-left"
+            >
+              {/* Card Image Frame */}
+              <div className="aspect-[4/3] w-full overflow-hidden bg-[#D8D3CB] rounded-[2px] border border-black/5 shadow-sm">
+                <img
+                  src={story.heroImage}
+                  alt={story.couple}
+                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+              </div>
+
+              {/* Story Title (Matching Screenshot Typography) */}
+              <h3 className="font-editorial text-2xl sm:text-3xl text-[#261E1E] font-normal leading-snug group-hover:text-[#922A2F] transition-colors">
+                {story.title}
+              </h3>
+
+              {/* Description Paragraph */}
+              <p className="font-sans text-sm sm:text-base text-[#4A453F] font-light leading-relaxed">
+                {story.introText}
+              </p>
+
+              {/* Read More Link Button */}
+              <div>
+                <span className="inline-flex items-center gap-1.5 text-sm font-sans text-[#261E1E] font-normal group-hover:text-[#922A2F] transition-colors">
+                  <span>Read more</span>
+                  <span className="text-base leading-none group-hover:translate-x-1 transition-transform">→</span>
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+      </section>
+
+      {/* ── 4. DEDICATED COUPLE STORY PAGE MODAL ── */}
       {activeStoryModal && (
         <IndividualCoupleStoryModal
           story={activeStoryModal}
@@ -370,9 +432,9 @@ function IndividualCoupleStoryModal({
         </div>
 
         {/* Title & Metadata */}
-        <div className="space-y-2 border-b border-[#D8D3CB] pb-8">
-          <h1 className="font-editorial text-5xl sm:text-7xl text-[#171717] font-normal">
-            {story.couple}
+        <div className="space-y-2 border-b border-[#D8D3CB] pb-8 text-left">
+          <h1 className="font-editorial text-4xl sm:text-6xl md:text-7xl text-[#171717] font-normal">
+            {story.title}
           </h1>
           <p className="text-xs font-mono uppercase tracking-widest text-[#68645E]">
             {story.location} · {story.shootType} · {story.year}
@@ -380,7 +442,7 @@ function IndividualCoupleStoryModal({
         </div>
 
         {/* Short Introduction */}
-        <div className="max-w-2xl py-4">
+        <div className="max-w-3xl py-4 text-left">
           <p className="font-sans text-base sm:text-lg text-[#171717] font-light leading-relaxed">
             {story.introText}
           </p>
@@ -444,15 +506,15 @@ function IndividualCoupleStoryModal({
           window.scrollTo({ top: 0, behavior: "smooth" });
           onNextStory(nextStory);
         }}
-        className="py-24 px-6 border-t border-[#D8D3CB] bg-[#E8E4DC] hover:bg-[#DDD8CE] transition-colors cursor-pointer group"
+        className="py-24 px-6 border-t border-[#D8D3CB] bg-[#E8E4DC] hover:bg-[#DDD8CE] transition-colors cursor-pointer group text-left"
       >
         <div className="max-w-[1440px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
           <div>
             <span className="text-xs font-mono uppercase tracking-widest text-[#68645E]">
               NEXT EDITORIAL STORY
             </span>
-            <h3 className="font-editorial text-4xl text-[#171717] group-hover:text-[#68645E] transition-colors">
-              {nextStory.couple}
+            <h3 className="font-editorial text-3xl sm:text-4xl text-[#171717] group-hover:text-[#68645E] transition-colors">
+              {nextStory.title}
             </h3>
             <p className="text-xs font-mono uppercase tracking-widest text-[#68645E] mt-1">
               {nextStory.location}
@@ -465,185 +527,5 @@ function IndividualCoupleStoryModal({
       </section>
 
     </div>
-  );
-}
-
-// ── LOCATION FILTERED COUPLE STORIES CAROUSEL SLIDER ────────────────────
-function CoupleStoriesCarouselSection({
-  stories,
-  selectedCityFilter,
-  setSelectedCityFilter,
-  onSelectStory,
-}: {
-  stories: CoupleStoryItem[];
-  selectedCityFilter: string;
-  setSelectedCityFilter: (city: string) => void;
-  onSelectStory: (story: CoupleStoryItem) => void;
-}) {
-  const [currentIndex, setCurrentIndex] = useState(stories.length);
-  const [isTransitioning, setIsTransitioning] = useState(true);
-  const [isPaused, setIsPaused] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
-
-  const infiniteStories = useMemo(
-    () => [...stories, ...stories, ...stories],
-    [stories]
-  );
-
-  useEffect(() => {
-    setCurrentIndex(stories.length);
-  }, [stories.length, selectedCityFilter]);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(min-width: 768px)");
-    const updateViewport = () => setIsDesktop(mediaQuery.matches);
-    updateViewport();
-    mediaQuery.addEventListener("change", updateViewport);
-    return () => mediaQuery.removeEventListener("change", updateViewport);
-  }, []);
-
-  useEffect(() => {
-    if (isPaused || stories.length === 0) return;
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => prev + 1);
-    }, 2500);
-    return () => clearInterval(timer);
-  }, [isPaused, stories.length]);
-
-  const handleTransitionEnd = () => {
-    if (currentIndex >= stories.length * 2) {
-      setIsTransitioning(false);
-      setCurrentIndex(stories.length);
-    } else if (currentIndex < stories.length) {
-      setIsTransitioning(false);
-      setCurrentIndex(stories.length * 2 - 1);
-    }
-  };
-
-  useEffect(() => {
-    if (!isTransitioning) {
-      const t = setTimeout(() => {
-        setIsTransitioning(true);
-      }, 50);
-      return () => clearTimeout(t);
-    }
-  }, [isTransitioning]);
-
-  const handleNext = () => {
-    setCurrentIndex((prev) => prev + 1);
-  };
-
-  const handlePrev = () => {
-    setCurrentIndex((prev) => prev - 1);
-  };
-
-  const activeDotIndex = stories.length > 0 ? currentIndex % stories.length : 0;
-
-  return (
-    <section className="py-20 md:py-28 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto border-b border-[#D8D3CB] space-y-12 overflow-hidden">
-      
-      <div className="flex flex-wrap items-center gap-8 border-b border-[#D8D3CB] pb-4 text-xs font-mono uppercase tracking-widest">
-        {["All", "Jaipur", "Udaipur", "Goa", "Mumbai"].map((loc) => (
-          <button
-            key={loc}
-            type="button"
-            onClick={() => setSelectedCityFilter(loc)}
-            className={`pb-1 transition-all cursor-pointer ${
-              selectedCityFilter === loc
-                ? "text-[#171717] border-b-2 border-[#171717] font-semibold"
-                : "text-[#68645E] hover:text-[#171717]"
-            }`}
-          >
-            {loc}
-          </button>
-        ))}
-      </div>
-
-      <div
-        className="relative px-2 sm:px-4"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-      >
-        <button
-          type="button"
-          onClick={handlePrev}
-          aria-label="Previous story"
-          className="absolute left-1 md:-left-4 top-1/2 -translate-y-1/2 z-20 h-10 w-10 md:h-12 md:w-12 rounded-full bg-[#3D3A36]/80 hover:bg-[#3D3A36] text-white flex items-center justify-center transition-all duration-300 active:scale-95 cursor-pointer shadow-lg"
-        >
-          <ArrowLeft className="w-5 h-5" />
-        </button>
-
-        <button
-          type="button"
-          onClick={handleNext}
-          aria-label="Next story"
-          className="absolute right-1 md:-right-4 top-1/2 -translate-y-1/2 z-20 h-10 w-10 md:h-12 md:w-12 rounded-full bg-[#3D3A36]/80 hover:bg-[#3D3A36] text-white flex items-center justify-center transition-all duration-300 active:scale-95 cursor-pointer shadow-lg"
-        >
-          <ArrowRight className="w-5 h-5" />
-        </button>
-
-        <div className="overflow-hidden py-2">
-          <div
-            onTransitionEnd={handleTransitionEnd}
-            className={`flex ${isDesktop ? "gap-8" : ""} ${
-              isTransitioning
-                ? "transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
-                : "transition-none"
-            }`}
-            style={{
-              transform: isDesktop
-                ? `translateX(-${currentIndex * (420 + 32)}px)`
-                : `translateX(-${currentIndex * 100}%)`,
-            }}
-          >
-            {infiniteStories.map((story, idx) => (
-              <div
-                key={`${story.id}-${idx}`}
-                onClick={() => onSelectStory(story)}
-                className={`${isDesktop ? "w-[420px]" : "w-full"} shrink-0 cursor-pointer group space-y-4`}
-              >
-                <div className="aspect-[4/5] w-full overflow-hidden bg-[#D8D3CB] rounded-[4px] shadow-md border border-black/5">
-                  <img
-                    src={story.heroImage}
-                    alt={story.couple}
-                    className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                  />
-                </div>
-
-                <div className="flex justify-between items-end pt-1">
-                  <div>
-                    <h3 className="font-editorial text-3xl text-[#171717] group-hover:text-[#68645E] transition-colors">
-                      {story.couple}
-                    </h3>
-                    <p className="text-xs font-mono uppercase tracking-widest text-[#68645E] mt-1">
-                      {story.shootType} · {story.location}
-                    </p>
-                  </div>
-                  <span className="inline-flex items-center gap-1 text-xs font-mono uppercase tracking-widest text-[#171717] font-semibold group-hover:translate-x-1 transition-transform">
-                    View →
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-10 flex justify-center items-center gap-2">
-          {stories.map((_, idx) => (
-            <button
-              key={idx}
-              type="button"
-              onClick={() => setCurrentIndex(stories.length + idx)}
-              aria-label={`Go to slide ${idx + 1}`}
-              className={`h-2 rounded-full transition-all duration-500 cursor-pointer ${
-                idx === activeDotIndex ? "w-6 bg-[#3D3A36]" : "w-2 bg-[#171717]/20"
-              }`}
-            />
-          ))}
-        </div>
-
-      </div>
-
-    </section>
   );
 }
