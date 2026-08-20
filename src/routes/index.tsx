@@ -44,7 +44,8 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   return (
-    <main className="pt-20 md:pt-24">
+    <main>
+      <Hero />
       <FeaturedStory />
       <PortfolioEditorial />
       <FilmsSection />
