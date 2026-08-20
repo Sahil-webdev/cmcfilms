@@ -151,13 +151,19 @@ export function BlogJournalSection() {
       <div className="relative z-10 mx-auto max-w-[1600px] px-5 md:px-10">
         
         {/* Simple Clean Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12 md:mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16 space-y-2">
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-light text-espresso leading-tight">
             Tying the Knot,{" "}
             <em className="font-editorial italic border-b border-espresso/30 pb-0.5">
               One Story at a Time
             </em>
           </h2>
+          <p className="font-display text-2xl sm:text-3xl md:text-4xl font-light text-espresso/90 leading-tight pt-1">
+            Crafting Memories,{" "}
+            <em className="font-editorial italic border-b border-espresso/30 pb-0.5">
+              Forever in Frame
+            </em>
+          </p>
         </div>
 
         {/* ── INFINITE SEAMLESS LOOP CAROUSEL CONTAINER (2-Sec Auto Step) ── */}
