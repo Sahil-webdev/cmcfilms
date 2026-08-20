@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
-import { ArrowRight, X } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { ArrowRight, ArrowLeft, X } from "lucide-react";
 
 // Pinterest Folder Assets (src/assets/pinterest)
 import pin1 from "@/assets/pinterest/pin1.jpg";
@@ -197,6 +197,30 @@ const collagePhotos = [
 export function CoupleShootsPage() {
   const [activeStoryModal, setActiveStoryModal] = useState<CoupleStoryItem | null>(null);
   const [activeLightboxPhoto, setActiveLightboxPhoto] = useState<string | null>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      if (carouselRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+        if (scrollLeft + clientWidth >= scrollWidth - 15) {
+          carouselRef.current.scrollTo({ left: 0, behavior: "smooth" });
+        } else {
+          carouselRef.current.scrollBy({ left: 400, behavior: "smooth" });
+        }
+      }
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [isPaused]);
+
+  const scroll = (direction: "left" | "right") => {
+    if (carouselRef.current) {
+      const scrollAmount = direction === "left" ? -400 : 400;
+      carouselRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    }
+  };
 
   return (
     <main className="bg-[#F3F0EA] text-[#171717] font-sans selection:bg-[#922A2F]/20 relative overflow-hidden">
@@ -327,8 +351,8 @@ export function CoupleShootsPage() {
         </div>
       )}
 
-      {/* ── 3. DEDICATED 2-COLUMN EDITORIAL STORY CARDS GRID SECTION (MATCHING USER REFERENCE SCREENSHOT) ── */}
-      <section className="py-16 sm:py-24 px-6 sm:px-12 md:px-16 max-w-[1440px] mx-auto space-y-12 sm:space-y-16">
+      {/* ── 3. DEDICATED 3-ITEMS-PER-ROW SLIDER CAROUSEL SECTION ── */}
+      <section className="py-16 sm:py-24 px-4 sm:px-12 md:px-16 max-w-[1700px] mx-auto space-y-10">
         
         {/* Section Heading Title (Matching Reference Screenshot "Couple Shoot") */}
         <div className="text-center">
@@ -340,42 +364,74 @@ export function CoupleShootsPage() {
           </h2>
         </div>
 
-        {/* 2-Column Story Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 sm:gap-12 md:gap-16">
-          {coupleStoriesList.map((story) => (
-            <div
-              key={story.id}
-              onClick={() => setActiveStoryModal(story)}
-              className="group cursor-pointer space-y-4 text-left"
-            >
-              {/* Card Image Frame */}
-              <div className="aspect-[4/3] w-full overflow-hidden bg-[#D8D3CB] rounded-[2px] border border-black/5 shadow-sm">
-                <img
-                  src={story.heroImage}
-                  alt={story.couple}
-                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                />
+        {/* Carousel Slider Wrapper (3 Items Per Row on Desktop) */}
+        <div
+          className="relative group px-2 sm:px-6"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {/* Left Arrow Button */}
+          <button
+            type="button"
+            onClick={() => scroll("left")}
+            aria-label="Scroll left"
+            className="absolute left-0 sm:left-1 top-1/3 -translate-y-1/2 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-[#261E1E]/80 hover:bg-[#261E1E] text-white flex items-center justify-center backdrop-blur-md transition-all duration-300 shadow-xl cursor-pointer opacity-90 hover:scale-105"
+          >
+            <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+          </button>
+
+          {/* Right Arrow Button */}
+          <button
+            type="button"
+            onClick={() => scroll("right")}
+            aria-label="Scroll right"
+            className="absolute right-0 sm:right-1 top-1/3 -translate-y-1/2 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-[#261E1E]/80 hover:bg-[#261E1E] text-white flex items-center justify-center backdrop-blur-md transition-all duration-300 shadow-xl cursor-pointer opacity-90 hover:scale-105"
+          >
+            <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
+          </button>
+
+          {/* 3 Items Per Row Slider Row */}
+          <div
+            ref={carouselRef}
+            className="flex gap-6 sm:gap-8 overflow-x-auto scroll-smooth pb-6 px-1 no-bar items-stretch"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
+            {coupleStoriesList.map((story) => (
+              <div
+                key={story.id}
+                onClick={() => setActiveStoryModal(story)}
+                className="w-[88%] sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.35rem)] shrink-0 group cursor-pointer space-y-4 text-left flex flex-col justify-between"
+              >
+                <div className="space-y-4">
+                  {/* Image Frame */}
+                  <div className="aspect-[4/3] w-full overflow-hidden bg-[#D8D3CB] rounded-[2px] border border-black/5 shadow-sm">
+                    <img
+                      src={story.heroImage}
+                      alt={story.couple}
+                      className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                  </div>
+
+                  {/* Story Title */}
+                  <h3 className="font-editorial text-xl sm:text-2xl text-[#261E1E] font-normal leading-snug group-hover:text-[#922A2F] transition-colors">
+                    {story.title}
+                  </h3>
+
+                  {/* Description Paragraph */}
+                  <p className="font-sans text-xs sm:text-sm text-[#4A453F] font-light leading-relaxed line-clamp-3">
+                    {story.introText}
+                  </p>
+                </div>
+
+                <div className="pt-2">
+                  <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-sans text-[#261E1E] font-normal group-hover:text-[#922A2F] transition-colors">
+                    <span>Read more</span>
+                    <span className="text-sm leading-none group-hover:translate-x-1 transition-transform">→</span>
+                  </span>
+                </div>
               </div>
-
-              {/* Story Title (Matching Screenshot Typography) */}
-              <h3 className="font-editorial text-2xl sm:text-3xl text-[#261E1E] font-normal leading-snug group-hover:text-[#922A2F] transition-colors">
-                {story.title}
-              </h3>
-
-              {/* Description Paragraph */}
-              <p className="font-sans text-sm sm:text-base text-[#4A453F] font-light leading-relaxed">
-                {story.introText}
-              </p>
-
-              {/* Read More Link Button */}
-              <div>
-                <span className="inline-flex items-center gap-1.5 text-sm font-sans text-[#261E1E] font-normal group-hover:text-[#922A2F] transition-colors">
-                  <span>Read more</span>
-                  <span className="text-base leading-none group-hover:translate-x-1 transition-transform">→</span>
-                </span>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
       </section>
