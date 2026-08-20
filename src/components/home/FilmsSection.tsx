@@ -94,15 +94,19 @@ export function FilmsSection() {
   const [isPaused, setIsPaused] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // Auto swipe every 4 seconds
+  // Infinite seamless Right-to-Left auto swipe every 4 seconds
   useEffect(() => {
     if (isPaused) return;
 
     const interval = setInterval(() => {
       if (scrollContainerRef.current) {
         const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
-        if (scrollLeft + clientWidth >= scrollWidth - 15) {
-          scrollContainerRef.current.scrollTo({ left: 0, behavior: "smooth" });
+        const maxScroll = scrollWidth - clientWidth;
+        
+        // When approaching the middle of duplicated array, reset scroll position seamlessly so cards always flow Right-to-Left
+        if (scrollLeft >= maxScroll - 350) {
+          scrollContainerRef.current.scrollLeft = 0;
+          scrollContainerRef.current.scrollBy({ left: 320, behavior: "smooth" });
         } else {
           scrollContainerRef.current.scrollBy({ left: 320, behavior: "smooth" });
         }
@@ -165,9 +169,9 @@ export function FilmsSection() {
             className="flex gap-4 sm:gap-6 overflow-x-auto scroll-smooth pb-4 px-2 no-bar items-stretch"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
-            {posterFilms.map((film) => (
+            {[...posterFilms, ...posterFilms].map((film, idx) => (
               <a
-                key={film.id}
+                key={`${film.id}-${idx}`}
                 href="https://www.youtube.com"
                 target="_blank"
                 rel="noopener noreferrer"
