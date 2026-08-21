@@ -450,34 +450,6 @@ export function WeddingFilmsPage() {
       </section>
 
 
-      {/* ── FINAL SCREEN & CTA ── */}
-      <section className="py-36 md:py-48 px-6 text-center bg-[#F2EFE8]">
-        <div className="max-w-2xl mx-auto space-y-8">
-          <div className="mx-auto w-44 aspect-[3/4] overflow-hidden rounded-[2px] shadow-2xl border border-black/5 bg-[#171512]">
-            <img
-              src={coastal}
-              alt="Your story could be next"
-              className="h-full w-full object-cover"
-            />
-          </div>
-
-          <div className="space-y-4">
-            <h2 className="font-display text-3xl sm:text-5xl font-light text-[#171512]">
-              “Your story could be next.”
-            </h2>
-
-            <div className="pt-2">
-              <Link
-                to="/contact"
-                className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-[#171512] border-b-2 border-[#A67B2E] pb-1 hover:text-[#A67B2E] transition-colors"
-              >
-                <span>Tell Us About Your Wedding</span>
-                <ArrowUpRight className="w-4 h-4 text-[#A67B2E]" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ── FULL-SCREEN PRIVATE CINEMA PLAYER MODAL ── */}
       {activeFilmModal && (
