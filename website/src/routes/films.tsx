@@ -449,37 +449,6 @@ export function WeddingFilmsPage() {
 
       </section>
 
-      {/* ── DARK TRANSITION INTERMISSION (#171512 Deep Warm Brown-Black) ── */}
-      <section className="relative py-32 md:py-48 bg-[#171512] text-[#F2EFE8] border-b border-white/10 overflow-hidden">
-        <div className="max-w-4xl mx-auto text-center px-6 space-y-8">
-          
-          <div className="relative mx-auto w-full max-w-xl aspect-[16/9] overflow-hidden rounded-[4px] shadow-2xl border border-white/10 bg-black">
-            <img
-              src={f2}
-              alt="CMC Intermission frame"
-              className="h-full w-full object-cover opacity-75 transition-transform duration-1000 hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-              <div className="h-12 w-12 rounded-full border border-white/40 flex items-center justify-center text-white">
-                <Play className="w-4 h-4 fill-current ml-0.5" />
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-3">
-            <span className="text-xs font-mono tracking-[0.3em] uppercase text-[#A67B2E]">
-              CMC FILMS
-            </span>
-            <h2 className="font-display text-3xl sm:text-5xl font-light text-[#F2EFE8]">
-              “We film what you didn't know <br />
-              <em className="font-editorial italic text-[#A67B2E] font-normal">
-                you would miss.
-              </em>”
-            </h2>
-          </div>
-
-        </div>
-      </section>
 
       {/* ── FINAL SCREEN & CTA ── */}
       <section className="py-36 md:py-48 px-6 text-center bg-[#F2EFE8]">
