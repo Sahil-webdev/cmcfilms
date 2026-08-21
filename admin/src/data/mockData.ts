@@ -27,6 +27,16 @@ export interface Story {
   status?: 'Published' | 'Draft';
 }
 
+export interface WeddingFilm {
+  id: string;
+  title: string;
+  youtubeUrl: string;
+  thumbnailUrl?: string;
+  category: string;
+  featured: boolean;
+  createdAt: string;
+}
+
 export interface PackageItem {
   id: string;
   name: string;
@@ -126,11 +136,7 @@ export const INITIAL_STORIES: Story[] = [
     featured: true,
     date: 'Feb 2026',
     excerpt: 'An enchanting multi-day royal wedding celebration surrounded by the shimmering waters of Lake Pichola.',
-    content: `Nestled amidst the serene waters of Lake Pichola, Devansh and Shreya's wedding at Jagmandir Island Palace was a masterpiece of heritage, elegance, and timeless romance.
-
-From the ceremonial boat arrival of the groom to the emotional sunset Vows against the backdrop of the City Palace, every moment was captured in 4K cinema and candid editorial frames.
-
-The Sangeet evening glittered with thousands of fairy lights, while traditional Rajasthani folk music echoed across the island Courtyard. Our team captured every tears of joy, intricate bridal detail, and grand celebration.`,
+    content: `Nestled amidst the serene waters of Lake Pichola, Devansh and Shreya's wedding at Jagmandir Island Palace was a masterpiece of heritage, elegance, and timeless romance.`,
     status: 'Published',
   },
   {
@@ -144,11 +150,7 @@ The Sangeet evening glittered with thousands of fairy lights, while traditional 
     featured: true,
     date: 'Jan 2026',
     excerpt: 'A breezy, sun-kissed beach destination wedding filled with laughter, pastel florals, and golden hour magic.',
-    content: `Siddharth and Natasha chose the serene golden beaches of Vagator for their dream destination wedding.
-
-Surrounded by close family and friends, their outdoor seaside ceremony combined modern minimalistic aesthetics with warm traditional rituals.
-
-Our drone cinematographers captured breathtaking aerial sequences of the couple walking along the shoreline at dusk, creating a teaser that gained over 500,000 views on Instagram.`,
+    content: `Siddharth and Natasha chose the serene golden beaches of Vagator for their dream destination wedding.`,
     status: 'Published',
   },
   {
@@ -178,6 +180,36 @@ Our drone cinematographers captured breathtaking aerial sequences of the couple 
     excerpt: 'An intimate pre-wedding photo story capturing quiet moments by the lake.',
     content: `Before their winter wedding, Yash and Riya spent a peaceful morning exploring secret heritage nooks and lakeside docks around Udaipur.`,
     status: 'Published',
+  },
+];
+
+export const INITIAL_FILMS: WeddingFilm[] = [
+  {
+    id: 'film-1',
+    title: 'The Royal Affair | Devansh & Shreya | Udaipur Wedding Film',
+    youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800',
+    category: 'Cinematic Film',
+    featured: true,
+    createdAt: '2026-08-20',
+  },
+  {
+    id: 'film-2',
+    title: 'Sunset Beach Vows | Siddharth & Natasha | Goa Wedding Teaser',
+    youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800',
+    category: 'Teaser Reel',
+    featured: true,
+    createdAt: '2026-08-18',
+  },
+  {
+    id: 'film-3',
+    title: 'Pre-Wedding Symphony | Yash & Riya | Udaipur Lake Shoot',
+    youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=800',
+    category: 'Pre-Wedding Film',
+    featured: false,
+    createdAt: '2026-08-15',
   },
 ];
 

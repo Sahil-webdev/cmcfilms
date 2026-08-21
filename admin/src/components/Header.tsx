@@ -25,6 +25,8 @@ export const Header: React.FC<HeaderProps> = ({
         return { main: 'Inquiries & Bookings', desc: 'Manage client leads, proposals & booking confirmations' };
       case 'stories':
         return { main: 'Wedding Stories', desc: 'Curate luxury website portfolio galleries' };
+      case 'films':
+        return { main: 'Wedding Films CMS', desc: 'Manage YouTube cinematic films & video redirects' };
       case 'packages':
         return { main: 'Packages & Pricing', desc: 'Edit investment tiers, deliverables & rates' };
       case 'media':

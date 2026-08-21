@@ -9,6 +9,7 @@ import { LoginPage } from './pages/LoginPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { InquiriesPage } from './pages/InquiriesPage';
 import { StoriesPage } from './pages/StoriesPage';
+import { FilmsPage } from './pages/FilmsPage';
 import { PackagesPage } from './pages/PackagesPage';
 import { MediaPage } from './pages/MediaPage';
 import { AnalyticsPage } from './pages/AnalyticsPage';
@@ -16,10 +17,12 @@ import { SettingsPage } from './pages/SettingsPage';
 import {
   INITIAL_INQUIRIES,
   INITIAL_STORIES,
+  INITIAL_FILMS,
   INITIAL_PACKAGES,
   INITIAL_MEDIA,
   Inquiry,
   Story,
+  WeddingFilm,
   PackageItem,
   MediaAsset,
 } from './data/mockData';
@@ -36,6 +39,7 @@ const AdminContent: React.FC = () => {
   // Data states
   const [inquiries, setInquiries] = useState<Inquiry[]>(INITIAL_INQUIRIES);
   const [stories, setStories] = useState<Story[]>(INITIAL_STORIES);
+  const [films, setFilms] = useState<WeddingFilm[]>(INITIAL_FILMS);
   const [packages, setPackages] = useState<PackageItem[]>(INITIAL_PACKAGES);
   const [media, setMedia] = useState<MediaAsset[]>(INITIAL_MEDIA);
 
@@ -99,6 +103,19 @@ const AdminContent: React.FC = () => {
     setStories([story, ...stories]);
   };
 
+  // Film Handlers
+  const handleAddFilm = (film: WeddingFilm) => {
+    setFilms([film, ...films]);
+  };
+
+  const handleDeleteFilm = (id: string) => {
+    setFilms((prev) => prev.filter((f) => f.id !== id));
+  };
+
+  const handleToggleFeaturedFilm = (id: string) => {
+    setFilms((prev) => prev.map((f) => (f.id === id ? { ...f, featured: !f.featured } : f)));
+  };
+
   const handleUpdatePackage = (pkg: PackageItem) => {
     setPackages((prev) => prev.map((p) => (p.id === pkg.id ? pkg : p)));
   };
@@ -140,6 +157,15 @@ const AdminContent: React.FC = () => {
             onAddStory={handleAddStory}
           />
         );
+      case 'films':
+        return (
+          <FilmsPage
+            films={films}
+            onAddFilm={handleAddFilm}
+            onDeleteFilm={handleDeleteFilm}
+            onToggleFeatured={handleToggleFeaturedFilm}
+          />
+        );
       case 'packages':
         return <PackagesPage packages={packages} onUpdatePackage={handleUpdatePackage} />;
       case 'media':
@@ -162,7 +188,7 @@ const AdminContent: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex bg-slate-50 dark:bg-[#0B0C10] text-slate-900 dark:text-[#E2E8F0] transition-colors duration-200">
+    <div className="min-h-screen flex bg-slate-50 dark:bg-[#0B0C10] text-slate-900 dark:text-[#E2E8F0] transition-colors duration-200 font-sans">
       {/* Sidebar */}
       <Sidebar
         isCollapsed={isSidebarCollapsed}
@@ -196,7 +222,7 @@ const AdminContent: React.FC = () => {
       {/* New Inquiry Modal */}
       {showNewInquiryModal && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-[#121520] border border-slate-200 dark:border-[#23293D] rounded-3xl max-w-md w-full p-6 space-y-5 shadow-2xl relative">
+          <div className="bg-white dark:bg-[#121522] border border-slate-200 dark:border-[#23293D] rounded-3xl max-w-md w-full p-6 space-y-5 shadow-2xl relative">
             <button
               onClick={() => setShowNewInquiryModal(false)}
               className="absolute right-5 top-5 p-1.5 rounded-xl bg-slate-100 dark:bg-[#1A1E2C] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
@@ -205,7 +231,7 @@ const AdminContent: React.FC = () => {
             </button>
 
             <div>
-              <h3 className="font-editorial text-2xl font-semibold text-slate-900 dark:text-white">Create New Inquiry</h3>
+              <h3 className="text-2xl font-bold text-slate-900 dark:text-white font-sans">Create New Inquiry</h3>
               <p className="text-xs text-slate-500 dark:text-slate-400">Add a new client wedding booking request</p>
             </div>
 
@@ -218,7 +244,7 @@ const AdminContent: React.FC = () => {
                   value={newCouple}
                   onChange={(e) => setNewCouple(e.target.value)}
                   placeholder="e.g. Sameer & Priyanka"
-                  className="w-full bg-slate-50 dark:bg-[#1A1E2C] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147] focus:outline-none focus:border-[#C47A65]"
+                  className="w-full bg-slate-50 dark:bg-[#1A1E2C] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147] focus:outline-none focus:border-[#8C90C1]"
                 />
               </div>
 
@@ -240,7 +266,7 @@ const AdminContent: React.FC = () => {
                     value={newEmail}
                     onChange={(e) => setNewEmail(e.target.value)}
                     placeholder="couple@gmail.com"
-                    className="w-full bg-slate-50 dark:bg-[#1A1E2C] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147]"
+                    className="w-full bg-slate-50 dark:bg-[#1A1E2E] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147]"
                   />
                 </div>
               </div>
@@ -252,7 +278,7 @@ const AdminContent: React.FC = () => {
                     type="date"
                     value={newDate}
                     onChange={(e) => setNewDate(e.target.value)}
-                    className="w-full bg-slate-50 dark:bg-[#1A1E2C] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147]"
+                    className="w-full bg-slate-50 dark:bg-[#1A1E2E] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147]"
                   />
                 </div>
                 <div className="space-y-1">
@@ -262,7 +288,7 @@ const AdminContent: React.FC = () => {
                     value={newVenue}
                     onChange={(e) => setNewVenue(e.target.value)}
                     placeholder="Udaipur, Rajasthan"
-                    className="w-full bg-slate-50 dark:bg-[#1A1E2C] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147]"
+                    className="w-full bg-slate-50 dark:bg-[#1A1E2E] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147]"
                   />
                 </div>
               </div>
@@ -274,13 +300,13 @@ const AdminContent: React.FC = () => {
                   value={newBudget}
                   onChange={(e) => setNewBudget(e.target.value)}
                   placeholder="e.g. ₹10,00,000"
-                  className="w-full bg-slate-50 dark:bg-[#1A1E2C] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147]"
+                  className="w-full bg-slate-50 dark:bg-[#1A1E2E] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147]"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-[#C47A65] hover:bg-[#B36854] text-white font-semibold py-3 rounded-xl transition-colors cursor-pointer"
+                className="w-full bg-[#8C90C1] hover:bg-[#787CAE] text-white font-semibold py-3 rounded-xl transition-colors cursor-pointer"
               >
                 Save Inquiry
               </button>

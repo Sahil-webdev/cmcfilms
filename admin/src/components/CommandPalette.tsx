@@ -76,12 +76,22 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
           },
         },
         {
-          id: 'nav-[#C47A65]',
+          id: 'nav-stories',
           title: 'Go to Wedding Stories',
           subtitle: 'Curate luxury website portfolio stories',
           icon: Film,
           action: () => {
             setActiveTab('stories');
+            onClose();
+          },
+        },
+        {
+          id: 'nav-films',
+          title: 'Go to Wedding Films',
+          subtitle: 'Manage YouTube film links & video teasers',
+          icon: Film,
+          action: () => {
+            setActiveTab('films');
             onClose();
           },
         },

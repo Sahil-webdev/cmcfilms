@@ -4,6 +4,7 @@ import {
   LayoutDashboard,
   Inbox,
   Film,
+  Video,
   Sparkles,
   Image as ImageIcon,
   BarChart3,
@@ -27,6 +28,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggleCollapse 
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'inquiries', label: 'Inquiries & Bookings', icon: Inbox, badge: '5 New' },
     { id: 'stories', label: 'Wedding Stories', icon: Film },
+    { id: 'films', label: 'Wedding Films', icon: Video },
     { id: 'packages', label: 'Packages & Rates', icon: Sparkles },
     { id: 'media', label: 'Media Library', icon: ImageIcon },
   ];
