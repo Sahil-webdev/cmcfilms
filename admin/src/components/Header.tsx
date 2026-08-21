@@ -76,12 +76,18 @@ export const Header: React.FC<HeaderProps> = ({
         </button>
 
         {/* Uiverse.io Sun/Moon Switcher Toggle Button */}
-        <div className="flex items-center gap-2" title={`Current theme: ${theme} mode`}>
-          <label className="ui-switch">
+        <div className="flex items-center gap-2" title={`Click to switch mode (Current: ${theme})`}>
+          <label
+            className="ui-switch cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault();
+              toggleTheme();
+            }}
+          >
             <input
               type="checkbox"
               checked={theme === 'dark'}
-              onChange={toggleTheme}
+              readOnly
             />
             <div className="slider">
               <div className="circle"></div>

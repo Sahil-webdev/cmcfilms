@@ -11,19 +11,26 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setThemeState] = useState<Theme>(() => {
-    const saved = localStorage.getItem('cmc_admin_theme');
-    return (saved as Theme) || 'light';
-  });
+  const [theme, setThemeState] = useState<Theme>('light');
 
   useEffect(() => {
-    localStorage.setItem('cmc_admin_theme', theme);
+    // Sync with html & body elements
     const root = document.documentElement;
+    const body = document.body;
+    
     if (theme === 'dark') {
       root.classList.add('dark');
+      root.classList.remove('light');
+      body.classList.add('dark');
+      body.classList.remove('light');
     } else {
       root.classList.remove('dark');
+      root.classList.add('light');
+      body.classList.remove('dark');
+      body.classList.add('light');
     }
+
+    localStorage.setItem('cmc_admin_theme', theme);
   }, [theme]);
 
   const toggleTheme = () => {
