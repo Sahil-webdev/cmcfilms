@@ -179,15 +179,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggleCollapse 
             <img
               src={user?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'}
               alt={user?.name}
-              className="h-8.5 w-8.5 rounded-full object-cover border-2 border-[#8C90C1] shrink-0"
+              className="w-9 h-9 rounded-full object-cover border-2 border-[#8C90C1] shrink-0"
             />
             {!isCollapsed && (
               <div className="min-w-0">
                 <p className="text-xs font-bold text-slate-900 dark:text-white truncate">
-                  {user?.name || 'CMC Director'}
+                  {user?.name || 'Sahil Sharma'}
                 </p>
                 <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">
-                  {user?.role || 'Administrator'}
+                  {user?.role || 'Founder & Director'}
                 </p>
               </div>
             )}
