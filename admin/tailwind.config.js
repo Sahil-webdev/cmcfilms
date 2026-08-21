@@ -9,19 +9,19 @@ export default {
     extend: {
       colors: {
         studio: {
-          bg: "#090A0F",
-          card: "#11131C",
-          border: "#202434",
-          accent: "#C47A65",
-          accentHover: "#B36854",
+          bg: "#0B0D14",
+          card: "#121522",
+          border: "#1E2235",
+          accent: "#8C90C1",
+          accentHover: "#787CAE",
           gold: "#D4AF37",
-          text: "#E2E8F0",
+          text: "#F8FAFC",
           muted: "#94A3B8"
         }
       },
       fontFamily: {
-        sans: ['"DM Sans"', 'Inter', 'sans-serif'],
-        editorial: ['"DM Sans"', 'Inter', 'sans-serif'],
+        sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+        editorial: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
       }
     },
   },

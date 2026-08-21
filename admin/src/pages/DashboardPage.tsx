@@ -55,7 +55,7 @@ export const DashboardPage: React.FC<DashboardProps> = ({
       change: '100% deposit',
       period: 'October - December',
       icon: CheckCircle2,
-      accent: 'border-l-4 border-l-[#C47A65]',
+      accent: 'border-l-4 border-l-[#8C90C1]',
     },
     {
       title: 'Published Stories',
@@ -63,7 +63,7 @@ export const DashboardPage: React.FC<DashboardProps> = ({
       change: '4 Featured',
       period: 'on live website',
       icon: Sparkles,
-      accent: 'border-l-4 border-l-sky-500',
+      accent: 'border-l-4 border-l-indigo-400',
     },
   ];
 
@@ -77,26 +77,26 @@ export const DashboardPage: React.FC<DashboardProps> = ({
   ];
 
   return (
-    <div className="p-6 sm:p-8 space-y-8 max-w-7xl mx-auto">
+    <div className="p-6 sm:p-8 space-y-8 max-w-7xl mx-auto font-sans">
       {/* Contextual Top Summary & Action Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200 dark:border-[#1E2333]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200 dark:border-[#1E2235]">
         <div>
-          <h1 className="font-editorial text-2xl sm:text-3xl font-semibold text-slate-900 dark:text-white">
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white font-sans">
             Welcome back, Sahil
           </h1>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-            Studio booking activity overview for <span className="font-medium text-slate-800 dark:text-white">August 2026</span>
+            Studio booking activity overview for <span className="font-semibold text-slate-800 dark:text-white">August 2026</span>
           </p>
         </div>
 
         {/* Controls */}
         <div className="flex items-center gap-3">
           {/* Date Range Selector */}
-          <div className="flex items-center p-1 rounded-xl text-xs font-medium bg-slate-100 dark:bg-[#141722] border border-slate-200 dark:border-[#23283B]">
+          <div className="flex items-center p-1 rounded-xl text-xs font-medium bg-slate-100 dark:bg-[#121522] border border-slate-200 dark:border-[#202435]">
             <button
               onClick={() => setDateRange('30d')}
               className={`px-3 py-1 rounded-lg transition-colors ${
-                dateRange === '30d' ? 'bg-[#C47A65] text-white font-semibold' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                dateRange === '30d' ? 'bg-[#8C90C1] text-white font-semibold' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               30 Days
@@ -104,7 +104,7 @@ export const DashboardPage: React.FC<DashboardProps> = ({
             <button
               onClick={() => setDateRange('3m')}
               className={`px-3 py-1 rounded-lg transition-colors ${
-                dateRange === '3m' ? 'bg-[#C47A65] text-white font-semibold' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                dateRange === '3m' ? 'bg-[#8C90C1] text-white font-semibold' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               3 Months
@@ -112,7 +112,7 @@ export const DashboardPage: React.FC<DashboardProps> = ({
             <button
               onClick={() => setDateRange('ytd')}
               className={`px-3 py-1 rounded-lg transition-colors ${
-                dateRange === 'ytd' ? 'bg-[#C47A65] text-white font-semibold' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                dateRange === 'ytd' ? 'bg-[#8C90C1] text-white font-semibold' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               YTD
@@ -121,7 +121,7 @@ export const DashboardPage: React.FC<DashboardProps> = ({
 
           <button
             onClick={() => onNavigateTab('analytics')}
-            className="flex items-center gap-2 px-3.5 py-2 rounded-xl border text-xs font-semibold transition-colors bg-white dark:bg-[#141722] hover:bg-slate-50 dark:hover:bg-[#1C202E] border-slate-200 dark:border-[#23283B] text-slate-700 dark:text-slate-300 shadow-sm"
+            className="flex items-center gap-2 px-3.5 py-2 rounded-xl border text-xs font-semibold transition-colors bg-white dark:bg-[#121522] hover:bg-slate-50 dark:hover:bg-[#1A1E2E] border-slate-200 dark:border-[#202435] text-slate-700 dark:text-slate-300 shadow-sm"
           >
             <Download className="h-3.5 w-3.5" />
             <span>Export Summary</span>
@@ -136,14 +136,14 @@ export const DashboardPage: React.FC<DashboardProps> = ({
           return (
             <div
               key={idx}
-              className={`bg-white dark:bg-[#121520] border border-slate-200 dark:border-[#202434] ${stat.accent} rounded-2xl p-5 space-y-3 shadow-sm hover:border-[#C47A65]/40 transition-colors`}
+              className={`bg-white dark:bg-[#121522] border border-slate-200 dark:border-[#1E2235] ${stat.accent} rounded-2xl p-5 space-y-3 shadow-sm hover:border-[#8C90C1]/40 transition-colors`}
             >
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">{stat.title}</span>
-                <Icon className="h-4 w-4 text-[#C47A65]" />
+                <Icon className="h-4 w-4 text-[#8C90C1]" />
               </div>
               <div>
-                <p className="font-editorial text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">{stat.value}</p>
+                <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white font-sans">{stat.value}</p>
                 <div className="flex items-center gap-2 text-[11px] mt-1.5">
                   <span className="font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">
                     {stat.change}
@@ -157,20 +157,20 @@ export const DashboardPage: React.FC<DashboardProps> = ({
       </div>
 
       {/* Hero Analytics Chart Section */}
-      <div className="bg-white dark:bg-[#121520] border border-slate-200 dark:border-[#202434] rounded-2xl p-6 space-y-6 shadow-sm">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-[#1E2333] pb-4">
+      <div className="bg-white dark:bg-[#121522] border border-slate-200 dark:border-[#1E2235] rounded-2xl p-6 space-y-6 shadow-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-[#1E2235] pb-4">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-[#C47A65]">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-[#8C90C1]">
               REVENUE & BOOKING ANALYTICS
             </span>
-            <h3 className="font-editorial text-xl font-semibold mt-0.5 text-slate-900 dark:text-white">
+            <h3 className="text-xl font-bold mt-0.5 text-slate-900 dark:text-white font-sans">
               Studio Revenue Trend (2026)
             </h3>
           </div>
 
           <div className="flex items-center gap-4 text-xs font-medium text-slate-500 dark:text-slate-400">
             <span className="flex items-center gap-1.5">
-              <span className="h-2.5 w-2.5 rounded-full bg-[#C47A65]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#8C90C1]" />
               Revenue (Lakhs)
             </span>
             <span className="flex items-center gap-1.5">
@@ -192,7 +192,7 @@ export const DashboardPage: React.FC<DashboardProps> = ({
 
                 {/* Revenue Bar */}
                 <div
-                  className="w-1/2 bg-gradient-to-t from-[#C47A65]/40 to-[#C47A65] rounded-t-lg transition-all duration-300 group-hover:brightness-125"
+                  className="w-1/2 bg-gradient-to-t from-[#8C90C1]/40 to-[#8C90C1] rounded-t-lg transition-all duration-300 group-hover:brightness-125"
                   style={{ height: `${(d.revenue / 20) * 100}%` }}
                 />
                 {/* Bookings Bar */}
@@ -213,15 +213,15 @@ export const DashboardPage: React.FC<DashboardProps> = ({
       {/* Main 2-Column Section */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Left Column: Recent Inquiries */}
-        <div className="lg:col-span-8 bg-white dark:bg-[#121520] border border-slate-200 dark:border-[#202434] rounded-2xl p-6 space-y-5 shadow-sm">
-          <div className="flex items-center justify-between border-b border-slate-200 dark:border-[#1E2333] pb-4">
+        <div className="lg:col-span-8 bg-white dark:bg-[#121522] border border-slate-200 dark:border-[#1E2235] rounded-2xl p-6 space-y-5 shadow-sm">
+          <div className="flex items-center justify-between border-b border-slate-200 dark:border-[#1E2235] pb-4">
             <div>
-              <h3 className="font-editorial text-xl font-semibold text-slate-900 dark:text-white">Recent Booking Inquiries</h3>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white font-sans">Recent Booking Inquiries</h3>
               <p className="text-xs text-slate-500 dark:text-slate-400">Client wedding leads requiring action</p>
             </div>
             <button
               onClick={() => onNavigateTab('inquiries')}
-              className="text-xs font-semibold text-[#C47A65] hover:underline flex items-center gap-1"
+              className="text-xs font-semibold text-[#8C90C1] hover:underline flex items-center gap-1"
             >
               Manage All Inquiries
               <ArrowUpRight className="h-3.5 w-3.5" />
@@ -233,11 +233,11 @@ export const DashboardPage: React.FC<DashboardProps> = ({
               <div
                 key={item.id}
                 onClick={() => onSelectInquiry(item)}
-                className="p-4 rounded-xl bg-slate-50 dark:bg-[#171B29] border border-slate-200 dark:border-[#23293D] hover:border-[#C47A65]/50 transition-all duration-200 cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                className="p-4 rounded-xl bg-slate-50 dark:bg-[#171B29] border border-slate-200 dark:border-[#202435] hover:border-[#8C90C1]/50 transition-all duration-200 cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-4"
               >
                 <div className="space-y-1">
                   <div className="flex items-center gap-2.5">
-                    <span className="font-semibold text-sm text-slate-900 dark:text-white">{item.coupleName}</span>
+                    <span className="font-bold text-sm text-slate-900 dark:text-white">{item.coupleName}</span>
                     <span
                       className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${
                         item.status === 'New'
@@ -252,7 +252,7 @@ export const DashboardPage: React.FC<DashboardProps> = ({
                   </div>
                   <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
                     <span className="flex items-center gap-1">
-                      <MapPin className="h-3.5 w-3.5 text-[#C47A65]" />
+                      <MapPin className="h-3.5 w-3.5 text-[#8C90C1]" />
                       {item.venueLocation}
                     </span>
                     <span>•</span>
@@ -268,7 +268,7 @@ export const DashboardPage: React.FC<DashboardProps> = ({
                     <p className="text-xs font-mono font-semibold text-slate-900 dark:text-white">{item.estimatedBudget}</p>
                     <p className="text-[10px] text-slate-500">Budget Range</p>
                   </div>
-                  <button className="px-3 py-1.5 rounded-lg bg-white dark:bg-[#1A1E2C] text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-[#2B3147]">
+                  <button className="px-3 py-1.5 rounded-lg bg-white dark:bg-[#1A1E2E] text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-[#2B3147]">
                     View
                   </button>
                 </div>
@@ -280,10 +280,10 @@ export const DashboardPage: React.FC<DashboardProps> = ({
         {/* Right Column: Shoots Calendar & Top Destinations */}
         <div className="lg:col-span-4 space-y-6">
           {/* Upcoming Shoots Timeline */}
-          <div className="bg-white dark:bg-[#121520] border border-slate-200 dark:border-[#202434] rounded-2xl p-6 space-y-4 shadow-sm">
-            <div className="flex items-center justify-between border-b border-slate-200 dark:border-[#1E2333] pb-3">
-              <h3 className="font-editorial text-lg font-semibold text-slate-900 dark:text-white flex items-center gap-2">
-                <Clock className="h-4 w-4 text-[#C47A65]" />
+          <div className="bg-white dark:bg-[#121522] border border-slate-200 dark:border-[#1E2235] rounded-2xl p-6 space-y-4 shadow-sm">
+            <div className="flex items-center justify-between border-b border-slate-200 dark:border-[#1E2235] pb-3">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 font-sans">
+                <Clock className="h-4 w-4 text-[#8C90C1]" />
                 Upcoming Shoots
               </h3>
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
@@ -292,34 +292,34 @@ export const DashboardPage: React.FC<DashboardProps> = ({
             </div>
 
             <div className="space-y-3">
-              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#171B29] border border-slate-200 dark:border-[#23293D] space-y-1">
+              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#171B29] border border-slate-200 dark:border-[#202435] space-y-1">
                 <p className="text-xs font-bold text-slate-900 dark:text-white">Kabir & Rhea Wedding</p>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400">Rambagh Palace, Jaipur</p>
-                <p className="text-[10px] text-[#C47A65] font-mono">Oct 28 - Oct 30, 2026</p>
+                <p className="text-[10px] text-[#8C90C1] font-mono font-semibold">Oct 28 - Oct 30, 2026</p>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#171B29] border border-slate-200 dark:border-[#23293D] space-y-1">
+              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#171B29] border border-slate-200 dark:border-[#202435] space-y-1">
                 <p className="text-xs font-bold text-slate-900 dark:text-white">Aarav & Ananya Pre-Wedding</p>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400">Lake Pichola, Udaipur</p>
-                <p className="text-[10px] text-[#C47A65] font-mono">Nov 14, 2026</p>
+                <p className="text-[10px] text-[#8C90C1] font-mono font-semibold">Nov 14, 2026</p>
               </div>
             </div>
           </div>
 
           {/* Quick Package Card */}
-          <div className="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl p-5 space-y-3 shadow-sm">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-[#C47A65]">
+          <div className="bg-gradient-to-br from-[#8C90C1] to-[#6C70A6] text-white rounded-2xl p-5 space-y-3 shadow-md">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-white/80">
               MOST POPULAR PACKAGE
             </span>
-            <h4 className="font-editorial text-xl font-semibold text-white">The Royal Edition</h4>
-            <p className="text-xs text-slate-300">
+            <h4 className="text-xl font-bold text-white font-sans">The Royal Edition</h4>
+            <p className="text-xs text-white/90">
               3-Day luxury Cinema & Ultra-Candid photography for destination weddings.
             </p>
-            <div className="flex items-center justify-between pt-2 border-t border-slate-700">
+            <div className="flex items-center justify-between pt-2 border-t border-white/20">
               <span className="font-mono text-base font-bold text-white">₹7,50,000</span>
               <button
                 onClick={() => onNavigateTab('packages')}
-                className="text-xs font-semibold text-[#C47A65] hover:underline"
+                className="text-xs font-semibold text-white hover:underline"
               >
                 Edit Package →
               </button>

@@ -4,18 +4,19 @@
 
 @layer base {
   :root {
-    --bg-main: #F6F8FA;
+    --bg-main: #F4F6FB;
     --text-main: #0F172A;
   }
   
   html.dark {
-    --bg-main: #090A0F;
+    --bg-main: #0B0D14;
     --text-main: #F8FAFC;
   }
 
   body {
     background-color: var(--bg-main);
     color: var(--text-main);
+    font-family: 'Plus Jakarta Sans', sans-serif;
     transition: background-color 0.25s ease, color 0.25s ease;
     overflow-x: hidden;
   }
@@ -30,6 +31,6 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #C47A65;
+  background: #8C90C1;
   border-radius: 3px;
 }

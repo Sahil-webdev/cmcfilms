@@ -28,28 +28,28 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen w-full relative flex items-center justify-center bg-[#0B0C10] overflow-hidden px-4">
+    <div className="min-h-screen w-full relative flex items-center justify-center bg-[#0B0D14] overflow-hidden px-4 font-sans">
       {/* Background Image with Dark Vignette */}
       <div className="absolute inset-0 z-0">
         <img
           src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=1600"
           alt="CMC Studio Background"
-          className="h-full w-full object-cover opacity-20 scale-105 filter blur-[2px]"
+          className="h-full w-full object-cover opacity-15 scale-105 filter blur-[2px]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0B0C10] via-[#0B0C10]/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0B0D14] via-[#0B0D14]/80 to-transparent" />
       </div>
 
       {/* Login Card */}
-      <div className="relative z-10 w-full max-w-md bg-[#121520]/90 backdrop-blur-xl border border-[#23283B] rounded-3xl p-8 sm:p-10 shadow-2xl shadow-black/80 space-y-6">
+      <div className="relative z-10 w-full max-w-md bg-[#121522]/90 backdrop-blur-xl border border-[#202435] rounded-3xl p-8 sm:p-10 shadow-2xl space-y-6">
         {/* Brand Badge */}
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center h-14 w-14 rounded-2xl bg-[#C47A65]/15 border border-[#C47A65]/30 text-[#C47A65] mb-2 shadow-inner">
+          <div className="inline-flex items-center justify-center h-14 w-14 rounded-2xl bg-[#8C90C1]/15 border border-[#8C90C1]/30 text-[#8C90C1] mb-2 shadow-inner">
             <Film className="h-7 w-7" />
           </div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#C47A65]">
+          <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#8C90C1]">
             CMC FILMS STUDIO
           </p>
-          <h1 className="font-editorial text-3xl text-white font-medium tracking-tight">
+          <h1 className="text-3xl font-bold text-white tracking-tight font-sans">
             Admin Console Login
           </h1>
           <p className="text-xs text-slate-400">
@@ -59,7 +59,7 @@ export const LoginPage: React.FC = () => {
 
         {/* Error Alert */}
         {error && (
-          <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs text-center font-medium">
+          <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs text-center font-semibold">
             {error}
           </div>
         )}
@@ -76,7 +76,7 @@ export const LoginPage: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="admin@cmcfilms.com"
-                className="w-full bg-[#1A1E2C] text-sm text-white pl-10 pr-4 py-3 rounded-xl border border-[#2B3147] focus:outline-none focus:border-[#C47A65] transition-colors"
+                className="w-full bg-[#1A1E2E] text-sm text-white pl-10 pr-4 py-3 rounded-xl border border-[#2B3147] focus:outline-none focus:border-[#8C90C1] transition-colors"
               />
             </div>
           </div>
@@ -91,7 +91,7 @@ export const LoginPage: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full bg-[#1A1E2C] text-sm text-white pl-10 pr-10 py-3 rounded-xl border border-[#2B3147] focus:outline-none focus:border-[#C47A65] transition-colors"
+                className="w-full bg-[#1A1E2E] text-sm text-white pl-10 pr-10 py-3 rounded-xl border border-[#2B3147] focus:outline-none focus:border-[#8C90C1] transition-colors"
               />
               <button
                 type="button"
@@ -106,7 +106,7 @@ export const LoginPage: React.FC = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full flex items-center justify-center gap-2 bg-[#C47A65] hover:bg-[#B36854] text-white text-sm font-semibold py-3.5 rounded-xl shadow-lg shadow-[#C47A65]/25 transition-all duration-200 active:scale-95 cursor-pointer disabled:opacity-50"
+            className="w-full flex items-center justify-center gap-2 bg-[#8C90C1] hover:bg-[#787CAE] text-white text-sm font-semibold py-3.5 rounded-xl shadow-lg shadow-[#8C90C1]/25 transition-all duration-200 active:scale-95 cursor-pointer disabled:opacity-50"
           >
             <span>{isLoading ? 'Signing In...' : 'Sign In to Dashboard'}</span>
             <ArrowRight className="h-4 w-4" />
@@ -114,7 +114,7 @@ export const LoginPage: React.FC = () => {
         </form>
 
         {/* Demo Quick Login Card */}
-        <div className="p-3.5 rounded-2xl bg-[#171B28] border border-[#252B3E] space-y-2 text-center">
+        <div className="p-3.5 rounded-2xl bg-[#171B29] border border-[#202435] space-y-2 text-center">
           <div className="flex items-center justify-between text-[11px] font-semibold text-slate-400 px-1">
             <span className="flex items-center gap-1.5 text-amber-400">
               <Shield className="h-3.5 w-3.5" />
@@ -122,12 +122,12 @@ export const LoginPage: React.FC = () => {
             </span>
             <button
               onClick={handleDemoFill}
-              className="text-[#C47A65] hover:underline font-bold"
+              className="text-[#8C90C1] hover:underline font-bold cursor-pointer"
             >
               Autofill Demo
             </button>
           </div>
-          <div className="font-mono text-xs text-slate-300 bg-[#0E1017] p-2 rounded-lg border border-[#1E2333] flex justify-between px-3">
+          <div className="font-mono text-xs text-slate-300 bg-[#0B0D14] p-2 rounded-lg border border-[#1E2235] flex justify-between px-3">
             <span>admin@cmcfilms.com</span>
             <span className="text-slate-500">admin123</span>
           </div>
