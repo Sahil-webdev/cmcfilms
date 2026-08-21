@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PackageItem } from '../data/mockData';
-import { Sparkles, Check, Edit2, Save } from 'lucide-react';
+import { Check, Edit2, Save } from 'lucide-react';
 
 interface PackagesPageProps {
   packages: PackageItem[];
@@ -24,18 +24,18 @@ export const PackagesPage: React.FC<PackagesPageProps> = ({ packages, onUpdatePa
   return (
     <div className="p-6 sm:p-8 space-y-6 max-w-7xl mx-auto">
       <div>
-        <h3 className="font-editorial text-2xl text-white font-medium">Investment Packages Editor</h3>
-        <p className="text-xs text-slate-400">Configure photography & cinema package pricing and feature checklists</p>
+        <h3 className="font-editorial text-2xl font-semibold text-slate-900 dark:text-white">Investment Packages Editor</h3>
+        <p className="text-xs text-slate-500 dark:text-slate-400">Configure photography & cinema package pricing and feature checklists</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {packages.map((pkg) => (
           <div
             key={pkg.id}
-            className={`bg-[#121520] border rounded-3xl p-6 space-y-6 flex flex-col justify-between relative shadow-xl ${
+            className={`bg-white dark:bg-[#121520] border rounded-3xl p-6 space-y-6 flex flex-col justify-between relative shadow-sm ${
               pkg.popular
                 ? 'border-[#C47A65] shadow-[#C47A65]/10'
-                : 'border-[#202434]'
+                : 'border-slate-200 dark:border-[#202434]'
             }`}
           >
             {pkg.popular && (
@@ -49,12 +49,12 @@ export const PackagesPage: React.FC<PackagesPageProps> = ({ packages, onUpdatePa
                 <span className="text-[10px] font-mono uppercase text-[#C47A65] font-semibold">
                   {pkg.duration} COVERAGE
                 </span>
-                <h4 className="font-editorial text-2xl text-white font-medium">{pkg.name}</h4>
-                <p className="text-xs text-slate-400 mt-1">{pkg.tagline}</p>
+                <h4 className="font-editorial text-2xl font-semibold text-slate-900 dark:text-white">{pkg.name}</h4>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{pkg.tagline}</p>
               </div>
 
               {/* Price Row */}
-              <div className="p-4 rounded-2xl bg-[#171B29] border border-[#23293D] flex items-center justify-between">
+              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-[#171B29] border border-slate-200 dark:border-[#23293D] flex items-center justify-between">
                 <div>
                   <span className="text-[10px] text-slate-400 uppercase tracking-wider block">
                     Starting Investment
@@ -64,10 +64,10 @@ export const PackagesPage: React.FC<PackagesPageProps> = ({ packages, onUpdatePa
                       type="text"
                       value={editPrice}
                       onChange={(e) => setEditPrice(e.target.value)}
-                      className="bg-[#0B0C10] text-white font-mono text-lg font-bold px-2 py-1 rounded border border-[#C47A65] w-36"
+                      className="bg-white dark:bg-[#0B0C10] text-slate-900 dark:text-white font-mono text-lg font-bold px-2 py-1 rounded border border-[#C47A65] w-36"
                     />
                   ) : (
-                    <span className="font-mono text-2xl font-bold text-white">{pkg.price}</span>
+                    <span className="font-mono text-2xl font-bold text-slate-900 dark:text-white">{pkg.price}</span>
                   )}
                 </div>
 
@@ -81,7 +81,7 @@ export const PackagesPage: React.FC<PackagesPageProps> = ({ packages, onUpdatePa
                 ) : (
                   <button
                     onClick={() => handleStartEdit(pkg)}
-                    className="p-2 rounded-xl bg-[#1A1E2C] text-slate-400 hover:text-white transition-colors"
+                    className="p-2 rounded-xl bg-slate-200 dark:bg-[#1A1E2C] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
                     title="Edit Price"
                   >
                     <Edit2 className="h-4 w-4" />
@@ -91,10 +91,10 @@ export const PackagesPage: React.FC<PackagesPageProps> = ({ packages, onUpdatePa
 
               {/* Features List */}
               <div className="space-y-2.5 pt-2">
-                <span className="text-xs font-semibold text-slate-300">Included Deliverables:</span>
+                <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">Included Deliverables:</span>
                 <ul className="space-y-2">
                   {pkg.features.map((feat, idx) => (
-                    <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-300">
+                    <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-600 dark:text-slate-300">
                       <div className="p-0.5 rounded bg-[#C47A65]/20 text-[#C47A65] mt-0.5 shrink-0">
                         <Check className="h-3 w-3" />
                       </div>

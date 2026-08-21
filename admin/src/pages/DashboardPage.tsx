@@ -10,9 +10,6 @@ import {
   MapPin,
   Sparkles,
   Download,
-  Filter,
-  BarChart2,
-  ChevronDown,
 } from 'lucide-react';
 
 interface DashboardProps {
@@ -82,24 +79,24 @@ export const DashboardPage: React.FC<DashboardProps> = ({
   return (
     <div className="p-6 sm:p-8 space-y-8 max-w-7xl mx-auto">
       {/* Contextual Top Summary & Action Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#1E2333]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200 dark:border-[#1E2333]">
         <div>
-          <h1 className="font-editorial text-2xl sm:text-3xl text-white font-semibold">
+          <h1 className="font-editorial text-2xl sm:text-3xl font-semibold text-slate-900 dark:text-white">
             Welcome back, Sahil
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
-            Studio booking activity overview for <span className="text-white font-medium">August 2026</span>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+            Studio booking activity overview for <span className="font-medium text-slate-800 dark:text-white">August 2026</span>
           </p>
         </div>
 
         {/* Controls */}
         <div className="flex items-center gap-3">
           {/* Date Range Selector */}
-          <div className="flex items-center bg-[#141722] border border-[#23283B] p-1 rounded-xl text-xs font-medium">
+          <div className="flex items-center p-1 rounded-xl text-xs font-medium bg-slate-100 dark:bg-[#141722] border border-slate-200 dark:border-[#23283B]">
             <button
               onClick={() => setDateRange('30d')}
               className={`px-3 py-1 rounded-lg transition-colors ${
-                dateRange === '30d' ? 'bg-[#C47A65] text-white font-semibold' : 'text-slate-400 hover:text-white'
+                dateRange === '30d' ? 'bg-[#C47A65] text-white font-semibold' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               30 Days
@@ -107,7 +104,7 @@ export const DashboardPage: React.FC<DashboardProps> = ({
             <button
               onClick={() => setDateRange('3m')}
               className={`px-3 py-1 rounded-lg transition-colors ${
-                dateRange === '3m' ? 'bg-[#C47A65] text-white font-semibold' : 'text-slate-400 hover:text-white'
+                dateRange === '3m' ? 'bg-[#C47A65] text-white font-semibold' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               3 Months
@@ -115,7 +112,7 @@ export const DashboardPage: React.FC<DashboardProps> = ({
             <button
               onClick={() => setDateRange('ytd')}
               className={`px-3 py-1 rounded-lg transition-colors ${
-                dateRange === 'ytd' ? 'bg-[#C47A65] text-white font-semibold' : 'text-slate-400 hover:text-white'
+                dateRange === 'ytd' ? 'bg-[#C47A65] text-white font-semibold' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               YTD
@@ -124,7 +121,7 @@ export const DashboardPage: React.FC<DashboardProps> = ({
 
           <button
             onClick={() => onNavigateTab('analytics')}
-            className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#141722] hover:bg-[#1C202E] border border-[#23283B] text-xs font-semibold text-slate-300 hover:text-white transition-colors"
+            className="flex items-center gap-2 px-3.5 py-2 rounded-xl border text-xs font-semibold transition-colors bg-white dark:bg-[#141722] hover:bg-slate-50 dark:hover:bg-[#1C202E] border-slate-200 dark:border-[#23283B] text-slate-700 dark:text-slate-300 shadow-sm"
           >
             <Download className="h-3.5 w-3.5" />
             <span>Export Summary</span>
@@ -139,16 +136,16 @@ export const DashboardPage: React.FC<DashboardProps> = ({
           return (
             <div
               key={idx}
-              className={`bg-[#121520] border border-[#202434] ${stat.accent} rounded-2xl p-5 space-y-3 shadow-lg hover:border-[#C47A65]/40 transition-colors`}
+              className={`bg-white dark:bg-[#121520] border border-slate-200 dark:border-[#202434] ${stat.accent} rounded-2xl p-5 space-y-3 shadow-sm hover:border-[#C47A65]/40 transition-colors`}
             >
               <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-slate-400">{stat.title}</span>
+                <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">{stat.title}</span>
                 <Icon className="h-4 w-4 text-[#C47A65]" />
               </div>
               <div>
-                <p className="font-editorial text-2xl sm:text-3xl text-white font-bold">{stat.value}</p>
+                <p className="font-editorial text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">{stat.value}</p>
                 <div className="flex items-center gap-2 text-[11px] mt-1.5">
-                  <span className="font-semibold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">
+                  <span className="font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">
                     {stat.change}
                   </span>
                   <span className="text-slate-500">{stat.period}</span>
@@ -160,18 +157,18 @@ export const DashboardPage: React.FC<DashboardProps> = ({
       </div>
 
       {/* Hero Analytics Chart Section */}
-      <div className="bg-[#121520] border border-[#202434] rounded-2xl p-6 space-y-6 shadow-xl">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#1E2333] pb-4">
+      <div className="bg-white dark:bg-[#121520] border border-slate-200 dark:border-[#202434] rounded-2xl p-6 space-y-6 shadow-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-[#1E2333] pb-4">
           <div>
             <span className="text-[10px] font-bold uppercase tracking-widest text-[#C47A65]">
               REVENUE & BOOKING ANALYTICS
             </span>
-            <h3 className="font-editorial text-xl text-white font-semibold mt-0.5">
+            <h3 className="font-editorial text-xl font-semibold mt-0.5 text-slate-900 dark:text-white">
               Studio Revenue Trend (2026)
             </h3>
           </div>
 
-          <div className="flex items-center gap-4 text-xs font-medium text-slate-400">
+          <div className="flex items-center gap-4 text-xs font-medium text-slate-500 dark:text-slate-400">
             <span className="flex items-center gap-1.5">
               <span className="h-2.5 w-2.5 rounded-full bg-[#C47A65]" />
               Revenue (Lakhs)
@@ -183,13 +180,13 @@ export const DashboardPage: React.FC<DashboardProps> = ({
           </div>
         </div>
 
-        {/* Visual Chart Graph (Pure SVG & Tailwind Bars) */}
+        {/* Visual Chart Graph */}
         <div className="h-56 w-full flex items-end justify-between gap-4 sm:gap-8 pt-4 px-2">
           {chartData.map((d, idx) => (
             <div key={idx} className="flex-1 flex flex-col items-center gap-3 h-full justify-end group">
               <div className="w-full flex items-end justify-center gap-1.5 h-44 relative">
                 {/* Hover Tooltip */}
-                <div className="absolute -top-10 opacity-0 group-hover:opacity-100 transition-opacity bg-black border border-[#23283B] text-[10px] text-white px-2 py-1 rounded shadow-lg whitespace-nowrap z-10 pointer-events-none">
+                <div className="absolute -top-10 opacity-0 group-hover:opacity-100 transition-opacity bg-slate-900 text-white text-[10px] px-2 py-1 rounded shadow-lg whitespace-nowrap z-10 pointer-events-none">
                   ₹{d.revenue} Lakhs • {d.bookings} Weddings
                 </div>
 
@@ -205,7 +202,7 @@ export const DashboardPage: React.FC<DashboardProps> = ({
                 />
               </div>
 
-              <span className="text-xs font-semibold text-slate-400 group-hover:text-white transition-colors">
+              <span className="text-xs font-semibold text-slate-600 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
                 {d.month}
               </span>
             </div>
@@ -216,11 +213,11 @@ export const DashboardPage: React.FC<DashboardProps> = ({
       {/* Main 2-Column Section */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Left Column: Recent Inquiries */}
-        <div className="lg:col-span-8 bg-[#121520] border border-[#202434] rounded-2xl p-6 space-y-5 shadow-xl">
-          <div className="flex items-center justify-between border-b border-[#1E2333] pb-4">
+        <div className="lg:col-span-8 bg-white dark:bg-[#121520] border border-slate-200 dark:border-[#202434] rounded-2xl p-6 space-y-5 shadow-sm">
+          <div className="flex items-center justify-between border-b border-slate-200 dark:border-[#1E2333] pb-4">
             <div>
-              <h3 className="font-editorial text-xl text-white font-semibold">Recent Booking Inquiries</h3>
-              <p className="text-xs text-slate-400">Client wedding leads requiring action</p>
+              <h3 className="font-editorial text-xl font-semibold text-slate-900 dark:text-white">Recent Booking Inquiries</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Client wedding leads requiring action</p>
             </div>
             <button
               onClick={() => onNavigateTab('inquiries')}
@@ -236,24 +233,24 @@ export const DashboardPage: React.FC<DashboardProps> = ({
               <div
                 key={item.id}
                 onClick={() => onSelectInquiry(item)}
-                className="p-4 rounded-xl bg-[#171B29] border border-[#23293D] hover:border-[#C47A65]/50 transition-all duration-200 cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                className="p-4 rounded-xl bg-slate-50 dark:bg-[#171B29] border border-slate-200 dark:border-[#23293D] hover:border-[#C47A65]/50 transition-all duration-200 cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-4"
               >
                 <div className="space-y-1">
                   <div className="flex items-center gap-2.5">
-                    <span className="font-semibold text-sm text-white">{item.coupleName}</span>
+                    <span className="font-semibold text-sm text-slate-900 dark:text-white">{item.coupleName}</span>
                     <span
                       className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${
                         item.status === 'New'
-                          ? 'bg-amber-500/10 text-amber-400 border-amber-500/30'
+                          ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30'
                           : item.status === 'Confirmed'
-                          ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
-                          : 'bg-sky-500/10 text-sky-400 border-sky-500/30'
+                          ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
+                          : 'bg-sky-500/10 text-sky-600 dark:text-sky-400 border-sky-500/30'
                       }`}
                     >
                       {item.status}
                     </span>
                   </div>
-                  <div className="flex items-center gap-3 text-xs text-slate-400">
+                  <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
                     <span className="flex items-center gap-1">
                       <MapPin className="h-3.5 w-3.5 text-[#C47A65]" />
                       {item.venueLocation}
@@ -268,10 +265,10 @@ export const DashboardPage: React.FC<DashboardProps> = ({
 
                 <div className="flex items-center justify-between sm:justify-end gap-4 text-right">
                   <div>
-                    <p className="text-xs font-mono font-semibold text-white">{item.estimatedBudget}</p>
+                    <p className="text-xs font-mono font-semibold text-slate-900 dark:text-white">{item.estimatedBudget}</p>
                     <p className="text-[10px] text-slate-500">Budget Range</p>
                   </div>
-                  <button className="px-3 py-1.5 rounded-lg bg-[#1A1E2C] text-xs font-semibold text-slate-300 hover:text-white border border-[#2B3147]">
+                  <button className="px-3 py-1.5 rounded-lg bg-white dark:bg-[#1A1E2C] text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-[#2B3147]">
                     View
                   </button>
                 </div>
@@ -283,9 +280,9 @@ export const DashboardPage: React.FC<DashboardProps> = ({
         {/* Right Column: Shoots Calendar & Top Destinations */}
         <div className="lg:col-span-4 space-y-6">
           {/* Upcoming Shoots Timeline */}
-          <div className="bg-[#121520] border border-[#202434] rounded-2xl p-6 space-y-4 shadow-xl">
-            <div className="flex items-center justify-between border-b border-[#1E2333] pb-3">
-              <h3 className="font-editorial text-lg text-white font-semibold flex items-center gap-2">
+          <div className="bg-white dark:bg-[#121520] border border-slate-200 dark:border-[#202434] rounded-2xl p-6 space-y-4 shadow-sm">
+            <div className="flex items-center justify-between border-b border-slate-200 dark:border-[#1E2333] pb-3">
+              <h3 className="font-editorial text-lg font-semibold text-slate-900 dark:text-white flex items-center gap-2">
                 <Clock className="h-4 w-4 text-[#C47A65]" />
                 Upcoming Shoots
               </h3>
@@ -295,30 +292,30 @@ export const DashboardPage: React.FC<DashboardProps> = ({
             </div>
 
             <div className="space-y-3">
-              <div className="p-3.5 rounded-xl bg-[#171B29] border border-[#23293D] space-y-1">
-                <p className="text-xs font-bold text-white">Kabir & Rhea Wedding</p>
-                <p className="text-[11px] text-slate-400">Rambagh Palace, Jaipur</p>
+              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#171B29] border border-slate-200 dark:border-[#23293D] space-y-1">
+                <p className="text-xs font-bold text-slate-900 dark:text-white">Kabir & Rhea Wedding</p>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">Rambagh Palace, Jaipur</p>
                 <p className="text-[10px] text-[#C47A65] font-mono">Oct 28 - Oct 30, 2026</p>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-[#171B29] border border-[#23293D] space-y-1">
-                <p className="text-xs font-bold text-white">Aarav & Ananya Pre-Wedding</p>
-                <p className="text-[11px] text-slate-400">Lake Pichola, Udaipur</p>
+              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#171B29] border border-slate-200 dark:border-[#23293D] space-y-1">
+                <p className="text-xs font-bold text-slate-900 dark:text-white">Aarav & Ananya Pre-Wedding</p>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">Lake Pichola, Udaipur</p>
                 <p className="text-[10px] text-[#C47A65] font-mono">Nov 14, 2026</p>
               </div>
             </div>
           </div>
 
           {/* Quick Package Card */}
-          <div className="bg-gradient-to-br from-[#1A1E2C] to-[#121520] border border-[#2A3045] rounded-2xl p-5 space-y-3 shadow-xl">
+          <div className="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl p-5 space-y-3 shadow-sm">
             <span className="text-[10px] font-bold uppercase tracking-widest text-[#C47A65]">
               MOST POPULAR PACKAGE
             </span>
-            <h4 className="font-editorial text-xl text-white font-semibold">The Royal Edition</h4>
-            <p className="text-xs text-slate-400">
+            <h4 className="font-editorial text-xl font-semibold text-white">The Royal Edition</h4>
+            <p className="text-xs text-slate-300">
               3-Day luxury Cinema & Ultra-Candid photography for destination weddings.
             </p>
-            <div className="flex items-center justify-between pt-2 border-t border-[#23283B]">
+            <div className="flex items-center justify-between pt-2 border-t border-slate-700">
               <span className="font-mono text-base font-bold text-white">₹7,50,000</span>
               <button
                 onClick={() => onNavigateTab('packages')}

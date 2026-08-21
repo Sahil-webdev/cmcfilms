@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Story } from '../data/mockData';
-import { Plus, Sparkles, MapPin, Film, X } from 'lucide-react';
+import { Plus, Sparkles, MapPin, X } from 'lucide-react';
 
 interface StoriesPageProps {
   stories: Story[];
@@ -42,8 +42,8 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ stories, onToggleFeatu
     <div className="p-6 sm:p-8 space-y-6 max-w-7xl mx-auto">
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="font-editorial text-2xl text-white font-medium">Wedding Stories Gallery</h3>
-          <p className="text-xs text-slate-400">Curate portfolio galleries displayed on the main website</p>
+          <h3 className="font-editorial text-2xl font-semibold text-slate-900 dark:text-white">Wedding Stories Gallery</h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400">Curate portfolio galleries displayed on the main website</p>
         </div>
 
         <button
@@ -60,7 +60,7 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ stories, onToggleFeatu
         {stories.map((story) => (
           <div
             key={story.id}
-            className="bg-[#121520] border border-[#202434] rounded-2xl overflow-hidden group hover:border-[#C47A65]/50 transition-all duration-300 shadow-xl flex flex-col justify-between"
+            className="bg-white dark:bg-[#121520] border border-slate-200 dark:border-[#202434] rounded-2xl overflow-hidden group hover:border-[#C47A65]/50 transition-all duration-300 shadow-sm flex flex-col justify-between"
           >
             {/* Image Header */}
             <div className="relative h-56 w-full overflow-hidden">
@@ -69,7 +69,7 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ stories, onToggleFeatu
                 alt={story.title}
                 className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#121520] via-transparent to-black/40" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30" />
 
               <span className="absolute top-3 left-3 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/20">
                 {story.category}
@@ -80,7 +80,7 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ stories, onToggleFeatu
                 className={`absolute top-3 right-3 p-1.5 rounded-full border backdrop-blur-md transition-colors ${
                   story.featured
                     ? 'bg-[#C47A65] text-white border-[#C47A65]'
-                    : 'bg-black/60 text-slate-400 border-white/20 hover:text-white'
+                    : 'bg-black/60 text-slate-300 border-white/20 hover:text-white'
                 }`}
                 title={story.featured ? 'Featured on Home Page' : 'Click to feature on Home'}
               >
@@ -92,17 +92,17 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ stories, onToggleFeatu
             <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
               <div className="space-y-1.5">
                 <span className="text-[11px] font-mono font-semibold text-[#C47A65]">{story.couple}</span>
-                <h4 className="font-editorial text-lg text-white font-medium leading-snug">
+                <h4 className="font-editorial text-lg font-semibold text-slate-900 dark:text-white leading-snug">
                   {story.title}
                 </h4>
               </div>
 
-              <div className="pt-3 border-t border-[#1E2333] flex items-center justify-between text-xs text-slate-400">
+              <div className="pt-3 border-t border-slate-200 dark:border-[#1E2333] flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                 <span className="flex items-center gap-1">
                   <MapPin className="h-3.5 w-3.5 text-[#C47A65]" />
                   {story.location}
                 </span>
-                <span className="font-mono text-[10px] bg-[#1A1E2C] px-2 py-0.5 rounded border border-[#2B3147]">
+                <span className="font-mono text-[10px] bg-slate-100 dark:bg-[#1A1E2C] text-slate-700 dark:text-slate-300 px-2 py-0.5 rounded border border-slate-200 dark:border-[#2B3147]">
                   {story.photosCount} Photos
                 </span>
               </div>
@@ -113,52 +113,52 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ stories, onToggleFeatu
 
       {/* Add Story Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#121520] border border-[#23293D] rounded-3xl max-w-md w-full p-6 space-y-5 shadow-2xl relative">
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-[#121520] border border-slate-200 dark:border-[#23293D] rounded-3xl max-w-md w-full p-6 space-y-5 shadow-2xl relative">
             <button
               onClick={() => setShowAddModal(false)}
-              className="absolute right-5 top-5 p-1.5 rounded-xl bg-[#1A1E2C] text-slate-400 hover:text-white"
+              className="absolute right-5 top-5 p-1.5 rounded-xl bg-slate-100 dark:bg-[#1A1E2C] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
             >
               <X className="h-5 w-5" />
             </button>
 
             <div>
-              <h3 className="font-editorial text-2xl text-white font-medium">Add Wedding Story</h3>
-              <p className="text-xs text-slate-400">Publish a new wedding gallery on the website</p>
+              <h3 className="font-editorial text-2xl font-semibold text-slate-900 dark:text-white">Add Wedding Story</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Publish a new wedding gallery on the website</p>
             </div>
 
             <form onSubmit={handleCreate} className="space-y-4 text-xs">
               <div className="space-y-1">
-                <label className="font-semibold text-slate-300">Story Title</label>
+                <label className="font-semibold text-slate-700 dark:text-slate-300">Story Title</label>
                 <input
                   type="text"
                   required
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="e.g. Whispers of Love in Lake City"
-                  className="w-full bg-[#1A1E2C] text-white p-3 rounded-xl border border-[#2B3147] focus:outline-none focus:border-[#C47A65]"
+                  className="w-full bg-slate-50 dark:bg-[#1A1E2C] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147] focus:outline-none focus:border-[#C47A65]"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="font-semibold text-slate-300">Couple Names</label>
+                <label className="font-semibold text-slate-700 dark:text-slate-300">Couple Names</label>
                 <input
                   type="text"
                   required
                   value={couple}
                   onChange={(e) => setCouple(e.target.value)}
                   placeholder="e.g. Rahul & Sunaina"
-                  className="w-full bg-[#1A1E2C] text-white p-3 rounded-xl border border-[#2B3147] focus:outline-none focus:border-[#C47A65]"
+                  className="w-full bg-slate-50 dark:bg-[#1A1E2C] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147] focus:outline-none focus:border-[#C47A65]"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <label className="font-semibold text-slate-300">Category</label>
+                  <label className="font-semibold text-slate-700 dark:text-slate-300">Category</label>
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value as any)}
-                    className="w-full bg-[#1A1E2C] text-white p-3 rounded-xl border border-[#2B3147]"
+                    className="w-full bg-slate-50 dark:bg-[#1A1E2C] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147]"
                   >
                     <option value="Royal Wedding">Royal Wedding</option>
                     <option value="Destination">Destination</option>
@@ -168,24 +168,24 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ stories, onToggleFeatu
                 </div>
 
                 <div className="space-y-1">
-                  <label className="font-semibold text-slate-300">Location</label>
+                  <label className="font-semibold text-slate-700 dark:text-slate-300">Location</label>
                   <input
                     type="text"
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
-                    className="w-full bg-[#1A1E2C] text-white p-3 rounded-xl border border-[#2B3147]"
+                    className="w-full bg-slate-50 dark:bg-[#1A1E2C] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147]"
                   />
                 </div>
               </div>
 
               <div className="space-y-1">
-                <label className="font-semibold text-slate-300">Cover Image URL</label>
+                <label className="font-semibold text-slate-700 dark:text-slate-300">Cover Image URL</label>
                 <input
                   type="text"
                   value={coverImage}
                   onChange={(e) => setCoverImage(e.target.value)}
                   placeholder="https://images.unsplash.com/..."
-                  className="w-full bg-[#1A1E2C] text-white p-3 rounded-xl border border-[#2B3147]"
+                  className="w-full bg-slate-50 dark:bg-[#1A1E2C] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147]"
                 />
               </div>
 

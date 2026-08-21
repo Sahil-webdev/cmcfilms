@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { CommandPalette } from './components/CommandPalette';
@@ -161,7 +162,7 @@ const AdminContent: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex bg-[#0B0C10] text-[#E2E8F0]">
+    <div className="min-h-screen flex bg-slate-50 dark:bg-[#0B0C10] text-slate-900 dark:text-[#E2E8F0] transition-colors duration-200">
       {/* Sidebar */}
       <Sidebar
         isCollapsed={isSidebarCollapsed}
@@ -178,7 +179,7 @@ const AdminContent: React.FC = () => {
         <main className="flex-1 overflow-y-auto pb-12">{renderActiveView()}</main>
       </div>
 
-      {/* Linear/Raycast Command Palette Modal (Cmd+K) */}
+      {/* Command Palette Modal (Cmd+K) */}
       <CommandPalette
         isOpen={isCommandPaletteOpen}
         onClose={() => setIsCommandPaletteOpen(false)}
@@ -194,86 +195,86 @@ const AdminContent: React.FC = () => {
 
       {/* New Inquiry Modal */}
       {showNewInquiryModal && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#121520] border border-[#23293D] rounded-3xl max-w-md w-full p-6 space-y-5 shadow-2xl relative">
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-[#121520] border border-slate-200 dark:border-[#23293D] rounded-3xl max-w-md w-full p-6 space-y-5 shadow-2xl relative">
             <button
               onClick={() => setShowNewInquiryModal(false)}
-              className="absolute right-5 top-5 p-1.5 rounded-xl bg-[#1A1E2C] text-slate-400 hover:text-white"
+              className="absolute right-5 top-5 p-1.5 rounded-xl bg-slate-100 dark:bg-[#1A1E2C] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
             >
               <X className="h-5 w-5" />
             </button>
 
             <div>
-              <h3 className="font-editorial text-2xl text-white font-semibold">Create New Inquiry</h3>
-              <p className="text-xs text-slate-400">Add a new client wedding booking request</p>
+              <h3 className="font-editorial text-2xl font-semibold text-slate-900 dark:text-white">Create New Inquiry</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Add a new client wedding booking request</p>
             </div>
 
             <form onSubmit={handleCreateInquiry} className="space-y-3.5 text-xs">
               <div className="space-y-1">
-                <label className="font-semibold text-slate-300">Couple Names</label>
+                <label className="font-semibold text-slate-700 dark:text-slate-300">Couple Names</label>
                 <input
                   type="text"
                   required
                   value={newCouple}
                   onChange={(e) => setNewCouple(e.target.value)}
                   placeholder="e.g. Sameer & Priyanka"
-                  className="w-full bg-[#1A1E2C] text-white p-3 rounded-xl border border-[#2B3147] focus:outline-none focus:border-[#C47A65]"
+                  className="w-full bg-slate-50 dark:bg-[#1A1E2C] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147] focus:outline-none focus:border-[#C47A65]"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <label className="font-semibold text-slate-300">Phone</label>
+                  <label className="font-semibold text-slate-700 dark:text-slate-300">Phone</label>
                   <input
                     type="text"
                     value={newPhone}
                     onChange={(e) => setNewPhone(e.target.value)}
                     placeholder="+91 98765 43210"
-                    className="w-full bg-[#1A1E2C] text-white p-3 rounded-xl border border-[#2B3147]"
+                    className="w-full bg-slate-50 dark:bg-[#1A1E2C] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147]"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="font-semibold text-slate-300">Email</label>
+                  <label className="font-semibold text-slate-700 dark:text-slate-300">Email</label>
                   <input
                     type="email"
                     value={newEmail}
                     onChange={(e) => setNewEmail(e.target.value)}
                     placeholder="couple@gmail.com"
-                    className="w-full bg-[#1A1E2C] text-white p-3 rounded-xl border border-[#2B3147]"
+                    className="w-full bg-slate-50 dark:bg-[#1A1E2C] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147]"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <label className="font-semibold text-slate-300">Wedding Date</label>
+                  <label className="font-semibold text-slate-700 dark:text-slate-300">Wedding Date</label>
                   <input
                     type="date"
                     value={newDate}
                     onChange={(e) => setNewDate(e.target.value)}
-                    className="w-full bg-[#1A1E2C] text-white p-3 rounded-xl border border-[#2B3147]"
+                    className="w-full bg-slate-50 dark:bg-[#1A1E2C] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147]"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="font-semibold text-slate-300">Venue / Location</label>
+                  <label className="font-semibold text-slate-700 dark:text-slate-300">Venue / Location</label>
                   <input
                     type="text"
                     value={newVenue}
                     onChange={(e) => setNewVenue(e.target.value)}
                     placeholder="Udaipur, Rajasthan"
-                    className="w-full bg-[#1A1E2C] text-white p-3 rounded-xl border border-[#2B3147]"
+                    className="w-full bg-slate-50 dark:bg-[#1A1E2C] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147]"
                   />
                 </div>
               </div>
 
               <div className="space-y-1">
-                <label className="font-semibold text-slate-300">Budget Range</label>
+                <label className="font-semibold text-slate-700 dark:text-slate-300">Budget Range</label>
                 <input
                   type="text"
                   value={newBudget}
                   onChange={(e) => setNewBudget(e.target.value)}
                   placeholder="e.g. ₹10,00,000"
-                  className="w-full bg-[#1A1E2C] text-white p-3 rounded-xl border border-[#2B3147]"
+                  className="w-full bg-slate-50 dark:bg-[#1A1E2C] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147]"
                 />
               </div>
 
@@ -293,9 +294,11 @@ const AdminContent: React.FC = () => {
 
 export function App() {
   return (
-    <AuthProvider>
-      <AdminContent />
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <AdminContent />
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 

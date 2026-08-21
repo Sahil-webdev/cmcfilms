@@ -7,14 +7,9 @@ import {
   Mail,
   Phone,
   X,
-  CheckCircle,
-  Download,
-  Filter,
-  SlidersHorizontal,
   ChevronLeft,
   ChevronRight,
   CheckSquare,
-  Square,
 } from 'lucide-react';
 
 interface InquiriesPageProps {
@@ -65,7 +60,7 @@ export const InquiriesPage: React.FC<InquiriesPageProps> = ({
   return (
     <div className="p-6 sm:p-8 space-y-6 max-w-7xl mx-auto">
       {/* Header & Filter Controls Bar */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 bg-[#121520] border border-[#202434] p-4 rounded-2xl shadow-xl">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 bg-white dark:bg-[#121520] border border-slate-200 dark:border-[#202434] p-4 rounded-2xl shadow-sm">
         {/* Status Filter Pills */}
         <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 sm:pb-0">
           {statuses.map((st) => (
@@ -75,7 +70,7 @@ export const InquiriesPage: React.FC<InquiriesPageProps> = ({
               className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
                 filter === st
                   ? 'bg-[#C47A65] text-white shadow-md shadow-[#C47A65]/20'
-                  : 'text-slate-400 hover:text-white hover:bg-[#1A1E2C]'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#1A1E2C]'
               }`}
             >
               {st}
@@ -91,14 +86,14 @@ export const InquiriesPage: React.FC<InquiriesPageProps> = ({
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search couple, venue, email..."
-            className="w-full bg-[#1A1E2C] text-xs text-white pl-9 pr-4 py-2 rounded-xl border border-[#2B3147] focus:outline-none focus:border-[#C47A65]"
+            className="w-full bg-slate-50 dark:bg-[#1A1E2C] text-xs text-slate-900 dark:text-white pl-9 pr-4 py-2 rounded-xl border border-slate-200 dark:border-[#2B3147] focus:outline-none focus:border-[#C47A65]"
           />
         </div>
       </div>
 
-      {/* Bulk Action Bar (when rows are selected) */}
+      {/* Bulk Action Bar */}
       {selectedIds.length > 0 && (
-        <div className="p-3.5 rounded-2xl bg-[#171B29] border border-[#C47A65]/40 flex items-center justify-between text-xs font-semibold text-white animate-in fade-in duration-150 shadow-lg">
+        <div className="p-3.5 rounded-2xl bg-amber-50 dark:bg-[#171B29] border border-[#C47A65]/40 flex items-center justify-between text-xs font-semibold text-slate-900 dark:text-white shadow-sm">
           <span className="flex items-center gap-2">
             <CheckSquare className="h-4 w-4 text-[#C47A65]" />
             {selectedIds.length} inquiries selected
@@ -110,13 +105,13 @@ export const InquiriesPage: React.FC<InquiriesPageProps> = ({
                 selectedIds.forEach((id) => onUpdateStatus(id, 'Confirmed'));
                 setSelectedIds([]);
               }}
-              className="px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/30 transition-colors"
+              className="px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/30 transition-colors"
             >
               Mark Confirmed
             </button>
             <button
               onClick={() => setSelectedIds([])}
-              className="px-3 py-1.5 rounded-xl bg-[#1A1E2C] text-slate-400 hover:text-white"
+              className="px-3 py-1.5 rounded-xl bg-slate-200 dark:bg-[#1A1E2C] text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
             >
               Deselect All
             </button>
@@ -125,17 +120,17 @@ export const InquiriesPage: React.FC<InquiriesPageProps> = ({
       )}
 
       {/* Table Section */}
-      <div className="bg-[#121520] border border-[#202434] rounded-2xl overflow-hidden shadow-xl">
+      <div className="bg-white dark:bg-[#121520] border border-slate-200 dark:border-[#202434] rounded-2xl overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
-              <tr className="bg-[#161924] border-b border-[#202434] text-slate-400 font-semibold uppercase tracking-wider text-[10px]">
+              <tr className="bg-slate-50 dark:bg-[#161924] border-b border-slate-200 dark:border-[#202434] text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider text-[10px]">
                 <th className="py-4 px-4 w-10">
                   <input
                     type="checkbox"
                     checked={selectedIds.length === filteredInquiries.length && filteredInquiries.length > 0}
                     onChange={toggleSelectAll}
-                    className="rounded bg-[#1A1E2C] border-[#2B3147] text-[#C47A65] focus:ring-0 cursor-pointer"
+                    className="rounded border-slate-300 dark:border-[#2B3147] text-[#C47A65] focus:ring-0 cursor-pointer"
                   />
                 </th>
                 <th className="py-4 px-5">ID & Couple</th>
@@ -146,7 +141,7 @@ export const InquiriesPage: React.FC<InquiriesPageProps> = ({
                 <th className="py-4 px-5 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#1E2333]">
+            <tbody className="divide-y divide-slate-200 dark:divide-[#1E2333]">
               {filteredInquiries.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="py-12 text-center text-slate-500 text-xs">
@@ -159,8 +154,8 @@ export const InquiriesPage: React.FC<InquiriesPageProps> = ({
                   return (
                     <tr
                       key={item.id}
-                      className={`hover:bg-[#171B29] transition-colors group cursor-pointer ${
-                        isSelected ? 'bg-[#171B29]/70' : ''
+                      className={`hover:bg-slate-50 dark:hover:bg-[#171B29] transition-colors group cursor-pointer ${
+                        isSelected ? 'bg-slate-50 dark:bg-[#171B29]/70' : ''
                       }`}
                       onClick={() => {
                         setSelectedInquiry(item);
@@ -172,32 +167,32 @@ export const InquiriesPage: React.FC<InquiriesPageProps> = ({
                           type="checkbox"
                           checked={isSelected}
                           onChange={() => toggleSelectRow(item.id)}
-                          className="rounded bg-[#1A1E2C] border-[#2B3147] text-[#C47A65] focus:ring-0 cursor-pointer"
+                          className="rounded border-slate-300 dark:border-[#2B3147] text-[#C47A65] focus:ring-0 cursor-pointer"
                         />
                       </td>
 
                       <td className="py-4 px-5">
                         <div className="space-y-0.5">
                           <span className="font-mono text-[10px] text-[#C47A65]">{item.id}</span>
-                          <p className="font-semibold text-sm text-white group-hover:text-[#C47A65] transition-colors">
+                          <p className="font-semibold text-sm text-slate-900 dark:text-white group-hover:text-[#C47A65] transition-colors">
                             {item.coupleName}
                           </p>
-                          <p className="text-[11px] text-slate-400">{item.phone}</p>
+                          <p className="text-[11px] text-slate-500 dark:text-slate-400">{item.phone}</p>
                         </div>
                       </td>
 
                       <td className="py-4 px-5 space-y-1">
-                        <div className="flex items-center gap-1.5 text-slate-200">
+                        <div className="flex items-center gap-1.5 text-slate-800 dark:text-slate-200">
                           <Calendar className="h-3.5 w-3.5 text-[#C47A65]" />
                           <span className="font-medium">{item.weddingDate}</span>
                         </div>
-                        <div className="flex items-center gap-1.5 text-slate-400">
-                          <MapPin className="h-3.5 w-3.5 text-slate-500" />
+                        <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
+                          <MapPin className="h-3.5 w-3.5 text-slate-400" />
                           <span>{item.venueLocation}</span>
                         </div>
                       </td>
 
-                      <td className="py-4 px-5 font-mono text-white font-semibold">
+                      <td className="py-4 px-5 font-mono text-slate-900 dark:text-white font-semibold">
                         {item.estimatedBudget}
                       </td>
 
@@ -206,7 +201,7 @@ export const InquiriesPage: React.FC<InquiriesPageProps> = ({
                           {item.servicesRequested.map((srv, idx) => (
                             <span
                               key={idx}
-                              className="bg-[#1A1E2C] text-slate-300 border border-[#2B3147] text-[10px] px-2 py-0.5 rounded-md"
+                              className="bg-slate-100 dark:bg-[#1A1E2C] text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-[#2B3147] text-[10px] px-2 py-0.5 rounded-md"
                             >
                               {srv}
                             </span>
@@ -218,12 +213,12 @@ export const InquiriesPage: React.FC<InquiriesPageProps> = ({
                         <span
                           className={`text-[10px] font-bold px-2.5 py-1 rounded-full border inline-block ${
                             item.status === 'New'
-                              ? 'bg-amber-500/10 text-amber-400 border-amber-500/30'
+                              ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30'
                               : item.status === 'Confirmed'
-                              ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
+                              ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
                               : item.status === 'Contacted'
-                              ? 'bg-sky-500/10 text-sky-400 border-sky-500/30'
-                              : 'bg-purple-500/10 text-purple-400 border-purple-500/30'
+                              ? 'bg-sky-500/10 text-sky-600 dark:text-sky-400 border-sky-500/30'
+                              : 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/30'
                           }`}
                         >
                           {item.status}
@@ -236,7 +231,7 @@ export const InquiriesPage: React.FC<InquiriesPageProps> = ({
                             setSelectedInquiry(item);
                             setNotesInput(item.notes || '');
                           }}
-                          className="px-3 py-1.5 rounded-xl bg-[#1A1E2C] hover:bg-[#C47A65] text-slate-300 hover:text-white transition-colors text-xs font-semibold"
+                          className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-[#1A1E2C] hover:bg-[#C47A65] text-slate-700 dark:text-slate-300 hover:text-white transition-colors text-xs font-semibold"
                         >
                           Details →
                         </button>
@@ -250,18 +245,18 @@ export const InquiriesPage: React.FC<InquiriesPageProps> = ({
         </div>
 
         {/* Pagination Footer */}
-        <div className="p-4 bg-[#161924] border-t border-[#202434] flex items-center justify-between text-xs text-slate-400">
+        <div className="p-4 bg-slate-50 dark:bg-[#161924] border-t border-slate-200 dark:border-[#202434] flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
           <span>
-            Showing <strong className="text-white">{filteredInquiries.length}</strong> of{' '}
-            <strong className="text-white">{inquiries.length}</strong> total inquiries
+            Showing <strong className="text-slate-900 dark:text-white">{filteredInquiries.length}</strong> of{' '}
+            <strong className="text-slate-900 dark:text-white">{inquiries.length}</strong> total inquiries
           </span>
 
           <div className="flex items-center gap-2">
-            <button disabled className="p-1.5 rounded-lg bg-[#1A1E2C] text-slate-600 opacity-50">
+            <button disabled className="p-1.5 rounded-lg bg-slate-200 dark:bg-[#1A1E2C] text-slate-400 opacity-50">
               <ChevronLeft className="h-4 w-4" />
             </button>
-            <span className="font-mono text-xs text-slate-300 px-2">Page 1 of 1</span>
-            <button disabled className="p-1.5 rounded-lg bg-[#1A1E2C] text-slate-600 opacity-50">
+            <span className="font-mono text-xs text-slate-700 dark:text-slate-300 px-2">Page 1 of 1</span>
+            <button disabled className="p-1.5 rounded-lg bg-slate-200 dark:bg-[#1A1E2C] text-slate-400 opacity-50">
               <ChevronRight className="h-4 w-4" />
             </button>
           </div>
@@ -270,26 +265,26 @@ export const InquiriesPage: React.FC<InquiriesPageProps> = ({
 
       {/* Detail Slide-Over / Modal */}
       {selectedInquiry && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#121520] border border-[#23293D] rounded-3xl max-w-lg w-full p-6 space-y-6 shadow-2xl relative animate-in fade-in zoom-in-95 duration-150">
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-[#121520] border border-slate-200 dark:border-[#23293D] rounded-3xl max-w-lg w-full p-6 space-y-6 shadow-2xl relative animate-in fade-in zoom-in-95 duration-150">
             <button
               onClick={() => setSelectedInquiry(null)}
-              className="absolute right-5 top-5 p-1.5 rounded-xl bg-[#1A1E2C] text-slate-400 hover:text-white"
+              className="absolute right-5 top-5 p-1.5 rounded-xl bg-slate-100 dark:bg-[#1A1E2C] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
             >
               <X className="h-5 w-5" />
             </button>
 
             <div>
               <span className="font-mono text-xs text-[#C47A65]">{selectedInquiry.id}</span>
-              <h3 className="font-editorial text-2xl text-white font-semibold">
+              <h3 className="font-editorial text-2xl font-semibold text-slate-900 dark:text-white">
                 {selectedInquiry.coupleName}
               </h3>
-              <p className="text-xs text-slate-400">Received on: {selectedInquiry.createdAt}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Received on: {selectedInquiry.createdAt}</p>
             </div>
 
             {/* Quick Status Update */}
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-slate-300">Update Booking Status</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Update Booking Status</label>
               <div className="grid grid-cols-3 gap-2">
                 {(['New', 'Contacted', 'Proposal Sent', 'Confirmed', 'Archived'] as const).map(
                   (st) => (
@@ -299,7 +294,7 @@ export const InquiriesPage: React.FC<InquiriesPageProps> = ({
                       className={`p-2 rounded-xl text-xs font-semibold border transition-all ${
                         selectedInquiry.status === st
                           ? 'bg-[#C47A65] text-white border-[#C47A65]'
-                          : 'bg-[#1A1E2C] text-slate-400 border-[#2B3147] hover:text-white'
+                          : 'bg-slate-50 dark:bg-[#1A1E2C] text-slate-600 dark:text-slate-400 border-slate-200 dark:border-[#2B3147] hover:text-slate-900 dark:hover:text-white'
                       }`}
                     >
                       {st}
@@ -310,20 +305,20 @@ export const InquiriesPage: React.FC<InquiriesPageProps> = ({
             </div>
 
             {/* Contact & Venue Info */}
-            <div className="p-4 rounded-xl bg-[#171B29] border border-[#23293D] space-y-2.5 text-xs">
-              <div className="flex items-center gap-2 text-slate-200">
+            <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#171B29] border border-slate-200 dark:border-[#23293D] space-y-2.5 text-xs">
+              <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
                 <Mail className="h-4 w-4 text-[#C47A65]" />
                 <span>{selectedInquiry.email}</span>
               </div>
-              <div className="flex items-center gap-2 text-slate-200">
+              <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
                 <Phone className="h-4 w-4 text-[#C47A65]" />
                 <span>{selectedInquiry.phone}</span>
               </div>
-              <div className="flex items-center gap-2 text-slate-200">
+              <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
                 <MapPin className="h-4 w-4 text-[#C47A65]" />
                 <span>{selectedInquiry.venueLocation}</span>
               </div>
-              <div className="flex items-center gap-2 text-slate-200">
+              <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
                 <Calendar className="h-4 w-4 text-[#C47A65]" />
                 <span>Wedding Date: {selectedInquiry.weddingDate}</span>
               </div>
@@ -331,20 +326,20 @@ export const InquiriesPage: React.FC<InquiriesPageProps> = ({
 
             {/* Admin Notes */}
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-slate-300">Studio Internal Notes</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Studio Internal Notes</label>
               <textarea
                 rows={3}
                 value={notesInput}
                 onChange={(e) => setNotesInput(e.target.value)}
                 placeholder="Enter private notes (advance payment status, team requirements...)"
-                className="w-full bg-[#1A1E2C] text-xs text-white p-3 rounded-xl border border-[#2B3147] focus:outline-none focus:border-[#C47A65]"
+                className="w-full bg-slate-50 dark:bg-[#1A1E2C] text-xs text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147] focus:outline-none focus:border-[#C47A65]"
               />
             </div>
 
             <div className="flex justify-end gap-3 pt-2">
               <button
                 onClick={() => setSelectedInquiry(null)}
-                className="px-4 py-2 rounded-xl bg-[#1A1E2C] text-slate-300 text-xs font-semibold hover:bg-[#23283B]"
+                className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-[#1A1E2C] text-slate-700 dark:text-slate-300 text-xs font-semibold hover:bg-slate-200 dark:hover:bg-[#23283B]"
               >
                 Close
               </button>
