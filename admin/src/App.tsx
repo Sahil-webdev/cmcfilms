@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
+import { CommandPalette } from './components/CommandPalette';
+import { NotificationDrawer } from './components/NotificationDrawer';
 import { LoginPage } from './pages/LoginPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { InquiriesPage } from './pages/InquiriesPage';
@@ -25,6 +27,12 @@ import { X } from 'lucide-react';
 const AdminContent: React.FC = () => {
   const { isAuthenticated, activeTab, setActiveTab } = useAuth();
 
+  // Layout UI states
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+
+  // Data states
   const [inquiries, setInquiries] = useState<Inquiry[]>(INITIAL_INQUIRIES);
   const [stories, setStories] = useState<Story[]>(INITIAL_STORIES);
   const [packages, setPackages] = useState<PackageItem[]>(INITIAL_PACKAGES);
@@ -33,7 +41,7 @@ const AdminContent: React.FC = () => {
   const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
   const [showNewInquiryModal, setShowNewInquiryModal] = useState(false);
 
-  // New Inquiry form state
+  // New Inquiry Form fields
   const [newCouple, setNewCouple] = useState('');
   const [newEmail, setNewEmail] = useState('');
   const [newPhone, setNewPhone] = useState('');
@@ -45,7 +53,7 @@ const AdminContent: React.FC = () => {
     return <LoginPage />;
   }
 
-  // Inquiry actions
+  // Handlers
   const handleUpdateStatus = (id: string, status: Inquiry['status']) => {
     setInquiries((prev) => prev.map((i) => (i.id === id ? { ...i, status } : i)));
     if (selectedInquiry && selectedInquiry.id === id) {
@@ -82,7 +90,6 @@ const AdminContent: React.FC = () => {
     setNewPhone('');
   };
 
-  // Story actions
   const handleToggleFeaturedStory = (id: string) => {
     setStories((prev) => prev.map((s) => (s.id === id ? { ...s, featured: !s.featured } : s)));
   };
@@ -91,12 +98,10 @@ const AdminContent: React.FC = () => {
     setStories([story, ...stories]);
   };
 
-  // Package actions
   const handleUpdatePackage = (pkg: PackageItem) => {
     setPackages((prev) => prev.map((p) => (p.id === pkg.id ? pkg : p)));
   };
 
-  // Media actions
   const handleUploadMedia = (asset: MediaAsset) => {
     setMedia([asset, ...media]);
   };
@@ -157,12 +162,35 @@ const AdminContent: React.FC = () => {
 
   return (
     <div className="min-h-screen flex bg-[#0B0C10] text-[#E2E8F0]">
-      <Sidebar />
+      {/* Sidebar */}
+      <Sidebar
+        isCollapsed={isSidebarCollapsed}
+        onToggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+      />
 
+      {/* Main Workspace */}
       <div className="flex-1 flex flex-col min-w-0">
-        <Header onNewInquiryClick={() => setShowNewInquiryModal(true)} />
+        <Header
+          onNewInquiryClick={() => setShowNewInquiryModal(true)}
+          onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+          onOpenNotifications={() => setIsNotificationsOpen(true)}
+        />
         <main className="flex-1 overflow-y-auto pb-12">{renderActiveView()}</main>
       </div>
+
+      {/* Linear/Raycast Command Palette Modal (Cmd+K) */}
+      <CommandPalette
+        isOpen={isCommandPaletteOpen}
+        onClose={() => setIsCommandPaletteOpen(false)}
+        onNewInquiry={() => setShowNewInquiryModal(true)}
+      />
+
+      {/* Slide-over Notification Drawer */}
+      <NotificationDrawer
+        isOpen={isNotificationsOpen}
+        onClose={() => setIsNotificationsOpen(false)}
+        onNavigateTab={setActiveTab}
+      />
 
       {/* New Inquiry Modal */}
       {showNewInquiryModal && (
@@ -176,7 +204,7 @@ const AdminContent: React.FC = () => {
             </button>
 
             <div>
-              <h3 className="font-editorial text-2xl text-white font-medium">Create New Inquiry</h3>
+              <h3 className="font-editorial text-2xl text-white font-semibold">Create New Inquiry</h3>
               <p className="text-xs text-slate-400">Add a new client wedding booking request</p>
             </div>
 
