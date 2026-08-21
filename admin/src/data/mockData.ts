@@ -22,6 +22,9 @@ export interface Story {
   photosCount: number;
   featured: boolean;
   date: string;
+  excerpt?: string;
+  content?: string;
+  status?: 'Published' | 'Draft';
 }
 
 export interface PackageItem {
@@ -114,7 +117,7 @@ export const INITIAL_INQUIRIES: Inquiry[] = [
 export const INITIAL_STORIES: Story[] = [
   {
     id: 'story-1',
-    title: 'Echoes of Royalty at Jagmandir Island',
+    title: 'Echoes of Royalty at Jagmandir Island Palace',
     couple: 'Devansh & Shreya',
     category: 'Royal Wedding',
     location: 'Udaipur, Rajasthan',
@@ -122,10 +125,17 @@ export const INITIAL_STORIES: Story[] = [
     photosCount: 42,
     featured: true,
     date: 'Feb 2026',
+    excerpt: 'An enchanting multi-day royal wedding celebration surrounded by the shimmering waters of Lake Pichola.',
+    content: `Nestled amidst the serene waters of Lake Pichola, Devansh and Shreya's wedding at Jagmandir Island Palace was a masterpiece of heritage, elegance, and timeless romance.
+
+From the ceremonial boat arrival of the groom to the emotional sunset Vows against the backdrop of the City Palace, every moment was captured in 4K cinema and candid editorial frames.
+
+The Sangeet evening glittered with thousands of fairy lights, while traditional Rajasthani folk music echoed across the island Courtyard. Our team captured every tears of joy, intricate bridal detail, and grand celebration.`,
+    status: 'Published',
   },
   {
     id: 'story-2',
-    title: 'Sunset Vows by the Arabian Sea',
+    title: 'Sunset Vows by the Azure Arabian Sea',
     couple: 'Siddharth & Natasha',
     category: 'Destination',
     location: 'Goa, India',
@@ -133,10 +143,17 @@ export const INITIAL_STORIES: Story[] = [
     photosCount: 36,
     featured: true,
     date: 'Jan 2026',
+    excerpt: 'A breezy, sun-kissed beach destination wedding filled with laughter, pastel florals, and golden hour magic.',
+    content: `Siddharth and Natasha chose the serene golden beaches of Vagator for their dream destination wedding.
+
+Surrounded by close family and friends, their outdoor seaside ceremony combined modern minimalistic aesthetics with warm traditional rituals.
+
+Our drone cinematographers captured breathtaking aerial sequences of the couple walking along the shoreline at dusk, creating a teaser that gained over 500,000 views on Instagram.`,
+    status: 'Published',
   },
   {
     id: 'story-3',
-    title: 'A Modern Tale at Umaid Bhawan Palace',
+    title: 'A Modern Royal Tale at Umaid Bhawan Palace',
     couple: 'Karan & Avani',
     category: 'Royal Wedding',
     location: 'Jodhpur, Rajasthan',
@@ -144,10 +161,13 @@ export const INITIAL_STORIES: Story[] = [
     photosCount: 50,
     featured: false,
     date: 'Dec 2025',
+    excerpt: 'Opulence meets intimate warmth at Jodhpur’s iconic sandstone palace.',
+    content: `Set against the colossal golden sandstone architecture of Umaid Bhawan Palace, Karan and Avani's union was a testament to grandeur.`,
+    status: 'Published',
   },
   {
     id: 'story-4',
-    title: 'Whispers of Love in Aravalli Hills',
+    title: 'Whispers of Romance in the Aravalli Foothills',
     couple: 'Yash & Riya',
     category: 'Pre-Wedding',
     location: 'Fateh Sagar, Udaipur',
@@ -155,6 +175,9 @@ export const INITIAL_STORIES: Story[] = [
     photosCount: 28,
     featured: true,
     date: 'Mar 2026',
+    excerpt: 'An intimate pre-wedding photo story capturing quiet moments by the lake.',
+    content: `Before their winter wedding, Yash and Riya spent a peaceful morning exploring secret heritage nooks and lakeside docks around Udaipur.`,
+    status: 'Published',
   },
 ];
 
