@@ -205,16 +205,49 @@ function FilmsVideoHero() {
   );
 }
 
-// ── RECENT FILMS CAROUSEL (Matching Reference Design from knotsbyamp.com/wedding-films) ──
+// ── RECENT FILMS INFINITE AUTO-LOOP CAROUSEL (knotsbyamp.com reference design) ──
 function RecentFilmsCarousel() {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
-      const scrollAmount = direction === 'left' ? -340 : 340;
-      scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      const container = scrollRef.current;
+      const scrollAmount = 340;
+      
+      if (direction === 'right') {
+        if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 15) {
+          container.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        }
+      } else {
+        if (container.scrollLeft <= 15) {
+          container.scrollTo({ left: container.scrollWidth, behavior: 'smooth' });
+        } else {
+          container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        }
+      }
     }
   };
+
+  // Infinite Auto-Loop Timer
+  useEffect(() => {
+    if (isHovered) return;
+
+    const interval = setInterval(() => {
+      if (scrollRef.current) {
+        const container = scrollRef.current;
+        if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 15) {
+          container.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          container.scrollBy({ left: 340, behavior: 'smooth' });
+        }
+      }
+    }, 2800);
+
+    return () => clearInterval(interval);
+  }, [isHovered]);
 
   const recentFilmsList = [
     {
@@ -262,7 +295,11 @@ function RecentFilmsCarousel() {
   ];
 
   return (
-    <section className="bg-[#FAF7F2] py-20 md:py-28 relative overflow-hidden select-none border-t border-b border-[#EAE5DC]">
+    <section
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="bg-[#FAF7F2] py-20 md:py-28 relative overflow-hidden select-none border-t border-b border-[#EAE5DC]"
+    >
       {/* Centered Serif Italic Header */}
       <div className="text-center mb-12 px-4">
         <h2 className="font-editorial italic text-4xl sm:text-5xl md:text-6xl text-[#2B2724] tracking-tight font-normal">
@@ -350,7 +387,7 @@ export function WeddingFilmsPage() {
       {/* ── SECTION 1 — FULL-SCREEN VIDEO HERO ── */}
       <FilmsVideoHero />
 
-      {/* ── SECTION 2 — RECENT FILMS CAROUSEL (knotsbyamp.com reference design) ── */}
+      {/* ── SECTION 2 — RECENT FILMS CAROUSEL (knotsbyamp.com reference design with auto-loop) ── */}
       <RecentFilmsCarousel />
 
       {/* ── SECTION 3 — EDITORIAL INTRO & FILM GRID ── */}
