@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { WeddingFilm } from '../data/mockData';
 import {
   Plus,
@@ -9,6 +9,8 @@ import {
   Trash2,
   X,
   Video,
+  Upload,
+  Image as ImageIcon,
 } from 'lucide-react';
 
 interface FilmsPageProps {
@@ -27,8 +29,9 @@ export const FilmsPage: React.FC<FilmsPageProps> = ({
   const [showAddModal, setShowAddModal] = useState(false);
   const [title, setTitle] = useState('');
   const [youtubeUrl, setYoutubeUrl] = useState('');
-  const [category, setCategory] = useState('Cinematic Film');
-  const [customThumbnail, setCustomThumbnail] = useState('');
+  const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Extract YouTube Thumbnail helper
   const getYoutubeThumbnail = (url: string, fallback?: string) => {
@@ -45,9 +48,21 @@ export const FilmsPage: React.FC<FilmsPageProps> = ({
         return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
       }
     } catch (e) {
-      // fallback if invalid URL syntax
+      // fallback
     }
     return 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800';
+  };
+
+  // Handle System File Upload for Thumbnail
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setThumbnailPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleCreateFilm = (e: React.FormEvent) => {
@@ -57,14 +72,14 @@ export const FilmsPage: React.FC<FilmsPageProps> = ({
       return;
     }
 
-    const autoThumb = getYoutubeThumbnail(youtubeUrl, customThumbnail);
+    const finalThumb = thumbnailPreview || getYoutubeThumbnail(youtubeUrl);
 
     const newFilm: WeddingFilm = {
       id: `film-${Date.now()}`,
       title,
       youtubeUrl,
-      thumbnailUrl: autoThumb,
-      category,
+      thumbnailUrl: finalThumb,
+      category: 'Cinematic Film',
       featured: true,
       createdAt: new Date().toISOString().split('T')[0],
     };
@@ -73,7 +88,7 @@ export const FilmsPage: React.FC<FilmsPageProps> = ({
     setShowAddModal(false);
     setTitle('');
     setYoutubeUrl('');
-    setCustomThumbnail('');
+    setThumbnailPreview(null);
   };
 
   return (
@@ -90,8 +105,13 @@ export const FilmsPage: React.FC<FilmsPageProps> = ({
         </div>
 
         <button
-          onClick={() => setShowAddModal(true)}
-          className="flex items-center gap-2 bg-[#8C90C1] hover:bg-[#787CAE] text-white text-xs font-semibold px-5 py-3 rounded-xl shadow-lg shadow-[#8C90C1]/20 cursor-pointer font-sans"
+          onClick={() => {
+            setTitle('');
+            setYoutubeUrl('');
+            setThumbnailPreview(null);
+            setShowAddModal(true);
+          }}
+          className="flex items-center gap-2 bg-[#8C90C1] hover:bg-[#787CAE] text-white text-xs font-semibold px-5 py-3 rounded-xl shadow-lg shadow-[#8C90C1]/20 cursor-pointer font-sans transition-all active:scale-95"
         >
           <Plus className="h-4 w-4" />
           <span>+ Add Wedding Film</span>
@@ -116,10 +136,10 @@ export const FilmsPage: React.FC<FilmsPageProps> = ({
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/40" />
 
-                {/* Category Tag */}
+                {/* Youtube Badge */}
                 <span className="absolute top-3 left-3 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md text-white border border-white/20 flex items-center gap-1.5">
                   <Youtube className="h-3 w-3 text-red-500" />
-                  {film.category}
+                  YouTube Film
                 </span>
 
                 {/* Featured Toggle */}
@@ -185,87 +205,115 @@ export const FilmsPage: React.FC<FilmsPageProps> = ({
         })}
       </div>
 
-      {/* Add Film Modal */}
+      {/* Redesigned Clean Add Film Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-[#121522] border border-slate-200 dark:border-[#23293D] rounded-3xl max-w-md w-full p-6 space-y-5 shadow-2xl relative animate-in fade-in zoom-in-95 duration-150">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-[#121522] border border-slate-200 dark:border-[#23293D] rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-6 shadow-2xl relative animate-in fade-in zoom-in-95 duration-150">
+            {/* Close Button */}
             <button
               onClick={() => setShowAddModal(false)}
-              className="absolute right-5 top-5 p-1.5 rounded-xl bg-slate-100 dark:bg-[#1A1E2E] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+              className="absolute right-5 top-5 p-2 rounded-xl bg-slate-100 dark:bg-[#1A1E2E] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white cursor-pointer"
             >
               <X className="h-5 w-5" />
             </button>
 
+            {/* Header Title */}
             <div>
-              <div className="flex items-center gap-2 text-[#8C90C1]">
+              <div className="flex items-center gap-2.5 text-[#8C90C1]">
                 <Video className="h-5 w-5" />
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white font-sans">
                   Add Wedding Film
                 </h3>
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                Add title and YouTube link for wedding teasers
+                Enter video title, YouTube link and select thumbnail from your system
               </p>
             </div>
 
-            <form onSubmit={handleCreateFilm} className="space-y-4 text-xs">
-              <div className="space-y-1">
-                <label className="font-semibold text-slate-700 dark:text-slate-300">Film Title *</label>
+            <form onSubmit={handleCreateFilm} className="space-y-5 text-xs">
+              {/* Field 1: Film Title */}
+              <div className="space-y-1.5">
+                <label className="font-bold text-slate-700 dark:text-slate-300">Film Title *</label>
                 <input
                   type="text"
                   required
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="e.g. The Royal Affair | Devansh & Shreya | Udaipur Wedding Film"
-                  className="w-full bg-slate-50 dark:bg-[#1A1E2E] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147] focus:outline-none focus:border-[#8C90C1]"
+                  className="w-full bg-slate-50 dark:bg-[#1A1E2E] text-slate-900 dark:text-white p-3.5 rounded-xl border border-slate-200 dark:border-[#2B3147] focus:outline-none focus:border-[#8C90C1] text-xs font-sans"
                 />
               </div>
 
-              <div className="space-y-1">
-                <label className="font-semibold text-slate-700 dark:text-slate-300">YouTube Video Link / URL *</label>
+              {/* Field 2: YouTube Video Link */}
+              <div className="space-y-1.5">
+                <label className="font-bold text-slate-700 dark:text-slate-300">YouTube Video Link / URL *</label>
                 <div className="relative">
-                  <Youtube className="h-4 w-4 absolute left-3 top-1/2 -translate-y-1/2 text-red-500" />
+                  <Youtube className="h-4 w-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-red-500" />
                   <input
                     type="url"
                     required
                     value={youtubeUrl}
                     onChange={(e) => setYoutubeUrl(e.target.value)}
                     placeholder="https://www.youtube.com/watch?v=..."
-                    className="w-full bg-slate-50 dark:bg-[#1A1E2E] text-slate-900 dark:text-white pl-9 pr-3 py-3 rounded-xl border border-slate-200 dark:border-[#2B3147] focus:outline-none focus:border-[#8C90C1]"
+                    className="w-full bg-slate-50 dark:bg-[#1A1E2E] text-slate-900 dark:text-white pl-10 pr-3.5 py-3.5 rounded-xl border border-slate-200 dark:border-[#2B3147] focus:outline-none focus:border-[#8C90C1] text-xs font-mono"
                   />
                 </div>
               </div>
 
-              <div className="space-y-1">
-                <label className="font-semibold text-slate-700 dark:text-slate-300">Category Tag</label>
-                <select
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  className="w-full bg-slate-50 dark:bg-[#1A1E2E] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147]"
-                >
-                  <option value="Cinematic Film">Cinematic Film</option>
-                  <option value="Teaser Reel">Teaser Reel</option>
-                  <option value="Pre-Wedding Film">Pre-Wedding Film</option>
-                  <option value="Highlight Reel">Highlight Reel</option>
-                </select>
-              </div>
+              {/* Field 3: System File Picker for Thumbnail */}
+              <div className="space-y-1.5">
+                <label className="font-bold text-slate-700 dark:text-slate-300">
+                  Thumbnail Image (Upload from System)
+                </label>
 
-              <div className="space-y-1">
-                <label className="font-semibold text-slate-700 dark:text-slate-300">Custom Thumbnail Image URL (Optional)</label>
+                {/* Hidden File Input */}
                 <input
-                  type="text"
-                  value={customThumbnail}
-                  onChange={(e) => setCustomThumbnail(e.target.value)}
-                  placeholder="Leave empty to auto-detect YouTube thumbnail"
-                  className="w-full bg-slate-50 dark:bg-[#1A1E2E] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147]"
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                  accept="image/*"
+                  className="hidden"
                 />
+
+                {thumbnailPreview ? (
+                  <div className="relative h-36 w-full rounded-2xl overflow-hidden bg-slate-900 border border-[#8C90C1]/50 group">
+                    <img
+                      src={thumbnailPreview}
+                      alt="System Thumbnail"
+                      className="h-full w-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button
+                        type="button"
+                        onClick={() => setThumbnailPreview(null)}
+                        className="px-3 py-1.5 rounded-xl bg-red-500 text-white font-semibold text-xs shadow"
+                      >
+                        Remove Image
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div
+                    onClick={() => fileInputRef.current?.click()}
+                    className="border-2 border-dashed border-slate-300 dark:border-[#2B3147] hover:border-[#8C90C1] rounded-2xl p-5 text-center space-y-1.5 cursor-pointer transition-colors bg-slate-50/50 dark:bg-[#171B29]/50"
+                  >
+                    <Upload className="h-5 w-5 mx-auto text-[#8C90C1]" />
+                    <p className="text-xs font-bold text-slate-900 dark:text-white">
+                      Click to choose thumbnail from computer
+                    </p>
+                    <p className="text-[10px] text-slate-400">
+                      PNG, JPG, WEBP (If empty, YouTube thumbnail will auto-detect)
+                    </p>
+                  </div>
+                )}
               </div>
 
+              {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full bg-[#8C90C1] hover:bg-[#787CAE] text-white font-semibold py-3 rounded-xl transition-colors cursor-pointer text-xs"
+                className="w-full bg-[#8C90C1] hover:bg-[#787CAE] text-white font-bold py-3.5 rounded-xl transition-all cursor-pointer text-xs shadow-lg shadow-[#8C90C1]/20 active:scale-95 mt-2"
               >
-                Save & Add Film
+                Save & Add Wedding Film
               </button>
             </form>
           </div>
