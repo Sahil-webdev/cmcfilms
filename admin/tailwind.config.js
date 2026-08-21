@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -8,9 +9,9 @@ export default {
     extend: {
       colors: {
         studio: {
-          bg: "#0B0C10",
-          card: "#12141C",
-          border: "#202432",
+          bg: "#090A0F",
+          card: "#11131C",
+          border: "#202434",
           accent: "#C47A65",
           accentHover: "#B36854",
           gold: "#D4AF37",

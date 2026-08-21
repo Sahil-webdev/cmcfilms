@@ -3,9 +3,20 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --bg-main: #F6F8FA;
+    --text-main: #0F172A;
+  }
+  
+  html.dark {
+    --bg-main: #090A0F;
+    --text-main: #F8FAFC;
+  }
+
   body {
-    background-color: #0B0C10;
-    color: #E2E8F0;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    transition: background-color 0.25s ease, color 0.25s ease;
     overflow-x: hidden;
   }
 }
@@ -16,12 +27,9 @@
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0B0C10;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #202432;
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
   background: #C47A65;
+  border-radius: 3px;
 }
