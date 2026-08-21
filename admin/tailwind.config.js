@@ -19,8 +19,8 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
-        editorial: ['"Playfair Display"', 'Georgia', 'serif'],
+        sans: ['"DM Sans"', 'Inter', 'sans-serif'],
+        editorial: ['"DM Serif Display"', 'Georgia', 'serif'],
       }
     },
   },
