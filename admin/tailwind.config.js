@@ -20,7 +20,7 @@ export default {
       },
       fontFamily: {
         sans: ['"DM Sans"', 'Inter', 'sans-serif'],
-        editorial: ['"DM Serif Display"', 'Georgia', 'serif'],
+        editorial: ['"DM Sans"', 'Inter', 'sans-serif'],
       }
     },
   },
