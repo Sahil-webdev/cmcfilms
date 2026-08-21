@@ -81,6 +81,18 @@ app.get('/api/inquiries', protect, (req, res) => {
   res.json({ success: true, count: DUMMY_INQUIRIES.length, data: DUMMY_INQUIRIES });
 });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`🚀 [CMC Films Backend] running on http://localhost:${PORT}`);
+  console.log(`🔑 Auth: POST http://localhost:${PORT}/api/auth/login`);
 });
+
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`\n❌ Port ${PORT} is already in use.`);
+    console.error(`   Run this to free it: lsof -ti :${PORT} | xargs kill -9\n`);
+    process.exit(1);
+  } else {
+    throw err;
+  }
+});
+
