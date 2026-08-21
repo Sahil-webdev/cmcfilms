@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useMemo, useEffect, useRef } from "react";
-import { ArrowUpRight, Play, X } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { ArrowUpRight, Play, ArrowLeft, ArrowRight, X } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 
 // Image Imports
@@ -65,7 +65,7 @@ const filmsData: FilmItem[] = [
     duration: "12:45",
     timestamp: "00:01:24",
     coverImage: luxuryEditorial,
-    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
   },
   {
     id: "f-02",
@@ -79,7 +79,7 @@ const filmsData: FilmItem[] = [
     duration: "09:30",
     timestamp: "00:04:17",
     coverImage: hero,
-    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     isMostLoved: true,
   },
   {
@@ -94,7 +94,7 @@ const filmsData: FilmItem[] = [
     duration: "08:15",
     timestamp: "00:07:32",
     coverImage: coastal,
-    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     isMostLoved: true,
   },
   {
@@ -110,7 +110,7 @@ const filmsData: FilmItem[] = [
     timestamp: "00:10:04",
     coverImage: f1,
     secondaryImage: story3,
-    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
   },
   {
     id: "f-05",
@@ -124,7 +124,7 @@ const filmsData: FilmItem[] = [
     duration: "07:40",
     timestamp: "00:12:50",
     coverImage: haldi,
-    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     isMostLoved: true,
   },
   {
@@ -139,33 +139,10 @@ const filmsData: FilmItem[] = [
     duration: "14:10",
     timestamp: "00:16:08",
     coverImage: f2,
-    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
-    isMostLoved: true,
-  },
-  {
-    id: "f-07",
-    code: "07",
-    couple: "Sana & Aditya",
-    filmTitle: "The Manganiyar Serenade",
-    location: "JODHPUR",
-    category: "TRADITIONAL",
-    style: "Cultural Heritage",
-    year: "2025",
-    duration: "08:50",
-    timestamp: "00:19:42",
-    coverImage: f3,
-    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
+    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     isMostLoved: true,
   },
 ];
-
-const categoryFilters = [
-  "ALL",
-  "DESTINATION",
-  "TRADITIONAL",
-  "INTIMATE",
-  "INTERNATIONAL",
-] as const;
 
 // ── FILMS PAGE VIDEO HERO ─────────────────────────────────────────────────
 function FilmsVideoHero() {
@@ -186,7 +163,6 @@ function FilmsVideoHero() {
 
   return (
     <section className="relative h-[100svh] min-h-[640px] w-full overflow-hidden bg-black">
-      {/* Autoplay background video — couples cinematic wedding footage */}
       <video
         ref={videoRef}
         autoPlay
@@ -197,19 +173,13 @@ function FilmsVideoHero() {
         className="absolute inset-0 h-full w-full object-cover"
         aria-hidden
       >
-        {/* Drop a couple-specific video at /public/films-hero-bg.mp4 to override */}
         <source src="/films-hero-bg.mp4" type="video/mp4" />
         <source src="/hero-bg.mp4" type="video/mp4" />
       </video>
 
-      {/* Cinematic gradient overlay — bottom-heavy for text legibility */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/40 pointer-events-none" />
 
-      {/* Content — identical layout to home hero, centered at bottom */}
-      <div
-        className="relative flex h-full flex-col items-center justify-end px-5 pb-20 md:pb-28 text-center text-white"
-      >
-        {/* Small label above */}
+      <div className="relative flex h-full flex-col items-center justify-end px-5 pb-20 md:pb-28 text-center text-white">
         <p
           className="mb-4 font-mono text-[11px] tracking-[0.35em] uppercase text-white/60 transition-all duration-700 delay-100"
           style={{ opacity: ready ? 1 : 0, transform: ready ? "none" : "translateY(10px)" }}
@@ -217,7 +187,6 @@ function FilmsVideoHero() {
           CMC FILMS · WEDDING CINEMA
         </p>
 
-        {/* Big "FILMS" title — same size & weight as home "CMC Films" */}
         <h1
           className="font-display text-[clamp(3.2rem,8.5vw,6.5rem)] font-normal md:font-medium leading-none tracking-tight text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)] transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]"
           style={{ opacity: ready ? 1 : 0, transform: ready ? "none" : "translateY(20px)" }}
@@ -225,7 +194,6 @@ function FilmsVideoHero() {
           Films
         </h1>
 
-        {/* Subtitle */}
         <p
           className="mt-2.5 md:mt-3.5 font-display text-[clamp(1.1rem,2.6vw,2rem)] font-light tracking-wide text-white/90 drop-shadow-[0_2px_14px_rgba(0,0,0,0.85)] transition-all duration-1000 delay-200 ease-out"
           style={{ opacity: ready ? 1 : 0, transform: ready ? "none" : "translateY(14px)" }}
@@ -237,25 +205,155 @@ function FilmsVideoHero() {
   );
 }
 
-export function WeddingFilmsPage() {
-  const [activeCategoryFilter, setActiveCategoryFilter] = useState<string>("ALL");
-  const [activeFilmModal, setActiveFilmModal] = useState<FilmItem | null>(null);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+// ── RECENT FILMS CAROUSEL (Matching Reference Design from knotsbyamp.com/wedding-films) ──
+function RecentFilmsCarousel() {
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    setMousePos({ x: e.clientX, y: e.clientY });
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollRef.current) {
+      const scrollAmount = direction === 'left' ? -340 : 340;
+      scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
   };
 
+  const recentFilmsList = [
+    {
+      id: 'rf-1',
+      couple: 'Kashish & Priya',
+      sub: 'A CMC Films Feature',
+      image: luxuryEditorial,
+      youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    },
+    {
+      id: 'rf-2',
+      couple: 'Anushri & Aditya',
+      sub: 'A CMC Films Feature',
+      image: f1,
+      youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    },
+    {
+      id: 'rf-3',
+      couple: 'Riddhi & Karan',
+      sub: 'A CMC Films Feature',
+      image: hero,
+      youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    },
+    {
+      id: 'rf-4',
+      couple: 'Maitri & Aneesh',
+      sub: 'A CMC Films Feature',
+      image: coastal,
+      youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    },
+    {
+      id: 'rf-5',
+      couple: 'Palak & Priya',
+      sub: 'A CMC Films Feature',
+      image: haldi,
+      youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    },
+    {
+      id: 'rf-6',
+      couple: 'Dhruv & Pippa',
+      sub: 'A CMC Films Feature',
+      image: story2,
+      youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    },
+  ];
+
   return (
-    <main
-      onMouseMove={handleMouseMove}
-      className="bg-[#F2EFE8] text-[#171512] font-sans selection:bg-[#171512] selection:text-[#F2EFE8] min-h-screen relative overflow-hidden"
-    >
+    <section className="bg-[#FAF7F2] py-20 md:py-28 relative overflow-hidden select-none border-t border-b border-[#EAE5DC]">
+      {/* Centered Serif Italic Header */}
+      <div className="text-center mb-12 px-4">
+        <h2 className="font-editorial italic text-4xl sm:text-5xl md:text-6xl text-[#2B2724] tracking-tight font-normal">
+          Recent Films
+        </h2>
+      </div>
+
+      {/* Navigation Controls & Carousel Container */}
+      <div className="max-w-[1700px] mx-auto relative px-4 sm:px-14">
+        {/* Left Floating Arrow Button */}
+        <button
+          onClick={() => scroll('left')}
+          className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 h-12 w-12 rounded-full bg-black/40 hover:bg-black/80 text-white backdrop-blur-md flex items-center justify-center transition-all shadow-xl border border-white/20 cursor-pointer active:scale-95"
+          aria-label="Previous Films"
+        >
+          <ArrowLeft className="w-5 h-5" />
+        </button>
+
+        {/* Right Floating Arrow Button */}
+        <button
+          onClick={() => scroll('right')}
+          className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 h-12 w-12 rounded-full bg-black/40 hover:bg-black/80 text-white backdrop-blur-md flex items-center justify-center transition-all shadow-xl border border-white/20 cursor-pointer active:scale-95"
+          aria-label="Next Films"
+        >
+          <ArrowRight className="w-5 h-5" />
+        </button>
+
+        {/* Horizontal Scroll Area */}
+        <div
+          ref={scrollRef}
+          className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar py-4 px-2"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          {recentFilmsList.map((film) => (
+            <div
+              key={film.id}
+              className="snap-center shrink-0 w-[270px] sm:w-[310px] flex flex-col items-center gap-5 group"
+            >
+              {/* Portrait Poster Container (Aspect 3:4.2) */}
+              <div className="relative aspect-[3/4.2] w-full overflow-hidden rounded-xl bg-[#171512] shadow-xl border border-black/5 cursor-pointer">
+                <img
+                  src={film.image}
+                  alt={film.couple}
+                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+                
+                {/* Vignette Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30" />
+
+                {/* Sub-brand top label */}
+                <span className="absolute top-4 inset-x-0 text-center text-[10px] font-mono tracking-[0.25em] text-white/70 uppercase">
+                  {film.sub}
+                </span>
+
+                {/* Elegant Couple Name Overlay (Centered Bottom) */}
+                <div className="absolute bottom-6 inset-x-4 text-center">
+                  <h3 className="font-editorial italic text-2xl sm:text-3xl text-white font-normal drop-shadow-md leading-tight">
+                    {film.couple}
+                  </h3>
+                </div>
+              </div>
+
+              {/* Watch Film Dark Pill Button */}
+              <a
+                href={film.youtubeUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="bg-[#2B2724] hover:bg-[#171512] text-white text-xs font-semibold px-6 py-2.5 rounded-full transition-all shadow-md hover:shadow-lg active:scale-95 cursor-pointer inline-flex items-center gap-2 font-sans"
+              >
+                <span>Watch Film</span>
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function WeddingFilmsPage() {
+  const [activeFilmModal, setActiveFilmModal] = useState<FilmItem | null>(null);
+
+  return (
+    <main className="bg-[#F2EFE8] text-[#171512] font-sans selection:bg-[#171512] selection:text-[#F2EFE8] min-h-screen relative overflow-hidden">
       {/* ── SECTION 1 — FULL-SCREEN VIDEO HERO ── */}
       <FilmsVideoHero />
 
-      {/* ── SECTION 2 — EDITORIAL INTRO & 2-COLUMN FILM GRID (Matching Reference Design) ── */}
+      {/* ── SECTION 2 — RECENT FILMS CAROUSEL (knotsbyamp.com reference design) ── */}
+      <RecentFilmsCarousel />
+
+      {/* ── SECTION 3 — EDITORIAL INTRO & FILM GRID ── */}
       <section className="py-20 md:py-28 px-6 sm:px-10 md:px-16 max-w-[1600px] mx-auto space-y-16">
         
         {/* Editorial Intro Header */}
@@ -266,10 +364,7 @@ export function WeddingFilmsPage() {
 
           <div className="space-y-5 text-sm sm:text-base text-[#171512]/75 font-sans font-light leading-relaxed">
             <p>
-              Cinematic wedding films rooted in genuine emotion, unscripted movement, and honest storytelling. We take pride in understanding the couple, their families, and the quiet, intimate glances between. Every celebration deserves a wedding film thoughtfully crafted to do justice to the beauty, grace, and authentic spirit of your story. This philosophy has made CMC FILMS the choice for couples seeking an elevated, artistic, and deeply personal cinema experience.
-            </p>
-            <p className="text-[#171512]/60 text-xs sm:text-sm font-sans">
-              Here is a curated selection of our recent wedding films. Each film captures a unique celebration—thoughtfully edited to take you on a timeless journey through pure joy, tearful vows, exuberant celebrations, and quiet romantic moments.
+              Cinematic wedding films rooted in genuine emotion, unscripted movement, and honest storytelling. We take pride in understanding the couple, their families, and the quiet, intimate glances between. Every celebration deserves a wedding film thoughtfully crafted to do justice to the beauty, grace, and authentic spirit of your story.
             </p>
           </div>
         </Reveal>
@@ -289,15 +384,14 @@ export function WeddingFilmsPage() {
                   className="h-full w-full object-cover opacity-90 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
                 />
 
-                {/* Gradient Overlay for Text Readability & Hover Effect */}
+                {/* Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10 group-hover:from-black/85 group-hover:via-black/40 transition-all duration-500 flex items-center justify-center">
-                  {/* Center Play Button */}
                   <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-white/20 backdrop-blur-md border border-white/40 flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:bg-white text-white group-hover:text-[#171512] transition-all duration-300">
                     <Play className="w-5 h-5 fill-current ml-0.5" />
                   </div>
                 </div>
 
-                {/* Bottom Overlay Text — Studio Name & Large Serif Couple Names */}
+                {/* Bottom Overlay Text */}
                 <div className="absolute bottom-4 left-5 right-5 text-white space-y-0.5 pointer-events-none">
                   <p className="text-[9px] font-mono tracking-[0.3em] uppercase text-white/75 font-bold">
                     CMC FILMS
@@ -353,8 +447,6 @@ export function WeddingFilmsPage() {
       {/* ── FINAL SCREEN & CTA ── */}
       <section className="py-36 md:py-48 px-6 text-center bg-[#F2EFE8]">
         <div className="max-w-2xl mx-auto space-y-8">
-          
-          {/* Center Single Small Wedding Frame */}
           <div className="mx-auto w-44 aspect-[3/4] overflow-hidden rounded-[2px] shadow-2xl border border-black/5 bg-[#171512]">
             <img
               src={coastal}
@@ -378,11 +470,10 @@ export function WeddingFilmsPage() {
               </Link>
             </div>
           </div>
-
         </div>
       </section>
 
-      {/* ── FULL-SCREEN PRIVATE CINEMA PLAYER MODAL (#0D0D0C) ── */}
+      {/* ── FULL-SCREEN PRIVATE CINEMA PLAYER MODAL ── */}
       {activeFilmModal && (
         <PrivateCinemaFilmPlayerModal
           film={activeFilmModal}
@@ -402,9 +493,7 @@ function PrivateCinemaFilmPlayerModal({
   onClose: () => void;
 }) {
   return (
-    <div className="fixed inset-0 z-[100] bg-[#0D0D0C] text-[#F2EFE8] flex flex-col justify-between animate-in fade-in duration-300">
-      
-      {/* Minimal Top Header */}
+    <div className="fixed inset-0 z-[100] bg-[#0D0D0C] text-[#F2EFE8] flex flex-col justify-between animate-in fade-in duration-300 font-sans">
       <div className="flex items-center justify-between px-6 py-5 bg-black/60 border-b border-white/10 z-20">
         <div className="space-y-0.5">
           <h2 className="font-display text-2xl font-light text-white">
@@ -424,25 +513,22 @@ function PrivateCinemaFilmPlayerModal({
         </button>
       </div>
 
-      {/* Video Viewport */}
       <div className="relative flex-1 bg-black flex items-center justify-center p-4 md:p-10">
         <div className="w-full max-w-5xl aspect-video overflow-hidden rounded-[4px] bg-black border border-white/10 shadow-2xl relative">
-          <video
-            src={film.videoUrl}
-            poster={film.coverImage}
-            controls
-            autoPlay
-            className="w-full h-full object-cover"
+          <iframe
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
+            title={film.filmTitle}
+            className="w-full h-full border-0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
           />
         </div>
       </div>
 
-      {/* Minimal Footer */}
       <div className="px-6 py-4 bg-black/60 border-t border-white/10 flex justify-between items-center text-xs font-mono text-[#F2EFE8]/60 z-20">
         <span>"{film.filmTitle}"</span>
         <span className="text-[#A67B2E]">CMC FILMS PRIVATE CINEMA</span>
       </div>
-
     </div>
   );
 }
