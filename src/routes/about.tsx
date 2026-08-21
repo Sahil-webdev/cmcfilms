@@ -40,34 +40,22 @@ function AboutPage() {
   return (
     <main className="bg-[#FAF8F5] text-[#171717] font-sans selection:bg-[#D8D3CB] min-h-screen">
       
-      {/* ── 1. HERO SECTION (DARK CINEMA WITH CURSIVE WATERMARK OVERLAY) ── */}
-      <section className="relative h-[480px] sm:h-[540px] md:h-[600px] w-full bg-[#0C0D10] overflow-hidden flex items-center justify-center text-center px-6">
-        {/* Background Image with Dark Vignette */}
+      {/* ── 1. HERO SECTION (CLEAR VIVID IMAGE WITH CLEAN SINGLE ABOUT US TITLE) ── */}
+      <section className="relative h-[420px] sm:h-[480px] md:h-[520px] w-full overflow-hidden flex items-center justify-center text-center px-6">
+        {/* Clear Vivid Background Image */}
         <img
           src={featured}
           alt="CMC FILMS Studio Background"
-          className="absolute inset-0 h-full w-full object-cover opacity-35 scale-105"
+          className="absolute inset-0 h-full w-full object-cover object-center opacity-90 scale-100"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-[#0C0D10]" />
+        {/* Soft Overlay for High Legibility */}
+        <div className="absolute inset-0 bg-black/40" />
 
-        {/* Centered Cursive Overlay & Main Title */}
-        <div className="relative z-10 space-y-2 max-w-3xl">
-          {/* Cursive Background Watermark */}
-          <div className="relative flex items-center justify-center">
-            <span
-              className="text-white/20 select-none pointer-events-none text-7xl sm:text-9xl md:text-[11rem] leading-none absolute -top-8 sm:-top-16 font-normal"
-              style={{ fontFamily: "'Alex Brush', cursive" }}
-            >
-              About
-            </span>
-            <h1 className="font-editorial text-4xl sm:text-6xl md:text-7xl text-white font-normal relative z-10 tracking-tight">
-              About Us
-            </h1>
-          </div>
-          
-          <p className="text-xs sm:text-sm font-mono uppercase tracking-[0.25em] text-[#C47A65] pt-4 font-semibold">
-            CMC FILMS · WEDDING STORYTELLERS
-          </p>
+        {/* Clean Single Text Overlay: About Us */}
+        <div className="relative z-10 max-w-3xl">
+          <h1 className="font-editorial text-5xl sm:text-7xl md:text-8xl text-white font-light tracking-wide drop-shadow-md">
+            About Us
+          </h1>
         </div>
       </section>
 
@@ -75,18 +63,10 @@ function AboutPage() {
       <section className="py-20 sm:py-28 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto border-b border-[#D8D3CB]">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           
-          {/* Left Column: Heading, Watermark, Studio Paragraph & Skills */}
+          {/* Left Column: Heading, Studio Paragraph & Skills */}
           <div className="lg:col-span-7 space-y-8 relative">
             
-            {/* Background Watermark Text behind Heading */}
             <div className="relative">
-              <span
-                className="text-[#171717]/[0.06] select-none pointer-events-none text-6xl sm:text-8xl md:text-9xl leading-none absolute -top-6 -left-2 font-normal z-0"
-                style={{ fontFamily: "'Alex Brush', cursive" }}
-              >
-                About Us
-              </span>
-
               <h2 className="font-editorial text-3xl sm:text-5xl md:text-6xl text-[#171717] font-normal leading-[1.1] relative z-10">
                 The wedding photography <br className="hidden sm:block" />
                 specialists since 2018.
