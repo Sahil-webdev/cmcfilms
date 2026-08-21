@@ -7,16 +7,12 @@ import {
   ArrowLeft,
   Upload,
   Image as ImageIcon,
-  CheckCircle2,
-  Eye,
   Bold,
   Italic,
   List,
   Heading2,
   Heading3,
   Quote,
-  Trash2,
-  FileText,
   Save,
   Globe,
 } from 'lucide-react';
@@ -28,17 +24,12 @@ interface StoriesPageProps {
 }
 
 export const StoriesPage: React.FC<StoriesPageProps> = ({ stories, onToggleFeatured, onAddStory }) => {
-  // View states: 'list' | 'editor' | 'preview'
-  const [viewMode, setViewMode] = useState<'list' | 'editor' | 'preview'>('list');
+  // View states: 'list' | 'editor'
+  const [viewMode, setViewMode] = useState<'list' | 'editor'>('list');
   const [editingStory, setEditingStory] = useState<Story | null>(null);
 
   // Editor Form Fields
   const [title, setTitle] = useState('');
-  const [couple, setCouple] = useState('');
-  const [category, setCategory] = useState<Story['category']>('Royal Wedding');
-  const [location, setLocation] = useState('Udaipur, Rajasthan');
-  const [date, setDate] = useState('Aug 2026');
-  const [excerpt, setExcerpt] = useState('');
   const [content, setContent] = useState('');
   const [coverImage, setCoverImage] = useState('https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800');
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -50,11 +41,6 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ stories, onToggleFeatu
   const handleOpenNewEditor = () => {
     setEditingStory(null);
     setTitle('');
-    setCouple('');
-    setCategory('Royal Wedding');
-    setLocation('Udaipur, Rajasthan');
-    setDate('Aug 2026');
-    setExcerpt('');
     setContent('');
     setCoverImage('https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800');
     setImagePreview(null);
@@ -66,11 +52,6 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ stories, onToggleFeatu
   const handleOpenEditEditor = (story: Story) => {
     setEditingStory(story);
     setTitle(story.title);
-    setCouple(story.couple);
-    setCategory(story.category);
-    setLocation(story.location);
-    setDate(story.date);
-    setExcerpt(story.excerpt || '');
     setContent(story.content || '');
     setCoverImage(story.coverImage);
     setImagePreview(story.coverImage);
@@ -99,22 +80,21 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ stories, onToggleFeatu
 
   // Save / Publish Blog Post
   const handleSavePost = (publishStatus: 'Published' | 'Draft') => {
-    if (!title || !couple) {
-      alert('Please fill in the Story Title and Couple Names.');
+    if (!title) {
+      alert('Please fill in the Story Title.');
       return;
     }
 
     const newStory: Story = {
       id: editingStory ? editingStory.id : `story-${Date.now()}`,
       title,
-      couple,
-      category,
-      location,
+      couple: editingStory ? editingStory.couple : 'Featured Couple',
+      category: editingStory ? editingStory.category : 'Royal Wedding',
+      location: editingStory ? editingStory.location : 'Udaipur, Rajasthan',
       coverImage: coverImage || 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800',
       photosCount: 35,
       featured: editingStory ? editingStory.featured : true,
-      date,
-      excerpt: excerpt || title,
+      date: editingStory ? editingStory.date : 'Aug 2026',
       content: content || 'Story content coming soon...',
       status: publishStatus,
     };
@@ -124,11 +104,11 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ stories, onToggleFeatu
   };
 
   // -------------------------------------------------------------
-  // RENDER VIEW 1: BLOG POST EDITOR MODE
+  // RENDER VIEW 1: CLEAN BLOG POST EDITOR MODE
   // -------------------------------------------------------------
   if (viewMode === 'editor') {
     return (
-      <div className="p-6 sm:p-8 max-w-5xl mx-auto space-y-8 font-sans">
+      <div className="p-6 sm:p-8 max-w-4xl mx-auto space-y-8 font-sans">
         {/* Editor Header Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-[#1E2235]">
           <div className="flex items-center gap-3">
@@ -181,93 +161,22 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ stories, onToggleFeatu
         </div>
 
         {/* Main Editor Body */}
-        <div className="space-y-8">
-          {/* Section 1: Story Title & Excerpt */}
-          <div className="bg-white dark:bg-[#121522] border border-slate-200 dark:border-[#1E2235] rounded-2xl p-6 space-y-4 shadow-sm">
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold uppercase tracking-wider text-[#8C90C1]">
-                Story Blog Title *
-              </label>
-              <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="e.g. Whispers of Royal Elegance at Jagmandir Island Palace"
-                className="w-full bg-slate-50 dark:bg-[#1A1E2E] text-lg sm:text-xl font-bold text-slate-900 dark:text-white p-4 rounded-xl border border-slate-200 dark:border-[#2B3147] focus:outline-none focus:border-[#8C90C1]"
-              />
-            </div>
-
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                Short Excerpt / Teaser Summary
-              </label>
-              <textarea
-                rows={2}
-                value={excerpt}
-                onChange={(e) => setExcerpt(e.target.value)}
-                placeholder="A brief 1-2 sentence preview summary of the wedding celebration..."
-                className="w-full bg-slate-50 dark:bg-[#1A1E2E] text-xs text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147] focus:outline-none focus:border-[#8C90C1]"
-              />
-            </div>
+        <div className="space-y-6">
+          {/* Section 1: Story Title */}
+          <div className="bg-white dark:bg-[#121522] border border-slate-200 dark:border-[#1E2235] rounded-2xl p-6 space-y-2 shadow-sm">
+            <label className="text-xs font-bold uppercase tracking-wider text-[#8C90C1]">
+              Story Title *
+            </label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="e.g. Whispers of Royal Elegance at Jagmandir Island Palace"
+              className="w-full bg-slate-50 dark:bg-[#1A1E2E] text-lg sm:text-xl font-bold text-slate-900 dark:text-white p-4 rounded-xl border border-slate-200 dark:border-[#2B3147] focus:outline-none focus:border-[#8C90C1]"
+            />
           </div>
 
-          {/* Section 2: Metadata Grid */}
-          <div className="bg-white dark:bg-[#121522] border border-slate-200 dark:border-[#1E2235] rounded-2xl p-6 space-y-4 shadow-sm">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-[#1E2235] pb-2">
-              Wedding Post Meta & Details
-            </h4>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs">
-              <div className="space-y-1">
-                <label className="font-semibold text-slate-700 dark:text-slate-300">Couple Names *</label>
-                <input
-                  type="text"
-                  value={couple}
-                  onChange={(e) => setCouple(e.target.value)}
-                  placeholder="e.g. Devansh & Shreya"
-                  className="w-full bg-slate-50 dark:bg-[#1A1E2E] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147] focus:outline-none focus:border-[#8C90C1]"
-                />
-              </div>
-
-              <div className="space-y-1">
-                <label className="font-semibold text-slate-700 dark:text-slate-300">Category</label>
-                <select
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value as any)}
-                  className="w-full bg-slate-50 dark:bg-[#1A1E2E] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147] focus:outline-none focus:border-[#8C90C1]"
-                >
-                  <option value="Royal Wedding">Royal Wedding</option>
-                  <option value="Destination">Destination</option>
-                  <option value="Pre-Wedding">Pre-Wedding</option>
-                  <option value="Intimate Ceremony">Intimate Ceremony</option>
-                </select>
-              </div>
-
-              <div className="space-y-1">
-                <label className="font-semibold text-slate-700 dark:text-slate-300">Location / Venue</label>
-                <input
-                  type="text"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  placeholder="Udaipur, Rajasthan"
-                  className="w-full bg-slate-50 dark:bg-[#1A1E2E] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147] focus:outline-none focus:border-[#8C90C1]"
-                />
-              </div>
-
-              <div className="space-y-1">
-                <label className="font-semibold text-slate-700 dark:text-slate-300">Shoot Month & Year</label>
-                <input
-                  type="text"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  placeholder="Feb 2026"
-                  className="w-full bg-slate-50 dark:bg-[#1A1E2E] text-slate-900 dark:text-white p-3 rounded-xl border border-slate-200 dark:border-[#2B3147] focus:outline-none focus:border-[#8C90C1]"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Section 3: Thumbnail & Cover Image Upload */}
+          {/* Section 2: Thumbnail & Cover Image Upload */}
           <div className="bg-white dark:bg-[#121522] border border-slate-200 dark:border-[#1E2235] rounded-2xl p-6 space-y-4 shadow-sm">
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-[#1E2235] pb-2">
               Featured Cover Image & Thumbnail
@@ -340,11 +249,11 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ stories, onToggleFeatu
             </div>
           </div>
 
-          {/* Section 4: Rich Content Editor Toolbar & Textarea */}
+          {/* Section 3: Rich Content Editor Toolbar & Textarea */}
           <div className="bg-white dark:bg-[#121522] border border-slate-200 dark:border-[#1E2235] rounded-2xl p-6 space-y-4 shadow-sm">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 dark:border-[#1E2235] pb-3">
               <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                Full Wedding Story Article Content
+                Story Article Content
               </h4>
 
               {/* Formatting Toolbar */}
@@ -406,10 +315,10 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ stories, onToggleFeatu
             </div>
 
             <textarea
-              rows={12}
+              rows={14}
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              placeholder="Write the full wedding blog post story here... (Describe the venue, moments, ritual highlights, ceremony details, and couple quote)"
+              placeholder="Write the full wedding story article content here..."
               className="w-full bg-slate-50 dark:bg-[#1A1E2E] text-sm text-slate-900 dark:text-white p-4 rounded-xl border border-slate-200 dark:border-[#2B3147] focus:outline-none focus:border-[#8C90C1] leading-relaxed font-sans"
             />
           </div>
@@ -502,11 +411,6 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ stories, onToggleFeatu
                 <h4 className="text-base font-bold text-slate-900 dark:text-white leading-snug font-sans">
                   {story.title}
                 </h4>
-                {story.excerpt && (
-                  <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
-                    {story.excerpt}
-                  </p>
-                )}
               </div>
 
               <div className="pt-3 border-t border-slate-200 dark:border-[#1E2235] flex items-center justify-between text-xs">
