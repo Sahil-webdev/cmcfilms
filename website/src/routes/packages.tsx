@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate, useSearch } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
 import { Check, Sparkles, ArrowRight, Camera, Film, Clock, HelpCircle, X, Send, ArrowUpRight, ArrowLeft, Search, Filter, RotateCcw, ChevronDown, ChevronUp, MapPin, Award, SlidersHorizontal, Phone, MessageSquare } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
@@ -29,6 +29,9 @@ export const Route = createFileRoute("/packages")({
       { property: "og:url", content: "/packages" },
     ],
     links: [{ rel: "canonical", href: "/packages" }],
+  }),
+  validateSearch: (search: Record<string, unknown>) => ({
+    service: typeof search.service === "string" ? search.service : undefined,
   }),
   component: PackagesPage,
 });
@@ -355,7 +358,25 @@ const faqs = [
 ];
 
 export function PackagesPage() {
-  const [activeDetailService, setActiveDetailService] = useState<ServiceDetail | null>(null);
+  // URL search params — service ID drives which detail view is shown
+  const { service: activeServiceId } = useSearch({ from: "/packages" });
+  const navigate = useNavigate({ from: "/packages" });
+
+  // Derive active service from URL param (no local state needed)
+  const activeDetailService = activeServiceId
+    ? (servicesData.find((s) => s.id === activeServiceId) ?? null)
+    : null;
+
+  const openServiceDetail = (pkg: ServiceDetail) => {
+    navigate({ search: { service: pkg.id } });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const closeServiceDetail = () => {
+    navigate({ search: {} });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const [enquiryModalItem, setEnquiryModalItem] = useState<{ name: string; price: string } | null>(null);
   const [formSent, setFormSent] = useState(false);
   const [expandedDesc, setExpandedDesc] = useState(false);
@@ -411,7 +432,7 @@ export function PackagesPage() {
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                onClick={() => setActiveDetailService(null)}
+                onClick={closeServiceDetail}
                 className="hover:text-[#C47A65] underline flex items-center gap-1 cursor-pointer font-bold text-[#171717]"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
@@ -423,7 +444,7 @@ export function PackagesPage() {
 
             <button
               type="button"
-              onClick={() => setActiveDetailService(null)}
+              onClick={closeServiceDetail}
               className="bg-[#171717] text-white px-3.5 py-1 rounded-full text-[11px] font-mono hover:bg-[#C47A65] transition-all cursor-pointer shrink-0"
             >
               ← Back
@@ -695,10 +716,7 @@ export function PackagesPage() {
               {servicesData.map((pkg) => (
                 <div
                   key={pkg.id}
-                  onClick={() => {
-                    setActiveDetailService(pkg);
-                    window.scrollTo({ top: 250, behavior: "smooth" });
-                  }}
+                  onClick={() => openServiceDetail(pkg)}
                   className="relative overflow-hidden rounded-xl sm:rounded-2xl aspect-[1.25/1] sm:aspect-square group cursor-pointer shadow-xs hover:shadow-xl transition-all duration-500 bg-black border border-black/10"
                 >
                   {/* Full Image Fill */}
