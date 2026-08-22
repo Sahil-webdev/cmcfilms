@@ -88,8 +88,8 @@ export function FooterOption7() {
             </div>
           </div>
 
-          {/* COL 2 (2.5 Cols): EXPLORE */}
-          <div className="lg:col-span-3 space-y-4">
+          {/* COL 2 (2 Cols): EXPLORE */}
+          <div className="lg:col-span-2 space-y-4">
             <span
               className="text-xs sm:text-sm font-mono uppercase tracking-[0.22em] text-[#AE171E] font-bold block mb-2"
               style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
@@ -97,7 +97,7 @@ export function FooterOption7() {
               EXPLORE
             </span>
 
-            <ul className="space-y-3.5 sm:space-y-4 text-sm sm:text-base font-normal text-[#AE171E]/90" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
+            <ul className="space-y-2.5 sm:space-y-3 text-xs sm:text-sm font-normal text-[#AE171E]/90" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
               <li>
                 <Link to="/portfolio" className="hover:underline transition-all inline-block py-0.5">Wedding Stories</Link>
               </li>
@@ -113,14 +113,14 @@ export function FooterOption7() {
               <li>
                 <Link to="/packages" className="hover:underline transition-all font-medium inline-flex items-center gap-1 py-0.5">
                   <span>Packages &amp; Investment</span>
-                  <ArrowUpRight className="w-4 h-4 text-[#AE171E]" />
+                  <ArrowUpRight className="w-3.5 h-3.5 text-[#AE171E]" />
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* COL 3 (2.5 Cols): SERVICES */}
-          <div className="lg:col-span-2 space-y-4">
+          {/* COL 3 (3.5 Cols): SERVICES */}
+          <div className="lg:col-span-3 space-y-4">
             <span
               className="text-xs sm:text-sm font-mono uppercase tracking-[0.22em] text-[#AE171E] font-bold block mb-2"
               style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
@@ -128,18 +128,30 @@ export function FooterOption7() {
               SERVICES
             </span>
 
-            <ul className="space-y-3.5 sm:space-y-4 text-sm sm:text-base font-normal text-[#AE171E]/90" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
+            <ul className="space-y-2 sm:space-y-2.5 text-xs sm:text-sm font-normal text-[#AE171E]/90" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
               <li>
-                <Link to="/portfolio" className="hover:underline transition-all inline-block py-0.5">Wedding Photography</Link>
+                <Link to="/packages" className="hover:underline transition-all inline-block py-0.5">Wedding Photography</Link>
               </li>
               <li>
-                <Link to="/films" className="hover:underline transition-all inline-block py-0.5">Cinematic Films</Link>
+                <Link to="/couples" className="hover:underline transition-all inline-block py-0.5">Pre-Wedding Photography</Link>
               </li>
               <li>
-                <Link to="/couples" className="hover:underline transition-all inline-block py-0.5">Pre-Wedding Shoots</Link>
+                <Link to="/packages" className="hover:underline transition-all inline-block py-0.5">Destination Wedding Photography</Link>
               </li>
               <li>
-                <Link to="/portfolio" className="hover:underline transition-all inline-block py-0.5">Destination Weddings</Link>
+                <Link to="/portfolio" className="hover:underline transition-all inline-block py-0.5">Event Photography</Link>
+              </li>
+              <li>
+                <Link to="/portfolio" className="hover:underline transition-all inline-block py-0.5">Commercial &amp; Brand Photography</Link>
+              </li>
+              <li>
+                <Link to="/portfolio" className="hover:underline transition-all inline-block py-0.5">Fashion &amp; Lifestyle Photography</Link>
+              </li>
+              <li>
+                <Link to="/portfolio" className="hover:underline transition-all inline-block py-0.5">Product &amp; Food Photography</Link>
+              </li>
+              <li>
+                <Link to="/portfolio" className="hover:underline transition-all inline-block py-0.5">Hotel, Resort &amp; Property Photography</Link>
               </li>
             </ul>
           </div>
