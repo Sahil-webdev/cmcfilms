@@ -7,7 +7,7 @@ export function Approach() {
   const current = services[active]!;
 
   return (
-    <section className="bg-background px-5 py-12 md:px-10 md:py-32">
+    <section className="bg-background px-5 pt-4 pb-12 md:px-10 md:pt-10 md:pb-24">
       <div className="mx-auto grid max-w-[1600px] gap-8 md:grid-cols-2 md:gap-20">
         <div className="relative aspect-[4/5] w-full overflow-hidden bg-beige md:sticky md:top-28 md:self-start">
           {services.map((s, i) => (
