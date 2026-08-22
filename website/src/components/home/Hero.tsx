@@ -48,7 +48,7 @@ export function Hero() {
       <div className="relative flex h-full flex-col items-center justify-end px-5 pb-20 md:pb-28 text-center text-white">
         {/* Main Title */}
         <h1
-          className="font-display text-[clamp(3.2rem,8.5vw,6.5rem)] font-medium leading-none tracking-wider uppercase text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)] transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]"
+          className="font-display text-[clamp(2rem,5.2vw,4.25rem)] font-medium leading-none tracking-wider uppercase text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)] transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]"
           style={{ opacity: ready ? 1 : 0, transform: ready ? "none" : "translateY(20px)" }}
         >
           CMC FILMS
@@ -56,7 +56,7 @@ export function Hero() {
 
         {/* Subtitle */}
         <p
-          className="mt-0.5 md:mt-1 font-sans text-[clamp(1.25rem,3.2vw,2.3rem)] font-medium tracking-wider text-white/95 drop-shadow-[0_2px_14px_rgba(0,0,0,0.85)] transition-all duration-1000 delay-200 ease-out"
+          className="mt-0.5 md:mt-1 font-sans text-[clamp(0.9rem,1.8vw,1.35rem)] font-medium tracking-widest text-white/90 drop-shadow-[0_2px_14px_rgba(0,0,0,0.85)] transition-all duration-1000 delay-200 ease-out"
           style={{ opacity: ready ? 1 : 0, transform: ready ? "none" : "translateY(14px)" }}
         >
           Wedding Storytellers
