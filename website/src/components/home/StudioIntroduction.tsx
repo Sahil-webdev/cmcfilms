@@ -1,4 +1,3 @@
-import { Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/Reveal";
 
 export function StudioIntroduction() {
@@ -25,12 +24,14 @@ export function StudioIntroduction() {
         </Reveal>
 
         <Reveal delay={0.3} className="pt-2">
-          <Link
-            to="/about"
+          <a
+            href="https://wa.me/917425940636"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-block bg-[#33302C] hover:bg-[#C47A65] text-white font-poppins text-xs sm:text-sm font-semibold px-8 py-3 rounded-full transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer"
           >
             Get in touch
-          </Link>
+          </a>
         </Reveal>
 
       </div>
