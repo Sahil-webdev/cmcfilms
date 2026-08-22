@@ -347,7 +347,7 @@ export function WeddingStoriesPage() {
       </section>
 
       {/* ── 3. ELEGANT 2-COLUMN JOURNAL CARDS SECTION (EXACT USER REFERENCE MATCH) ── */}
-      <section className="relative z-10 py-16 md:py-24 px-6 md:px-14 max-w-[1500px] mx-auto space-y-14">
+      <section className="relative z-10 pt-4 pb-16 md:pt-8 md:pb-24 px-6 md:px-14 max-w-[1500px] mx-auto space-y-10">
         
         {/* Minimal Header & Filter Tabs */}
         <div className="space-y-6 text-center max-w-3xl mx-auto">
