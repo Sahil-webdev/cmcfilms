@@ -28,13 +28,13 @@ export function FooterOption7() {
     <footer className="relative bg-[#D4DDD8] text-[#AE171E] font-sans selection:bg-[#AE171E] selection:text-white border-t border-[#AE171E]/20 overflow-hidden">
       
       {/* ── MAIN COMPACT & CLEAN FOOTER CONTAINER ── */}
-      <div className="relative z-10 py-8 sm:py-10 px-6 sm:px-12 md:px-16 max-w-[1400px] mx-auto space-y-6">
+      <div className="relative z-10 py-10 sm:py-14 px-6 sm:px-10 md:px-14 xl:px-20 max-w-[1750px] mx-auto space-y-10">
         
         {/* 4-COLUMN NEAT & AIRY GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 md:gap-10 xl:gap-14">
           
-          {/* COL 1 (4 Cols): BRAND IDENTITY & TAGLINE */}
-          <div className="lg:col-span-4 space-y-5">
+          {/* COL 1 (3 Cols): BRAND IDENTITY & TAGLINE */}
+          <div className="lg:col-span-3 space-y-5">
             <Link to="/" className="inline-block transition-opacity hover:opacity-85">
               <img
                 src={logoImg}
@@ -43,18 +43,18 @@ export function FooterOption7() {
               />
             </Link>
 
-            <p className="text-xs sm:text-sm text-[#AE171E]/90 font-normal leading-relaxed max-w-md" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
+            <p className="text-xs sm:text-sm text-[#AE171E]/90 font-normal leading-relaxed max-w-sm" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
               Capturing unscripted love stories, genuine emotions, and timeless cinema across India &amp; worldwide.
             </p>
 
             {/* Clean Inline Social Icons */}
-            <div className="flex items-center gap-4 pt-1">
+            <div className="flex items-center gap-3.5 pt-1">
               <a
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="w-10 h-10 rounded-full border border-[#AE171E]/20 text-[#AE171E] hover:bg-[#AE171E] hover:text-white flex items-center justify-center transition-all cursor-pointer"
+                className="w-9 h-9 rounded-full border border-[#AE171E]/20 text-[#AE171E] hover:bg-[#AE171E] hover:text-white flex items-center justify-center transition-all cursor-pointer"
               >
                 <Instagram className="w-4 h-4" />
               </a>
@@ -63,7 +63,7 @@ export function FooterOption7() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="YouTube"
-                className="w-10 h-10 rounded-full border border-[#AE171E]/20 text-[#AE171E] hover:bg-[#AE171E] hover:text-white flex items-center justify-center transition-all cursor-pointer"
+                className="w-9 h-9 rounded-full border border-[#AE171E]/20 text-[#AE171E] hover:bg-[#AE171E] hover:text-white flex items-center justify-center transition-all cursor-pointer"
               >
                 <Youtube className="w-4 h-4" />
               </a>
@@ -72,7 +72,7 @@ export function FooterOption7() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                className="w-10 h-10 rounded-full border border-[#AE171E]/20 text-[#AE171E] hover:bg-[#AE171E] hover:text-white flex items-center justify-center transition-all cursor-pointer"
+                className="w-9 h-9 rounded-full border border-[#AE171E]/20 text-[#AE171E] hover:bg-[#AE171E] hover:text-white flex items-center justify-center transition-all cursor-pointer"
               >
                 <Facebook className="w-4 h-4" />
               </a>
@@ -81,7 +81,7 @@ export function FooterOption7() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="WhatsApp"
-                className="w-10 h-10 rounded-full border border-[#AE171E]/20 text-[#AE171E] hover:bg-[#AE171E] hover:text-white flex items-center justify-center transition-all cursor-pointer"
+                className="w-9 h-9 rounded-full border border-[#AE171E]/20 text-[#AE171E] hover:bg-[#AE171E] hover:text-white flex items-center justify-center transition-all cursor-pointer"
               >
                 <WhatsAppIcon className="w-4 h-4" />
               </a>
@@ -119,8 +119,8 @@ export function FooterOption7() {
             </ul>
           </div>
 
-          {/* COL 3 (3.5 Cols): SERVICES */}
-          <div className="lg:col-span-3 space-y-4">
+          {/* COL 3 (4 Cols): SERVICES */}
+          <div className="lg:col-span-4 space-y-4">
             <span
               className="text-xs sm:text-sm font-mono uppercase tracking-[0.22em] text-[#AE171E] font-bold block mb-2"
               style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
