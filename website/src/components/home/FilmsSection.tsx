@@ -187,11 +187,11 @@ export function FilmsSection() {
                   />
                   
                   {/* Gradient Overlay for Text Visibility */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/75" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/20" />
 
-                  {/* Center/Top Poster Title (Matching Screenshot Typography) */}
-                  <div className="absolute top-12 sm:top-14 inset-x-4 text-center z-10">
-                    <h3 className="font-editorial italic text-3xl sm:text-4xl text-white font-normal drop-shadow-lg tracking-wide">
+                  {/* Poster Title (Positioned at Bottom of Card) */}
+                  <div className="absolute bottom-5 sm:bottom-6 inset-x-4 text-center z-10">
+                    <h3 className="font-editorial italic text-2xl sm:text-3xl md:text-4xl text-white font-normal drop-shadow-lg tracking-wide">
                       {film.posterTitle}
                     </h3>
                   </div>
