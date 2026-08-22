@@ -356,9 +356,9 @@ export function CoupleShootsPage() {
           </h2>
         </div>
 
-        {/* Carousel Slider Wrapper (3 Items Per Row on Desktop) */}
+        {/* Carousel Slider Wrapper (1 Item per view on Mobile, 2 on Tablet, 3 on Desktop) */}
         <div
-          className="relative group px-2 sm:px-6"
+          className="relative group px-3 sm:px-8"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
@@ -367,7 +367,7 @@ export function CoupleShootsPage() {
             type="button"
             onClick={() => scroll("left")}
             aria-label="Scroll left"
-            className="absolute left-0 sm:left-1 top-1/3 -translate-y-1/2 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-[#261E1E]/80 hover:bg-[#261E1E] text-white flex items-center justify-center backdrop-blur-md transition-all duration-300 shadow-xl cursor-pointer opacity-90 hover:scale-105"
+            className="absolute left-2 sm:left-4 top-[22%] sm:top-1/3 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#261E1E]/80 hover:bg-[#261E1E] text-white flex items-center justify-center backdrop-blur-md transition-all duration-300 shadow-xl cursor-pointer opacity-90 hover:scale-105"
           >
             <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
@@ -377,22 +377,22 @@ export function CoupleShootsPage() {
             type="button"
             onClick={() => scroll("right")}
             aria-label="Scroll right"
-            className="absolute right-0 sm:right-1 top-1/3 -translate-y-1/2 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-[#261E1E]/80 hover:bg-[#261E1E] text-white flex items-center justify-center backdrop-blur-md transition-all duration-300 shadow-xl cursor-pointer opacity-90 hover:scale-105"
+            className="absolute right-2 sm:right-4 top-[22%] sm:top-1/3 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#261E1E]/80 hover:bg-[#261E1E] text-white flex items-center justify-center backdrop-blur-md transition-all duration-300 shadow-xl cursor-pointer opacity-90 hover:scale-105"
           >
             <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
 
-          {/* 3 Items Per Row Slider Row */}
+          {/* Slider Row */}
           <div
             ref={carouselRef}
-            className="flex gap-6 sm:gap-8 overflow-x-auto scroll-smooth pb-6 px-1 no-bar items-stretch"
+            className="flex gap-6 sm:gap-8 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-6 px-1 no-bar items-stretch"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {coupleStoriesList.map((story) => (
               <div
                 key={story.id}
                 onClick={() => setActiveStoryModal(story)}
-                className="w-[88%] sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.35rem)] shrink-0 group cursor-pointer space-y-4 text-left flex flex-col justify-between"
+                className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.35rem)] snap-center shrink-0 group cursor-pointer space-y-4 text-left flex flex-col justify-between"
               >
                 <div className="space-y-4">
                   {/* Image Frame */}
