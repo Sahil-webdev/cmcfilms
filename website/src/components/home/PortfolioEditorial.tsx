@@ -156,7 +156,7 @@ export function PortfolioEditorial() {
     : wallItems.filter((item) => item.categoryTag === activeTab);
 
   return (
-    <section className="bg-[#F0E8DF] px-4 py-10 md:px-8 md:py-24 border-b border-espresso/10">
+    <section className="bg-[#F0E8DF] px-4 pt-4 pb-10 md:px-8 md:pt-10 md:pb-24 border-b border-espresso/10">
       <div className="mx-auto max-w-[1750px]">
         {/* Clean Header Title */}
         <Reveal className="border-b border-[#261E1E]/15 pb-4 mb-6 md:pb-6 md:mb-8 text-left">
