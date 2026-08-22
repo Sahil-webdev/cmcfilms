@@ -350,4 +350,61 @@
   stroke-dashoffset: -32.42;
 }
 
+/* ——— Animated Read More Button (From Uiverse.io by Creatlydev) ——— */
+.uiverse-button {
+  line-height: 1;
+  text-decoration: none;
+  display: inline-flex;
+  border: none;
+  cursor: pointer;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: var(--clr, #261E1E);
+  color: #fff;
+  border-radius: 10rem;
+  font-weight: 600;
+  padding: 0.65rem 1.25rem;
+  padding-left: 16px;
+  font-size: 0.8125rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background-color 0.3s;
+}
+
+.uiverse-button__icon-wrapper {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  color: var(--clr, #261E1E);
+  background-color: #fff;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.uiverse-button:hover {
+  background-color: #000;
+}
+
+.uiverse-button:hover .uiverse-button__icon-wrapper {
+  color: #000;
+}
+
+.uiverse-button__icon-svg--copy {
+  position: absolute;
+  transform: translate(-150%, 150%);
+}
+
+.uiverse-button:hover .uiverse-button__icon-svg:first-child {
+  transition: transform 0.3s ease-in-out;
+  transform: translate(150%, -150%);
+}
+
+.uiverse-button:hover .uiverse-button__icon-svg--copy {
+  transition: transform 0.3s ease-in-out 0.1s;
+  transform: translate(0);
+}
 

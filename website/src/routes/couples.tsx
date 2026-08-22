@@ -424,10 +424,38 @@ export function CoupleShootsPage() {
                 </div>
 
                 <div className="pt-2">
-                  <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-sans text-[#261E1E] font-normal group-hover:text-[#922A2F] transition-colors">
-                    <span>Read more</span>
-                    <span className="text-sm leading-none group-hover:translate-x-1 transition-transform">→</span>
-                  </span>
+                  <button
+                    type="button"
+                    className="uiverse-button group/btn inline-flex items-center gap-2.5 bg-[#261E1E] hover:bg-black text-white font-semibold text-xs py-2 px-4 pl-3 rounded-full transition-all duration-300 shadow-xs cursor-pointer whitespace-nowrap overflow-hidden"
+                    style={{ "--clr": "#261E1E" } as React.CSSProperties}
+                  >
+                    <span className="uiverse-button__icon-wrapper shrink-0 w-6 h-6 rounded-full bg-white text-[#261E1E] flex items-center justify-center relative overflow-hidden">
+                      <svg
+                        viewBox="0 0 14 15"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="uiverse-button__icon-svg w-2.5 h-2.5 transition-transform duration-300 group-hover/btn:translate-x-[150%] group-hover/btn:-translate-y-[150%]"
+                      >
+                        <path
+                          d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
+                          fill="currentColor"
+                        ></path>
+                      </svg>
+
+                      <svg
+                        viewBox="0 0 14 15"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="uiverse-button__icon-svg uiverse-button__icon-svg--copy w-2.5 h-2.5 absolute transition-transform duration-300 -translate-x-[150%] translate-y-[150%] group-hover/btn:translate-x-0 group-hover/btn:translate-y-0"
+                      >
+                        <path
+                          d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
+                          fill="currentColor"
+                        ></path>
+                      </svg>
+                    </span>
+                    <span className="font-poppins text-xs font-semibold text-white">Read More</span>
+                  </button>
                 </div>
               </div>
             ))}
