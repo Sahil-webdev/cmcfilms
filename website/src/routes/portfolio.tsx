@@ -289,17 +289,9 @@ export function WeddingStoriesPage() {
             </h1>
           </Reveal>
 
-          <Reveal delay={150}>
-            <p className="text-sm sm:text-base md:text-lg text-[#1A1A1A] font-sans font-medium leading-relaxed max-w-xs space-y-1 pt-2">
-              <span>Real weddings.</span> <br />
-              <span>Real people.</span> <br />
-              <span>Real memories.</span>
-            </p>
-          </Reveal>
         </div>
 
-        <div className="relative z-10 flex justify-between items-end text-xs font-mono text-[#1A1A1A]/60 border-t border-black/10 pt-4">
-          <span>REAL SHOOT DIARIES & JOURNAL</span>
+        <div className="relative z-10 flex justify-end items-end text-xs font-mono text-[#1A1A1A]/60 border-t border-black/10 pt-4">
           <span className="flex items-center gap-2">
             Scroll to read journal <ArrowDown className="w-3.5 h-3.5 text-[#93191E]" />
           </span>
