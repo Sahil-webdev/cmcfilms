@@ -208,7 +208,7 @@ export function CoupleShootsPage() {
         if (scrollLeft + clientWidth >= scrollWidth - 15) {
           carouselRef.current.scrollTo({ left: 0, behavior: "smooth" });
         } else {
-          carouselRef.current.scrollBy({ left: 400, behavior: "smooth" });
+          carouselRef.current.scrollBy({ left: carouselRef.current.clientWidth, behavior: "smooth" });
         }
       }
     }, 4000);
@@ -217,7 +217,7 @@ export function CoupleShootsPage() {
 
   const scroll = (direction: "left" | "right") => {
     if (carouselRef.current) {
-      const scrollAmount = direction === "left" ? -400 : 400;
+      const scrollAmount = (carouselRef.current.clientWidth) * (direction === "left" ? -1 : 1);
       carouselRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
     }
   };
@@ -225,10 +225,8 @@ export function CoupleShootsPage() {
   return (
     <main className="bg-[#F3F0EA] text-[#171717] font-sans selection:bg-[#922A2F]/20 relative overflow-hidden">
       
-      {/* ── 1. HERO SECTION (UNTOUCHED & PRESERVED) ── */}
       <section className="relative pt-24 md:pt-32 pb-16 md:pb-24 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto border-b border-[#D8D3CB] overflow-hidden">
         
-        {/* Background Giant Marquee Track */}
         <style>{`
           @keyframes marquee-couples {
             0% { transform: translateX(0%); }
@@ -241,27 +239,21 @@ export function CoupleShootsPage() {
           }
         `}</style>
 
-        <div
-          className="pointer-events-none select-none absolute top-4 inset-x-0 overflow-hidden z-0 flex items-center"
-          aria-hidden="true"
-        >
-          <div className="marquee-couples-track flex items-center gap-16 whitespace-nowrap">
-            {Array.from({ length: 10 }).map((_, i) => (
-              <span
-                key={i}
-                className="uppercase tracking-tighter text-[#171717]/[0.06]"
-                style={{ fontSize: "clamp(6rem, 15vw, 14rem)", lineHeight: 1, fontFamily: "'Anton', sans-serif" }}
-              >
-                COUPLE SHOOT
-              </span>
-            ))}
+        <div className="absolute inset-x-0 top-10 pointer-events-none opacity-[0.07] overflow-hidden select-none">
+          <div className="marquee-couples-track">
+            <span className="font-editorial text-[14vw] leading-none uppercase tracking-widest text-[#261E1E] whitespace-nowrap pr-12 font-bold">
+              COUPLE STORIES &bull; UNFILTERED LOVE &bull; PRE-WEDDING ARCHIVES &bull;&nbsp;
+            </span>
+            <span className="font-editorial text-[14vw] leading-none uppercase tracking-widest text-[#261E1E] whitespace-nowrap pr-12 font-bold">
+              COUPLE STORIES &bull; UNFILTERED LOVE &bull; PRE-WEDDING ARCHIVES &bull;&nbsp;
+            </span>
           </div>
         </div>
 
         {/* Hero Main Content */}
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center pt-8 md:pt-12">
           
-          {/* Left Column: Clean Tall Vertical Real Couple Image (UNTOUCHED PRESERVED HERO IMAGE) */}
+          {/* Left Column: Clean Tall Vertical Real Couple Image */}
           <div className="lg:col-span-6 flex justify-center lg:justify-start w-full">
             <div className="relative h-[520px] sm:h-[600px] lg:h-[660px] w-full max-w-lg lg:max-w-xl overflow-hidden rounded-2xl shadow-xl bg-[#D8D3CB]">
               <img
