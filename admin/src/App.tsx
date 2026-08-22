@@ -167,7 +167,7 @@ const AdminContent: React.FC = () => {
           />
         );
       case 'packages':
-        return <PackagesPage packages={packages} onUpdatePackage={handleUpdatePackage} />;
+        return <PackagesPage />;
       case 'media':
         return <MediaPage media={media} onUploadMedia={handleUploadMedia} />;
       case 'analytics':

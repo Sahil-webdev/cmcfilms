@@ -137,7 +137,7 @@ const initialPackages: ServicePackage[] = [
 
 // ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
 
-export const PackagesPage: React.FC = () => {
+export const PackagesAdminPage: React.FC = () => {
   const [packages, setPackages] = useState<ServicePackage[]>(initialPackages);
   const [editingPkg, setEditingPkg] = useState<ServicePackage | null>(null);
   const [expandedPkgId, setExpandedPkgId] = useState<string | null>(null);
