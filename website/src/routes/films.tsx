@@ -334,44 +334,38 @@ function RecentFilmsCarousel() {
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {recentFilmsList.map((film) => (
-            <div
+            <a
               key={film.id}
-              className="snap-center shrink-0 w-[270px] sm:w-[310px] flex flex-col items-center gap-5 group"
+              href={film.youtubeUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="snap-center shrink-0 w-[260px] sm:w-[300px] md:w-[320px] flex flex-col items-center gap-3.5 group cursor-pointer"
             >
-              {/* Portrait Poster Container (Aspect 3:4.2) */}
-              <div className="relative aspect-[3/4.2] w-full overflow-hidden rounded-xl bg-[#171512] shadow-xl border border-black/5 cursor-pointer">
+              {/* Movie Poster Card */}
+              <div className="relative aspect-[2/3] w-full rounded-xl overflow-hidden bg-black/40 shadow-xl border border-white/20 transition-all duration-500 group-hover:shadow-2xl group-hover:scale-[1.02]">
+                {/* Poster Background Image */}
                 <img
                   src={film.image}
                   alt={film.couple}
-                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  className="h-full w-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105"
                 />
                 
-                {/* Vignette Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30" />
+                {/* Gradient Overlay for Text Visibility */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/20" />
 
-                {/* Sub-brand top label */}
-                <span className="absolute top-4 inset-x-0 text-center text-[10px] font-mono tracking-[0.25em] text-white/70 uppercase">
-                  {film.sub}
-                </span>
-
-                {/* Elegant Couple Name Overlay (Centered Bottom) */}
-                <div className="absolute bottom-6 inset-x-4 text-center">
-                  <h3 className="font-editorial italic text-2xl sm:text-3xl text-white font-normal drop-shadow-md leading-tight">
+                {/* Poster Title (Positioned at Bottom of Card) */}
+                <div className="absolute bottom-5 sm:bottom-6 inset-x-4 text-center z-10">
+                  <h3 className="font-editorial italic text-2xl sm:text-3xl md:text-4xl text-white font-normal drop-shadow-lg tracking-wide">
                     {film.couple}
                   </h3>
                 </div>
               </div>
 
-              {/* Watch Film Dark Pill Button */}
-              <a
-                href={film.youtubeUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="bg-[#2B2724] hover:bg-[#171512] text-white text-xs font-semibold px-6 py-2.5 rounded-full transition-all shadow-md hover:shadow-lg active:scale-95 cursor-pointer inline-flex items-center gap-2 font-sans"
-              >
-                <span>Watch Film</span>
-              </a>
-            </div>
+              {/* Bottom Dark Pill Button "Watch Film" */}
+              <span className="bg-[#33302C] group-hover:bg-[#171717] text-white font-poppins text-xs font-semibold px-6 py-2.5 rounded-full transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer inline-block">
+                Watch Film
+              </span>
+            </a>
           ))}
         </div>
       </div>
