@@ -159,7 +159,7 @@ export function PortfolioEditorial() {
     <section className="bg-[#F0E8DF] px-4 pt-4 pb-10 md:px-8 md:pt-10 md:pb-24 border-b border-espresso/10">
       <div className="mx-auto max-w-[1750px]">
         {/* Clean Header Title */}
-        <Reveal className="border-b border-[#261E1E]/15 pb-4 mb-6 md:pb-6 md:mb-8 text-left">
+        <Reveal className="mb-4 md:mb-6 text-left">
           <h2 className="font-display text-[clamp(2.2rem,5vw,4.25rem)] leading-tight font-light text-[#261E1E]">
             The Visual <em className="font-editorial italic text-[#93191E] font-normal">Editorial Masonry</em>
           </h2>
