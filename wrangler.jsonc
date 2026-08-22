@@ -1,0 +1,21 @@
+{
+  "$schema": "website/node_modules/wrangler/config-schema.json",
+  "name": "cmcfilms",
+  "compatibility_date": "2026-08-13",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "website/.output/server/index.mjs",
+  "no_bundle": true,
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "website/.output/public"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "rules": [
+    {
+      "type": "ESModule",
+      "globs": ["**/*.mjs", "**/*.js"]
+    }
+  ]
+}
