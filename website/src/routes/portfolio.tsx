@@ -349,34 +349,11 @@ export function WeddingStoriesPage() {
       {/* ── 3. ELEGANT 2-COLUMN JOURNAL CARDS SECTION (EXACT USER REFERENCE MATCH) ── */}
       <section className="relative z-10 pt-4 pb-16 md:pt-8 md:pb-24 px-6 md:px-14 max-w-[1500px] mx-auto space-y-10">
         
-        {/* Minimal Header & Filter Tabs */}
-        <div className="space-y-6 text-center max-w-3xl mx-auto">
-          <div className="space-y-2">
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-light text-[#261E1E]">
-              Stories, Wisdom & <em className="font-editorial italic text-[#93191E] font-normal">Wedding Inspiration</em>
-            </h2>
-          </div>
-
-          {/* Clean Category Filter Tabs */}
-          <div className="flex flex-wrap items-center justify-center gap-2.5 pt-2">
-            {categories.map((cat) => {
-              const active = selectedCategory === cat;
-              return (
-                <button
-                  key={cat}
-                  type="button"
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`px-5 py-2 rounded-full text-xs font-mono transition-all duration-300 cursor-pointer ${
-                    active
-                      ? "bg-[#383330] text-white shadow-md"
-                      : "bg-[#EFECE6] text-[#261E1E]/75 hover:bg-[#E2DDD5] hover:text-[#261E1E]"
-                  }`}
-                >
-                  {cat}
-                </button>
-              );
-            })}
-          </div>
+        {/* Minimal Header */}
+        <div className="text-center max-w-3xl mx-auto">
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-light text-[#261E1E]">
+            Stories, Wisdom & <em className="font-editorial italic text-[#93191E] font-normal">Wedding Inspiration</em>
+          </h2>
         </div>
 
         {/* 4-Column Story Cards Grid */}
