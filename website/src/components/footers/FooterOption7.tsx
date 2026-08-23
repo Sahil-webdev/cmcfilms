@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, CheckCircle2, Instagram, Youtube, Facebook, Phone, Mail, MapPin } from "lucide-react";
-import logoImg from "@/assets/logo.png";
+import { BrandLogo } from "../BrandLogo";
 
 function WhatsAppIcon({ className = "w-4 h-4" }: { className?: string }) {
   return (
@@ -30,18 +30,15 @@ export function FooterOption7() {
       {/* ── MAIN COMPACT & CLEAN FOOTER CONTAINER ── */}
       <div className="relative z-10 py-10 sm:py-14 px-6 sm:px-10 md:px-14 xl:px-20 max-w-[1750px] mx-auto space-y-10">
         
-        {/* 4-COLUMN PERFECTLY ALIGNED GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 md:gap-10 xl:gap-12 items-start">
+        {/* Four equal-width columns with consistent spacing on desktop. */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 xl:gap-12 items-start">
           
           {/* COL 1 (3 Cols): BRAND IDENTITY & TAGLINE */}
-          <div className="lg:col-span-3 space-y-4">
-            <Link to="/" className="inline-block transition-opacity hover:opacity-85">
-              <img
-                src={logoImg}
-                alt="CMC FILMS - Wedding Storytellers"
-                className="h-9 sm:h-11 w-auto object-contain"
-              />
-            </Link>
+          <div className="space-y-4">
+            <BrandLogo
+              variant="custom"
+              textClassName="text-xl sm:text-2xl font-display font-medium tracking-[0.34em] text-[#AE171E]"
+            />
 
             <p className="text-xs sm:text-sm text-[#AE171E]/90 font-normal leading-relaxed max-w-xs" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
               Capturing unscripted love stories, genuine emotions, and timeless cinema across India &amp; worldwide.
@@ -89,7 +86,7 @@ export function FooterOption7() {
           </div>
 
           {/* COL 2 (2 Cols): EXPLORE */}
-          <div className="lg:col-span-2 space-y-3">
+          <div className="space-y-3">
             <span
               className="text-xs sm:text-sm font-mono uppercase tracking-[0.22em] text-[#AE171E] font-bold block mb-3 h-6 flex items-center"
               style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
@@ -119,8 +116,8 @@ export function FooterOption7() {
             </ul>
           </div>
 
-          {/* COL 3 (4 Cols): SERVICES (2-Column Sub-Grid for Perfect Alignment) */}
-          <div className="lg:col-span-4 space-y-3">
+          {/* COL 3 (4 Cols): SERVICES (Single Vertical Column List) */}
+          <div className="space-y-3">
             <span
               className="text-xs sm:text-sm font-mono uppercase tracking-[0.22em] text-[#AE171E] font-bold block mb-3 h-6 flex items-center"
               style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
@@ -128,7 +125,7 @@ export function FooterOption7() {
               SERVICES
             </span>
 
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2.5 text-xs sm:text-sm font-normal text-[#AE171E]/90" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
+            <ul className="space-y-2 sm:space-y-2.5 text-xs sm:text-sm font-normal text-[#AE171E]/90" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
               <li>
                 <Link to="/packages" className="hover:underline transition-all inline-block py-0.5">Wedding Photography</Link>
               </li>
@@ -136,28 +133,28 @@ export function FooterOption7() {
                 <Link to="/couples" className="hover:underline transition-all inline-block py-0.5">Pre-Wedding Photography</Link>
               </li>
               <li>
-                <Link to="/packages" className="hover:underline transition-all inline-block py-0.5">Destination Wedding</Link>
+                <Link to="/packages" className="hover:underline transition-all inline-block py-0.5">Destination Wedding Photography</Link>
               </li>
               <li>
                 <Link to="/portfolio" className="hover:underline transition-all inline-block py-0.5">Event Photography</Link>
               </li>
               <li>
-                <Link to="/portfolio" className="hover:underline transition-all inline-block py-0.5">Commercial &amp; Brand</Link>
+                <Link to="/portfolio" className="hover:underline transition-all inline-block py-0.5">Commercial &amp; Brand Photography</Link>
               </li>
               <li>
-                <Link to="/portfolio" className="hover:underline transition-all inline-block py-0.5">Fashion &amp; Lifestyle</Link>
+                <Link to="/portfolio" className="hover:underline transition-all inline-block py-0.5">Fashion &amp; Lifestyle Photography</Link>
               </li>
               <li>
-                <Link to="/portfolio" className="hover:underline transition-all inline-block py-0.5">Product &amp; Food</Link>
+                <Link to="/portfolio" className="hover:underline transition-all inline-block py-0.5">Product &amp; Food Photography</Link>
               </li>
               <li>
-                <Link to="/portfolio" className="hover:underline transition-all inline-block py-0.5">Hotel &amp; Resort</Link>
+                <Link to="/portfolio" className="hover:underline transition-all inline-block py-0.5">Hotel, Resort &amp; Property Photography</Link>
               </li>
             </ul>
           </div>
 
           {/* COL 4 (3 Cols): CONTACT & ENQUIRE */}
-          <div className="lg:col-span-3 space-y-3">
+          <div className="space-y-3">
             <span
               className="text-xs sm:text-sm font-mono uppercase tracking-[0.22em] text-[#AE171E] font-bold block mb-3 h-6 flex items-center"
               style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}

@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import { Instagram, Youtube, Calendar, ArrowUpRight, MessageCircle } from "lucide-react";
 import { navLinks, studio } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
-
-import logoImg from "@/assets/logo.png";
+import { BrandLogo } from "./BrandLogo";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -55,19 +54,13 @@ export function Navbar() {
           )}
         >
           {/* Desktop Left Brand Logo */}
-          <Link
-            to="/"
-            className="inline-flex items-center transition-all duration-300 hover:opacity-90 active:scale-95"
-          >
-            <img
-              src={logoImg}
-              alt="CMC FILMS - Wedding Storytellers"
-              className={cn(
-                "w-auto object-contain transition-all duration-300 drop-shadow-[0_0_14px_rgba(255,255,255,0.85)]",
-                scrolled ? "h-9 sm:h-11" : "h-11 sm:h-13"
-              )}
-            />
-          </Link>
+          <BrandLogo
+            variant="custom"
+            textClassName={cn(
+              "font-display font-medium tracking-[0.34em] transition-all duration-300",
+              scrolled ? "text-[#261E1E] text-lg sm:text-xl md:text-2xl" : "text-white text-xl sm:text-2xl md:text-[25px] drop-shadow-md"
+            )}
+          />
 
           {/* Desktop Right Navigation Links (Animated Gold Underline Active Highlight) */}
           <nav className="hidden items-center gap-5 md:gap-7 lg:flex" role="navigation" aria-label="Main Navigation">
@@ -163,13 +156,10 @@ export function Navbar() {
 
         {/* ── Top Header / Brand Mark ── */}
         <div className="relative z-10 pb-4 border-b border-white/10">
-          <Link to="/" onClick={() => setOpen(false)} className="inline-block">
-            <img
-              src={logoImg}
-              alt="CMC FILMS - Wedding Storytellers"
-              className="h-10 sm:h-12 w-auto object-contain drop-shadow-[0_0_14px_rgba(255,255,255,0.85)]"
-            />
-          </Link>
+          <BrandLogo
+            variant="light"
+            textClassName="text-lg sm:text-xl font-display font-medium tracking-[0.32em]"
+          />
           <span className="label-xs text-[#E5CA92] text-[10px] uppercase tracking-widest block mt-2 font-mono">
             Stories for love • Told forever
           </span>
