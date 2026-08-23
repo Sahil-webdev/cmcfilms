@@ -72,38 +72,39 @@ function Contact() {
             </p>
           </div>
         ) : (
-          <form onSubmit={onSubmit} noValidate className="mt-14 space-y-8">
-            <div className="grid gap-8 sm:grid-cols-2">
+          <form onSubmit={onSubmit} noValidate className="mt-10 space-y-6">
+            <div className="grid gap-5 sm:grid-cols-2">
               {fields.map((f) => (
-                <label key={f.name} className="block">
-                  <span className="label-xs text-olive">
+                <div key={f.name} className="space-y-1.5">
+                  <label className="block text-[11px] font-mono uppercase tracking-[0.16em] text-[#261E1E]/80 font-bold">
                     {f.label}
-                    {"required" in f && f.required ? <span className="text-gold"> *</span> : null}
-                  </span>
+                    {"required" in f && f.required ? <span className="text-[#922A2F]"> *</span> : null}
+                  </label>
                   <input
                     name={f.name}
                     type={f.type}
                     required={"required" in f ? f.required : false}
-                    className="mt-3 w-full border-b border-input bg-transparent pb-2 font-display text-xl outline-none transition-colors focus:border-gold"
+                    className="w-full bg-white border border-[#261E1E]/15 rounded-xl px-4 py-3 text-xs sm:text-sm text-[#261E1E] placeholder:text-[#261E1E]/35 outline-none transition-all duration-300 focus:border-[#922A2F] focus:ring-2 focus:ring-[#922A2F]/10 shadow-2xs"
                   />
-                </label>
+                </div>
               ))}
             </div>
 
-            <label className="block">
-              <span className="label-xs text-olive">Tell Us About Your Story</span>
+            <div className="space-y-1.5">
+              <label className="block text-[11px] font-mono uppercase tracking-[0.16em] text-[#261E1E]/80 font-bold">Tell Us About Your Story</label>
               <textarea
                 name="story"
                 rows={4}
-                className="mt-3 w-full resize-none border-b border-input bg-transparent pb-2 font-display text-xl outline-none transition-colors focus:border-gold"
+                placeholder="Tell us about your celebration, functions, or vision..."
+                className="w-full bg-white border border-[#261E1E]/15 rounded-2xl p-4 text-xs sm:text-sm text-[#261E1E] placeholder:text-[#261E1E]/35 outline-none transition-all duration-300 focus:border-[#922A2F] focus:ring-2 focus:ring-[#922A2F]/10 shadow-2xs resize-none"
               />
-            </label>
+            </div>
 
-            {error && <p className="text-sm text-destructive">{error}</p>}
+            {error && <p className="text-xs font-mono text-red-600 bg-red-50 p-3 rounded-lg border border-red-200">{error}</p>}
 
             <button
               type="submit"
-              className="label-xs border border-espresso px-10 py-4 transition-colors duration-500 hover:bg-espresso hover:text-ivory"
+              className="bg-[#261E1E] hover:bg-[#922A2F] text-white px-9 py-3.5 rounded-full font-sans text-xs font-semibold uppercase tracking-[0.2em] transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer"
             >
               Send Enquiry
             </button>
