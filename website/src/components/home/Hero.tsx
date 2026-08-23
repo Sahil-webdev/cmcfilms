@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import heroImg from "@/assets/hero.jpg";
+import heroVideo from "@/assets/video/15157496-hd_1920_1080_25fps.mp4";
 
 export function Hero() {
   const [ready, setReady] = useState(false);
@@ -38,11 +39,8 @@ export function Hero() {
         className="absolute inset-0 h-full w-full object-cover"
         aria-hidden
       >
-        <source src="/hero-bg.mp4" type="video/mp4" />
+        <source src={heroVideo} type="video/mp4" />
       </video>
-
-      {/* ── Minimal Subtle Gradient for Text Readability (Just like KnotsbyAMP) ── */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-black/35 pointer-events-none" />
 
       {/* ── Hero content placed in lower center like KnotsbyAMP ── */}
       <div className="relative flex h-full flex-col items-center justify-end px-5 pb-20 md:pb-28 text-center text-white">

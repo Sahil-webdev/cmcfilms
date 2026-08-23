@@ -417,25 +417,25 @@ export function WeddingFilmsPage() {
 
                 {/* Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10 group-hover:from-black/85 group-hover:via-black/40 transition-all duration-500 flex items-center justify-center">
-                  <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-white/20 backdrop-blur-md border border-white/40 flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:bg-white text-white group-hover:text-[#171512] transition-all duration-300">
+                  <button
+                    type="button"
+                    aria-label="Open CMC FILMS on YouTube"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      window.open("https://www.youtube.com", "_blank", "noopener,noreferrer");
+                    }}
+                    className="h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-white/20 backdrop-blur-md border border-white/40 flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:bg-white text-white group-hover:text-[#171512] transition-all duration-300 cursor-pointer"
+                  >
                     <Play className="w-5 h-5 fill-current ml-0.5" />
-                  </div>
+                  </button>
                 </div>
 
                 {/* Bottom Overlay Text */}
                 <div className="absolute bottom-4 left-5 right-5 text-white space-y-0.5 pointer-events-none">
-                  <p className="text-[9px] font-mono tracking-[0.3em] uppercase text-white/75 font-bold">
-                    CMC FILMS
-                  </p>
                   <h3 className="font-display uppercase tracking-wider text-xl sm:text-2xl font-normal text-white drop-shadow-md leading-tight">
                     {film.couple}
                   </h3>
                 </div>
-
-                {/* Top Duration Badge */}
-                <span className="absolute top-3 right-3 text-[10px] font-mono text-white/90 bg-black/60 backdrop-blur-sm px-2.5 py-0.5 rounded-[2px]">
-                  {film.duration} · {film.location}
-                </span>
               </div>
             </Reveal>
           ))}

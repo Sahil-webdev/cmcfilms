@@ -114,6 +114,14 @@ export function FooterOption7() {
                 </Link>
               </li>
             </ul>
+
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 border border-[#AE171E]/45 px-3.5 py-2 text-xs font-medium text-[#AE171E] transition-colors hover:bg-[#AE171E] hover:text-white"
+            >
+              <span>Work With Us</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
 
           {/* COL 3 (4 Cols): SERVICES (Single Vertical Column List) */}
@@ -216,8 +224,8 @@ export function FooterOption7() {
           <p>© {new Date().getFullYear()} CMC FILMS. All rights reserved.</p>
           
           <div className="flex items-center gap-6">
-            <Link to="/contact" className="hover:underline transition-all">Privacy Policy</Link>
-            <Link to="/contact" className="hover:underline transition-all">Terms of Service</Link>
+            <Link to="/privacy-policy" className="hover:underline transition-all">Privacy Policy</Link>
+            <Link to="/terms-of-service" className="hover:underline transition-all">Terms of Service</Link>
           </div>
         </div>
 

@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate, useSearch } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
-import { Check, Sparkles, ArrowRight, Camera, Film, Clock, HelpCircle, X, Send, ArrowUpRight, ArrowLeft, Search, Filter, RotateCcw, ChevronDown, ChevronUp, MapPin, Award, SlidersHorizontal, Phone, MessageSquare } from "lucide-react";
+import { Check, Sparkles, ArrowRight, Camera, Film, Clock, X, Send, ArrowUpRight, ArrowLeft, Search, Filter, RotateCcw, ChevronDown, ChevronUp, MapPin, Award, SlidersHorizontal, Phone, MessageSquare } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 
 // Image Imports
@@ -30,8 +30,8 @@ export const Route = createFileRoute("/packages")({
     ],
     links: [{ rel: "canonical", href: "/packages" }],
   }),
-  validateSearch: (search: Record<string, unknown>) => ({
-    service: typeof search.service === "string" ? search.service : undefined,
+  validateSearch: (search: Record<string, unknown>): { service?: string } => ({
+    service: typeof search["service"] === "string" ? search["service"] : undefined,
   }),
   component: PackagesPage,
 });
@@ -373,7 +373,7 @@ export function PackagesPage() {
   };
 
   const closeServiceDetail = () => {
-    navigate({ search: {} });
+    navigate({ search: { service: undefined } });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -682,20 +682,13 @@ export function PackagesPage() {
       ) : (
         /* ── MAIN OVERVIEW PAGE (HERO + 6 CARD BOXES + CALCULATOR + FAQS) ── */
         <>
-          {/* ── 1. CLEAR HERO BORDERLESS BANNER WITH BOLD TITLE ── */}
-          <section className="relative h-[220px] sm:h-[300px] md:h-[340px] w-full overflow-hidden flex items-center justify-center text-center px-6">
+          {/* ── 1. CLEAN FULL-SIZE HERO IMAGE ── */}
+          <section className="relative h-[420px] sm:h-[480px] md:h-[520px] w-full overflow-hidden">
             <img
               src={hero}
               alt="Our Packages - CMC FILMS"
-              className="absolute inset-0 h-full w-full object-cover opacity-90 object-center"
+              className="h-full w-full object-cover object-center"
             />
-            <div className="absolute inset-0 bg-black/35" />
-
-            <div className="relative z-10 pt-6 sm:pt-8">
-              <h1 className="font-poppins text-3xl sm:text-6xl md:text-7xl text-white font-bold tracking-wider uppercase drop-shadow-md">
-                Our Packages
-              </h1>
-            </div>
           </section>
 
           {/* ── 2. EXACT 4-COLUMN IMAGE CARDS GRID (OPTIMIZED FOR MOBILE) ── */}
@@ -706,9 +699,6 @@ export function PackagesPage() {
               <h2 className="font-poppins text-xl sm:text-4xl text-[#171717] font-bold uppercase tracking-tight">
                 Our Packages
               </h2>
-              <p className="text-xs sm:text-sm text-[#55504A] font-light">
-                Click any service card below to view detailed offerings, duration filters, and inclusions.
-              </p>
             </div>
 
             {/* 4-Column Responsive Grid (Optimized for Mobile View) */}
@@ -742,27 +732,28 @@ export function PackagesPage() {
 
           </section>
 
-          {/* ── 4. FAQ ACCORDION SECTION ── */}
-          <section className="py-10 sm:py-16 px-4 sm:px-12 md:px-16 max-w-[1300px] mx-auto space-y-6 sm:space-y-8 border-t border-[#D8D3CB]">
-            <div className="text-center space-y-1.5">
-              <span className="text-xs font-mono text-[#C47A65] uppercase tracking-[0.2em] font-bold">
-                QUESTIONS &amp; ANSWERS
-              </span>
-              <h2 className="font-sans text-2xl sm:text-4xl font-bold text-[#171717] tracking-tight">
+          {/* ── 4. FAQ SECTION ── */}
+          <section className="py-12 sm:py-20 px-4 sm:px-12 md:px-16 max-w-[1300px] mx-auto space-y-8 sm:space-y-12 border-t border-[#D8D3CB]">
+            <div className="text-center">
+              <h2 className="font-sans text-2xl sm:text-4xl font-normal text-[#171717] tracking-tight">
                 Frequently Asked Questions
               </h2>
             </div>
 
-            <div className="space-y-3 max-w-3xl mx-auto">
+            <div className="max-w-4xl mx-auto border-y border-[#D8D3CB]">
               {faqs.map((faq, idx) => (
-                <div key={idx} className="bg-white p-4 sm:p-5 rounded-xl border border-[#D8D3CB]/80 space-y-1.5 shadow-xs text-left">
-                  <h3 className="font-sans text-sm sm:text-base text-[#171717] font-semibold flex items-start gap-2.5">
-                    <HelpCircle className="w-4 h-4 text-[#C47A65] shrink-0 mt-0.5" />
-                    <span>{faq.q}</span>
-                  </h3>
-                  <p className="text-xs sm:text-sm text-[#55504A] font-light leading-relaxed pl-6">
-                    {faq.a}
-                  </p>
+                <div key={idx} className="grid grid-cols-[2rem_1fr] gap-x-3 sm:grid-cols-[3.5rem_1fr] sm:gap-x-5 border-b border-[#D8D3CB] py-6 sm:py-8 last:border-b-0 text-left">
+                  <span className="pt-0.5 font-mono text-[11px] tracking-[0.12em] text-[#C47A65]">
+                    {String(idx + 1).padStart(2, "0")}
+                  </span>
+                  <div className="space-y-3">
+                    <h3 className="font-sans text-base sm:text-xl text-[#171717] font-normal leading-snug">
+                      {faq.q}
+                    </h3>
+                    <p className="text-sm sm:text-base text-[#55504A] font-normal leading-relaxed">
+                      {faq.a}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>

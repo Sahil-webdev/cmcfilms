@@ -15,6 +15,11 @@ export function BrandLogo({
   variant = "light",
   to = "/",
 }: BrandLogoProps) {
+  const scrollToTop = () => {
+    if (to !== "/") return;
+    requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: "auto" }));
+  };
+
   const textColor =
     variant === "dark"
       ? "text-[#171717]"
@@ -25,6 +30,8 @@ export function BrandLogo({
   return (
     <Link
       to={to}
+      resetScroll={to === "/"}
+      onClick={scrollToTop}
       className={cn(
         "inline-flex items-center group transition-all duration-300 hover:opacity-90 select-none",
         className

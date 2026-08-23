@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
 import { Star, Quote, ArrowRight, Sparkles } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 
@@ -136,83 +135,21 @@ const testimonialsData: TestimonialItem[] = [
 ];
 
 export function TestimonialsPage() {
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
-
-  const categories = ["All", "Palace Wedding", "Destination Nuptials", "Pre-Wedding Session", "Intimate Ceremony"];
-
-  const filteredTestimonials = useMemo(() => {
-    if (selectedCategory === "All") return testimonialsData;
-    return testimonialsData.filter((t) => t.eventType === selectedCategory);
-  }, [selectedCategory]);
-
   return (
     <main className="bg-[#FAF8F5] text-[#171717] font-sans selection:bg-[#D8D3CB] selection:text-[#171717] min-h-screen relative">
       
       {/* ── 1. HERO SECTION ── */}
-      <section className="relative h-[480px] sm:h-[540px] md:h-[600px] w-full bg-[#0C0D10] overflow-hidden flex items-center justify-center text-center px-6">
+      <section className="relative h-[480px] sm:h-[540px] md:h-[600px] w-full bg-[#0C0D10] overflow-hidden">
         <img
           src={hero}
           alt="CMC FILMS Testimonials Hero"
-          className="absolute inset-0 h-full w-full object-cover opacity-35 scale-105"
+          className="h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/50 to-[#0C0D10]" />
-
-        {/* Centered Title */}
-        <div className="relative z-10 space-y-3 max-w-3xl">
-          <div className="relative flex items-center justify-center">
-            <span
-              className="text-white/20 select-none pointer-events-none text-7xl sm:text-9xl md:text-[12rem] leading-none absolute -top-10 sm:-top-20 font-normal"
-              style={{ fontFamily: "'Alex Brush', cursive" }}
-            >
-              Kind Words
-            </span>
-            <h1 className="font-editorial text-4xl sm:text-6xl md:text-7xl text-white font-normal relative z-10 tracking-tight">
-              Testimonials
-            </h1>
-          </div>
-          
-          <p className="text-xs sm:text-sm font-mono uppercase tracking-[0.25em] text-[#C47A65] pt-4 font-semibold">
-            REAL COUPLES · HEARTFELT LOVE STORIES
-          </p>
-
-          <p className="text-sm sm:text-base text-white/80 font-light max-w-xl mx-auto leading-relaxed pt-2">
-            Read authentic reviews from couples who trusted us to capture their unrepeatable wedding celebrations.
-          </p>
-        </div>
       </section>
 
-      {/* ── 2. FILTER PILLS STRIP ── */}
-      <section className="py-8 px-6 sm:px-12 bg-[#F3EEE7] border-b border-[#D8D3CB] sticky top-16 md:top-20 z-40 backdrop-blur-md bg-opacity-95">
-        <div className="max-w-[1500px] mx-auto flex items-center justify-between gap-4 flex-wrap">
-          <span className="text-xs font-mono uppercase tracking-widest text-[#171717] font-bold">
-            FILTER BY EXPERIENCE:
-          </span>
-
-          <div className="flex flex-wrap items-center gap-2">
-            {categories.map((cat) => {
-              const active = selectedCategory === cat;
-              return (
-                <button
-                  key={cat}
-                  type="button"
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`px-5 py-2 rounded-full text-xs font-mono transition-all duration-300 cursor-pointer ${
-                    active
-                      ? "bg-[#171717] text-white shadow-md font-semibold"
-                      : "bg-white text-[#171717]/75 hover:bg-[#E5E0D8] hover:text-[#171717] border border-[#D8D3CB]/60"
-                  }`}
-                >
-                  {cat === "All" ? "All Stories" : cat}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ── 3. INDIVIDUAL COMPACT SECTION-BY-SECTION TESTIMONIAL STRIPS ── */}
+      {/* ── INDIVIDUAL COMPACT SECTION-BY-SECTION TESTIMONIAL STRIPS ── */}
       <div className="divide-y divide-[#D8D3CB]">
-        {filteredTestimonials.map((item, idx) => {
+        {testimonialsData.map((item, idx) => {
           const isEven = idx % 2 === 0;
 
           return (

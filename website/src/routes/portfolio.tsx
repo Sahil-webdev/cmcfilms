@@ -350,9 +350,9 @@ export function WeddingStoriesPage() {
       <section className="relative z-10 pt-4 pb-16 md:pt-8 md:pb-24 px-6 md:px-14 max-w-[1500px] mx-auto space-y-10">
         
         {/* Minimal Header */}
-        <div className="text-center max-w-3xl mx-auto">
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-light text-[#261E1E]">
-            Stories, Wisdom & <em className="font-editorial italic text-[#93191E] font-normal">Wedding Inspiration</em>
+        <div className="text-center max-w-none mx-auto">
+          <h2 className="font-montserrat text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-[#261E1E] lg:whitespace-nowrap">
+            Stories, Wisdom & <span className="text-[#93191E]">Wedding Inspiration</span>
           </h2>
         </div>
 
@@ -376,12 +376,12 @@ export function WeddingStoriesPage() {
                 </div>
 
                 {/* 2. Centered Title */}
-                <h3 className="font-display text-lg sm:text-xl font-light text-[#261E1E] text-center leading-snug transition-colors group-hover:text-[#93191E]">
+                <h3 className="font-poppins text-base sm:text-lg font-normal text-[#261E1E] text-center leading-snug transition-colors group-hover:text-[#93191E]">
                   {post.title}
                 </h3>
 
                 {/* 3. Centered Description */}
-                <p className="text-xs sm:text-sm text-[#8A8072] font-sans font-light text-center leading-relaxed line-clamp-3 px-1">
+                <p className="text-xs sm:text-sm text-[#8A8072] font-poppins font-normal text-center leading-relaxed line-clamp-3 px-1">
                   {post.excerpt}
                 </p>
               </div>

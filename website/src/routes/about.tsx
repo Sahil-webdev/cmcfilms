@@ -30,15 +30,8 @@ export const Route = createFileRoute("/about")({
 });
 
 function AboutPage() {
-  const skillsList = [
-    { title: "Cinematic Wedding Films", percentage: 98 },
-    { title: "Candid & Editorial Photography", percentage: 96 },
-    { title: "Pre-Wedding Concept Shoots", percentage: 95 },
-    { title: "Color Grading & Sound Design", percentage: 100 },
-  ];
-
   return (
-    <main className="bg-[#FAF8F5] text-[#171717] font-sans selection:bg-[#D8D3CB] min-h-screen">
+    <main className="bg-[#FAF8F5] text-[#171717] font-poppins selection:bg-[#D8D3CB] min-h-screen">
       
       {/* ── 1. HERO SECTION (CLEAR VIVID IMAGE WITH CLEAN SINGLE ABOUT US TITLE) ── */}
       <section className="relative h-[420px] sm:h-[480px] md:h-[520px] w-full overflow-hidden flex items-center justify-center text-center px-6">
@@ -46,17 +39,9 @@ function AboutPage() {
         <img
           src={featured}
           alt="CMC FILMS Studio Background"
-          className="absolute inset-0 h-full w-full object-cover object-center opacity-90 scale-100"
+          className="absolute inset-0 h-full w-full object-cover object-center scale-100"
         />
-        {/* Soft Overlay for High Legibility */}
-        <div className="absolute inset-0 bg-black/40" />
 
-        {/* Clean Single Text Overlay: About Us */}
-        <div className="relative z-10 max-w-3xl">
-          <h1 className="font-editorial text-5xl sm:text-7xl md:text-8xl text-white font-light tracking-wide drop-shadow-md">
-            About Us
-          </h1>
-        </div>
       </section>
 
       {/* ── 2. MAIN STORY & PHOTO SECTION (2-COLUMN REFERENCE MATCH) ── */}
@@ -67,7 +52,7 @@ function AboutPage() {
           <div className="lg:col-span-7 space-y-8 relative">
             
             <div className="relative">
-              <h2 className="font-editorial text-3xl sm:text-5xl md:text-6xl text-[#171717] font-normal leading-[1.1] relative z-10">
+              <h2 className="font-montserrat text-3xl sm:text-5xl md:text-6xl text-[#171717] font-extrabold leading-[1.1] relative z-10">
                 The wedding photography <br className="hidden sm:block" />
                 specialists since 2018.
               </h2>
@@ -75,40 +60,16 @@ function AboutPage() {
 
             {/* Studio Brand Name Subheading */}
             <div className="space-y-3 pt-2">
-              <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#C47A65] font-bold block">
+              <span className="font-poppins text-xs uppercase tracking-[0.18em] text-[#C47A65] font-semibold block">
                 CMC FILMS
               </span>
 
-              <p className="text-sm sm:text-base text-[#55504A] font-light leading-relaxed">
+              <p className="text-sm sm:text-base text-[#55504A] font-normal leading-relaxed">
                 Our journey of becoming a premium wedding photography & filmmaking studio began years ago. Since then, we have creatively captured the beginning of conjugal lives of 100s of couples across India and internationally. We have been successful in winning the admiration and respect of our clients because we have an in-house team of dedicated photographers, videographers, and cinematographers.
               </p>
-              <p className="text-sm sm:text-base text-[#55504A] font-light leading-relaxed">
+              <p className="text-sm sm:text-base text-[#55504A] font-normal leading-relaxed">
                 We own and use only the most advanced cinema lighting equipment, anamorphic prime lenses, and 4K full-frame camera systems. We provide end-to-end services for all aspects of photography and film using our in-house team of trained photo and movie editors. Our level of professionalism and courtesy makes you and your guests feel completely at ease while being captured.
               </p>
-            </div>
-
-            {/* Skills / Strengths Progress Bars */}
-            <div className="pt-6 space-y-6">
-              <h3 className="font-editorial text-2xl text-[#171717] font-normal">
-                Some Of Our Strengths
-              </h3>
-
-              <div className="space-y-5">
-                {skillsList.map((skill) => (
-                  <div key={skill.title} className="space-y-2">
-                    <div className="flex justify-between items-center text-xs font-mono uppercase tracking-widest text-[#171717] font-semibold">
-                      <span>{skill.title}</span>
-                      <span className="text-[#C47A65]">{skill.percentage}%</span>
-                    </div>
-                    <div className="h-2 w-full bg-[#E5E0D8] rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-[#C47A65] rounded-full transition-all duration-1000 ease-out"
-                        style={{ width: `${skill.percentage}%` }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
             </div>
 
           </div>
@@ -124,7 +85,7 @@ function AboutPage() {
                 />
               </div>
               <div className="mt-3 text-center">
-                <span className="text-xs font-mono uppercase tracking-widest text-[#68645E]">
+                <span className="text-xs font-poppins uppercase tracking-widest text-[#68645E] font-semibold">
                   Real Couple Shoot · CMC FILMS
                 </span>
               </div>
@@ -138,10 +99,10 @@ function AboutPage() {
       <section className="py-20 sm:py-28 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto border-b border-[#D8D3CB] space-y-16">
         
         <div className="text-center max-w-2xl mx-auto space-y-3">
-          <span className="text-xs font-mono uppercase tracking-widest text-[#C47A65] font-semibold">
+          <span className="text-xs font-poppins uppercase tracking-widest text-[#C47A65] font-semibold">
             WHY CHOOSE US
           </span>
-          <h2 className="font-editorial text-3xl sm:text-5xl text-[#171717]">
+          <h2 className="font-montserrat text-3xl sm:text-5xl text-[#171717] font-extrabold">
             Crafting Memories With Precision
           </h2>
         </div>
@@ -153,8 +114,8 @@ function AboutPage() {
             <div className="w-12 h-12 rounded-full bg-[#FAF8F5] border border-[#D8D3CB] flex items-center justify-center text-[#C47A65]">
               <Users className="w-5 h-5" />
             </div>
-            <h3 className="font-editorial text-2xl text-[#171717]">In-House Team</h3>
-            <p className="text-xs sm:text-sm text-[#55504A] font-light leading-relaxed">
+            <h3 className="font-league text-2xl text-[#171717] font-bold">In-House Team</h3>
+            <p className="text-xs sm:text-sm text-[#55504A] font-normal leading-relaxed">
               We never outsource your memories. Every photo and film frame is captured and edited by our dedicated in-house team.
             </p>
           </div>
@@ -164,8 +125,8 @@ function AboutPage() {
             <div className="w-12 h-12 rounded-full bg-[#FAF8F5] border border-[#D8D3CB] flex items-center justify-center text-[#C47A65]">
               <Camera className="w-5 h-5" />
             </div>
-            <h3 className="font-editorial text-2xl text-[#171717]">Cinema Gear</h3>
-            <p className="text-xs sm:text-sm text-[#55504A] font-light leading-relaxed">
+            <h3 className="font-league text-2xl text-[#171717] font-bold">Cinema Gear</h3>
+            <p className="text-xs sm:text-sm text-[#55504A] font-normal leading-relaxed">
               We use 4K full-frame cinema cameras, anamorphic lenses, studio lighting, and audio equipment for rich production value.
             </p>
           </div>
@@ -175,8 +136,8 @@ function AboutPage() {
             <div className="w-12 h-12 rounded-full bg-[#FAF8F5] border border-[#D8D3CB] flex items-center justify-center text-[#C47A65]">
               <Heart className="w-5 h-5" />
             </div>
-            <h3 className="font-editorial text-2xl text-[#171717]">Unscripted Tones</h3>
-            <p className="text-xs sm:text-sm text-[#55504A] font-light leading-relaxed">
+            <h3 className="font-league text-2xl text-[#171717] font-bold">Unscripted Tones</h3>
+            <p className="text-xs sm:text-sm text-[#55504A] font-normal leading-relaxed">
               No awkward forced posing. We document genuine emotions, candid laughter, and quiet moments as they naturally occur.
             </p>
           </div>
@@ -186,8 +147,8 @@ function AboutPage() {
             <div className="w-12 h-12 rounded-full bg-[#FAF8F5] border border-[#D8D3CB] flex items-center justify-center text-[#C47A65]">
               <ShieldCheck className="w-5 h-5" />
             </div>
-            <h3 className="font-editorial text-2xl text-[#171717]">Worldwide Travel</h3>
-            <p className="text-xs sm:text-sm text-[#55504A] font-light leading-relaxed">
+            <h3 className="font-league text-2xl text-[#171717] font-bold">Worldwide Travel</h3>
+            <p className="text-xs sm:text-sm text-[#55504A] font-normal leading-relaxed">
               Based in India and available for destination weddings worldwide — Jaipur, Udaipur, Goa, Dubai, and beyond.
             </p>
           </div>
@@ -199,20 +160,20 @@ function AboutPage() {
       <section className="py-16 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto border-b border-[#D8D3CB]">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           <div className="space-y-1">
-            <span className="font-editorial text-4xl sm:text-5xl text-[#C47A65] font-light">8+</span>
-            <p className="text-xs font-mono uppercase tracking-widest text-[#68645E]">Years Experience</p>
+            <span className="font-montserrat text-4xl sm:text-5xl text-[#C47A65] font-extrabold">8+</span>
+            <p className="text-xs font-poppins font-semibold uppercase tracking-widest text-[#68645E]">Years Experience</p>
           </div>
           <div className="space-y-1">
-            <span className="font-editorial text-4xl sm:text-5xl text-[#C47A65] font-light">150+</span>
-            <p className="text-xs font-mono uppercase tracking-widest text-[#68645E]">Weddings Filmed</p>
+            <span className="font-montserrat text-4xl sm:text-5xl text-[#C47A65] font-extrabold">150+</span>
+            <p className="text-xs font-poppins font-semibold uppercase tracking-widest text-[#68645E]">Weddings Filmed</p>
           </div>
           <div className="space-y-1">
-            <span className="font-editorial text-4xl sm:text-5xl text-[#C47A65] font-light">20+</span>
-            <p className="text-xs font-mono uppercase tracking-widest text-[#68645E]">Shoot Destinations</p>
+            <span className="font-montserrat text-4xl sm:text-5xl text-[#C47A65] font-extrabold">20+</span>
+            <p className="text-xs font-poppins font-semibold uppercase tracking-widest text-[#68645E]">Shoot Destinations</p>
           </div>
           <div className="space-y-1">
-            <span className="font-editorial text-4xl sm:text-5xl text-[#C47A65] font-light">100%</span>
-            <p className="text-xs font-mono uppercase tracking-widest text-[#68645E]">In-House Crafting</p>
+            <span className="font-montserrat text-4xl sm:text-5xl text-[#C47A65] font-extrabold">100%</span>
+            <p className="text-xs font-poppins font-semibold uppercase tracking-widest text-[#68645E]">In-House Crafting</p>
           </div>
         </div>
       </section>
@@ -257,21 +218,21 @@ function AboutContactForm() {
   return (
     <div className="bg-white p-8 sm:p-12 md:p-16 rounded-3xl border border-[#D8D3CB]/70 shadow-sm max-w-5xl mx-auto space-y-10">
       <div className="space-y-3 border-b border-[#D8D3CB]/50 pb-6">
-        <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#C47A65] font-bold">
+        <span className="text-xs font-poppins uppercase tracking-[0.18em] text-[#C47A65] font-semibold">
           GET IN TOUCH
         </span>
-        <h2 className="font-editorial text-4xl sm:text-6xl text-[#171717]">
+        <h2 className="font-montserrat text-4xl sm:text-6xl text-[#171717] font-extrabold">
           Tell Us Your Story
         </h2>
-        <p className="text-sm sm:text-base text-[#55504A] font-light leading-relaxed max-w-xl">
+        <p className="text-sm sm:text-base text-[#55504A] font-normal leading-relaxed max-w-xl">
           Share a little about your celebration. We reply personally to every inquiry, usually within 24 to 48 hours.
         </p>
       </div>
 
       {sent ? (
         <div className="border border-[#C47A65] bg-[#FAF8F5] p-10 rounded-2xl text-center space-y-3 animate-in fade-in">
-          <h3 className="font-editorial text-4xl text-[#171717]">Thank You!</h3>
-          <p className="text-sm text-[#55504A] font-light max-w-md mx-auto leading-relaxed">
+          <h3 className="font-league text-4xl text-[#171717] font-bold">Thank You!</h3>
+          <p className="text-sm text-[#55504A] font-normal max-w-md mx-auto leading-relaxed">
             Your enquiry has been received by CMC FILMS. We will reach out to you directly at the email provided.
           </p>
         </div>
@@ -280,7 +241,7 @@ function AboutContactForm() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
             {fields.map((f) => (
               <label key={f.name} className="block space-y-2">
-                <span className="text-xs font-mono uppercase tracking-widest text-[#171717] font-semibold">
+                <span className="text-xs font-poppins uppercase tracking-widest text-[#171717] font-semibold">
                   {f.label}
                   {"required" in f && f.required ? <span className="text-[#C47A65]"> *</span> : null}
                 </span>
@@ -288,34 +249,34 @@ function AboutContactForm() {
                   name={f.name}
                   type={f.type}
                   required={"required" in f ? f.required : false}
-                  className="w-full border-b border-[#D8D3CB] bg-transparent pb-2 font-display text-lg text-[#171717] outline-none transition-colors focus:border-[#C47A65]"
+                  className="w-full border-b border-[#D8D3CB] bg-transparent pb-2 font-poppins text-lg text-[#171717] outline-none transition-colors focus:border-[#C47A65]"
                 />
               </label>
             ))}
           </div>
 
           <label className="block space-y-2 pt-2">
-            <span className="text-xs font-mono uppercase tracking-widest text-[#171717] font-semibold">
+            <span className="text-xs font-poppins uppercase tracking-widest text-[#171717] font-semibold">
               Tell Us About Your Celebration & Vision
             </span>
             <textarea
               name="story"
               rows={4}
-              className="w-full resize-none border-b border-[#D8D3CB] bg-transparent pb-2 font-display text-lg text-[#171717] outline-none transition-colors focus:border-[#C47A65]"
+              className="w-full resize-none border-b border-[#D8D3CB] bg-transparent pb-2 font-poppins text-lg text-[#171717] outline-none transition-colors focus:border-[#C47A65]"
             />
           </label>
 
-          {error && <p className="text-xs font-mono text-red-600">{error}</p>}
+          {error && <p className="text-xs font-poppins text-red-600">{error}</p>}
 
           <div className="pt-4 flex items-center justify-between flex-wrap gap-4">
             <button
               type="submit"
-              className="bg-[#171717] hover:bg-[#C47A65] text-white px-10 py-4 rounded-full font-mono text-xs uppercase tracking-widest transition-all duration-300 shadow-md cursor-pointer"
+              className="bg-[#171717] hover:bg-[#C47A65] text-white px-10 py-4 rounded-full font-poppins text-xs font-semibold uppercase tracking-widest transition-all duration-300 shadow-md cursor-pointer"
             >
               Send Enquiry
             </button>
 
-            <div className="text-xs font-mono text-[#68645E]">
+            <div className="text-xs font-poppins text-[#68645E]">
               Email: <a href="mailto:cmcfilms771@gmail.com" className="hover:text-[#171717] underline">cmcfilms771@gmail.com</a> · Phone: +91 74259 40636
             </div>
           </div>
@@ -324,5 +285,3 @@ function AboutContactForm() {
     </div>
   );
 }
-
-

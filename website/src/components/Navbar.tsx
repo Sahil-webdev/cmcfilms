@@ -9,6 +9,9 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const scrollHomeToTop = () => {
+    requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: "auto" }));
+  };
 
   // Scroll listener for sticky header
   useEffect(() => {
@@ -74,6 +77,8 @@ export function Navbar() {
                 <Link
                   key={l.label}
                   to={l.to}
+                  resetScroll={l.to === "/"}
+                  onClick={l.to === "/" ? scrollHomeToTop : undefined}
                   className={cn(
                     "relative py-1 text-xs md:text-[13px] font-poppins uppercase tracking-wider font-semibold transition-all duration-300",
                     "after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-gold after:transition-all after:duration-300",
@@ -170,10 +175,14 @@ export function Navbar() {
           {navLinks.map((l, i) => {
             const isActive = location.pathname === l.to;
             return (
-              <Link
-                key={l.label}
-                to={l.to}
-                onClick={() => setOpen(false)}
+                <Link
+                  key={l.label}
+                  to={l.to}
+                resetScroll={l.to === "/"}
+                onClick={() => {
+                  setOpen(false);
+                  if (l.to === "/") scrollHomeToTop();
+                }}
                 className="group relative flex items-center justify-between transition-all duration-300 py-1"
                 style={{
                   transitionDelay: `${open ? 60 + i * 40 : 0}ms`,
