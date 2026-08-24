@@ -80,7 +80,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggleCollapse 
         {/* Core Navigation */}
         <nav className="p-3 space-y-6 font-sans">
           {/* Main Section */}
-          <div className="space-y-1">
+          <div className="space-y-1.5">
             {!isCollapsed && (
               <p className="px-3 text-[10px] uppercase font-bold tracking-wider text-slate-400 dark:text-slate-500 mb-2">
                 MAIN WORKSPACE
@@ -94,23 +94,37 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggleCollapse 
                   key={item.id}
                   onClick={() => setActiveTab(item.id)}
                   title={isCollapsed ? item.label : undefined}
-                  className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-xs font-semibold transition-all relative group cursor-pointer ${
+                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-2xl text-xs font-semibold transition-all relative group cursor-pointer overflow-hidden ${
                     isActive
-                      ? 'bg-[#8C90C1] text-white shadow-lg shadow-[#8C90C1]/25 font-bold'
+                      ? 'bg-[#8C90C1]/15 dark:bg-[#8C90C1]/22 text-[#4E5178] dark:text-white font-bold shadow-xs'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#121522]'
                   }`}
                 >
+                  {/* Left Rounded Vertical Pill Strip for Active State */}
+                  {isActive && (
+                    <span className="absolute left-0 top-1.5 bottom-1.5 w-1.5 rounded-r-full bg-[#8C90C1] shadow-sm" />
+                  )}
+
                   <div className={`flex items-center gap-3 ${isCollapsed ? 'mx-auto' : ''}`}>
-                    <Icon className={`h-4.5 w-4.5 shrink-0 ${isActive ? 'text-white' : 'text-slate-400'}`} />
-                    {!isCollapsed && <span>{item.label}</span>}
+                    {/* Icon Badge Box */}
+                    <div
+                      className={`w-8.5 h-8.5 rounded-xl flex items-center justify-center transition-colors shrink-0 ${
+                        isActive
+                          ? 'bg-[#8C90C1]/25 text-[#565985] dark:text-white shadow-2xs'
+                          : 'bg-slate-100 dark:bg-[#121522] text-slate-500 dark:text-slate-400 group-hover:bg-slate-200 dark:group-hover:bg-[#1A1E2E] group-hover:text-slate-800 dark:group-hover:text-slate-200'
+                      }`}
+                    >
+                      <Icon className="h-4.5 w-4.5" />
+                    </div>
+                    {!isCollapsed && <span className="truncate">{item.label}</span>}
                   </div>
 
                   {!isCollapsed && item.badge && (
                     <span
                       className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
                         isActive
-                          ? 'bg-white/20 text-white'
-                          : 'bg-[#8C90C1]/20 text-[#8C90C1] border border-[#8C90C1]/30'
+                          ? 'bg-[#8C90C1] text-white shadow-xs'
+                          : 'bg-[#8C90C1]/15 text-[#6C70A6] border border-[#8C90C1]/20'
                       }`}
                     >
                       {item.badge}
@@ -122,7 +136,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggleCollapse 
           </div>
 
           {/* System Section */}
-          <div className="space-y-1">
+          <div className="space-y-1.5">
             {!isCollapsed && (
               <p className="px-3 text-[10px] uppercase font-bold tracking-wider text-slate-400 dark:text-slate-500 mb-2">
                 STUDIO INSIGHTS
@@ -136,15 +150,29 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggleCollapse 
                   key={item.id}
                   onClick={() => setActiveTab(item.id)}
                   title={isCollapsed ? item.label : undefined}
-                  className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-xs font-semibold transition-all relative group cursor-pointer ${
+                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-2xl text-xs font-semibold transition-all relative group cursor-pointer overflow-hidden ${
                     isActive
-                      ? 'bg-[#8C90C1] text-white shadow-lg shadow-[#8C90C1]/25 font-bold'
+                      ? 'bg-[#8C90C1]/15 dark:bg-[#8C90C1]/22 text-[#4E5178] dark:text-white font-bold shadow-xs'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#121522]'
                   }`}
                 >
+                  {/* Left Rounded Vertical Pill Strip for Active State */}
+                  {isActive && (
+                    <span className="absolute left-0 top-1.5 bottom-1.5 w-1.5 rounded-r-full bg-[#8C90C1] shadow-sm" />
+                  )}
+
                   <div className={`flex items-center gap-3 ${isCollapsed ? 'mx-auto' : ''}`}>
-                    <Icon className={`h-4.5 w-4.5 shrink-0 ${isActive ? 'text-white' : 'text-slate-400'}`} />
-                    {!isCollapsed && <span>{item.label}</span>}
+                    {/* Icon Badge Box */}
+                    <div
+                      className={`w-8.5 h-8.5 rounded-xl flex items-center justify-center transition-colors shrink-0 ${
+                        isActive
+                          ? 'bg-[#8C90C1]/25 text-[#565985] dark:text-white shadow-2xs'
+                          : 'bg-slate-100 dark:bg-[#121522] text-slate-500 dark:text-slate-400 group-hover:bg-slate-200 dark:group-hover:bg-[#1A1E2E] group-hover:text-slate-800 dark:group-hover:text-slate-200'
+                      }`}
+                    >
+                      <Icon className="h-4.5 w-4.5" />
+                    </div>
+                    {!isCollapsed && <span className="truncate">{item.label}</span>}
                   </div>
                 </button>
               );
