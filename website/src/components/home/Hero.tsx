@@ -1,12 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import heroImg from "@/assets/hero.jpg";
 import heroVideo from "@/assets/video/15157496-hd_1920_1080_25fps.mp4";
+import { useHeroMedia } from "@/hooks/useHeroMedia";
 
 export function Hero() {
   const [ready, setReady] = useState(false);
+  const videoSrc = useHeroMedia('home', heroVideo);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
+    setReady(false);
     const t = setTimeout(() => setReady(true), 80);
 
     // Ensure browser autoplay policy is satisfied
@@ -23,12 +26,13 @@ export function Hero() {
     }
 
     return () => clearTimeout(t);
-  }, []);
+  }, [videoSrc]);
 
   return (
     <section className="relative h-[100svh] min-h-[640px] w-full overflow-hidden bg-black">
       {/* ── Crystal Clear Background Video with Poster Fallback ── */}
       <video
+        key={videoSrc}
         ref={videoRef}
         autoPlay
         muted
@@ -39,7 +43,7 @@ export function Hero() {
         className="absolute inset-0 h-full w-full object-cover"
         aria-hidden
       >
-        <source src={heroVideo} type="video/mp4" />
+        <source src={videoSrc} type="video/mp4" />
       </video>
 
       {/* ── Hero content placed in lower center like KnotsbyAMP ── */}

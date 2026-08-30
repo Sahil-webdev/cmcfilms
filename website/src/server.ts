@@ -7,6 +7,14 @@ type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
 };
 
+type StaticAssetBinding = {
+  fetch: (request: Request) => Promise<Response> | Response;
+};
+
+type WorkerEnvironment = {
+  ASSETS?: StaticAssetBinding;
+};
+
 let serverEntryPromise: Promise<ServerEntry> | undefined;
 
 async function getServerEntry(): Promise<ServerEntry> {
@@ -47,6 +55,25 @@ function isH3SwallowedErrorBody(body: string): boolean {
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
+      const url = new URL(request.url);
+
+      // The admin is bundled into the public site's asset output, so it can
+      // live at www.cmcfilms.in/admin without a separate subdomain.
+      if (url.pathname === "/admin") {
+        return Response.redirect(new URL("/admin/", url), 302);
+      }
+
+      if (url.pathname.startsWith("/admin/")) {
+        const assets = (env as WorkerEnvironment).ASSETS;
+        if (assets) {
+          const assetUrl = new URL(request.url);
+          if (assetUrl.pathname === "/admin/") assetUrl.pathname = "/admin/index.html";
+
+          const assetResponse = await assets.fetch(new Request(assetUrl, request));
+          if (assetResponse.status !== 404) return assetResponse;
+        }
+      }
+
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
       return await normalizeCatastrophicSsrResponse(response);

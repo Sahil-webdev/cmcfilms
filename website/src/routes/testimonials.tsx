@@ -1,6 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { Star, Quote, ArrowRight, Sparkles } from "lucide-react";
+import { createFileRoute } from "@tanstack/react-router";
 import { Reveal } from "@/components/Reveal";
+import { useHeroMedia } from "@/hooks/useHeroMedia";
 
 // Image Imports
 import hero from "@/assets/featured.jpg";
@@ -135,161 +135,50 @@ const testimonialsData: TestimonialItem[] = [
 ];
 
 export function TestimonialsPage() {
+  const heroMedia = useHeroMedia('testimonials', hero);
   return (
-    <main className="bg-[#FAF8F5] text-[#171717] font-sans selection:bg-[#D8D3CB] selection:text-[#171717] min-h-screen relative">
+    <main className="bg-[#FAF8F5] text-[#171717] font-poppins selection:bg-[#D8D3CB] selection:text-[#171717] min-h-screen">
       
       {/* ── 1. HERO SECTION ── */}
-      <section className="relative h-[480px] sm:h-[540px] md:h-[600px] w-full bg-[#0C0D10] overflow-hidden">
+      <section className="relative h-[420px] sm:h-[480px] md:h-[520px] w-full bg-[#0C0D10] overflow-hidden">
         <img
-          src={hero}
+          src={heroMedia}
           alt="CMC FILMS Testimonials Hero"
           className="h-full w-full object-cover"
         />
       </section>
 
-      {/* ── INDIVIDUAL COMPACT SECTION-BY-SECTION TESTIMONIAL STRIPS ── */}
+      {/* ── SIMPLE TESTIMONIAL LIST ── */}
       <div className="divide-y divide-[#D8D3CB]">
-        {testimonialsData.map((item, idx) => {
-          const isEven = idx % 2 === 0;
+        {testimonialsData.map((item, index) => {
+          const imageOnRight = index % 2 === 1;
 
           return (
-            <section
-              key={item.id}
-              className={`py-10 sm:py-14 px-6 sm:px-12 md:px-16 transition-colors duration-500 ${
-                isEven ? "bg-[#FAF8F5]" : "bg-[#F3EEE7]"
-              }`}
-            >
-              <div className="max-w-[1400px] mx-auto">
-                <Reveal>
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
-                    
-                    {/* COMPACT PHOTO COLUMN (Left for Even, Right for Odd) */}
-                    <div
-                      className={`lg:col-span-4 relative ${
-                        isEven ? "lg:order-1" : "lg:order-2"
-                      }`}
-                    >
-                      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-[#D8D3CB] shadow-md border border-black/10 group">
-                        <img
-                          src={item.image}
-                          alt={item.couple}
-                          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        />
-                        <div className="absolute bottom-3 left-3 right-3 bg-black/60 backdrop-blur-md p-3 rounded-lg text-white flex items-center justify-between">
-                          <div>
-                            <span className="font-editorial text-lg text-white block">
-                              {item.couple}
-                            </span>
-                            <span className="text-[9px] font-mono uppercase tracking-widest text-white/80">
-                              {item.location}
-                            </span>
-                          </div>
-                          <span className="text-[10px] font-mono text-[#C47A65] bg-white px-2.5 py-0.5 rounded-full font-bold">
-                            {item.year}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* COMPACT CONTENT COLUMN (Right for Even, Left for Odd) */}
-                    <div
-                      className={`lg:col-span-8 space-y-4 relative ${
-                        isEven ? "lg:order-2" : "lg:order-1"
-                      }`}
-                    >
-                      {/* Section Number & Rating */}
-                      <div className="flex items-center justify-between flex-wrap gap-2 border-b border-[#D8D3CB]/60 pb-3">
-                        <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#C47A65] font-bold">
-                          TESTIMONIAL 0{idx + 1} · {item.eventType}
-                        </span>
-
-                        <div className="flex items-center gap-1 text-[#C47A65]">
-                          {Array.from({ length: item.rating }).map((_, i) => (
-                            <Star key={i} className="w-3.5 h-3.5 fill-current" />
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Compact Highlight Quote */}
-                      <h2 className="font-editorial text-xl sm:text-2xl text-[#171717] font-normal leading-snug">
-                        “{item.highlightQuote}”
-                      </h2>
-
-                      {/* Compact Full Review */}
-                      <p className="text-xs sm:text-sm text-[#55504A] font-light leading-relaxed">
-                        “{item.fullReview}”
-                      </p>
-
-                      {/* Author Info & Collection Badge */}
-                      <div className="pt-3 border-t border-[#D8D3CB]/60 flex items-center justify-between flex-wrap gap-3">
-                        <div>
-                          <h3 className="font-editorial text-xl text-[#171717]">
-                            {item.couple}
-                          </h3>
-                          <p className="text-[10px] font-mono uppercase tracking-widest text-[#68645E]">
-                            {item.location} · {item.city}
-                          </p>
-                        </div>
-
-                        <span className="text-[10px] font-mono text-[#171717] bg-white px-3 py-1 rounded-full border border-[#D8D3CB] shadow-xs">
-                          {item.serviceType}
-                        </span>
-                      </div>
-
-                    </div>
-
+          <section key={item.id} className="px-6 py-12 sm:px-12 sm:py-16 md:px-16">
+            <div className="mx-auto max-w-[1200px]">
+              <Reveal>
+                <div className="grid grid-cols-1 items-start gap-7 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-14">
+                  <div className={`aspect-[4/3] overflow-hidden bg-[#E5E0D8] ${imageOnRight ? "lg:order-2" : "lg:order-1"}`}>
+                    <img src={item.image} alt={item.couple} className="h-full w-full object-cover" />
                   </div>
-                </Reveal>
-              </div>
-            </section>
+
+                  <div className={`space-y-5 lg:pt-2 ${imageOnRight ? "lg:order-1" : "lg:order-2"}`}>
+                    <div>
+                      <h2 className="text-xl font-normal leading-snug text-[#171717] sm:text-2xl">{item.couple}</h2>
+                      <p className="mt-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#C47A65]">
+                        {item.location} · {item.year}
+                      </p>
+                    </div>
+                    <p className="text-lg font-normal leading-relaxed text-[#171717] sm:text-xl">“{item.highlightQuote}”</p>
+                    <p className="text-sm font-normal leading-relaxed text-[#55504A] sm:text-base">{item.fullReview}</p>
+                  </div>
+                </div>
+              </Reveal>
+            </div>
+          </section>
           );
         })}
       </div>
-
-      {/* ── 4. KEY TRUST & STATS BANNER ── */}
-      <section className="py-16 sm:py-20 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto border-b border-[#D8D3CB]">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          <div className="space-y-1">
-            <span className="font-editorial text-4xl sm:text-5xl text-[#C47A65] font-light">150+</span>
-            <p className="text-xs font-mono uppercase tracking-widest text-[#68645E]">Happy Couples</p>
-          </div>
-          <div className="space-y-1">
-            <span className="font-editorial text-4xl sm:text-5xl text-[#C47A65] font-light">4.9 ★</span>
-            <p className="text-xs font-mono uppercase tracking-widest text-[#68645E]">Client Rating</p>
-          </div>
-          <div className="space-y-1">
-            <span className="font-editorial text-4xl sm:text-5xl text-[#C47A65] font-light">20+</span>
-            <p className="text-xs font-mono uppercase tracking-widest text-[#68645E]">Destinations Filmed</p>
-          </div>
-          <div className="space-y-1">
-            <span className="font-editorial text-4xl sm:text-5xl text-[#C47A65] font-light">100%</span>
-            <p className="text-xs font-mono uppercase tracking-widest text-[#68645E]">In-House Crafting</p>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 5. BOTTOM INVITATION CTA ── */}
-      <section className="py-20 sm:py-28 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto text-center space-y-6">
-        <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#C47A65] font-bold">
-          BEGIN YOUR STORY
-        </span>
-        <h2 className="font-editorial text-4xl sm:text-6xl text-[#171717] max-w-2xl mx-auto leading-tight">
-          Ready to preserve your unrepeatable wedding memories?
-        </h2>
-        <p className="text-sm sm:text-base text-[#55504A] font-light max-w-md mx-auto leading-relaxed">
-          Tell us about your wedding dates, venue, and vision. We reply personally within 24 hours.
-        </p>
-        <div className="pt-4">
-          <Link
-            to="/about"
-            hash="contact"
-            className="inline-flex items-center gap-2 bg-[#171717] hover:bg-[#C47A65] text-white px-10 py-4 rounded-full font-mono text-xs uppercase tracking-widest transition-all duration-300 shadow-lg cursor-pointer"
-          >
-            <span>Enquire For Your Date</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-      </section>
 
     </main>
   );

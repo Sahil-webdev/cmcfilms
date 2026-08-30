@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
 import { ArrowUpRight, Play, ArrowLeft, ArrowRight, X } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
+import { useHeroMedia } from "@/hooks/useHeroMedia";
 
 // Image Imports
 import hero from "@/assets/featured.jpg";
@@ -146,6 +147,7 @@ const filmsData: FilmItem[] = [
 
 // ── FILMS PAGE VIDEO HERO ─────────────────────────────────────────────────
 function FilmsVideoHero() {
+  const videoSrc = useHeroMedia('films', '/films-hero-bg.mp4');
   const [ready, setReady] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -163,7 +165,7 @@ function FilmsVideoHero() {
 
   return (
     <section className="relative h-[100svh] min-h-[640px] w-full overflow-hidden bg-black">
-      <video
+      <video key={videoSrc}
         ref={videoRef}
         autoPlay
         muted
@@ -173,8 +175,7 @@ function FilmsVideoHero() {
         className="absolute inset-0 h-full w-full object-cover"
         aria-hidden
       >
-        <source src="/films-hero-bg.mp4" type="video/mp4" />
-        <source src="/hero-bg.mp4" type="video/mp4" />
+        <source src={videoSrc} type="video/mp4" />
       </video>
 
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/40 pointer-events-none" />

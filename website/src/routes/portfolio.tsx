@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
-import { ArrowRight, ArrowDown, Clock, Calendar, X } from "lucide-react";
+import { useState, useMemo, useEffect } from "react";
+import { ArrowRight, Clock, Calendar, X } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
+import { useHeroMedia } from "@/hooks/useHeroMedia";
 
 // Image Imports
 import cat1 from "@/assets/cat-1.jpg";
@@ -60,6 +61,7 @@ export interface BlogPost {
     }[];
     conclusion: string;
   };
+  htmlContent?: string;
 }
 
 const blogPosts: BlogPost[] = [
@@ -254,66 +256,61 @@ const blogPosts: BlogPost[] = [
 ];
 
 export function WeddingStoriesPage() {
+  const heroMedia = useHeroMedia('portfolio', featured);
+  const [posts, setPosts] = useState<BlogPost[]>(blogPosts);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [activePost, setActivePost] = useState<BlogPost | null>(null);
 
   const categories = ["All", "Real Weddings", "Couple Shoots", "Bridal Guides", "Destinations"];
 
   const filteredPosts = useMemo(() => {
-    if (selectedCategory === "All") return blogPosts;
-    return blogPosts.filter((p) => p.category === selectedCategory);
-  }, [selectedCategory]);
+    if (selectedCategory === "All") return posts;
+    return posts.filter((p) => p.category === selectedCategory);
+  }, [selectedCategory, posts]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/stories`, { signal: controller.signal })
+      .then((response) => response.json())
+      .then((payload) => {
+        if (!Array.isArray(payload?.data?.stories) || payload.data.stories.length === 0) return;
+        setPosts(payload.data.stories.filter((story: any) => story.status !== 'Draft').map((story: any) => ({
+          id: String(story.id), slug: String(story.id), title: String(story.title || 'Wedding Story'), category: 'Real Weddings', date: String(story.date || ''), readTime: '', author: { name: String(story.couple || 'CMC FILMS'), avatar: '' }, coverImage: String(story.coverImage || featured), excerpt: String(story.subtitle || story.location || ''), htmlContent: String(story.content || ''), content: { intro: '', sections: [], conclusion: '' },
+        })));
+      }).catch(() => undefined);
+    return () => controller.abort();
+  }, []);
+
+  const featuredPost = posts[0];
 
   return (
     <main className="bg-[#FAF8F5] text-[#261E1E] font-sans selection:bg-[#93191E]/20 relative overflow-hidden">
       
-      {/* ── 1. HERO SECTION (100% PRESERVED EXACTLY AS IS) ── */}
-      <section className="relative z-10 h-[100svh] min-h-[640px] w-full overflow-hidden flex flex-col justify-between p-6 md:p-14 border-b border-black/5">
-        <div className="absolute inset-0 overflow-hidden z-0">
-          <img
-            src={featured}
-            alt="Wedding Stories Background"
-            className="h-full w-full object-cover object-center scale-105 transition-transform duration-[10000ms]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5]/75 via-[#FAF8F5]/20 via-20% to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#FAF8F5]/30 via-transparent to-transparent" />
-        </div>
-
-        <div className="relative z-10 my-auto max-w-4xl space-y-6">
-          <Reveal>
-            <h1 className="font-display text-[clamp(4rem,11.5vw,9.5rem)] leading-[0.85] font-extrabold text-[#0C0D10] tracking-tight select-none drop-shadow-sm">
-              WEDDING <br />
-              <em className="font-editorial italic text-[#93191E] font-bold drop-shadow-sm">
-                STORIES
-              </em>
-            </h1>
-          </Reveal>
-
-        </div>
-
-        <div className="relative z-10 flex justify-end items-end text-xs font-mono text-[#1A1A1A]/60 border-t border-black/10 pt-4">
-          <span className="flex items-center gap-2">
-            Scroll to read journal <ArrowDown className="w-3.5 h-3.5 text-[#93191E]" />
-          </span>
-        </div>
+      {/* ── 1. CLEAN HERO IMAGE ── */}
+      <section className="relative z-10 h-[100svh] min-h-[640px] w-full overflow-hidden border-b border-black/5">
+        <img
+          src={heroMedia}
+          alt="Wedding Stories"
+          className="h-full w-full object-cover object-center"
+        />
       </section>
 
       {/* ── 2. FEATURED STORY BANNER (PRESERVED EXACTLY AS IS) ── */}
-      <section className="relative z-10 py-16 md:py-24 px-4 md:px-10 max-w-[1700px] mx-auto border-b border-black/5">
+      {featuredPost && <section className="relative z-10 py-16 md:py-24 px-4 md:px-10 max-w-[1700px] mx-auto border-b border-black/5">
         <div className="relative mx-auto w-full md:w-[92%]">
           <div
-            onClick={() => setActivePost(blogPosts[0])}
+            onClick={() => setActivePost(featuredPost)}
             className="aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden rounded-3xl cursor-pointer bg-[#EFECE6] shadow-lg group"
           >
             <img
-              src={blogPosts[0].coverImage}
-              alt={blogPosts[0].title}
+              src={featuredPost.coverImage}
+              alt={featuredPost.title}
               className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
             />
           </div>
 
           <div
-            onClick={() => setActivePost(blogPosts[0])}
+            onClick={() => setActivePost(featuredPost)}
             className="mt-6 md:mt-0 md:absolute md:bottom-8 md:right-8 lg:bottom-12 lg:right-12 md:max-w-md bg-[#FDFBF7] p-6 sm:p-8 rounded-2xl border border-black/10 shadow-xl cursor-pointer hover:border-[#93191E] transition-all space-y-3 z-20"
           >
             <span className="label-xs text-[#93191E] uppercase tracking-widest font-mono">
@@ -325,15 +322,15 @@ export function WeddingStoriesPage() {
             </h3>
 
             <p className="font-editorial text-base italic text-[#93191E] font-normal">
-              "{blogPosts[0].title}"
+              "{featuredPost.title}"
             </p>
 
             <p className="text-xs font-mono text-[#261E1E]/60">
-              {blogPosts[0].category} · Jaipur, Rajasthan
+              {featuredPost.category}
             </p>
 
             <p className="text-xs text-[#261E1E]/80 font-sans font-light leading-relaxed">
-              "{blogPosts[0].excerpt}"
+              "{featuredPost.excerpt}"
             </p>
 
             <div className="pt-2">
@@ -344,7 +341,7 @@ export function WeddingStoriesPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* ── 3. ELEGANT 2-COLUMN JOURNAL CARDS SECTION (EXACT USER REFERENCE MATCH) ── */}
       <section className="relative z-10 pt-4 pb-16 md:pt-8 md:pb-24 px-6 md:px-14 max-w-[1500px] mx-auto space-y-10">
@@ -456,10 +453,10 @@ function CleanBlogReaderModal({
           <img src={post.coverImage} alt={post.title} className="h-full w-full object-cover" />
         </div>
 
-        {/* Intro */}
-        <p className="font-editorial text-2xl text-[#261E1E] font-light leading-relaxed italic border-l-3 border-[#93191E] pl-5">
-          "{post.content.intro}"
-        </p>
+        {post.htmlContent ? (
+          <div className="story-rich-content text-sm sm:text-base leading-relaxed text-[#261E1E]/85" dangerouslySetInnerHTML={{ __html: post.htmlContent }} />
+        ) : <>
+          <p className="font-editorial text-2xl text-[#261E1E] font-light leading-relaxed italic border-l-3 border-[#93191E] pl-5">"{post.content.intro}"</p>
 
         {/* Story Sections */}
         {post.content.sections.map((sec, idx) => (
@@ -491,7 +488,7 @@ function CleanBlogReaderModal({
           <p className="text-sm sm:text-base text-[#261E1E]/85 font-sans font-light leading-relaxed">
             {post.content.conclusion}
           </p>
-        </div>
+        </div></>}
 
         {/* Close Button at End */}
         <div className="pt-8 text-center">

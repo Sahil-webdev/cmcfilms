@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
+import { useHeroMedia } from "@/hooks/useHeroMedia";
 import { ArrowUpRight, Camera, Film, Sparkles, Award, Heart, ShieldCheck, Users } from "lucide-react";
 
 // Image Imports
@@ -30,6 +31,7 @@ export const Route = createFileRoute("/about")({
 });
 
 function AboutPage() {
+  const heroMedia = useHeroMedia('about', featured);
   return (
     <main className="bg-[#FAF8F5] text-[#171717] font-poppins selection:bg-[#D8D3CB] min-h-screen">
       
@@ -37,7 +39,7 @@ function AboutPage() {
       <section className="relative h-[420px] sm:h-[480px] md:h-[520px] w-full overflow-hidden flex items-center justify-center text-center px-6">
         {/* Clear Vivid Background Image */}
         <img
-          src={featured}
+          src={heroMedia}
           alt="CMC FILMS Studio Background"
           className="absolute inset-0 h-full w-full object-cover object-center scale-100"
         />

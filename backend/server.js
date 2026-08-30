@@ -1,17 +1,26 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { connectDB } from './src/config/db.js';
 import { loginUser, getMe } from './src/controllers/authController.js';
 import { protect } from './src/middleware/auth.js';
+import { getHomeHero, updateHomeHero, uploadHomeHero, uploadHomeHeroVideo } from './src/controllers/siteSettingsController.js';
+import { getPackages, updatePackages, uploadPackageImage, uploadPackageImageFile } from './src/controllers/packagesController.js';
+import { getHeroMedia, uploadHeroMedia, uploadHeroMediaFile } from './src/controllers/heroMediaController.js';
+import { getCoupleContent, updateCoupleContent } from './src/controllers/coupleContentController.js';
+import { getStories, updateStories } from './src/controllers/storiesController.js';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5001;
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Connect to MongoDB
 connectDB();
@@ -24,6 +33,26 @@ app.get('/api/health', (req, res) => {
 // Auth Routes
 app.post('/api/auth/login', loginUser);
 app.get('/api/auth/me', protect, getMe);
+
+// Public website configuration + protected CMS update route
+app.get('/api/site-settings/home-hero', getHomeHero);
+app.put('/api/site-settings/home-hero', protect, updateHomeHero);
+app.post('/api/site-settings/home-hero/upload', protect, uploadHomeHeroVideo.single('video'), uploadHomeHero);
+app.get('/api/packages', getPackages);
+app.put('/api/packages', protect, updatePackages);
+app.post('/api/packages/upload-image', protect, uploadPackageImage.single('image'), uploadPackageImageFile);
+app.get('/api/site-settings/hero-media', getHeroMedia);
+app.post('/api/site-settings/hero-media/upload', protect, uploadHeroMediaFile.single('media'), uploadHeroMedia);
+app.get('/api/couple-content', getCoupleContent);
+app.put('/api/couple-content', protect, updateCoupleContent);
+app.get('/api/stories', getStories);
+app.put('/api/stories', protect, updateStories);
+app.use((error, _req, res, next) => {
+  if (error?.name === 'MulterError' || error?.message === 'Only MP4 video files are supported.' || error?.message === 'Only image files are supported.' || error?.message === 'Choose an image or MP4 video file.') {
+    return res.status(400).json({ success: false, message: error.code === 'LIMIT_FILE_SIZE' ? 'The selected file is too large.' : error.message });
+  }
+  return next(error);
+});
 
 // Dummy Inquiries Data Endpoint for instant demo
 const DUMMY_INQUIRIES = [
@@ -95,4 +124,3 @@ server.on('error', (err) => {
     throw err;
   }
 });
-

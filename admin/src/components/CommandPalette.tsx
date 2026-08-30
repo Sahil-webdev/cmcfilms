@@ -8,6 +8,7 @@ import {
   Image as ImageIcon,
   BarChart3,
   Settings,
+  Home,
   Plus,
   ArrowRight,
   Database,
@@ -112,6 +113,16 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
           icon: ImageIcon,
           action: () => {
             setActiveTab('media');
+            onClose();
+          },
+        },
+        {
+          id: 'nav-home-hero',
+          title: 'Manage Website Hero Media',
+          subtitle: 'Replace hero images and videos across the website',
+          icon: Home,
+          action: () => {
+            setActiveTab('home-hero');
             onClose();
           },
         },

@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
 import { ArrowRight, ArrowLeft, X } from "lucide-react";
+import { useHeroMedia } from "@/hooks/useHeroMedia";
 
 // Pinterest Folder Assets (src/assets/pinterest)
 import pin1 from "@/assets/pinterest/pin1.jpg";
@@ -195,10 +196,32 @@ const collagePhotos = [
 ];
 
 export function CoupleShootsPage() {
+  const heroMedia = useHeroMedia('couples', couplesHeroCustom);
+  const [galleryPhotos, setGalleryPhotos] = useState(collagePhotos);
+  const [stories, setStories] = useState<CoupleStoryItem[]>(coupleStoriesList);
   const [activeStoryModal, setActiveStoryModal] = useState<CoupleStoryItem | null>(null);
   const [activeLightboxPhoto, setActiveLightboxPhoto] = useState<string | null>(null);
   const [isPaused, setIsPaused] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/couple-content`, { signal: controller.signal })
+      .then((response) => response.json())
+      .then((payload) => {
+        const content = payload?.data?.content;
+        if (!content) return;
+        if (Array.isArray(content.galleryImages) && content.galleryImages.length) {
+          setGalleryPhotos(content.galleryImages.slice(0, 6).map((src: string, index: number) => ({ src, alt: `Couple Shoot Gallery ${index + 1}`, title: `Couple Shoot ${index + 1}` })));
+        }
+        if (Array.isArray(content.blogs) && content.blogs.length) {
+          setStories(content.blogs.map((blog: any, index: number) => ({
+            id: String(blog.id || `blog-${index}`), couple: 'CMC FILMS', title: String(blog.title || 'Couple Shoot Story'), location: '', city: 'Udaipur', shootType: 'Pre-Wedding', year: new Date().getFullYear().toString(), heroImage: String(blog.image), supportingImage: String(blog.image), galleryImages: [String(blog.image)], introText: String(blog.excerpt || ''), credits: { location: '', photography: 'CMC FILMS', film: 'CMC FILMS', styling: '', year: new Date().getFullYear().toString() },
+          })));
+        }
+      }).catch(() => undefined);
+    return () => controller.abort();
+  }, []);
 
   useEffect(() => {
     if (isPaused) return;
@@ -257,7 +280,7 @@ export function CoupleShootsPage() {
           <div className="lg:col-span-6 flex justify-center lg:justify-start w-full">
             <div className="relative h-[520px] sm:h-[600px] lg:h-[660px] w-full max-w-lg lg:max-w-xl overflow-hidden rounded-2xl shadow-xl bg-[#D8D3CB]">
               <img
-                src={couplesHeroCustom}
+                src={heroMedia}
                 alt="Real Couple Shoot Hero"
                 className="h-full w-full object-cover object-top transition-transform duration-1000 hover:scale-105"
               />
@@ -300,7 +323,7 @@ export function CoupleShootsPage() {
       {/* ── 2. SMALL PHOTO COLLAGE GRID (CHOTTA SA GALLERY SECTION BELOW HERO) ── */}
       <section className="py-14 sm:py-20 px-6 sm:px-12 md:px-16 max-w-[1440px] mx-auto border-b border-[#D8D3CB]">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-          {collagePhotos.map((photo, idx) => (
+          {galleryPhotos.map((photo, idx) => (
             <div
               key={idx}
               onClick={() => setActiveLightboxPhoto(photo.src)}
@@ -388,7 +411,7 @@ export function CoupleShootsPage() {
             className="flex gap-6 sm:gap-8 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-6 px-1 no-bar items-stretch"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
-            {coupleStoriesList.map((story) => (
+            {stories.map((story) => (
               <div
                 key={story.id}
                 onClick={() => setActiveStoryModal(story)}
@@ -460,6 +483,7 @@ export function CoupleShootsPage() {
       {activeStoryModal && (
         <IndividualCoupleStoryModal
           story={activeStoryModal}
+          stories={stories}
           onClose={() => setActiveStoryModal(null)}
           onNextStory={(nextS) => setActiveStoryModal(nextS)}
         />
@@ -471,15 +495,17 @@ export function CoupleShootsPage() {
 // ── DEDICATED COUPLE STORY EDITORIAL DETAIL MODAL ──
 function IndividualCoupleStoryModal({
   story,
+  stories,
   onClose,
   onNextStory,
 }: {
   story: CoupleStoryItem;
+  stories: CoupleStoryItem[];
   onClose: () => void;
   onNextStory: (nextS: CoupleStoryItem) => void;
 }) {
-  const currentIndex = coupleStoriesList.findIndex((s) => s.id === story.id);
-  const nextStory = coupleStoriesList[(currentIndex + 1) % coupleStoriesList.length];
+  const currentIndex = stories.findIndex((s) => s.id === story.id);
+  const nextStory = stories[(currentIndex + 1) % stories.length] || story;
 
   return (
     <div className="fixed inset-0 z-[100] bg-[#F3F0EA] text-[#171717] overflow-y-auto animate-in fade-in duration-300">

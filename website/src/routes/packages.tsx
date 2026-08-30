@@ -1,7 +1,8 @@
 import { createFileRoute, Link, useNavigate, useSearch } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Check, Sparkles, ArrowRight, Camera, Film, Clock, X, Send, ArrowUpRight, ArrowLeft, Search, Filter, RotateCcw, ChevronDown, ChevronUp, MapPin, Award, SlidersHorizontal, Phone, MessageSquare } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
+import { useHeroMedia } from "@/hooks/useHeroMedia";
 
 // Image Imports
 import hero from "@/assets/featured.jpg";
@@ -30,8 +31,9 @@ export const Route = createFileRoute("/packages")({
     ],
     links: [{ rel: "canonical", href: "/packages" }],
   }),
-  validateSearch: (search: Record<string, unknown>): { service?: string } => ({
+  validateSearch: (search: Record<string, unknown>): { service?: string; package?: string } => ({
     service: typeof search["service"] === "string" ? search["service"] : undefined,
+    package: typeof search["package"] === "string" ? search["package"] : undefined,
   }),
   component: PackagesPage,
 });
@@ -357,23 +359,96 @@ const faqs = [
   },
 ];
 
-export function PackagesPage() {
-  // URL search params — service ID drives which detail view is shown
-  const { service: activeServiceId } = useSearch({ from: "/packages" });
-  const navigate = useNavigate({ from: "/packages" });
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001";
 
-  // Derive active service from URL param (no local state needed)
+const numericValue = (value: string | undefined) => {
+  const digits = (value || "").replace(/[^0-9]/g, "");
+  return digits ? Number(digits) : 0;
+};
+
+const toWebsiteServices = (packages: any[]): ServiceDetail[] =>
+  packages.map((pkg, index) => ({
+    id: String(pkg.id || `pkg-${index + 1}`),
+    no: String(pkg.no || index + 1).padStart(2, "0"),
+    title: String(pkg.title || "PACKAGE"),
+    subtitle: String(pkg.subtitle || ""),
+    copy: String(pkg.copy || ""),
+    fullDescription: String(pkg.fullDescription || ""),
+    price: String(pkg.startingPrice || ""),
+    numericPrice: numericValue(pkg.startingPrice),
+    image: String(pkg.heroImagePreview || hero),
+    offerings: Array.isArray(pkg.offerings)
+      ? pkg.offerings.map((offering: any, offeringIndex: number) => ({
+          id: String(offering.id || `off-${index + 1}-${offeringIndex + 1}`),
+          name: String(offering.name || "Package offering"),
+          duration: String(offering.duration || ""),
+          destinations: String(offering.destinations || ""),
+          themes: String(offering.themes || ""),
+          price: String(offering.price || ""),
+          numericPrice: numericValue(offering.price),
+          image: String(offering.imagePreview || pkg.heroImagePreview || hero),
+          categoryTag: String(offering.categoryTag || ""),
+          inclusions: Array.isArray(offering.inclusions) ? offering.inclusions.map(String) : [],
+        }))
+      : [],
+  }));
+
+export function PackagesPage() {
+  const heroMedia = useHeroMedia('packages', hero);
+  // URL search params — service ID and package ID drive views
+  const { service: activeServiceId, package: activeOfferingId } = useSearch({ from: "/packages" });
+  const navigate = useNavigate({ from: "/packages" });
+  const [services, setServices] = useState<ServiceDetail[]>(servicesData);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const loadPublishedPackages = async () => {
+      try {
+        const response = await fetch(`${API_URL}/api/packages`, { signal: controller.signal });
+        const payload = await response.json();
+        if (response.ok && Array.isArray(payload?.data?.packages)) {
+          setServices(toWebsiteServices(payload.data.packages));
+        }
+      } catch {
+        // The bundled packages remain visible when the content API is unavailable.
+      }
+    };
+    loadPublishedPackages();
+    return () => controller.abort();
+  }, []);
+
+  // Derive active service from URL param
   const activeDetailService = activeServiceId
-    ? (servicesData.find((s) => s.id === activeServiceId) ?? null)
+    ? (services.find((s) => s.id === activeServiceId) ?? null)
     : null;
 
+  // Derive active specific package offering detail from URL param
+  const activeOfferingDetail = useMemo(() => {
+    if (!activeOfferingId) return null;
+    for (const s of services) {
+      const found = s.offerings.find((off) => off.id === activeOfferingId);
+      if (found) return { offering: found, parentService: s };
+    }
+    return null;
+  }, [activeOfferingId, services]);
+
   const openServiceDetail = (pkg: ServiceDetail) => {
-    navigate({ search: { service: pkg.id } });
+    navigate({ search: { service: pkg.id, package: undefined } });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const closeServiceDetail = () => {
-    navigate({ search: { service: undefined } });
+    navigate({ search: { service: undefined, package: undefined } });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const openOfferingDetail = (offeringId: string) => {
+    navigate({ search: { service: activeServiceId, package: offeringId } });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const closeOfferingDetail = () => {
+    navigate({ search: { service: activeServiceId, package: undefined } });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -408,7 +483,7 @@ export function PackagesPage() {
     setFormSent(true);
   };
 
-  // Filtered offerings inside Detail View
+  // Filtered offerings inside Category Detail View
   const filteredOfferings = useMemo(() => {
     if (!activeDetailService) return [];
     return activeDetailService.offerings.filter((off) => {
@@ -423,8 +498,223 @@ export function PackagesPage() {
   return (
     <main className="bg-[#FAF8F5] text-[#171717] font-sans selection:bg-[#D8D3CB] selection:text-[#171717] min-h-screen relative">
       
-      {/* ── IF A CARD IS CLICKED: DEDICATED DETAIL PAGE VIEW MATCHING SCREENSHOTS ── */}
-      {activeDetailService ? (
+      {/* ── 1. DEDICATED PACKAGE OFFERING DETAIL PAGE VIEW (When View Details is Clicked) ── */}
+      {activeOfferingDetail ? (
+        <div className="pt-20 sm:pt-28 pb-20 px-4 sm:px-8 md:px-12 max-w-[1400px] mx-auto space-y-6 sm:space-y-10 animate-in fade-in duration-300 text-left">
+          
+          {/* Breadcrumb Navigation Bar */}
+          <div className="flex flex-wrap items-center justify-between border-b border-[#D8D3CB]/60 pb-4 text-xs font-mono text-[#68645E] gap-3">
+            <div className="flex items-center gap-2 flex-wrap">
+              <button
+                type="button"
+                onClick={closeOfferingDetail}
+                className="hover:text-[#C47A65] underline flex items-center gap-1 cursor-pointer font-bold text-[#171717]"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>{activeOfferingDetail.parentService.title}</span>
+              </button>
+              <span>/</span>
+              <span className="text-[#C47A65] font-semibold">{activeOfferingDetail.offering.name}</span>
+            </div>
+
+            <button
+              type="button"
+              onClick={closeOfferingDetail}
+              className="bg-[#171717] text-white px-4 py-1.5 rounded-full text-[11px] font-mono hover:bg-[#C47A65] transition-all cursor-pointer flex items-center gap-1.5"
+            >
+              <ArrowLeft className="w-3 h-3" />
+              <span>Back to {activeOfferingDetail.parentService.title}</span>
+            </button>
+          </div>
+
+          {/* Hero & Overview Header Card */}
+          <div className="bg-white rounded-3xl p-6 sm:p-10 border border-[#D8D3CB] shadow-xs grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            
+            {/* Left Column: Main Package Image Showcase */}
+            <div className="lg:col-span-6 relative aspect-[16/11] rounded-2xl overflow-hidden shadow-md border border-[#D8D3CB]/60 bg-black">
+              <img
+                src={activeOfferingDetail.offering.image}
+                alt={activeOfferingDetail.offering.name}
+                className="h-full w-full object-cover"
+              />
+              <span className="absolute top-3 left-3 bg-[#171717] text-white font-mono text-xs font-bold px-3 py-1 rounded-full shadow-xs">
+                {activeOfferingDetail.offering.categoryTag}
+              </span>
+            </div>
+
+            {/* Right Column: Information, Pricing & Primary Actions */}
+            <div className="lg:col-span-6 space-y-5">
+              <div className="space-y-2">
+                <span className="text-xs font-mono text-[#C47A65] font-bold uppercase tracking-widest block">
+                  {activeOfferingDetail.parentService.title} • {activeOfferingDetail.offering.categoryTag}
+                </span>
+                <h1 className="font-poppins text-2xl sm:text-4xl text-[#171717] font-bold leading-tight">
+                  {activeOfferingDetail.offering.name}
+                </h1>
+                <p className="text-sm font-mono text-[#68645E]">
+                  {activeOfferingDetail.offering.duration}
+                </p>
+              </div>
+
+              {/* Pricing Display */}
+              <div className="p-4.5 rounded-2xl bg-[#FAF8F5] border border-[#D8D3CB]/60 flex items-center justify-between">
+                <div>
+                  <span className="text-[10px] font-mono text-[#68645E] block uppercase font-bold">Starting Investment</span>
+                  <span className="font-editorial text-2xl sm:text-3xl font-bold text-[#00A651] block mt-0.5">
+                    {activeOfferingDetail.offering.price}
+                  </span>
+                </div>
+                <span className="text-xs font-mono text-[#C47A65] bg-white border border-[#C47A65]/30 px-3 py-1 rounded-full font-bold">
+                  All-Inclusive Service
+                </span>
+              </div>
+
+              {/* Quick Meta Info */}
+              <div className="space-y-2 text-xs font-sans text-[#55504A]">
+                <p className="flex items-center gap-2">
+                  <MapPin className="w-4 h-4 text-[#C47A65] shrink-0" />
+                  <span><strong>Destinations:</strong> {activeOfferingDetail.offering.destinations}</span>
+                </p>
+                <p className="flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-[#C47A65] shrink-0" />
+                  <span><strong>Themes &amp; Style:</strong> {activeOfferingDetail.offering.themes}</span>
+                </p>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEnquiryModalItem({
+                      name: activeOfferingDetail.offering.name,
+                      price: activeOfferingDetail.offering.price,
+                    });
+                    setFormSent(false);
+                  }}
+                  className="flex-1 py-3.5 px-6 rounded-full bg-[#C47A65] hover:bg-[#171717] text-white font-mono text-xs uppercase font-bold tracking-wider transition-all shadow-sm cursor-pointer flex items-center justify-center gap-2"
+                >
+                  <span>Book This Package</span>
+                  <Send className="w-4 h-4" />
+                </button>
+
+                <a
+                  href={`https://wa.me/919876543210?text=Hi%20CMC%20FILMS%2C%20I%20want%20to%20enquire%20about%20booking%20"${encodeURIComponent(activeOfferingDetail.offering.name)}"%20(${encodeURIComponent(activeOfferingDetail.offering.price)}).`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="py-3.5 px-6 rounded-full border border-[#171717] hover:bg-[#171717] hover:text-white text-[#171717] font-mono text-xs uppercase font-bold tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2"
+                >
+                  <MessageSquare className="w-4 h-4 text-[#25D366]" />
+                  <span>WhatsApp Enquiry</span>
+                </a>
+              </div>
+
+            </div>
+
+          </div>
+
+          {/* Package Inclusions & Full Details Section */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            {/* Left Column: What's Included */}
+            <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-[#D8D3CB] shadow-xs space-y-6">
+              <div className="border-b border-[#D8D3CB]/60 pb-4">
+                <h2 className="font-poppins text-xl sm:text-2xl font-bold text-[#171717]">
+                  What's Included in This Package
+                </h2>
+                <p className="text-xs text-[#68645E] font-mono mt-1">
+                  Full list of crew, equipment, deliverables &amp; inclusions provided
+                </p>
+              </div>
+
+              {/* Full Inclusions Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                {activeOfferingDetail.offering.inclusions.map((inc, iIdx) => (
+                  <div key={iIdx} className="p-3.5 rounded-xl bg-[#FAF8F5] border border-[#D8D3CB]/60 flex items-start gap-3">
+                    <div className="p-1.5 rounded-lg bg-[#C47A65]/10 text-[#C47A65] shrink-0 mt-0.5">
+                      <Check className="w-4 h-4 stroke-[3]" />
+                    </div>
+                    <div>
+                      <span className="text-xs font-mono font-bold text-[#171717] block">{inc}</span>
+                      <span className="text-[11px] text-[#68645E] font-sans">Full professional execution</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Deliverables Timeline */}
+              <div className="pt-4 border-t border-[#D8D3CB]/60 space-y-3">
+                <h3 className="font-poppins text-base font-bold text-[#171717]">
+                  Delivery Timeline &amp; Access
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-mono">
+                  <div className="p-3 rounded-xl bg-[#FAF8F5] border border-[#D8D3CB]/60">
+                    <span className="text-[#C47A65] font-bold block">72 Hours</span>
+                    <span className="text-[#55504A]">Teaser Trailer</span>
+                  </div>
+                  <div className="p-3 rounded-xl bg-[#FAF8F5] border border-[#D8D3CB]/60">
+                    <span className="text-[#C47A65] font-bold block">3-4 Weeks</span>
+                    <span className="text-[#55504A]">Retouched Gallery</span>
+                  </div>
+                  <div className="p-3 rounded-xl bg-[#FAF8F5] border border-[#D8D3CB]/60">
+                    <span className="text-[#C47A65] font-bold block">Cloud Drive</span>
+                    <span className="text-[#55504A]">Full Master Files</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Right Column: Studio Assurance & Booking Form */}
+            <div className="lg:col-span-5 space-y-6">
+              <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#D8D3CB] shadow-xs space-y-4">
+                <h3 className="font-poppins text-lg font-bold text-[#171717]">
+                  The CMC FILMS Standard
+                </h3>
+                <p className="text-xs text-[#55504A] font-light leading-relaxed">
+                  {activeOfferingDetail.parentService.fullDescription}
+                </p>
+
+                <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#D8D3CB]/60 space-y-1.5 text-xs font-mono">
+                  <span className="text-[#C47A65] font-bold block uppercase">Tailored Customization</span>
+                  <p className="text-[#68645E]">
+                    Need custom timings, extra days, or specific location permits? Our team handles all coordination for seamless shooting.
+                  </p>
+                </div>
+              </div>
+
+              {/* Bottom Quick Booking Card */}
+              <div className="bg-[#171717] text-white rounded-3xl p-6 sm:p-8 space-y-4 shadow-lg">
+                <div className="space-y-1">
+                  <span className="text-[10px] font-mono text-[#C47A65] uppercase font-bold">READY TO RESERVE?</span>
+                  <h3 className="font-poppins text-xl font-bold">Book {activeOfferingDetail.offering.name}</h3>
+                  <p className="text-xs text-[#D8D3CB] font-light">
+                    Starting at {activeOfferingDetail.offering.price}. Reserve your dates to secure our lead team.
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEnquiryModalItem({
+                      name: activeOfferingDetail.offering.name,
+                      price: activeOfferingDetail.offering.price,
+                    });
+                    setFormSent(false);
+                  }}
+                  className="w-full py-3.5 rounded-full bg-[#C47A65] hover:bg-white hover:text-[#171717] text-white font-mono text-xs uppercase font-bold tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2"
+                >
+                  <span>Book Package Enquiry</span>
+                  <Send className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      ) : activeDetailService ? (
+        /* ── 2. SERVICE CATEGORY OFFERINGS LIST VIEW ── */
         <div className="pt-20 sm:pt-28 pb-20 px-3 sm:px-8 md:px-12 max-w-[1550px] mx-auto space-y-6 sm:space-y-8 animate-in fade-in duration-300">
           
           {/* Breadcrumb Bar */}
@@ -451,7 +741,7 @@ export function PackagesPage() {
             </button>
           </div>
 
-          {/* 1. Landscape Hero Banner Image (Matching Top Banner in Screenshots) */}
+          {/* 1. Landscape Hero Banner Image */}
           <div className="relative h-[180px] sm:h-[260px] md:h-[340px] w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-md border border-[#D8D3CB]/60 bg-black">
             <img
               src={activeDetailService.image}
@@ -470,7 +760,7 @@ export function PackagesPage() {
             </div>
           </div>
 
-          {/* 2. Package Summary Description Box (Matching Description Box in Screenshots) */}
+          {/* 2. Package Summary Description Box */}
           <div className="bg-white p-4 sm:p-7 rounded-2xl border border-[#D8D3CB] shadow-xs space-y-2.5 text-left">
             <h2 className="font-poppins text-xl sm:text-3xl text-[#171717] font-semibold">
               {activeDetailService.title} Packages
@@ -489,7 +779,7 @@ export function PackagesPage() {
             </button>
           </div>
 
-          {/* Mobile Filter Toggle Button (For Mobile Screens) */}
+          {/* Mobile Filter Toggle Button */}
           <div className="lg:hidden">
             <button
               type="button"
@@ -504,10 +794,10 @@ export function PackagesPage() {
             </button>
           </div>
 
-          {/* 3. Split 2-Column Section (Filter Sidebar + Main Packages List) (Matching Screenshot 1 & 2) */}
+          {/* 3. Split 2-Column Section (Filter Sidebar + Main Packages List) */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start pt-1">
             
-            {/* Left Filter Sidebar (Collapsible on Mobile, Sticky on Desktop) */}
+            {/* Left Filter Sidebar */}
             <div className={`lg:col-span-3 bg-white p-5 sm:p-6 rounded-2xl border border-[#D8D3CB] shadow-xs space-y-5 text-left sticky top-24 ${mobileFilterOpen ? "block" : "hidden lg:block"}`}>
               <div className="flex items-center justify-between border-b border-[#D8D3CB]/60 pb-3">
                 <span className="text-xs font-mono font-bold text-[#171717]">
@@ -591,7 +881,7 @@ export function PackagesPage() {
               </div>
             </div>
 
-            {/* Right Packages List (Optimized for Mobile View matching DevTools screenshot) */}
+            {/* Right Packages List (Checkmark inclusion pills strip removed as requested) */}
             <div className="lg:col-span-9 space-y-5 sm:space-y-6 text-left">
               {filteredOfferings.map((offering) => (
                 <div
@@ -625,19 +915,9 @@ export function PackagesPage() {
                       <p><strong>Destinations:</strong> {offering.destinations}</p>
                       <p><strong>Themes:</strong> {offering.themes}</p>
                     </div>
-
-                    {/* Inclusions Strip with Icons */}
-                    <div className="pt-1 flex flex-wrap gap-1.5 text-[10px] font-mono text-[#68645E]">
-                      {offering.inclusions.slice(0, 3).map((inc, iIdx) => (
-                        <span key={iIdx} className="bg-[#FAF8F5] border border-[#D8D3CB]/60 px-2 py-0.5 rounded-md flex items-center gap-1">
-                          <Check className="w-3 h-3 text-[#C47A65]" />
-                          <span>{inc}</span>
-                        </span>
-                      ))}
-                    </div>
                   </div>
 
-                  {/* Right / Bottom Pricing & CTA Column (Matching Mobile Screenshot Layout) */}
+                  {/* Right / Bottom Pricing & CTA Column */}
                   <div className="w-full md:col-span-3 text-left md:text-right border-t md:border-t-0 md:border-l border-[#D8D3CB]/60 pt-3 md:pt-0 md:pl-6 flex flex-row md:flex-col items-center md:items-end justify-between gap-3">
                     <div>
                       <span className="text-[9px] sm:text-[10px] font-mono text-[#68645E] block uppercase">Starting from</span>
@@ -661,10 +941,7 @@ export function PackagesPage() {
 
                       <button
                         type="button"
-                        onClick={() => {
-                          setEnquiryModalItem({ name: offering.name, price: offering.price });
-                          setFormSent(false);
-                        }}
+                        onClick={() => openOfferingDetail(offering.id)}
                         className="py-2 px-3.5 sm:px-5 rounded-full border border-[#C47A65] text-[#C47A65] hover:bg-[#C47A65] hover:text-white font-mono text-[11px] font-semibold transition-all cursor-pointer whitespace-nowrap"
                       >
                         View Details
@@ -680,18 +957,18 @@ export function PackagesPage() {
 
         </div>
       ) : (
-        /* ── MAIN OVERVIEW PAGE (HERO + 6 CARD BOXES + CALCULATOR + FAQS) ── */
+        /* ── 3. MAIN OVERVIEW PAGE (HERO + 6 CARD BOXES + CALCULATOR + FAQS) ── */
         <>
           {/* ── 1. CLEAN FULL-SIZE HERO IMAGE ── */}
           <section className="relative h-[420px] sm:h-[480px] md:h-[520px] w-full overflow-hidden">
             <img
-              src={hero}
+              src={heroMedia}
               alt="Our Packages - CMC FILMS"
               className="h-full w-full object-cover object-center"
             />
           </section>
 
-          {/* ── 2. EXACT 4-COLUMN IMAGE CARDS GRID (OPTIMIZED FOR MOBILE) ── */}
+          {/* ── 2. EXACT 4-COLUMN IMAGE CARDS GRID ── */}
           <section className="py-8 sm:py-16 px-4 sm:px-8 md:px-12 max-w-[1550px] mx-auto space-y-6 sm:space-y-8">
             
             {/* Title Header */}
@@ -701,9 +978,9 @@ export function PackagesPage() {
               </h2>
             </div>
 
-            {/* 4-Column Responsive Grid (Optimized for Mobile View) */}
+            {/* 4-Column Responsive Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
-              {servicesData.map((pkg) => (
+              {services.map((pkg) => (
                 <div
                   key={pkg.id}
                   onClick={() => openServiceDetail(pkg)}

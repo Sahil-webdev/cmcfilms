@@ -7,6 +7,7 @@ import {
   Video,
   Sparkles,
   Image as ImageIcon,
+  Home,
   BarChart3,
   Settings,
   LogOut,
@@ -26,11 +27,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggleCollapse 
 
   const mainNav = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'inquiries', label: 'Inquiries & Bookings', icon: Inbox, badge: '5 New' },
+    { id: 'home-hero', label: 'Website Hero Media', icon: Home },
+    { id: 'couple-shoot', label: 'Couple Shoot Content', icon: ImageIcon },
     { id: 'stories', label: 'Wedding Stories', icon: Film },
     { id: 'films', label: 'Wedding Films', icon: Video },
     { id: 'packages', label: 'Packages & Rates', icon: Sparkles },
     { id: 'media', label: 'Media Library', icon: ImageIcon },
+    { id: 'inquiries', label: 'Inquiries & Bookings', icon: Inbox, badge: '5 New' },
   ];
 
   const secondaryNav = [

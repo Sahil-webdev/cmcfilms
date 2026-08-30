@@ -14,6 +14,8 @@ import { PackagesPage } from './pages/PackagesPage';
 import { MediaPage } from './pages/MediaPage';
 import { AnalyticsPage } from './pages/AnalyticsPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { HomeHeroPage } from './pages/HomeHeroPage';
+import { CoupleShootPage } from './pages/CoupleShootPage';
 import {
   INITIAL_INQUIRIES,
   INITIAL_STORIES,
@@ -170,6 +172,10 @@ const AdminContent: React.FC = () => {
         return <PackagesPage />;
       case 'media':
         return <MediaPage media={media} onUploadMedia={handleUploadMedia} />;
+      case 'home-hero':
+        return <HomeHeroPage />;
+      case 'couple-shoot':
+        return <CoupleShootPage />;
       case 'analytics':
         return <AnalyticsPage />;
       case 'settings':

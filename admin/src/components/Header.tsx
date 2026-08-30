@@ -31,6 +31,10 @@ export const Header: React.FC<HeaderProps> = ({
         return { main: 'Packages & Pricing', desc: 'Edit investment tiers, deliverables & rates' };
       case 'media':
         return { main: 'Media Asset Library', desc: 'Cloud assets, photography & film teasers' };
+      case 'home-hero':
+        return { main: 'Website Hero Media', desc: 'Update hero images and videos across the website' };
+      case 'couple-shoot':
+        return { main: 'Couple Shoot Content', desc: 'Manage gallery images and couple shoot blogs' };
       case 'analytics':
         return { main: 'Performance Analytics', desc: 'Revenue breakdown, top destinations & lead sources' };
       case 'settings':
