@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { Reveal, SectionLabel } from "@/components/Reveal";
 import { Lightbox, type LightboxItem } from "@/components/ui/Lightbox";
@@ -145,15 +145,62 @@ const wallItems: GalleryWallItem[] = [
   },
 ];
 
+interface AdminGalleryImage {
+  id: string;
+  src: string;
+  alt: string;
+  title: string;
+  category: string;
+  aspectRatio: string;
+  createdAt: string;
+}
+
 const categoryTabs = ["All Stories", "Weddings", "Bridal", "Pre-Wedding", "Couples", "Ceremonies"];
 
 export function PortfolioEditorial() {
   const [activeTab, setActiveTab] = useState("All Stories");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
+  // ── Dynamic Gallery: Read from localStorage (set by Admin "Home Gallery CMS") ──
+  const [adminGallery, setAdminGallery] = useState<AdminGalleryImage[]>([]);
+
+  useEffect(() => {
+    const loadGallery = () => {
+      try {
+        const stored = localStorage.getItem('cmc_gallery');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setAdminGallery(parsed);
+            return;
+          }
+        }
+        setAdminGallery([]); // reset to empty so fallback shows
+      } catch {}
+    };
+    loadGallery();
+    window.addEventListener('storage', loadGallery);
+    return () => window.removeEventListener('storage', loadGallery);
+  }, []);
+
+  // Convert admin gallery to GalleryWallItem format
+  const activeItems: GalleryWallItem[] = adminGallery.length > 0
+    ? adminGallery.map((img) => ({
+        id: img.id,
+        src: img.src,
+        alt: img.alt || img.title,
+        title: img.title,
+        category: img.category,
+        categoryTag: img.category,
+        location: '',
+        year: img.createdAt?.split('-')[0] || '2026',
+        aspectRatio: img.aspectRatio || 'aspect-[4/3]',
+      }))
+    : wallItems; // fallback to static if no admin gallery
+
   const filtered = activeTab === "All Stories"
-    ? wallItems
-    : wallItems.filter((item) => item.categoryTag === activeTab);
+    ? activeItems
+    : activeItems.filter((item) => item.categoryTag === activeTab);
 
   return (
     <section className="bg-[#F0E8DF] px-4 pt-4 pb-10 md:px-8 md:pt-10 md:pb-24 border-b border-espresso/10">

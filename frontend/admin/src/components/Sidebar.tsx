@@ -16,6 +16,7 @@ import {
   ChevronLeft,
   ChevronRight,
   ShieldCheck,
+  Grid3X3,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -32,6 +33,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggleCollapse 
     { id: 'couple-shoot', label: 'Couple Shoot Content', icon: ImageIcon },
     { id: 'stories', label: 'Wedding Stories', icon: Film },
     { id: 'films', label: 'Wedding Films', icon: Video },
+    { id: 'gallery', label: 'Home Gallery', icon: Grid3X3 },
     { id: 'packages', label: 'Packages & Rates', icon: Sparkles },
     { id: 'media', label: 'Media Library', icon: ImageIcon },
     { id: 'inquiries', label: 'Inquiries & Bookings', icon: Inbox, badge: '5 New' },

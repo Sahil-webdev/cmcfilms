@@ -15,6 +15,7 @@ import { MediaPage } from './pages/MediaPage';
 import { AnalyticsPage } from './pages/AnalyticsPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { HomeHeroPage } from './pages/HomeHeroPage';
+import { GalleryPage, type GalleryImage, type GalleryCategory } from './pages/GalleryPage';
 import { CoupleShootPage } from './pages/CoupleShootPage';
 import {
   INITIAL_INQUIRIES,
@@ -50,6 +51,13 @@ const AdminContent: React.FC = () => {
   });
   const [packages, setPackages] = useState<PackageItem[]>(INITIAL_PACKAGES);
   const [media, setMedia] = useState<MediaAsset[]>(INITIAL_MEDIA);
+  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>(() => {
+    try {
+      const saved = localStorage.getItem('cmc_gallery');
+      if (saved) return JSON.parse(saved) as GalleryImage[];
+    } catch {}
+    return [];
+  });
 
   const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
   const [showNewInquiryModal, setShowNewInquiryModal] = useState(false);
@@ -131,12 +139,32 @@ const AdminContent: React.FC = () => {
     } catch {}
   }, [films]);
 
+  // Persist gallery to localStorage
+  React.useEffect(() => {
+    try {
+      localStorage.setItem('cmc_gallery', JSON.stringify(galleryImages));
+    } catch {}
+  }, [galleryImages]);
+
   const handleUpdatePackage = (pkg: PackageItem) => {
     setPackages((prev) => prev.map((p) => (p.id === pkg.id ? pkg : p)));
   };
 
   const handleUploadMedia = (asset: MediaAsset) => {
     setMedia([asset, ...media]);
+  };
+
+  // Gallery Handlers
+  const handleAddGalleryImages = (imgs: GalleryImage[]) => {
+    setGalleryImages((prev) => [...prev, ...imgs]);
+  };
+
+  const handleDeleteGalleryImage = (id: string) => {
+    setGalleryImages((prev) => prev.filter((img) => img.id !== id));
+  };
+
+  const handleUpdateGalleryCategory = (id: string, category: GalleryCategory) => {
+    setGalleryImages((prev) => prev.map((img) => img.id === id ? { ...img, category } : img));
   };
 
   const renderActiveView = () => {
@@ -179,6 +207,15 @@ const AdminContent: React.FC = () => {
             onAddFilm={handleAddFilm}
             onDeleteFilm={handleDeleteFilm}
             onToggleFeatured={handleToggleFeaturedFilm}
+          />
+        );
+      case 'gallery':
+        return (
+          <GalleryPage
+            images={galleryImages}
+            onAddImages={handleAddGalleryImages}
+            onDeleteImage={handleDeleteGalleryImage}
+            onUpdateCategory={handleUpdateGalleryCategory}
           />
         );
       case 'packages':
