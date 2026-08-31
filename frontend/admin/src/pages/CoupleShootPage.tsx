@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { FileImage, FileText, Plus, Save, Trash2, Upload } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { API_URL } from '../lib/environment';
 
-const API_URL = 'http://localhost:5001';
 type Blog = { id: string; title: string; excerpt: string; image: string };
 
 export const CoupleShootPage: React.FC = () => {

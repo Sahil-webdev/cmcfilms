@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { API_URL } from '../lib/environment';
 import {
   Plus,
   Trash2,
@@ -49,8 +50,6 @@ export interface ServicePackage {
   heroImagePreview: string | null;
   offerings: Offering[];
 }
-
-const API_URL = 'http://localhost:5001';
 
 type ViewMode = 'list' | 'create-main' | 'edit-main' | 'create-sub' | 'edit-sub';
 

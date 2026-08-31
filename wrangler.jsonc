@@ -1,13 +1,13 @@
 {
-  "$schema": "website/node_modules/wrangler/config-schema.json",
+  "$schema": "frontend/node_modules/wrangler/config-schema.json",
   "name": "cmcfilms",
   "compatibility_date": "2026-08-13",
   "compatibility_flags": ["nodejs_compat"],
-  "main": "website/.output/server/index.mjs",
+  "main": "frontend/.output/server/index.mjs",
   "no_bundle": true,
   "assets": {
     "binding": "ASSETS",
-    "directory": "website/.output/public"
+    "directory": "frontend/.output/public"
   },
   "observability": {
     "enabled": true

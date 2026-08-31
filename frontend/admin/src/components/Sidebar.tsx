@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
+import { WEBSITE_URL } from '../lib/environment';
 import {
   LayoutDashboard,
   Inbox,
@@ -189,7 +190,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggleCollapse 
         {/* Open Main Website */}
         {!isCollapsed && (
           <a
-            href="http://localhost:5173"
+            href={WEBSITE_URL}
             target="_blank"
             rel="noreferrer"
             className="w-full flex items-center justify-between px-3.5 py-2.5 text-xs font-medium border rounded-xl transition-all bg-slate-50 dark:bg-[#121522] hover:bg-slate-100 dark:hover:bg-[#1A1E2E] border-slate-200 dark:border-[#202435] text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"

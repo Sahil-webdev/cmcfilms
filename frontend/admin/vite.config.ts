@@ -18,8 +18,8 @@ export default defineConfig({
     },
   },
   build: {
-    // This folder is included in the public website's Cloudflare asset bundle.
-    outDir: path.resolve(__dirname, '../website/public/admin'),
+    // This folder is copied into the same static frontend build as /admin.
+    outDir: path.resolve(__dirname, '../public/admin'),
     emptyOutDir: true,
   },
 });

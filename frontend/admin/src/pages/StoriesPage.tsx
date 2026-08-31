@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { API_URL } from '../lib/environment';
 import {
   Plus,
   Trash2,
@@ -26,8 +27,6 @@ declare global {
     CKEDITOR: any;
   }
 }
-
-const API_URL = 'http://localhost:5001';
 
 export interface WeddingStory {
   id: string;
@@ -355,7 +354,7 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({
     try {
       const formData = new FormData();
       formData.append('image', file);
-      const response = await fetch('http://localhost:5001/api/packages/upload-image', {
+      const response = await fetch(`${API_URL}/api/packages/upload-image`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
         body: formData,

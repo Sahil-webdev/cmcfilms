@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { WEBSITE_URL } from '../lib/environment';
 import {
   LayoutDashboard,
   Inbox,
@@ -174,10 +175,10 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
         {
           id: 'act-prev',
           title: 'Open Live Website Preview',
-          subtitle: 'Opens http://localhost:5173 in new tab',
+          subtitle: 'Opens the configured website in a new tab',
           icon: ExternalLink,
           action: () => {
-            window.open('http://localhost:5173', '_blank');
+            window.open(WEBSITE_URL, '_blank');
             onClose();
           },
         },
