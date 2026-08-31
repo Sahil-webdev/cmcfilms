@@ -420,10 +420,17 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({
     }
   };
 
-  const onToggleFeatured = (id: string) => { if (propToggleFeatured) propToggleFeatured(id);
-    setStories((prev) =>
-      prev.map((s) => (s.id === id ? { ...s, featured: !s.featured } : s))
-    );
+  const onToggleFeatured = (id: string) => {
+    if (propToggleFeatured) propToggleFeatured(id);
+    setStories((prev) => {
+      const target = prev.find((s) => s.id === id);
+      const becomingFeatured = target ? !target.featured : false;
+      return prev.map((s) =>
+        s.id === id
+          ? { ...s, featured: becomingFeatured }
+          : becomingFeatured ? { ...s, featured: false } : s
+      );
+    });
   };
 
   // Toggle CKEditor Toolbar Visibility
@@ -645,6 +652,34 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({
               />
             </div>
             <p className="text-[11px] text-slate-500 dark:text-slate-400">To add a link: select text in the editor, click the chain-link icon, enter the URL, then save. Use “Insert image” above to place an image from your computer inside the article.</p>
+          </div>
+
+          {/* ⭐ Featured Story Toggle */}
+          <div className="bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-[#1E1A10] dark:to-[#1A1810] border border-amber-200 dark:border-amber-900/50 rounded-2xl p-5 flex items-start gap-4">
+            <div className="flex-1">
+              <h4 className="text-sm font-bold text-amber-900 dark:text-amber-300 flex items-center gap-2">
+                <span className="text-base">⭐</span>
+                Featured Story
+              </h4>
+              <p className="text-xs text-amber-700 dark:text-amber-400 mt-0.5 leading-relaxed">
+                When enabled, this story appears as the <strong>Featured Story banner</strong> on the Wedding Stories page.
+                Only one story can be featured at a time — enabling this will unfeature any other story.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setFeatured((prev) => !prev)}
+              className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors duration-300 flex-shrink-0 cursor-pointer mt-0.5 ${
+                featured ? 'bg-amber-500' : 'bg-slate-300 dark:bg-slate-600'
+              }`}
+              aria-label="Toggle Featured Story"
+            >
+              <span
+                className={`inline-block h-5 w-5 transform rounded-full bg-white shadow-md transition-transform duration-300 ${
+                  featured ? 'translate-x-6' : 'translate-x-1'
+                }`}
+              />
+            </button>
           </div>
 
           {/* Bottom Action Footer */}

@@ -52,14 +52,67 @@ const blogPosts: BlogPost[] = [
   },
 ];
 
-// Duplicate array 3x for seamless 360 infinite loop
-const infiniteBlogPosts = [...blogPosts, ...blogPosts, ...blogPosts];
+// Admin Story type (from cmc_stories localStorage)
+interface AdminStory {
+  id: string;
+  title: string;
+  subtitle?: string;
+  excerpt?: string;
+  coverImage?: string;
+  couple?: string;
+  location?: string;
+  status?: string;
+  featured?: boolean;
+  date?: string;
+}
 
 export function BlogJournalSection() {
-  const [currentIndex, setCurrentIndex] = useState(blogPosts.length);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
+
+  // ── Dynamic: Read stories from localStorage (set by Admin Wedding Stories) ──
+  const [adminStories, setAdminStories] = useState<AdminStory[]>([]);
+
+  useEffect(() => {
+    const loadStories = () => {
+      try {
+        const stored = localStorage.getItem('cmc_stories');
+        if (stored) {
+          const parsed: AdminStory[] = JSON.parse(stored);
+          const published = parsed.filter((s) => s.status !== 'Draft' && s.title);
+          setAdminStories(published.length > 0 ? published : []);
+          return;
+        }
+      } catch {}
+      setAdminStories([]);
+    };
+    loadStories();
+    window.addEventListener('storage', loadStories);
+    return () => window.removeEventListener('storage', loadStories);
+  }, []);
+
+  // Reset carousel position when story list changes
+  useEffect(() => {
+    const count = adminStories.length > 0 ? adminStories.length : blogPosts.length;
+    setCurrentIndex(count); // start at middle copy for seamless infinite loop
+    setIsTransitioning(false);
+    setTimeout(() => setIsTransitioning(true), 50);
+  }, [adminStories.length]);
+
+  // Merge: admin stories take priority; fallback to static blogPosts
+  const activePosts = adminStories.length > 0
+    ? adminStories.map((s) => ({
+        id: s.id,
+        title: s.couple ? `${s.couple}${s.location ? ' — ' + s.location : ''}` : s.title,
+        excerpt: s.subtitle || s.excerpt || s.location || 'A beautiful wedding story by CMC FILMS.',
+        image: s.coverImage || cat1,
+      }))
+    : blogPosts;
+
+  // Infinite loop array (3x duplication)
+  const infiniteBlogPosts = [...activePosts, ...activePosts, ...activePosts];
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(min-width: 768px)");
@@ -83,12 +136,12 @@ export function BlogJournalSection() {
 
   // Seamless Infinite Loop Reset at boundary
   const handleTransitionEnd = () => {
-    if (currentIndex >= blogPosts.length * 2) {
+    if (currentIndex >= activePosts.length * 2) {
       setIsTransitioning(false);
-      setCurrentIndex(blogPosts.length);
-    } else if (currentIndex < blogPosts.length) {
+      setCurrentIndex(activePosts.length);
+    } else if (currentIndex < activePosts.length) {
       setIsTransitioning(false);
-      setCurrentIndex(blogPosts.length * 2 - 1);
+      setCurrentIndex(activePosts.length * 2 - 1);
     }
   };
 
@@ -109,7 +162,7 @@ export function BlogJournalSection() {
     setCurrentIndex((prev) => prev - 1);
   };
 
-  const activeDotIndex = currentIndex % blogPosts.length;
+  const activeDotIndex = currentIndex % activePosts.length;
 
   return (
     <section className="bg-[#FAF8F5] py-16 md:py-24 overflow-hidden relative">
@@ -244,11 +297,11 @@ export function BlogJournalSection() {
 
           {/* Simple Dots Indicator */}
           <div className="mt-10 flex justify-center items-center gap-2">
-            {blogPosts.map((_, idx) => (
+            {activePosts.map((_, idx) => (
               <button
                 key={idx}
                 type="button"
-                onClick={() => setCurrentIndex(blogPosts.length + idx)}
+                onClick={() => setCurrentIndex(activePosts.length + idx)}
                 aria-label={`Go to slide ${idx + 1}`}
                 className={`h-2 rounded-full transition-all duration-500 cursor-pointer ${
                   idx === activeDotIndex ? "w-6 bg-[#3D3A36]" : "w-2 bg-espresso/20"

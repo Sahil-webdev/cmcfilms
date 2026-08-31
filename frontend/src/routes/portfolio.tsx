@@ -263,11 +263,41 @@ export function WeddingStoriesPage() {
 
   const categories = ["All", "Real Weddings", "Couple Shoots", "Bridal Guides", "Destinations"];
 
-  const filteredPosts = useMemo(() => {
-    if (selectedCategory === "All") return posts;
-    return posts.filter((p) => p.category === selectedCategory);
-  }, [selectedCategory, posts]);
+  // ── Dynamic: Read admin stories from localStorage ──
+  useEffect(() => {
+    const loadAdminStories = () => {
+      try {
+        const stored = localStorage.getItem('cmc_stories');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          const published = parsed.filter((s: any) => s.status !== 'Draft' && s.title);
+          if (published.length > 0) {
+            setPosts(published.map((s: any) => ({
+              id: String(s.id),
+              slug: String(s.id),
+              title: String(s.title || 'Wedding Story'),
+              category: 'Real Weddings',
+              date: String(s.date || ''),
+              readTime: '5 min read',
+              author: { name: String(s.couple || 'CMC FILMS'), avatar: '' },
+              coverImage: String(s.coverImage || featured),
+              excerpt: String(s.subtitle || s.excerpt || s.location || 'A beautiful wedding story by CMC FILMS.'),
+              htmlContent: String(s.content || ''),
+              content: { intro: '', sections: [], conclusion: '' },
+              featured: Boolean(s.featured),
+            })));
+            return;
+          }
+        }
+      } catch {}
+    };
 
+    loadAdminStories();
+    window.addEventListener('storage', loadAdminStories);
+    return () => window.removeEventListener('storage', loadAdminStories);
+  }, []);
+
+  // Also try backend API as secondary source
   useEffect(() => {
     const controller = new AbortController();
     fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/stories`, { signal: controller.signal })
@@ -281,7 +311,13 @@ export function WeddingStoriesPage() {
     return () => controller.abort();
   }, []);
 
-  const featuredPost = posts[0];
+  const filteredPosts = useMemo(() => {
+    if (selectedCategory === "All") return posts;
+    return posts.filter((p) => p.category === selectedCategory);
+  }, [selectedCategory, posts]);
+
+  // Featured post = the one with featured: true (admin-set), otherwise first post
+  const featuredPost = posts.find((p: any) => p.featured) || posts[0];
 
   return (
     <main className="bg-[#FAF8F5] text-[#261E1E] font-sans selection:bg-[#93191E]/20 relative overflow-hidden">

@@ -41,7 +41,13 @@ const AdminContent: React.FC = () => {
 
   // Data states
   const [inquiries, setInquiries] = useState<Inquiry[]>(INITIAL_INQUIRIES);
-  const [stories, setStories] = useState<Story[]>(INITIAL_STORIES);
+  const [stories, setStories] = useState<Story[]>(() => {
+    try {
+      const saved = localStorage.getItem('cmc_stories');
+      if (saved) return JSON.parse(saved) as Story[];
+    } catch {}
+    return INITIAL_STORIES;
+  });
   const [films, setFilms] = useState<WeddingFilm[]>(() => {
     try {
       const saved = localStorage.getItem('cmc_films');
@@ -112,7 +118,15 @@ const AdminContent: React.FC = () => {
   };
 
   const handleToggleFeaturedStory = (id: string) => {
-    setStories((prev) => prev.map((s) => (s.id === id ? { ...s, featured: !s.featured } : s)));
+    setStories((prev) => {
+      const target = prev.find((s) => s.id === id);
+      const becomingFeatured = target ? !target.featured : false;
+      return prev.map((s) =>
+        s.id === id
+          ? { ...s, featured: becomingFeatured }
+          : becomingFeatured ? { ...s, featured: false } : s // unfeature others when one is featured
+      );
+    });
   };
 
   const handleAddStory = (story: Story) => {
@@ -145,6 +159,13 @@ const AdminContent: React.FC = () => {
       localStorage.setItem('cmc_gallery', JSON.stringify(galleryImages));
     } catch {}
   }, [galleryImages]);
+
+  // Persist stories to localStorage
+  React.useEffect(() => {
+    try {
+      localStorage.setItem('cmc_stories', JSON.stringify(stories));
+    } catch {}
+  }, [stories]);
 
   const handleUpdatePackage = (pkg: PackageItem) => {
     setPackages((prev) => prev.map((p) => (p.id === pkg.id ? pkg : p)));
