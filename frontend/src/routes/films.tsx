@@ -250,50 +250,65 @@ function RecentFilmsCarousel() {
     return () => clearInterval(interval);
   }, [isHovered]);
 
-  const recentFilmsList = [
-    {
-      id: 'rf-1',
-      couple: 'Kashish & Priya',
-      sub: 'A CMC Films Feature',
-      image: luxuryEditorial,
-      youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-    },
-    {
-      id: 'rf-2',
-      couple: 'Anushri & Aditya',
-      sub: 'A CMC Films Feature',
-      image: f1,
-      youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-    },
-    {
-      id: 'rf-3',
-      couple: 'Riddhi & Karan',
-      sub: 'A CMC Films Feature',
-      image: hero,
-      youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-    },
-    {
-      id: 'rf-4',
-      couple: 'Maitri & Aneesh',
-      sub: 'A CMC Films Feature',
-      image: coastal,
-      youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-    },
-    {
-      id: 'rf-5',
-      couple: 'Palak & Priya',
-      sub: 'A CMC Films Feature',
-      image: haldi,
-      youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-    },
-    {
-      id: 'rf-6',
-      couple: 'Dhruv & Pippa',
-      sub: 'A CMC Films Feature',
-      image: story2,
-      youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-    },
+  // ── Dynamic Films: Read from localStorage (set by Admin Panel) ──
+  const [adminFilms, setAdminFilms] = useState<Array<{
+    id: string;
+    title: string;
+    youtubeUrl: string;
+    thumbnailUrl?: string;
+    category: string;
+    featured: boolean;
+    createdAt: string;
+  }>>([]);
+
+  useEffect(() => {
+    const loadFilms = () => {
+      try {
+        const stored = localStorage.getItem('cmc_films');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setAdminFilms(parsed);
+            return;
+          }
+        }
+      } catch {}
+    };
+    loadFilms();
+    // Also listen for storage events (cross-tab sync)
+    window.addEventListener('storage', loadFilms);
+    return () => window.removeEventListener('storage', loadFilms);
+  }, []);
+
+  // Fallback static films shown when admin hasn't set up any yet
+  const staticRecentFilms = [
+    { id: 'rf-1', couple: 'Kashish & Priya', sub: 'A CMC Films Feature', image: luxuryEditorial, youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
+    { id: 'rf-2', couple: 'Anushri & Aditya', sub: 'A CMC Films Feature', image: f1, youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
+    { id: 'rf-3', couple: 'Riddhi & Karan', sub: 'A CMC Films Feature', image: hero, youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
+    { id: 'rf-4', couple: 'Maitri & Aneesh', sub: 'A CMC Films Feature', image: coastal, youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
+    { id: 'rf-5', couple: 'Palak & Priya', sub: 'A CMC Films Feature', image: haldi, youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
+    { id: 'rf-6', couple: 'Dhruv & Pippa', sub: 'A CMC Films Feature', image: story2, youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
   ];
+
+  // Helper: extract YouTube video ID from URL
+  const getYouTubeVideoId = (url: string) => {
+    try {
+      if (url.includes('youtu.be/')) return url.split('youtu.be/')[1]?.split('?')[0];
+      if (url.includes('youtube.com/watch')) return new URLSearchParams(new URL(url).search).get('v') || '';
+    } catch {}
+    return '';
+  };
+
+  // Merge: admin films take priority, fallback to static
+  const recentFilmsList = adminFilms.length > 0
+    ? adminFilms.map((af) => ({
+        id: af.id,
+        couple: af.title,
+        sub: 'A CMC Films Feature',
+        image: af.thumbnailUrl || `https://img.youtube.com/vi/${getYouTubeVideoId(af.youtubeUrl)}/hqdefault.jpg`,
+        youtubeUrl: af.youtubeUrl,
+      }))
+    : staticRecentFilms;
 
   return (
     <section

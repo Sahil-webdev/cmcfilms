@@ -18,6 +18,7 @@ interface MoviePosterFilm {
   year: string;
   duration: string;
   image: string;
+  youtubeUrl?: string;
 }
 
 const posterFilms: MoviePosterFilm[] = [
@@ -89,10 +90,62 @@ const posterFilms: MoviePosterFilm[] = [
   },
 ];
 
+interface AdminFilm {
+  id: string;
+  title: string;
+  youtubeUrl: string;
+  thumbnailUrl?: string;
+  category: string;
+  featured: boolean;
+  createdAt: string;
+}
+
+const getYouTubeVideoId = (url: string): string => {
+  try {
+    if (url.includes('youtu.be/')) return url.split('youtu.be/')[1]?.split('?')[0] || '';
+    if (url.includes('youtube.com/watch')) return new URLSearchParams(new URL(url).search).get('v') || '';
+  } catch {}
+  return '';
+};
+
 export function FilmsSection() {
   const [activeVideo, setActiveVideo] = useState<MoviePosterFilm | null>(null);
   const [isPaused, setIsPaused] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  // ── Dynamic Films: Read from localStorage (set by Admin Panel) ──
+  const [adminFilms, setAdminFilms] = useState<AdminFilm[]>([]);
+
+  useEffect(() => {
+    const loadFilms = () => {
+      try {
+        const stored = localStorage.getItem('cmc_films');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && parsed.length > 0) setAdminFilms(parsed);
+        }
+      } catch {}
+    };
+    loadFilms();
+    window.addEventListener('storage', loadFilms);
+    return () => window.removeEventListener('storage', loadFilms);
+  }, []);
+
+  // Convert admin films to poster format; fallback to static posterFilms if admin has none
+  const displayFilms: MoviePosterFilm[] = adminFilms.length > 0
+    ? adminFilms.map((af) => ({
+        id: af.id,
+        title: af.title,
+        subTitle: 'A CMC FILMS Film',
+        posterTitle: af.title,
+        tagline: 'A CMC FILMS Film',
+        location: '',
+        year: af.createdAt?.split('-')[0] || '2026',
+        duration: '',
+        image: af.thumbnailUrl || `https://img.youtube.com/vi/${getYouTubeVideoId(af.youtubeUrl)}/hqdefault.jpg`,
+        youtubeUrl: af.youtubeUrl,
+      }))
+    : posterFilms;
 
   // Infinite seamless Right-to-Left auto swipe every 4 seconds
   useEffect(() => {
@@ -169,10 +222,10 @@ export function FilmsSection() {
             className="flex gap-4 sm:gap-6 overflow-x-auto scroll-smooth pb-4 px-2 no-bar items-stretch"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
-            {[...posterFilms, ...posterFilms].map((film, idx) => (
+            {[...displayFilms, ...displayFilms].map((film, idx) => (
               <a
                 key={`${film.id}-${idx}`}
-                href="https://www.youtube.com"
+                href={film.youtubeUrl || "https://www.youtube.com"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-[260px] sm:w-[300px] md:w-[320px] shrink-0 flex flex-col items-center gap-3.5 group/card cursor-pointer"

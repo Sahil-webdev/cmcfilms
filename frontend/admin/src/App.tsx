@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { Sidebar } from './components/Sidebar';
@@ -41,7 +41,13 @@ const AdminContent: React.FC = () => {
   // Data states
   const [inquiries, setInquiries] = useState<Inquiry[]>(INITIAL_INQUIRIES);
   const [stories, setStories] = useState<Story[]>(INITIAL_STORIES);
-  const [films, setFilms] = useState<WeddingFilm[]>(INITIAL_FILMS);
+  const [films, setFilms] = useState<WeddingFilm[]>(() => {
+    try {
+      const saved = localStorage.getItem('cmc_films');
+      if (saved) return JSON.parse(saved);
+    } catch {}
+    return INITIAL_FILMS;
+  });
   const [packages, setPackages] = useState<PackageItem[]>(INITIAL_PACKAGES);
   const [media, setMedia] = useState<MediaAsset[]>(INITIAL_MEDIA);
 
@@ -117,6 +123,13 @@ const AdminContent: React.FC = () => {
   const handleToggleFeaturedFilm = (id: string) => {
     setFilms((prev) => prev.map((f) => (f.id === id ? { ...f, featured: !f.featured } : f)));
   };
+
+  // Persist films to localStorage whenever films state changes
+  React.useEffect(() => {
+    try {
+      localStorage.setItem('cmc_films', JSON.stringify(films));
+    } catch {}
+  }, [films]);
 
   const handleUpdatePackage = (pkg: PackageItem) => {
     setPackages((prev) => prev.map((p) => (p.id === pkg.id ? pkg : p)));
