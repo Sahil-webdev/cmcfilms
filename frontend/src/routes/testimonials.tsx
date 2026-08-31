@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
 import { Reveal } from "@/components/Reveal";
 import { useHeroMedia } from "@/hooks/useHeroMedia";
 
@@ -136,6 +137,32 @@ const testimonialsData: TestimonialItem[] = [
 
 export function TestimonialsPage() {
   const heroMedia = useHeroMedia('testimonials', hero);
+
+  // ── Dynamic: Read testimonials from localStorage (set by Admin) ──
+  const [adminTestimonials, setAdminTestimonials] = useState<TestimonialItem[]>([]);
+
+  useEffect(() => {
+    const load = () => {
+      try {
+        const stored = localStorage.getItem('cmc_testimonials');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setAdminTestimonials(parsed);
+            return;
+          }
+        }
+        setAdminTestimonials([]);
+      } catch {}
+    };
+    load();
+    window.addEventListener('storage', load);
+    return () => window.removeEventListener('storage', load);
+  }, []);
+
+  // Use admin testimonials if available, otherwise fall back to static
+  const activeTestimonials = adminTestimonials.length > 0 ? adminTestimonials : testimonialsData;
+
   return (
     <main className="bg-[#FAF8F5] text-[#171717] font-poppins selection:bg-[#D8D3CB] selection:text-[#171717] min-h-screen">
       
@@ -150,7 +177,7 @@ export function TestimonialsPage() {
 
       {/* ── SIMPLE TESTIMONIAL LIST ── */}
       <div className="divide-y divide-[#D8D3CB]">
-        {testimonialsData.map((item, index) => {
+        {activeTestimonials.map((item, index) => {
           const imageOnRight = index % 2 === 1;
 
           return (

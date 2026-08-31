@@ -16,6 +16,7 @@ import { AnalyticsPage } from './pages/AnalyticsPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { HomeHeroPage } from './pages/HomeHeroPage';
 import { GalleryPage, type GalleryImage, type GalleryCategory } from './pages/GalleryPage';
+import { TestimonialsAdminPage, type TestimonialItem as AdminTestimonialItem } from './pages/TestimonialsPage';
 import { CoupleShootPage } from './pages/CoupleShootPage';
 import {
   INITIAL_INQUIRIES,
@@ -57,6 +58,14 @@ const AdminContent: React.FC = () => {
   });
   const [packages, setPackages] = useState<PackageItem[]>(INITIAL_PACKAGES);
   const [media, setMedia] = useState<MediaAsset[]>(INITIAL_MEDIA);
+  const [adminTestimonials, setAdminTestimonials] = useState<AdminTestimonialItem[]>(() => {
+    try {
+      const saved = localStorage.getItem('cmc_testimonials');
+      if (saved) return JSON.parse(saved) as AdminTestimonialItem[];
+    } catch {}
+    return [];
+  });
+
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>(() => {
     try {
       const saved = localStorage.getItem('cmc_gallery');
@@ -167,12 +176,30 @@ const AdminContent: React.FC = () => {
     } catch {}
   }, [stories]);
 
+  // Persist testimonials to localStorage
+  React.useEffect(() => {
+    try {
+      localStorage.setItem('cmc_testimonials', JSON.stringify(adminTestimonials));
+    } catch {}
+  }, [adminTestimonials]);
+
   const handleUpdatePackage = (pkg: PackageItem) => {
     setPackages((prev) => prev.map((p) => (p.id === pkg.id ? pkg : p)));
   };
 
   const handleUploadMedia = (asset: MediaAsset) => {
     setMedia([asset, ...media]);
+  };
+
+  // Testimonials Handlers
+  const handleAddTestimonial = (t: AdminTestimonialItem) => {
+    setAdminTestimonials((prev) => [t, ...prev]);
+  };
+  const handleUpdateTestimonial = (t: AdminTestimonialItem) => {
+    setAdminTestimonials((prev) => prev.map((x) => (x.id === t.id ? t : x)));
+  };
+  const handleDeleteTestimonial = (id: string) => {
+    setAdminTestimonials((prev) => prev.filter((x) => x.id !== id));
   };
 
   // Gallery Handlers
@@ -228,6 +255,15 @@ const AdminContent: React.FC = () => {
             onAddFilm={handleAddFilm}
             onDeleteFilm={handleDeleteFilm}
             onToggleFeatured={handleToggleFeaturedFilm}
+          />
+        );
+      case 'testimonials-cms':
+        return (
+          <TestimonialsAdminPage
+            testimonials={adminTestimonials}
+            onAdd={handleAddTestimonial}
+            onUpdate={handleUpdateTestimonial}
+            onDelete={handleDeleteTestimonial}
           />
         );
       case 'gallery':
