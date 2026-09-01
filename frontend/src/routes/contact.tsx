@@ -72,7 +72,7 @@ function Contact() {
             </p>
           </div>
         ) : (
-          <form onSubmit={onSubmit} noValidate className="mt-10 space-y-6">
+          <form id="enquiry-form" onSubmit={onSubmit} noValidate className="mt-10 space-y-6">
             <div className="grid gap-5 sm:grid-cols-2">
               {fields.map((f) => (
                 <div key={f.name} className="space-y-1.5">

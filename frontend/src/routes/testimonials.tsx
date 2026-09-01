@@ -15,6 +15,8 @@ import pin3 from "@/assets/pinterest/pin3.jpg";
 import pin4 from "@/assets/pinterest/pin4.jpg";
 import pin5 from "@/assets/pinterest/pin5.jpg";
 
+const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:5001").replace(/\/$/, "");
+
 const title = "Kind Words & Reviews — CMC FILMS";
 const description =
   "Read genuine reviews and love stories from real couples who trusted CMC FILMS to document their wedding celebrations across India and destination locations worldwide.";
@@ -138,26 +140,32 @@ const testimonialsData: TestimonialItem[] = [
 export function TestimonialsPage() {
   const heroMedia = useHeroMedia('testimonials', hero);
 
-  // ── Dynamic: Read testimonials from localStorage (set by Admin) ──
+  // Published CMS data is shared across devices, unlike browser local storage.
   const [adminTestimonials, setAdminTestimonials] = useState<TestimonialItem[]>([]);
 
   useEffect(() => {
-    const load = () => {
-      try {
-        const stored = localStorage.getItem('cmc_testimonials');
-        if (stored) {
-          const parsed = JSON.parse(stored);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            setAdminTestimonials(parsed);
-            return;
-          }
-        }
-        setAdminTestimonials([]);
-      } catch {}
-    };
-    load();
-    window.addEventListener('storage', load);
-    return () => window.removeEventListener('storage', load);
+    const controller = new AbortController();
+    fetch(`${API_URL}/api/testimonials`, { signal: controller.signal })
+      .then((response) => response.json())
+      .then((payload) => {
+        const saved = payload?.data?.testimonials;
+        if (!payload?.success || !Array.isArray(saved) || saved.length === 0) return;
+        setAdminTestimonials(saved.map((item: Partial<TestimonialItem>) => ({
+          id: String(item.id || crypto.randomUUID()),
+          couple: String(item.couple || 'CMC FILMS Couple'),
+          location: String(item.location || 'Udaipur, Rajasthan'),
+          city: item.city || 'Udaipur',
+          eventType: item.eventType || 'Intimate Ceremony',
+          year: String(item.year || new Date().getFullYear()),
+          image: String(item.image || hero),
+          rating: Number(item.rating || 5),
+          highlightQuote: String(item.highlightQuote || ''),
+          fullReview: String(item.fullReview || ''),
+          serviceType: String(item.serviceType || ''),
+        })));
+      })
+      .catch(() => undefined);
+    return () => controller.abort();
   }, []);
 
   // Use admin testimonials if available, otherwise fall back to static

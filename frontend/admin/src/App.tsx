@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { Sidebar } from './components/Sidebar';
@@ -31,9 +31,10 @@ import {
   MediaAsset,
 } from './data/mockData';
 import { X } from 'lucide-react';
+import { API_URL } from './lib/environment';
 
 const AdminContent: React.FC = () => {
-  const { isAuthenticated, activeTab, setActiveTab } = useAuth();
+  const { isAuthenticated, activeTab, setActiveTab, token } = useAuth();
 
   // Layout UI states
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -73,6 +74,8 @@ const AdminContent: React.FC = () => {
     } catch {}
     return [];
   });
+  const galleryHydrated = useRef(false);
+  const testimonialsHydrated = useRef(false);
 
   const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
   const [showNewInquiryModal, setShowNewInquiryModal] = useState(false);
@@ -183,6 +186,76 @@ const AdminContent: React.FC = () => {
     } catch {}
   }, [adminTestimonials]);
 
+  // The backend is the source of truth for content shown on the live website.
+  // Local storage remains only as a small offline cache for the admin UI.
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch(`${API_URL}/api/home-gallery`, { signal: controller.signal })
+      .then((response) => response.json())
+      .then((payload) => {
+        if (payload?.success && Array.isArray(payload?.data?.images)) {
+          setGalleryImages(payload.data.images);
+        }
+      })
+      .catch(() => undefined)
+      .finally(() => { galleryHydrated.current = true; });
+    return () => controller.abort();
+  }, []);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch(`${API_URL}/api/testimonials`, { signal: controller.signal })
+      .then((response) => response.json())
+      .then((payload) => {
+        if (payload?.success && Array.isArray(payload?.data?.testimonials)) {
+          setAdminTestimonials(payload.data.testimonials);
+        }
+      })
+      .catch(() => undefined)
+      .finally(() => { testimonialsHydrated.current = true; });
+    return () => controller.abort();
+  }, []);
+
+  useEffect(() => {
+    if (!galleryHydrated.current || !token) return;
+    const timer = window.setTimeout(() => {
+      fetch(`${API_URL}/api/home-gallery`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ images: galleryImages }),
+      }).catch((error) => console.error('Unable to publish the home gallery.', error));
+    }, 350);
+    return () => window.clearTimeout(timer);
+  }, [galleryImages, token]);
+
+  useEffect(() => {
+    if (!testimonialsHydrated.current || !token) return;
+    const timer = window.setTimeout(() => {
+      fetch(`${API_URL}/api/testimonials`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ testimonials: adminTestimonials }),
+      }).catch((error) => console.error('Unable to publish testimonials.', error));
+    }, 350);
+    return () => window.clearTimeout(timer);
+  }, [adminTestimonials, token]);
+
+  const uploadImage = async (file: File) => {
+    if (!token) throw new Error('Please sign in again before uploading an image.');
+    const formData = new FormData();
+    formData.append('image', file);
+    const response = await fetch(`${API_URL}/api/packages/upload-image`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}` },
+      body: formData,
+    });
+    const payload = await response.json();
+    if (!response.ok || !payload?.success || !payload?.data?.imageUrl) {
+      throw new Error(payload?.message || 'Image upload failed.');
+    }
+    return payload.data.imageUrl as string;
+  };
+
   const handleUpdatePackage = (pkg: PackageItem) => {
     setPackages((prev) => prev.map((p) => (p.id === pkg.id ? pkg : p)));
   };
@@ -264,6 +337,7 @@ const AdminContent: React.FC = () => {
             onAdd={handleAddTestimonial}
             onUpdate={handleUpdateTestimonial}
             onDelete={handleDeleteTestimonial}
+            onUploadImage={uploadImage}
           />
         );
       case 'gallery':
@@ -273,6 +347,7 @@ const AdminContent: React.FC = () => {
             onAddImages={handleAddGalleryImages}
             onDeleteImage={handleDeleteGalleryImage}
             onUpdateCategory={handleUpdateGalleryCategory}
+            onUploadImage={uploadImage}
           />
         );
       case 'packages':

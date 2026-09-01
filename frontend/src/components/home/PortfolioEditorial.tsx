@@ -14,6 +14,8 @@ import cat2 from "@/assets/cat-2.jpg";
 import cat3 from "@/assets/cat-3.jpg";
 import heroImg from "@/assets/hero.jpg";
 
+const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:5001").replace(/\/$/, "");
+
 type GalleryWallItem = LightboxItem & {
   id: string;
   categoryTag: string;
@@ -161,26 +163,20 @@ export function PortfolioEditorial() {
   const [activeTab, setActiveTab] = useState("All Stories");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  // ── Dynamic Gallery: Read from localStorage (set by Admin "Home Gallery CMS") ──
+  // The public page loads images published through the admin CMS.
   const [adminGallery, setAdminGallery] = useState<AdminGalleryImage[]>([]);
 
   useEffect(() => {
-    const loadGallery = () => {
-      try {
-        const stored = localStorage.getItem('cmc_gallery');
-        if (stored) {
-          const parsed = JSON.parse(stored);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            setAdminGallery(parsed);
-            return;
-          }
+    const controller = new AbortController();
+    fetch(`${API_URL}/api/home-gallery`, { signal: controller.signal })
+      .then((response) => response.json())
+      .then((payload) => {
+        if (payload?.success && Array.isArray(payload?.data?.images)) {
+          setAdminGallery(payload.data.images);
         }
-        setAdminGallery([]); // reset to empty so fallback shows
-      } catch {}
-    };
-    loadGallery();
-    window.addEventListener('storage', loadGallery);
-    return () => window.removeEventListener('storage', loadGallery);
+      })
+      .catch(() => undefined);
+    return () => controller.abort();
   }, []);
 
   // Convert admin gallery to GalleryWallItem format

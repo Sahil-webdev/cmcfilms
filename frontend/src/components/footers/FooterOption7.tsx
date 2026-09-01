@@ -109,7 +109,7 @@ export function FooterOption7() {
               </li>
               <li>
                 <Link to="/packages" className="hover:underline transition-all font-medium inline-flex items-center gap-1 py-0.5">
-                  <span>Packages &amp; Investment</span>
+                  <span>Packages</span>
                   <ArrowUpRight className="w-3.5 h-3.5 text-[#AE171E]" />
                 </Link>
               </li>
@@ -117,6 +117,7 @@ export function FooterOption7() {
 
             <Link
               to="/contact"
+              hash="enquiry-form"
               className="inline-flex items-center gap-2 border border-[#AE171E]/45 px-3.5 py-2 text-xs font-medium text-[#AE171E] transition-colors hover:bg-[#AE171E] hover:text-white"
             >
               <span>Work With Us</span>
@@ -212,6 +213,10 @@ export function FooterOption7() {
                 <div className="flex items-center gap-2.5">
                   <Phone className="w-4 h-4 text-[#AE171E] shrink-0" />
                   <a href="tel:+917425940636" className="hover:underline transition-all">+91 74259 40636</a>
+                </div>
+                <div className="flex items-center gap-2.5">
+                  <Phone className="w-4 h-4 text-[#AE171E] shrink-0" />
+                  <a href="tel:+917014940636" className="hover:underline transition-all">+91 70149 40636</a>
                 </div>
               </div>
             </div>

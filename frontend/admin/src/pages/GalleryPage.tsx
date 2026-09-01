@@ -62,6 +62,7 @@ interface GalleryPageProps {
   onAddImages: (imgs: GalleryImage[]) => void;
   onDeleteImage: (id: string) => void;
   onUpdateCategory: (id: string, category: GalleryCategory) => void;
+  onUploadImage: (file: File) => Promise<string>;
 }
 
 export const GalleryPage: React.FC<GalleryPageProps> = ({
@@ -69,6 +70,7 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({
   onAddImages,
   onDeleteImage,
   onUpdateCategory,
+  onUploadImage,
 }) => {
   const [activeFilter, setActiveFilter] = useState<'All' | GalleryCategory>('All');
   const [isUploading, setIsUploading] = useState(false);
@@ -98,32 +100,33 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({
       if (!fileArr.length) return;
       setIsUploading(true);
       setUploadProgress(0);
-      const results: GalleryImage[] = [];
-      for (let i = 0; i < fileArr.length; i++) {
-        const file = fileArr[i];
-        const src: string = await new Promise((resolve) => {
-          const reader = new FileReader();
-          reader.onloadend = () => resolve(reader.result as string);
-          reader.readAsDataURL(file);
-        });
-        const { w, h } = await getImageDimensions(src);
-        const aspectRatio = detectAspectRatioClass(w, h);
-        results.push({
-          id: `gimg-${Date.now()}-${i}-${Math.random().toString(36).slice(2)}`,
-          src,
-          alt: file.name.replace(/\.[^/.]+$/, ''),
-          title: file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' '),
-          category: 'Uncategorized',
-          aspectRatio,
-          createdAt: new Date().toISOString().split('T')[0],
-        });
-        setUploadProgress(Math.round(((i + 1) / fileArr.length) * 100));
+      try {
+        const results: GalleryImage[] = [];
+        for (let i = 0; i < fileArr.length; i++) {
+          const file = fileArr[i];
+          const src = await onUploadImage(file);
+          const { w, h } = await getImageDimensions(src);
+          const aspectRatio = detectAspectRatioClass(w, h);
+          results.push({
+            id: `gimg-${Date.now()}-${i}-${Math.random().toString(36).slice(2)}`,
+            src,
+            alt: file.name.replace(/\.[^/.]+$/, ''),
+            title: file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' '),
+            category: 'Uncategorized',
+            aspectRatio,
+            createdAt: new Date().toISOString().split('T')[0],
+          });
+          setUploadProgress(Math.round(((i + 1) / fileArr.length) * 100));
+        }
+        onAddImages(results);
+      } catch (error) {
+        alert(error instanceof Error ? error.message : 'Image upload failed.');
+      } finally {
+        setIsUploading(false);
+        setUploadProgress(0);
       }
-      onAddImages(results);
-      setIsUploading(false);
-      setUploadProgress(0);
     },
-    [onAddImages]
+    [onAddImages, onUploadImage]
   );
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

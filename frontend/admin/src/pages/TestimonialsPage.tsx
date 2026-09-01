@@ -34,6 +34,7 @@ interface TestimonialsAdminPageProps {
   onAdd: (t: TestimonialItem) => void;
   onUpdate: (t: TestimonialItem) => void;
   onDelete: (id: string) => void;
+  onUploadImage: (file: File) => Promise<string>;
 }
 
 const EMPTY_FORM: Omit<TestimonialItem, 'id' | 'createdAt'> = {
@@ -52,6 +53,7 @@ export const TestimonialsAdminPage: React.FC<TestimonialsAdminPageProps> = ({
   onAdd,
   onUpdate,
   onDelete,
+  onUploadImage,
 }) => {
   const [viewMode, setViewMode] = useState<'list' | 'create'>('list');
   const [editingItem, setEditingItem] = useState<TestimonialItem | null>(null);
@@ -86,17 +88,17 @@ export const TestimonialsAdminPage: React.FC<TestimonialsAdminPageProps> = ({
     setViewMode('create');
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const result = reader.result as string;
-      setImagePreview(result);
-      setField('image', result);
-    };
-    reader.readAsDataURL(file);
     e.target.value = '';
+    try {
+      const imageUrl = await onUploadImage(file);
+      setImagePreview(imageUrl);
+      setField('image', imageUrl);
+    } catch (error) {
+      alert(error instanceof Error ? error.message : 'Image upload failed.');
+    }
   };
 
   const handleSave = () => {

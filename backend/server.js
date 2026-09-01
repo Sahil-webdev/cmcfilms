@@ -11,6 +11,7 @@ import { getPackages, updatePackages, uploadPackageImage, uploadPackageImageFile
 import { getHeroMedia, uploadHeroMedia, uploadHeroMediaFile } from './src/controllers/heroMediaController.js';
 import { getCoupleContent, updateCoupleContent } from './src/controllers/coupleContentController.js';
 import { getStories, updateStories } from './src/controllers/storiesController.js';
+import { getHomeGallery, updateHomeGallery, getTestimonials, updateTestimonials } from './src/controllers/websiteContentController.js';
 
 dotenv.config();
 
@@ -47,6 +48,10 @@ app.get('/api/couple-content', getCoupleContent);
 app.put('/api/couple-content', protect, updateCoupleContent);
 app.get('/api/stories', getStories);
 app.put('/api/stories', protect, updateStories);
+app.get('/api/home-gallery', getHomeGallery);
+app.put('/api/home-gallery', protect, updateHomeGallery);
+app.get('/api/testimonials', getTestimonials);
+app.put('/api/testimonials', protect, updateTestimonials);
 app.use((error, _req, res, next) => {
   if (error?.name === 'MulterError' || error?.message === 'Only MP4 video files are supported.' || error?.message === 'Only image files are supported.' || error?.message === 'Choose an image or MP4 video file.') {
     return res.status(400).json({ success: false, message: error.code === 'LIMIT_FILE_SIZE' ? 'The selected file is too large.' : error.message });
