@@ -97,41 +97,32 @@ function AboutPage() {
         </div>
       </section>
 
-      {/* ── 3. WHY CHOOSE CMC FILMS ── */}
-      <section className="border-b border-[#D8D3CB] bg-[#F2ECE5] px-6 py-20 sm:px-12 sm:py-28 md:px-16">
-        <div className="mx-auto grid max-w-[1500px] gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:gap-20">
-          <div className="lg:sticky lg:top-28 lg:self-start">
-            <span className="text-xs font-poppins font-semibold uppercase tracking-[0.2em] text-[#C47A65]">Why Choose Us</span>
-            <h2 className="mt-5 font-montserrat text-3xl font-extrabold leading-[1.04] text-[#171717] sm:text-5xl">
-              A calm presence for your most meaningful moments.
-            </h2>
-            <p className="mt-6 max-w-md text-sm leading-relaxed text-[#55504A] sm:text-base">
-              From the first conversation to final delivery, every detail is handled with care, clarity, and a cinematic eye.
-            </p>
-          </div>
+      {/* ── 3. WHY CHOOSE CMC FILMS (4 FEATURE CARDS) ── */}
+      <section className="py-20 sm:py-28 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto border-b border-[#D8D3CB] space-y-16">
+        <div className="text-center max-w-2xl mx-auto space-y-3">
+          <h2 className="font-montserrat text-3xl sm:text-5xl text-[#171717] font-extrabold">
+            WHY CHOOSE US
+          </h2>
+        </div>
 
-          <div className="divide-y divide-[#D8D3CB] border-y border-[#D8D3CB]">
-            {[
-              { no: '01', icon: Users, title: 'One dedicated in-house team', copy: 'The people who understand your celebration are the same people who photograph, film, edit, and deliver it.' },
-              { no: '02', icon: Camera, title: 'Cinematic quality, naturally captured', copy: '4K full-frame cameras, refined lighting, and thoughtful sound work—used quietly so the day still feels like yours.' },
-              { no: '03', icon: Heart, title: 'Emotion over forced poses', copy: 'We notice the unplanned laughter, the family glances, and the quiet pauses that make a wedding truly personal.' },
-              { no: '04', icon: ShieldCheck, title: 'Trusted across India and beyond', copy: 'From intimate local celebrations to destination weddings, our planning and production travel wherever your story takes us.' },
-            ].map((reason) => {
-              const Icon = reason.icon;
-              return (
-                <article key={reason.no} className="grid gap-4 py-6 sm:grid-cols-[42px_46px_1fr] sm:gap-5 sm:py-7">
-                  <span className="font-mono text-xs font-semibold tracking-wider text-[#C47A65]">{reason.no}</span>
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full border border-[#C47A65]/30 text-[#C47A65]">
-                    <Icon className="h-4 w-4" />
-                  </span>
-                  <div>
-                    <h3 className="font-poppins text-lg font-semibold text-[#171717] sm:text-xl">{reason.title}</h3>
-                    <p className="mt-2 max-w-xl text-sm leading-relaxed text-[#55504A]">{reason.copy}</p>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {[
+            { icon: Users, title: "In-House Team", copy: "We never outsource your memories. Every photo and film frame is captured and edited by our dedicated in-house team." },
+            { icon: Camera, title: "Cinema Gear", copy: "We use 4K full-frame cinema cameras, anamorphic lenses, studio lighting, and audio equipment for rich production value." },
+            { icon: Heart, title: "Unscripted Tones", copy: "No awkward forced posing. We document genuine emotions, candid laughter, and quiet moments as they naturally occur." },
+            { icon: ShieldCheck, title: "Worldwide Travel", copy: "Based in India and available for destination weddings worldwide — Jaipur, Udaipur, Goa, Dubai, and beyond." },
+          ].map((feature) => {
+            const Icon = feature.icon;
+            return (
+              <article key={feature.title} className="bg-white p-8 rounded-2xl border border-[#D8D3CB]/60 shadow-sm space-y-4 hover:border-[#C47A65]/40 transition-all hover:-translate-y-1">
+                <div className="w-12 h-12 rounded-full bg-[#FAF8F5] border border-[#D8D3CB] flex items-center justify-center text-[#C47A65]">
+                  <Icon className="w-5 h-5" />
+                </div>
+                <h3 className="font-league text-2xl text-[#171717] font-bold">{feature.title}</h3>
+                <p className="text-xs sm:text-sm text-[#55504A] font-normal leading-relaxed">{feature.copy}</p>
+              </article>
+            );
+          })}
         </div>
       </section>
 

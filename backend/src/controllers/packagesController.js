@@ -1,31 +1,17 @@
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
 import multer from 'multer';
 import mongoose from 'mongoose';
 import { SiteSetting } from '../models/SiteSetting.js';
+import { imageKitErrorResponse, uploadToImageKit } from '../services/imageKit.js';
 
 const PACKAGES_KEY = 'packages';
 let inMemoryPackages = null;
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const packageUploadDirectory = path.resolve(__dirname, '../../uploads/packages');
-
-fs.mkdirSync(packageUploadDirectory, { recursive: true });
-
 const databaseAvailable = () => mongoose.connection.readyState === 1;
 
-const packageImageStorage = multer.diskStorage({
-  destination: (_req, _file, callback) => callback(null, packageUploadDirectory),
-  filename: (_req, file, callback) => {
-    const extension = path.extname(file.originalname).toLowerCase() || '.jpg';
-    callback(null, `package-${Date.now()}${extension}`);
-  },
-});
-
 export const uploadPackageImage = multer({
-  storage: packageImageStorage,
+  storage: multer.memoryStorage(),
   fileFilter: (_req, file, callback) => callback(file.mimetype.startsWith('image/') ? null : new Error('Only image files are supported.'), file.mimetype.startsWith('image/')),
-  limits: { fileSize: 10 * 1024 * 1024 },
+  // ImageKit Free accepts images up to 25 MB.
+  limits: { fileSize: 25 * 1024 * 1024 },
 });
 
 const readPackages = async () => {
@@ -69,6 +55,11 @@ export const updatePackages = async (req, res) => {
 
 export const uploadPackageImageFile = async (req, res) => {
   if (!req.file) return res.status(400).json({ success: false, message: 'Please choose an image file.' });
-  const imageUrl = `${req.protocol}://${req.get('host')}/uploads/packages/${req.file.filename}`;
-  return res.json({ success: true, data: { imageUrl }, message: 'Image uploaded.' });
+  try {
+    const media = await uploadToImageKit({ file: req.file, folder: '/cmc-films/images', tags: ['cmc-films', 'image'] });
+    return res.json({ success: true, data: { imageUrl: media.url, media }, message: 'Image uploaded to ImageKit.' });
+  } catch (error) {
+    const response = imageKitErrorResponse(error, 'Unable to upload the image to ImageKit.');
+    return res.status(response.status).json({ success: false, message: response.message });
+  }
 };

@@ -1,30 +1,18 @@
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
 import multer from 'multer';
 import mongoose from 'mongoose';
 import { SiteSetting } from '../models/SiteSetting.js';
+import { imageKitErrorResponse, uploadToImageKit } from '../services/imageKit.js';
 
 const HERO_MEDIA_KEY = 'heroMedia';
 const allowedKeys = new Set(['home', 'portfolio', 'films', 'couples', 'testimonials', 'packages', 'about']);
 let inMemoryHeroMedia = {};
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const heroMediaDirectory = path.resolve(__dirname, '../../uploads/hero-media');
-fs.mkdirSync(heroMediaDirectory, { recursive: true });
-
 const databaseAvailable = () => mongoose.connection.readyState === 1;
-const storage = multer.diskStorage({
-  destination: (_req, _file, callback) => callback(null, heroMediaDirectory),
-  filename: (_req, file, callback) => {
-    const extension = path.extname(file.originalname).toLowerCase() || (file.mimetype === 'video/mp4' ? '.mp4' : '.jpg');
-    callback(null, `hero-${Date.now()}${extension}`);
-  },
-});
 
 export const uploadHeroMediaFile = multer({
-  storage,
+  storage: multer.memoryStorage(),
   fileFilter: (_req, file, callback) => callback(file.mimetype.startsWith('image/') || file.mimetype === 'video/mp4' ? null : new Error('Choose an image or MP4 video file.'), file.mimetype.startsWith('image/') || file.mimetype === 'video/mp4'),
-  limits: { fileSize: 150 * 1024 * 1024 },
+  // ImageKit Free: images <=25 MB, videos <=100 MB.
+  limits: { fileSize: 100 * 1024 * 1024 },
 });
 
 const readHeroMedia = async () => {
@@ -59,11 +47,19 @@ export const uploadHeroMedia = async (req, res) => {
 
   try {
     const media = await readHeroMedia();
-    const url = `${req.protocol}://${req.get('host')}/uploads/hero-media/${req.file.filename}`;
-    const updatedMedia = { ...media, [key]: { url, type: req.file.mimetype === 'video/mp4' ? 'video' : 'image' } };
+    const uploadedMedia = await uploadToImageKit({
+      file: req.file,
+      folder: `/cmc-films/hero-media/${key}`,
+      tags: ['cmc-films', 'hero-media', key],
+    });
+    const updatedMedia = {
+      ...media,
+      [key]: { ...uploadedMedia, type: req.file.mimetype === 'video/mp4' ? 'video' : 'image' },
+    };
     await saveHeroMedia(updatedMedia);
     return res.json({ success: true, data: { media: updatedMedia }, message: 'Hero media saved and published.' });
-  } catch {
-    return res.status(500).json({ success: false, message: 'Unable to save hero media.' });
+  } catch (error) {
+    const response = imageKitErrorResponse(error, 'Unable to upload and save hero media.');
+    return res.status(response.status).json({ success: false, message: response.message });
   }
 };

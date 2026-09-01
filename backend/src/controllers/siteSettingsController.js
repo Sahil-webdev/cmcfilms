@@ -1,32 +1,18 @@
-import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import multer from 'multer';
 import mongoose from 'mongoose';
 import { SiteSetting } from '../models/SiteSetting.js';
+import { imageKitErrorResponse, uploadToImageKit } from '../services/imageKit.js';
 
 const HOME_HERO_KEY = 'homeHero';
 let inMemoryHeroVideoUrl = '';
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const homeHeroUploadDirectory = path.resolve(__dirname, '../../uploads/home-hero');
-
-fs.mkdirSync(homeHeroUploadDirectory, { recursive: true });
-
-const homeHeroUploadStorage = multer.diskStorage({
-  destination: (_req, _file, callback) => callback(null, homeHeroUploadDirectory),
-  filename: (_req, file, callback) => {
-    const extension = path.extname(file.originalname).toLowerCase() || '.mp4';
-    callback(null, `home-hero-${Date.now()}${extension}`);
-  },
-});
-
 export const uploadHomeHeroVideo = multer({
-  storage: homeHeroUploadStorage,
+  storage: multer.memoryStorage(),
   fileFilter: (_req, file, callback) => {
     const isMp4 = file.mimetype === 'video/mp4' || path.extname(file.originalname).toLowerCase() === '.mp4';
     callback(isMp4 ? null : new Error('Only MP4 video files are supported.'), isMp4);
   },
-  limits: { fileSize: 150 * 1024 * 1024 },
+  limits: { fileSize: 100 * 1024 * 1024 },
 });
 
 const databaseAvailable = () => mongoose.connection.readyState === 1;
@@ -95,15 +81,20 @@ export const uploadHomeHero = async (req, res) => {
   }
 
   try {
-    const videoUrl = `${req.protocol}://${req.get('host')}/uploads/home-hero/${req.file.filename}`;
-    await saveHeroVideoUrl(videoUrl);
+    const media = await uploadToImageKit({
+      file: req.file,
+      folder: '/cmc-films/hero-media/home',
+      tags: ['cmc-films', 'hero-media', 'home'],
+    });
+    await saveHeroVideoUrl(media.url);
 
     return res.json({
       success: true,
-      data: { videoUrl },
-      message: 'Home hero video uploaded and updated.',
+      data: { videoUrl: media.url, media },
+      message: 'Home hero video uploaded to ImageKit and updated.',
     });
   } catch (error) {
-    return res.status(500).json({ success: false, message: 'The video was uploaded but the hero setting could not be saved.' });
+    const response = imageKitErrorResponse(error, 'Unable to upload the hero video to ImageKit.');
+    return res.status(response.status).json({ success: false, message: response.message });
   }
 };
