@@ -80,6 +80,14 @@ export interface StoriesPageProps {
   onAddStory?: (story: any) => void;
 }
 
+const dedupeStories = (items: WeddingStory[]) => {
+  const byId = new Map<string, WeddingStory>();
+  items.forEach((story) => {
+    if (story?.id) byId.set(story.id, story);
+  });
+  return [...byId.values()];
+};
+
 export const StoriesPage: React.FC<StoriesPageProps> = ({
   stories: propStories,
   onToggleFeatured: propToggleFeatured,
@@ -89,10 +97,10 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({
   const [stories, setStories] = useState<WeddingStory[]>(() => {
     try {
       const saved = localStorage.getItem('cmc_stories');
-      if (saved) return JSON.parse(saved);
+      if (saved) return dedupeStories(JSON.parse(saved));
     } catch {
     }
-    if (propStories && propStories.length > 0) return propStories;
+    if (propStories && propStories.length > 0) return dedupeStories(propStories);
     return initialStories;
   });
   const [storiesReady, setStoriesReady] = useState(false);
@@ -100,7 +108,7 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({
 
   useEffect(() => {
     try {
-      localStorage.setItem('cmc_stories', JSON.stringify(stories));
+      localStorage.setItem('cmc_stories', JSON.stringify(dedupeStories(stories)));
     } catch (err) {
       console.error('Failed to save stories:', err);
     }
@@ -113,7 +121,7 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({
       .then((payload) => {
         if (Array.isArray(payload?.data?.stories)) {
           setStories((current) => {
-            const remoteStories = payload.data.stories as WeddingStory[];
+            const remoteStories = dedupeStories(payload.data.stories as WeddingStory[]);
             const hasLocalOnlyStory = current.some((story) => !remoteStories.some((remote) => remote.id === story.id));
             if (hasLocalOnlyStory) {
               skipFirstPublish.current = false;
@@ -133,7 +141,8 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({
     if (skipFirstPublish.current) { skipFirstPublish.current = false; return; }
     const timer = window.setTimeout(async () => {
       try {
-        const publishedStories = await Promise.all(stories.map(async (story) => {
+        const uniqueStories = dedupeStories(stories);
+        const publishedStories = await Promise.all(uniqueStories.map(async (story) => {
           if (!story.coverImage.startsWith('data:image/')) return story;
           const blob = await (await fetch(story.coverImage)).blob();
           const imageFile = new File([blob], 'story-cover.jpg', { type: blob.type || 'image/jpeg' });
@@ -144,7 +153,7 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({
           if (!uploadResponse.ok || !uploadPayload.success) throw new Error(uploadPayload.message || 'Cover image upload failed.');
           return { ...story, coverImage: uploadPayload.data.imageUrl };
         }));
-        if (publishedStories.some((story, index) => story.coverImage !== stories[index].coverImage)) setStories(publishedStories);
+        if (publishedStories.some((story, index) => story.coverImage !== uniqueStories[index].coverImage)) setStories(publishedStories);
         const response = await fetch(`${API_URL}/api/stories`, { method: 'PUT', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify({ stories: publishedStories }) });
         if (!response.ok) throw new Error(`Publishing failed (${response.status}).`);
       } catch (error) {
@@ -401,12 +410,14 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({
       featured,
     };
 
-    if (propAddStory) { try { propAddStory(newStory); } catch (e) {} }
+    // Parent state is used by the dashboard too. It performs an id-based
+    // upsert, so editing this story can never create a second record.
+    if (propAddStory) { try { propAddStory(newStory); } catch {} }
     if (editingStory) {
-      setStories((prev) => prev.map((s) => (s.id === newStory.id ? newStory : s)));
+      setStories((prev) => dedupeStories(prev.map((s) => (s.id === newStory.id ? newStory : s))));
       showNotice(`Wedding Story "${title}" updated!`);
     } else {
-      setStories((prev) => [newStory, ...prev]);
+      setStories((prev) => dedupeStories([newStory, ...prev]));
       showNotice(`Wedding Story "${title}" published!`);
     }
 

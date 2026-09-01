@@ -64,6 +64,27 @@ export interface BlogPost {
   htmlContent?: string;
 }
 
+const toPublishedStoryPost = (story: any): BlogPost => ({
+  id: String(story.id),
+  slug: String(story.id),
+  title: String(story.title || 'Wedding Story'),
+  category: 'Real Weddings',
+  date: String(story.date || ''),
+  readTime: '5 min read',
+  author: { name: String(story.couple || 'CMC FILMS'), avatar: '' },
+  coverImage: String(story.coverImage || featured),
+  excerpt: String(story.subtitle || story.excerpt || story.location || 'A beautiful wedding story by CMC FILMS.'),
+  htmlContent: String(story.content || ''),
+  content: { intro: '', sections: [], conclusion: '' },
+  featured: Boolean(story.featured),
+});
+
+const dedupePostsById = (items: BlogPost[]) => {
+  const byId = new Map<string, BlogPost>();
+  items.forEach((item) => byId.set(item.id, item));
+  return [...byId.values()];
+};
+
 const blogPosts: BlogPost[] = [
   {
     id: "b1",
@@ -263,50 +284,18 @@ export function WeddingStoriesPage() {
 
   const categories = ["All", "Real Weddings", "Couple Shoots", "Bridal Guides", "Destinations"];
 
-  // ── Dynamic: Read admin stories from localStorage ──
-  useEffect(() => {
-    const loadAdminStories = () => {
-      try {
-        const stored = localStorage.getItem('cmc_stories');
-        if (stored) {
-          const parsed = JSON.parse(stored);
-          const published = parsed.filter((s: any) => s.status !== 'Draft' && s.title);
-          if (published.length > 0) {
-            setPosts(published.map((s: any) => ({
-              id: String(s.id),
-              slug: String(s.id),
-              title: String(s.title || 'Wedding Story'),
-              category: 'Real Weddings',
-              date: String(s.date || ''),
-              readTime: '5 min read',
-              author: { name: String(s.couple || 'CMC FILMS'), avatar: '' },
-              coverImage: String(s.coverImage || featured),
-              excerpt: String(s.subtitle || s.excerpt || s.location || 'A beautiful wedding story by CMC FILMS.'),
-              htmlContent: String(s.content || ''),
-              content: { intro: '', sections: [], conclusion: '' },
-              featured: Boolean(s.featured),
-            })));
-            return;
-          }
-        }
-      } catch {}
-    };
-
-    loadAdminStories();
-    window.addEventListener('storage', loadAdminStories);
-    return () => window.removeEventListener('storage', loadAdminStories);
-  }, []);
-
-  // Also try backend API as secondary source
+  // The API is the single source of truth. Website localStorage is deliberately
+  // not used here: it can contain stale/duplicated drafts from the admin UI.
   useEffect(() => {
     const controller = new AbortController();
     fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/stories`, { signal: controller.signal })
       .then((response) => response.json())
       .then((payload) => {
         if (!Array.isArray(payload?.data?.stories) || payload.data.stories.length === 0) return;
-        setPosts(payload.data.stories.filter((story: any) => story.status !== 'Draft').map((story: any) => ({
-          id: String(story.id), slug: String(story.id), title: String(story.title || 'Wedding Story'), category: 'Real Weddings', date: String(story.date || ''), readTime: '', author: { name: String(story.couple || 'CMC FILMS'), avatar: '' }, coverImage: String(story.coverImage || featured), excerpt: String(story.subtitle || story.location || ''), htmlContent: String(story.content || ''), content: { intro: '', sections: [], conclusion: '' },
-        })));
+        const publishedStories = payload.data.stories
+          .filter((story: any) => story.status !== 'Draft' && story.title)
+          .map(toPublishedStoryPost);
+        setPosts(dedupePostsById(publishedStories));
       }).catch(() => undefined);
     return () => controller.abort();
   }, []);

@@ -142,7 +142,14 @@ const AdminContent: React.FC = () => {
   };
 
   const handleAddStory = (story: Story) => {
-    setStories([story, ...stories]);
+    // The same handler is used for both create and edit. Preserve a story's
+    // id so publishing an edit replaces it instead of adding a duplicate.
+    setStories((previous) => {
+      const alreadyExists = previous.some((existing) => existing.id === story.id);
+      return alreadyExists
+        ? previous.map((existing) => (existing.id === story.id ? story : existing))
+        : [story, ...previous];
+    });
   };
 
   // Film Handlers

@@ -216,6 +216,93 @@
   animation: ticker 42s linear infinite;
 }
 
+/* Rich HTML saved from the Wedding Stories CKEditor. The editor stores plain
+ * table tags, so the public reader must supply the editorial table layout. */
+.story-rich-content {
+  overflow-x: auto;
+}
+
+.story-rich-content > * + * {
+  margin-top: 1.25rem;
+}
+
+.story-rich-content h1,
+.story-rich-content h2,
+.story-rich-content h3,
+.story-rich-content h4 {
+  color: #261e1e;
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.story-rich-content h1 { font-size: clamp(2rem, 5vw, 3rem); }
+.story-rich-content h2 { font-size: clamp(1.6rem, 4vw, 2.25rem); }
+.story-rich-content h3 { font-size: 1.5rem; }
+
+.story-rich-content p,
+.story-rich-content li {
+  color: rgb(38 30 30 / 0.85);
+}
+
+.story-rich-content ul,
+.story-rich-content ol {
+  margin-left: 1.25rem;
+  padding-left: 1.25rem;
+}
+
+.story-rich-content ul { list-style: disc; }
+.story-rich-content ol { list-style: decimal; }
+
+.story-rich-content a {
+  color: #93191e;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.story-rich-content img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin: 1.5rem auto;
+  border-radius: 0.75rem;
+}
+
+.story-rich-content figure {
+  margin: 1.5rem 0;
+}
+
+.story-rich-content figcaption {
+  margin-top: 0.5rem;
+  color: #8a8072;
+  font-size: 0.8125rem;
+  text-align: center;
+}
+
+.story-rich-content table {
+  width: 100%;
+  min-width: 32rem;
+  margin: 1.5rem 0;
+  border-collapse: collapse;
+  border: 1px solid #d8d3cb;
+  background: #fff;
+}
+
+.story-rich-content th,
+.story-rich-content td {
+  padding: 0.75rem 1rem;
+  border: 1px solid #d8d3cb;
+  text-align: left;
+  vertical-align: top;
+}
+
+.story-rich-content th {
+  background: #f2ece5;
+  color: #261e1e;
+  font-weight: 600;
+}
+
 @keyframes ticker {
   from {
     transform: translateX(0);
