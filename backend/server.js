@@ -1,11 +1,13 @@
 import express from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { connectDB } from './src/config/db.js';
-import { loginUser, getMe } from './src/controllers/authController.js';
-import { protect } from './src/middleware/auth.js';
+import { loginUser, getMe, getSetupStatus, registerFirstAdmin } from './src/controllers/authController.js';
+import { protect, requireAdmin } from './src/middleware/auth.js';
 import { getHomeHero, updateHomeHero, uploadHomeHero, uploadHomeHeroVideo } from './src/controllers/siteSettingsController.js';
 import { getPackages, updatePackages, uploadPackageImage, uploadPackageImageFile } from './src/controllers/packagesController.js';
 import { getHeroMedia, uploadHeroMedia, uploadHeroMediaFile } from './src/controllers/heroMediaController.js';
@@ -19,9 +21,23 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5001;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const configuredOrigins = [process.env.CLIENT_URL, process.env.ADMIN_URL]
+  .filter(Boolean)
+  .flatMap((value) => value.split(',').map((origin) => origin.trim()))
+  .filter(Boolean);
 
-app.use(cors());
-app.use(express.json({ limit: '10mb' }));
+app.set('trust proxy', 1);
+app.use(helmet({ crossOriginResourcePolicy: false }));
+app.use(
+  cors({
+    origin(origin, callback) {
+      // Requests without an Origin header are health checks or server-to-server requests.
+      if (!origin || configuredOrigins.includes(origin)) return callback(null, true);
+      return callback(new Error('Origin is not allowed by CORS.'));
+    },
+  })
+);
+app.use(express.json({ limit: '2mb' }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Connect to MongoDB
@@ -33,31 +49,43 @@ app.get('/api/health', (req, res) => {
 });
 
 // Auth Routes
-app.post('/api/auth/login', loginUser);
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, message: 'Too many sign-in attempts. Please try again in 15 minutes.' },
+});
+app.get('/api/auth/setup-status', getSetupStatus);
+app.post('/api/auth/register-first-admin', authLimiter, registerFirstAdmin);
+app.post('/api/auth/login', authLimiter, loginUser);
 app.get('/api/auth/me', protect, getMe);
 
 // Public website configuration + protected CMS update route
 app.get('/api/site-settings/home-hero', getHomeHero);
-app.put('/api/site-settings/home-hero', protect, updateHomeHero);
-app.post('/api/site-settings/home-hero/upload', protect, uploadHomeHeroVideo.single('video'), uploadHomeHero);
+app.put('/api/site-settings/home-hero', protect, requireAdmin, updateHomeHero);
+app.post('/api/site-settings/home-hero/upload', protect, requireAdmin, uploadHomeHeroVideo.single('video'), uploadHomeHero);
 app.get('/api/packages', getPackages);
-app.put('/api/packages', protect, updatePackages);
-app.post('/api/packages/upload-image', protect, uploadPackageImage.single('image'), uploadPackageImageFile);
+app.put('/api/packages', protect, requireAdmin, updatePackages);
+app.post('/api/packages/upload-image', protect, requireAdmin, uploadPackageImage.single('image'), uploadPackageImageFile);
 app.get('/api/site-settings/hero-media', getHeroMedia);
-app.post('/api/site-settings/hero-media/upload', protect, uploadHeroMediaFile.single('media'), uploadHeroMedia);
+app.post('/api/site-settings/hero-media/upload', protect, requireAdmin, uploadHeroMediaFile.single('media'), uploadHeroMedia);
 app.get('/api/couple-content', getCoupleContent);
-app.put('/api/couple-content', protect, updateCoupleContent);
+app.put('/api/couple-content', protect, requireAdmin, updateCoupleContent);
 app.get('/api/stories', getStories);
-app.put('/api/stories', protect, updateStories);
+app.put('/api/stories', protect, requireAdmin, updateStories);
 app.get('/api/films', getFilms);
-app.put('/api/films', protect, updateFilms);
+app.put('/api/films', protect, requireAdmin, updateFilms);
 app.get('/api/home-gallery', getHomeGallery);
-app.put('/api/home-gallery', protect, updateHomeGallery);
+app.put('/api/home-gallery', protect, requireAdmin, updateHomeGallery);
 app.get('/api/testimonials', getTestimonials);
-app.put('/api/testimonials', protect, updateTestimonials);
+app.put('/api/testimonials', protect, requireAdmin, updateTestimonials);
 app.use((error, _req, res, next) => {
   if (error?.name === 'MulterError' || error?.message === 'Only MP4 video files are supported.' || error?.message === 'Only image files are supported.' || error?.message === 'Choose an image or MP4 video file.') {
     return res.status(400).json({ success: false, message: error.code === 'LIMIT_FILE_SIZE' ? 'The selected file is too large.' : error.message });
+  }
+  if (error?.message === 'Origin is not allowed by CORS.') {
+    return res.status(403).json({ success: false, message: 'Request origin is not allowed.' });
   }
   return next(error);
 });
@@ -114,7 +142,7 @@ const DUMMY_INQUIRIES = [
   },
 ];
 
-app.get('/api/inquiries', protect, (req, res) => {
+app.get('/api/inquiries', protect, requireAdmin, (req, res) => {
   res.json({ success: true, count: DUMMY_INQUIRIES.length, data: DUMMY_INQUIRIES });
 });
 
