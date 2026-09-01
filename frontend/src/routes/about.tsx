@@ -32,6 +32,12 @@ export const Route = createFileRoute("/about")({
 
 function AboutPage() {
   const heroMedia = useHeroMedia('about', featured);
+  const whyChooseFeatures = [
+    { icon: Users, title: "In-House Team", copy: "We never outsource your memories. Every photo and film frame is captured and edited by our dedicated in-house team." },
+    { icon: Camera, title: "Cinema Gear", copy: "We use 4K full-frame cinema cameras, anamorphic lenses, studio lighting, and audio equipment for rich production value." },
+    { icon: Heart, title: "Unscripted Tones", copy: "No awkward forced posing. We document genuine emotions, candid laughter, and quiet moments as they naturally occur." },
+    { icon: ShieldCheck, title: "Worldwide Travel", copy: "Based in India and available for destination weddings worldwide — Jaipur, Udaipur, Goa, Dubai, and beyond." },
+  ];
   return (
     <main className="bg-[#FAF8F5] text-[#171717] font-poppins selection:bg-[#D8D3CB] min-h-screen">
       
@@ -105,16 +111,12 @@ function AboutPage() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {[
-            { icon: Users, title: "In-House Team", copy: "We never outsource your memories. Every photo and film frame is captured and edited by our dedicated in-house team." },
-            { icon: Camera, title: "Cinema Gear", copy: "We use 4K full-frame cinema cameras, anamorphic lenses, studio lighting, and audio equipment for rich production value." },
-            { icon: Heart, title: "Unscripted Tones", copy: "No awkward forced posing. We document genuine emotions, candid laughter, and quiet moments as they naturally occur." },
-            { icon: ShieldCheck, title: "Worldwide Travel", copy: "Based in India and available for destination weddings worldwide — Jaipur, Udaipur, Goa, Dubai, and beyond." },
-          ].map((feature) => {
+        <div className="why-choose-carousel" aria-label="Why choose CMC Films">
+          <div className="why-choose-carousel-track">
+          {[...whyChooseFeatures, ...whyChooseFeatures].map((feature, index) => {
             const Icon = feature.icon;
             return (
-              <article key={feature.title} className="bg-white p-8 rounded-2xl border border-[#D8D3CB]/60 shadow-sm space-y-4 hover:border-[#C47A65]/40 transition-all hover:-translate-y-1">
+              <article key={`${feature.title}-${index}`} className="why-choose-card bg-white p-8 rounded-2xl border border-[#D8D3CB]/60 shadow-sm space-y-4 hover:border-[#C47A65]/40 transition-all hover:-translate-y-1">
                 <div className="w-12 h-12 rounded-full bg-[#FAF8F5] border border-[#D8D3CB] flex items-center justify-center text-[#C47A65]">
                   <Icon className="w-5 h-5" />
                 </div>
@@ -123,6 +125,7 @@ function AboutPage() {
               </article>
             );
           })}
+          </div>
         </div>
       </section>
 

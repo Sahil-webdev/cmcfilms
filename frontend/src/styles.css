@@ -303,6 +303,41 @@
   font-weight: 600;
 }
 
+/* Continuous carousel for the About page's Why Choose Us cards. */
+.why-choose-carousel {
+  overflow: hidden;
+  padding: 0.35rem 0 1rem;
+  mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+}
+
+.why-choose-carousel-track {
+  display: flex;
+  width: max-content;
+  gap: 2rem;
+  animation: why-choose-scroll 28s linear infinite;
+}
+
+.why-choose-carousel:hover .why-choose-carousel-track,
+.why-choose-carousel:focus-within .why-choose-carousel-track {
+  animation-play-state: paused;
+}
+
+.why-choose-card {
+  width: min(21rem, calc(100vw - 3rem));
+  min-height: 23.5rem;
+  flex: 0 0 auto;
+}
+
+@keyframes why-choose-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-50% - 1rem)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .why-choose-carousel { overflow-x: auto; mask-image: none; }
+  .why-choose-carousel-track { animation: none; }
+}
+
 @keyframes ticker {
   from {
     transform: translateX(0);

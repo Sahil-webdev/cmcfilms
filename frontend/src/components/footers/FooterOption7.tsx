@@ -47,7 +47,7 @@ export function FooterOption7() {
             {/* Clean Inline Social Icons */}
             <div className="flex items-center gap-3 pt-1">
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/cmc_films?utm_source=ig_web_button_share_sheet&igsi=ZDNlZDc0MzIxNw=="
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
@@ -56,7 +56,7 @@ export function FooterOption7() {
                 <Instagram className="w-4 h-4" />
               </a>
               <a
-                href="https://youtube.com"
+                href="https://www.youtube.com/@cmcfilms"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="YouTube"
@@ -64,15 +64,12 @@ export function FooterOption7() {
               >
                 <Youtube className="w-4 h-4" />
               </a>
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
+              <span
                 aria-label="Facebook"
-                className="w-9 h-9 rounded-full border border-[#AE171E]/20 text-[#AE171E] hover:bg-[#AE171E] hover:text-white flex items-center justify-center transition-all cursor-pointer"
+                className="w-9 h-9 rounded-full border border-[#AE171E]/20 text-[#AE171E] flex items-center justify-center"
               >
                 <Facebook className="w-4 h-4" />
-              </a>
+              </span>
               <a
                 href="https://wa.me/917425940636"
                 target="_blank"
