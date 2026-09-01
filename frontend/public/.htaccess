@@ -1,0 +1,11 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Let Apache serve real files (assets, uploads, favicon, etc.) normally.
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Every other public URL is a React route.
+  RewriteRule ^ index.html [L]
+</IfModule>
