@@ -1,4 +1,5 @@
 import ImageKit, { toFile } from '@imagekit/nodejs';
+import sharp from 'sharp';
 
 const requiredEnvironmentVariables = ['IMAGEKIT_PRIVATE_KEY'];
 
@@ -23,6 +24,39 @@ const safeFileName = (fileName = 'upload') => {
   return normalized || `upload-${Date.now()}`;
 };
 
+// ImageKit will accept a large source upload but cannot serve images above its
+// 25 MP resolution limit. Resize camera originals before uploading so every
+// saved gallery image remains viewable on the website.
+const prepareImageForImageKit = async (file) => {
+  if (!file.mimetype?.startsWith('image/') || file.mimetype === 'image/svg+xml' || file.mimetype === 'image/gif') {
+    return file;
+  }
+
+  try {
+    const metadata = await sharp(file.buffer).metadata();
+    const sourcePixels = (metadata.width || 0) * (metadata.height || 0);
+    const MAX_PIXELS = 16_000_000;
+
+    // Already web-safe: preserve the original bytes and format.
+    if (sourcePixels > 0 && sourcePixels <= MAX_PIXELS) return file;
+
+    const optimized = sharp(file.buffer)
+      .rotate()
+      .resize({ width: 3840, height: 3840, fit: 'inside', withoutEnlargement: true });
+
+    if (metadata.hasAlpha) {
+      const buffer = await optimized.png({ compressionLevel: 9, adaptiveFiltering: true }).toBuffer();
+      return { ...file, buffer, mimetype: 'image/png', originalname: file.originalname.replace(/\.[^.]+$/, '') + '.png' };
+    }
+
+    const buffer = await optimized.jpeg({ quality: 88, mozjpeg: true }).toBuffer();
+    return { ...file, buffer, mimetype: 'image/jpeg', originalname: file.originalname.replace(/\.[^.]+$/, '') + '.jpg' };
+  } catch {
+    // Let ImageKit handle unsupported image formats as before.
+    return file;
+  }
+};
+
 /**
  * Upload a Multer in-memory file to ImageKit. Only metadata/URL is persisted
  * in MongoDB; the file itself never touches the deployed server filesystem.
@@ -34,10 +68,11 @@ export const uploadToImageKit = async ({ file, folder, tags = [] }) => {
     throw error;
   }
 
-  const fileName = safeFileName(file.originalname);
+  const preparedFile = await prepareImageForImageKit(file);
+  const fileName = safeFileName(preparedFile.originalname);
   const client = getClient();
   const result = await client.files.upload({
-    file: await toFile(file.buffer, fileName, { type: file.mimetype }),
+    file: await toFile(preparedFile.buffer, fileName, { type: preparedFile.mimetype }),
     fileName,
     folder,
     useUniqueFileName: true,
@@ -50,7 +85,7 @@ export const uploadToImageKit = async ({ file, folder, tags = [] }) => {
     filePath: result.filePath,
     name: result.name,
     size: result.size,
-    mimeType: file.mimetype,
+    mimeType: preparedFile.mimetype,
     provider: 'imagekit',
   };
 };
