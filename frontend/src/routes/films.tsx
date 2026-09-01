@@ -20,6 +20,31 @@ import maternity from "@/assets/maternity.jpg";
 const title = "Wedding Films — Cinematic Archive by CMC FILMS";
 const description =
   "Real wedding films created by CMC FILMS. Stories that moved us, captured the way they felt.";
+const FILMS_API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+
+type ManagedFilm = {
+  id: string;
+  title: string;
+  youtubeUrl: string;
+  featured?: boolean;
+  createdAt?: string;
+};
+
+const getYouTubeVideoId = (url: string) => {
+  try {
+    const parsed = new URL(url);
+    if (parsed.hostname.includes('youtu.be')) return parsed.pathname.split('/').filter(Boolean)[0] || '';
+    if (parsed.hostname.includes('youtube.com')) {
+      return parsed.searchParams.get('v') || parsed.pathname.split('/').filter(Boolean).pop() || '';
+    }
+  } catch {}
+  return '';
+};
+
+const getYouTubeThumbnail = (url: string) => {
+  const videoId = getYouTubeVideoId(url);
+  return videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : hero;
+};
 
 export const Route = createFileRoute("/films")({
   head: () => ({
@@ -250,34 +275,17 @@ function RecentFilmsCarousel() {
     return () => clearInterval(interval);
   }, [isHovered]);
 
-  // ── Dynamic Films: Read from localStorage (set by Admin Panel) ──
-  const [adminFilms, setAdminFilms] = useState<Array<{
-    id: string;
-    title: string;
-    youtubeUrl: string;
-    thumbnailUrl?: string;
-    category: string;
-    featured: boolean;
-    createdAt: string;
-  }>>([]);
+  const [adminFilms, setAdminFilms] = useState<ManagedFilm[]>([]);
 
   useEffect(() => {
-    const loadFilms = () => {
-      try {
-        const stored = localStorage.getItem('cmc_films');
-        if (stored) {
-          const parsed = JSON.parse(stored);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            setAdminFilms(parsed);
-            return;
-          }
-        }
-      } catch {}
-    };
-    loadFilms();
-    // Also listen for storage events (cross-tab sync)
-    window.addEventListener('storage', loadFilms);
-    return () => window.removeEventListener('storage', loadFilms);
+    const controller = new AbortController();
+    fetch(`${FILMS_API_URL}/api/films`, { signal: controller.signal })
+      .then((response) => response.json())
+      .then((payload) => {
+        if (Array.isArray(payload?.data?.films)) setAdminFilms(payload.data.films);
+      })
+      .catch(() => undefined);
+    return () => controller.abort();
   }, []);
 
   // Fallback static films shown when admin hasn't set up any yet
@@ -290,22 +298,13 @@ function RecentFilmsCarousel() {
     { id: 'rf-6', couple: 'Dhruv & Pippa', sub: 'A CMC Films Feature', image: story2, youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
   ];
 
-  // Helper: extract YouTube video ID from URL
-  const getYouTubeVideoId = (url: string) => {
-    try {
-      if (url.includes('youtu.be/')) return url.split('youtu.be/')[1]?.split('?')[0];
-      if (url.includes('youtube.com/watch')) return new URLSearchParams(new URL(url).search).get('v') || '';
-    } catch {}
-    return '';
-  };
-
-  // Merge: admin films take priority, fallback to static
+  // Published films from the admin panel take priority; otherwise show samples.
   const recentFilmsList = adminFilms.length > 0
     ? adminFilms.map((af) => ({
         id: af.id,
         couple: af.title,
         sub: 'A CMC Films Feature',
-        image: af.thumbnailUrl || `https://img.youtube.com/vi/${getYouTubeVideoId(af.youtubeUrl)}/hqdefault.jpg`,
+        image: getYouTubeThumbnail(af.youtubeUrl),
         youtubeUrl: af.youtubeUrl,
       }))
     : staticRecentFilms;
@@ -391,6 +390,41 @@ function RecentFilmsCarousel() {
 
 export function WeddingFilmsPage() {
   const [activeFilmModal, setActiveFilmModal] = useState<FilmItem | null>(null);
+  const [managedFilms, setManagedFilms] = useState<ManagedFilm[]>([]);
+  const [introTitle, setIntroTitle] = useState('Deeply personal, immersive, and timeless Films.');
+  const [introText, setIntroText] = useState('Cinematic wedding films rooted in genuine emotion, unscripted movement, and honest storytelling. We take pride in understanding the couple, their families, and the quiet, intimate glances between. Every celebration deserves a wedding film thoughtfully crafted to do justice to the beauty, grace, and authentic spirit of your story.');
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch(`${FILMS_API_URL}/api/films`, { signal: controller.signal })
+      .then((response) => response.json())
+      .then((payload) => {
+        if (!payload?.data) return;
+        if (Array.isArray(payload.data.films)) setManagedFilms(payload.data.films);
+        if (payload.data.introTitle) setIntroTitle(payload.data.introTitle);
+        if (payload.data.introText) setIntroText(payload.data.introText);
+      })
+      .catch(() => undefined);
+    return () => controller.abort();
+  }, []);
+
+  const displayedFilms: FilmItem[] = managedFilms.length > 0
+    ? managedFilms.map((film, index) => ({
+        id: film.id,
+        code: String(index + 1).padStart(2, '0'),
+        couple: film.title,
+        filmTitle: film.title,
+        location: 'CMC FILMS',
+        category: 'ROYAL',
+        style: 'Wedding Film',
+        year: film.createdAt?.slice(0, 4) || '',
+        duration: '',
+        timestamp: '',
+        coverImage: getYouTubeThumbnail(film.youtubeUrl),
+        videoUrl: film.youtubeUrl,
+        isMostLoved: Boolean(film.featured),
+      }))
+    : filmsData;
 
   return (
     <main className="bg-[#F2EFE8] text-[#171512] font-sans selection:bg-[#171512] selection:text-[#F2EFE8] min-h-screen relative overflow-hidden">
@@ -406,19 +440,19 @@ export function WeddingFilmsPage() {
         {/* Editorial Intro Header */}
         <Reveal className="max-w-4xl space-y-6">
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-light leading-[1.08] text-[#C47A65]">
-            Deeply personal, immersive, and timeless Films.
+            {introTitle}
           </h2>
 
           <div className="space-y-5 text-sm sm:text-base text-[#171512]/75 font-sans font-light leading-relaxed">
             <p>
-              Cinematic wedding films rooted in genuine emotion, unscripted movement, and honest storytelling. We take pride in understanding the couple, their families, and the quiet, intimate glances between. Every celebration deserves a wedding film thoughtfully crafted to do justice to the beauty, grace, and authentic spirit of your story.
+              {introText}
             </p>
           </div>
         </Reveal>
 
         {/* 3-Column Video Grid Layout */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {filmsData.map((film) => (
+          {displayedFilms.map((film) => (
             <Reveal key={film.id}>
               <div
                 onClick={() => setActiveFilmModal(film)}
@@ -438,7 +472,7 @@ export function WeddingFilmsPage() {
                     aria-label="Open CMC FILMS on YouTube"
                     onClick={(event) => {
                       event.stopPropagation();
-                      window.open("https://www.youtube.com", "_blank", "noopener,noreferrer");
+                      window.open(film.videoUrl, "_blank", "noopener,noreferrer");
                     }}
                     className="h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-white/20 backdrop-blur-md border border-white/40 flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:bg-white text-white group-hover:text-[#171512] transition-all duration-300 cursor-pointer"
                   >
@@ -504,7 +538,7 @@ function PrivateCinemaFilmPlayerModal({
       <div className="relative flex-1 bg-black flex items-center justify-center p-4 md:p-10">
         <div className="w-full max-w-5xl aspect-video overflow-hidden rounded-[4px] bg-black border border-white/10 shadow-2xl relative">
           <iframe
-            src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
+            src={`https://www.youtube.com/embed/${getYouTubeVideoId(film.videoUrl)}?autoplay=1`}
             title={film.filmTitle}
             className="w-full h-full border-0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { API_URL } from '../lib/environment';
+import { API_URL, WEBSITE_URL } from '../lib/environment';
 import {
   Plus,
   Trash2,
@@ -17,6 +17,7 @@ import {
   Sparkles,
   ArrowLeft,
   Eye,
+  ExternalLink,
   Sliders,
   Maximize2,
   Wand2,
@@ -87,6 +88,21 @@ const dedupeStories = (items: WeddingStory[]) => {
   });
   return [...byId.values()];
 };
+
+// Keep the admin preview URL identical to the public Wedding Stories route.
+// The id in the URL guarantees uniqueness even when two stories have similar titles.
+const getStorySlug = (story: Pick<WeddingStory, 'id' | 'title'>) => {
+  const toSegment = (value: string) => value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
+  return `${toSegment(story.title) || 'wedding-story'}-${toSegment(String(story.id)) || 'story'}`;
+};
+
+const getPublicStoryUrl = (story: Pick<WeddingStory, 'id' | 'title'>) =>
+  `${WEBSITE_URL}/wedding-stories/${getStorySlug(story)}`;
 
 export const StoriesPage: React.FC<StoriesPageProps> = ({
   stories: propStories,
@@ -805,6 +821,18 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({
                 </span>
 
                 <div className="flex items-center gap-1">
+                  {story.status !== 'Draft' && (
+                    <a
+                      href={getPublicStoryUrl(story)}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="p-2 rounded-xl text-slate-400 hover:text-[#6C70A6] hover:bg-[#8C90C1]/10 cursor-pointer"
+                      title="View live story"
+                      aria-label={`View ${story.title} on website`}
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                    </a>
+                  )}
                   <button
                     onClick={() => handleDeletePost(story.id, story.title)}
                     className="p-2 rounded-xl text-slate-400 hover:text-red-500 hover:bg-red-500/10 cursor-pointer"

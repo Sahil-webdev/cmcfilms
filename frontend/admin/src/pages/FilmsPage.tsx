@@ -1,5 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { WeddingFilm } from '../data/mockData';
+import { useAuth } from '../context/AuthContext';
+import { API_URL } from '../lib/environment';
 import {
   Plus,
   Play,
@@ -9,8 +11,6 @@ import {
   Trash2,
   X,
   Video,
-  Upload,
-  Image as ImageIcon,
 } from 'lucide-react';
 
 interface FilmsPageProps {
@@ -26,12 +26,14 @@ export const FilmsPage: React.FC<FilmsPageProps> = ({
   onDeleteFilm,
   onToggleFeatured,
 }) => {
+  const { token } = useAuth();
   const [showAddModal, setShowAddModal] = useState(false);
   const [title, setTitle] = useState('');
   const [youtubeUrl, setYoutubeUrl] = useState('');
-  const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
-
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [managedFilms, setManagedFilms] = useState<WeddingFilm[]>(films);
+  const [introTitle, setIntroTitle] = useState('Deeply personal, immersive, and timeless Films.');
+  const [introText, setIntroText] = useState('Cinematic wedding films rooted in genuine emotion, unscripted movement, and honest storytelling. We take pride in understanding the couple, their families, and the quiet, intimate glances between. Every celebration deserves a wedding film thoughtfully crafted to do justice to the beauty, grace, and authentic spirit of your story.');
+  const [hydrated, setHydrated] = useState(false);
 
   // Extract YouTube Thumbnail helper
   const getYoutubeThumbnail = (url: string, fallback?: string) => {
@@ -53,17 +55,31 @@ export const FilmsPage: React.FC<FilmsPageProps> = ({
     return 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800';
   };
 
-  // Handle System File Upload for Thumbnail
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setThumbnailPreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch(`${API_URL}/api/films`, { signal: controller.signal })
+      .then((response) => response.json())
+      .then((payload) => {
+        if (Array.isArray(payload?.data?.films)) setManagedFilms(payload.data.films);
+        if (payload?.data?.introTitle) setIntroTitle(payload.data.introTitle);
+        if (payload?.data?.introText) setIntroText(payload.data.introText);
+      })
+      .catch(() => undefined)
+      .finally(() => setHydrated(true));
+    return () => controller.abort();
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated || !token) return;
+    const timer = window.setTimeout(() => {
+      fetch(`${API_URL}/api/films`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ films: managedFilms, introTitle, introText }),
+      }).catch(() => undefined);
+    }, 400);
+    return () => window.clearTimeout(timer);
+  }, [managedFilms, introTitle, introText, hydrated, token]);
 
   const handleCreateFilm = (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,23 +88,21 @@ export const FilmsPage: React.FC<FilmsPageProps> = ({
       return;
     }
 
-    const finalThumb = thumbnailPreview || getYoutubeThumbnail(youtubeUrl);
-
     const newFilm: WeddingFilm = {
       id: `film-${Date.now()}`,
       title,
       youtubeUrl,
-      thumbnailUrl: finalThumb,
+      thumbnailUrl: getYoutubeThumbnail(youtubeUrl),
       category: 'Cinematic Film',
       featured: true,
       createdAt: new Date().toISOString().split('T')[0],
     };
 
+    setManagedFilms((current) => [newFilm, ...current]);
     onAddFilm(newFilm);
     setShowAddModal(false);
     setTitle('');
     setYoutubeUrl('');
-    setThumbnailPreview(null);
   };
 
   return (
@@ -108,7 +122,6 @@ export const FilmsPage: React.FC<FilmsPageProps> = ({
           onClick={() => {
             setTitle('');
             setYoutubeUrl('');
-            setThumbnailPreview(null);
             setShowAddModal(true);
           }}
           className="flex items-center gap-2 bg-[#8C90C1] hover:bg-[#787CAE] text-white text-xs font-semibold px-5 py-3 rounded-xl shadow-lg shadow-[#8C90C1]/20 cursor-pointer font-sans transition-all active:scale-95"
@@ -118,9 +131,21 @@ export const FilmsPage: React.FC<FilmsPageProps> = ({
         </button>
       </div>
 
+      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-[#1E2235] dark:bg-[#121522]">
+        <div className="mb-4">
+          <h4 className="text-sm font-bold text-slate-900 dark:text-white">Wedding Films Page Introduction</h4>
+          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">This heading and text appear above the six-film showcase on the website.</p>
+        </div>
+        <div className="grid gap-4">
+          <input value={introTitle} onChange={(event) => setIntroTitle(event.target.value)} placeholder="Section heading" className="w-full rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm font-semibold outline-none focus:border-[#8C90C1] dark:border-[#2B3147] dark:bg-[#1A1E2E] dark:text-white" />
+          <textarea value={introText} onChange={(event) => setIntroText(event.target.value)} placeholder="Section introduction" rows={4} className="w-full rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm outline-none focus:border-[#8C90C1] dark:border-[#2B3147] dark:bg-[#1A1E2E] dark:text-white" />
+          <p className="text-[11px] text-slate-400">Changes save automatically and publish to the live Wedding Films page.</p>
+        </div>
+      </section>
+
       {/* Films Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {films.map((film) => {
+        {managedFilms.map((film) => {
           const thumb = getYoutubeThumbnail(film.youtubeUrl, film.thumbnailUrl);
           return (
             <div
@@ -144,7 +169,7 @@ export const FilmsPage: React.FC<FilmsPageProps> = ({
 
                 {/* Featured Toggle */}
                 <button
-                  onClick={() => onToggleFeatured(film.id)}
+                  onClick={() => setManagedFilms((current) => current.map((item) => item.id === film.id ? { ...item, featured: !item.featured } : item))}
                   className={`absolute top-3 right-3 p-1.5 rounded-full border backdrop-blur-md transition-colors cursor-pointer ${
                     film.featured
                       ? 'bg-[#8C90C1] text-white border-[#8C90C1]'
@@ -182,7 +207,7 @@ export const FilmsPage: React.FC<FilmsPageProps> = ({
                 {/* Card Action Controls */}
                 <div className="pt-3 border-t border-slate-200 dark:border-[#1E2235] flex items-center justify-between">
                   <button
-                    onClick={() => onDeleteFilm(film.id)}
+                    onClick={() => setManagedFilms((current) => current.filter((item) => item.id !== film.id))}
                     className="p-2 rounded-xl text-slate-400 hover:text-red-500 hover:bg-red-500/10 transition-colors cursor-pointer"
                     title="Delete Film"
                   >
@@ -226,7 +251,7 @@ export const FilmsPage: React.FC<FilmsPageProps> = ({
                 </h3>
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                Enter video title, YouTube link and select thumbnail from your system
+                Enter a display title and YouTube link. The thumbnail is fetched automatically from YouTube.
               </p>
             </div>
 
@@ -260,52 +285,8 @@ export const FilmsPage: React.FC<FilmsPageProps> = ({
                 </div>
               </div>
 
-              {/* Field 3: System File Picker for Thumbnail */}
-              <div className="space-y-1.5">
-                <label className="font-bold text-slate-700 dark:text-slate-300">
-                  Thumbnail Image (Upload from System)
-                </label>
-
-                {/* Hidden File Input */}
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  onChange={handleFileChange}
-                  accept="image/*"
-                  className="hidden"
-                />
-
-                {thumbnailPreview ? (
-                  <div className="relative h-36 w-full rounded-2xl overflow-hidden bg-slate-900 border border-[#8C90C1]/50 group">
-                    <img
-                      src={thumbnailPreview}
-                      alt="System Thumbnail"
-                      className="h-full w-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                      <button
-                        type="button"
-                        onClick={() => setThumbnailPreview(null)}
-                        className="px-3 py-1.5 rounded-xl bg-red-500 text-white font-semibold text-xs shadow"
-                      >
-                        Remove Image
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <div
-                    onClick={() => fileInputRef.current?.click()}
-                    className="border-2 border-dashed border-slate-300 dark:border-[#2B3147] hover:border-[#8C90C1] rounded-2xl p-5 text-center space-y-1.5 cursor-pointer transition-colors bg-slate-50/50 dark:bg-[#171B29]/50"
-                  >
-                    <Upload className="h-5 w-5 mx-auto text-[#8C90C1]" />
-                    <p className="text-xs font-bold text-slate-900 dark:text-white">
-                      Click to choose thumbnail from computer
-                    </p>
-                    <p className="text-[10px] text-slate-400">
-                      PNG, JPG, WEBP (If empty, YouTube thumbnail will auto-detect)
-                    </p>
-                  </div>
-                )}
+              <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-4 text-xs text-slate-500 dark:border-[#2B3147] dark:bg-[#171B29] dark:text-slate-400">
+                The YouTube thumbnail will be used automatically after you save this video.
               </div>
 
               {/* Submit Button */}

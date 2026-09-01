@@ -11,6 +11,7 @@ import { getPackages, updatePackages, uploadPackageImage, uploadPackageImageFile
 import { getHeroMedia, uploadHeroMedia, uploadHeroMediaFile } from './src/controllers/heroMediaController.js';
 import { getCoupleContent, updateCoupleContent } from './src/controllers/coupleContentController.js';
 import { getStories, updateStories } from './src/controllers/storiesController.js';
+import { getFilms, updateFilms } from './src/controllers/filmsController.js';
 import { getHomeGallery, updateHomeGallery, getTestimonials, updateTestimonials } from './src/controllers/websiteContentController.js';
 
 dotenv.config();
@@ -48,6 +49,8 @@ app.get('/api/couple-content', getCoupleContent);
 app.put('/api/couple-content', protect, updateCoupleContent);
 app.get('/api/stories', getStories);
 app.put('/api/stories', protect, updateStories);
+app.get('/api/films', getFilms);
+app.put('/api/films', protect, updateFilms);
 app.get('/api/home-gallery', getHomeGallery);
 app.put('/api/home-gallery', protect, updateHomeGallery);
 app.get('/api/testimonials', getTestimonials);

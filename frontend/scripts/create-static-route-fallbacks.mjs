@@ -16,6 +16,7 @@ const routes = [
   "films",
   "packages",
   "portfolio",
+  "wedding-stories",
   "privacy-policy",
   "terms-of-service",
   "testimonials",

@@ -37,7 +37,7 @@ export const studio = {
 
 export const navLinks = [
   { label: "Home", to: "/" },
-  { label: "Wedding Stories", to: "/portfolio" },
+  { label: "Wedding Stories", to: "/wedding-stories" },
   { label: "Wedding Films", to: "/films" },
   { label: "Couple Shoot", to: "/couples" },
   { label: "Testimonials", to: "/testimonials" },

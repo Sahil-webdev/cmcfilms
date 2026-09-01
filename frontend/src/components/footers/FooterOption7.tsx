@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowUpRight, CheckCircle2, Instagram, Youtube, Facebook, Phone, Mail, MapPin } from "lucide-react";
+import { CheckCircle2, Instagram, Youtube, Facebook, Phone, Mail, MapPin } from "lucide-react";
 import { BrandLogo } from "../BrandLogo";
 
 function WhatsAppIcon({ className = "w-4 h-4" }: { className?: string }) {
@@ -96,7 +96,7 @@ export function FooterOption7() {
 
             <ul className="space-y-2.5 text-xs sm:text-sm font-normal text-[#AE171E]/90" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
               <li>
-                <Link to="/portfolio" className="hover:underline transition-all inline-block py-0.5">Wedding Stories</Link>
+                <Link to="/wedding-stories" className="hover:underline transition-all inline-block py-0.5">Wedding Stories</Link>
               </li>
               <li>
                 <Link to="/films" className="hover:underline transition-all inline-block py-0.5">Wedding Films</Link>
@@ -108,20 +108,12 @@ export function FooterOption7() {
                 <Link to="/about" className="hover:underline transition-all inline-block py-0.5">About Studio</Link>
               </li>
               <li>
-                <Link to="/packages" className="hover:underline transition-all font-medium inline-flex items-center gap-1 py-0.5">
-                  <span>Packages</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-[#AE171E]" />
-                </Link>
+                <Link to="/packages" className="hover:underline transition-all inline-block py-0.5">Packages</Link>
               </li>
             </ul>
 
-            <Link
-              to="/contact"
-              hash="enquiry-form"
-              className="inline-flex items-center gap-2 border border-[#AE171E]/45 px-3.5 py-2 text-xs font-medium text-[#AE171E] transition-colors hover:bg-[#AE171E] hover:text-white"
-            >
-              <span>Work With Us</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
+            <Link to="/contact" hash="enquiry-form" className="hover:underline transition-all inline-block py-0.5 text-xs sm:text-sm font-normal text-[#AE171E]/90">
+              Work With Us
             </Link>
           </div>
 
