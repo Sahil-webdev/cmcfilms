@@ -63,7 +63,7 @@ interface GalleryPageProps {
   onDeleteImage: (id: string) => void;
   onUpdateCategory: (id: string, category: GalleryCategory) => void;
   onClearAll: () => void;
-  onUploadImage: (file: File) => Promise<string>;
+  onUploadImage: (file: File, onProgress?: (percent: number) => void) => Promise<string>;
 }
 
 export const GalleryPage: React.FC<GalleryPageProps> = ({
@@ -77,6 +77,7 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({
   const [activeFilter, setActiveFilter] = useState<'All' | GalleryCategory>('All');
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadStatus, setUploadStatus] = useState('');
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [previewSrc, setPreviewSrc] = useState<string | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
@@ -108,11 +109,16 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({
       if (!fileArr.length) return;
       setIsUploading(true);
       setUploadProgress(0);
+      setUploadStatus(`Preparing ${fileArr.length} image${fileArr.length > 1 ? 's' : ''}…`);
       try {
         const results: GalleryImage[] = [];
         for (let i = 0; i < fileArr.length; i++) {
           const file = fileArr[i];
-          const src = await onUploadImage(file);
+          setUploadStatus(`Uploading ${i + 1} of ${fileArr.length}: ${file.name}`);
+          const src = await onUploadImage(file, (fileProgress) => {
+            setUploadProgress(Math.min(99, Math.round(((i + fileProgress / 100) / fileArr.length) * 100)));
+          });
+          setUploadStatus(`Finalizing ${i + 1} of ${fileArr.length}: ${file.name}`);
           const { w, h } = await getImageDimensions(src);
           const aspectRatio = detectAspectRatioClass(w, h);
           results.push({
@@ -132,6 +138,7 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({
       } finally {
         setIsUploading(false);
         setUploadProgress(0);
+        setUploadStatus('');
       }
     },
     [onAddImages, onUploadImage]
@@ -237,8 +244,9 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({
           <div className="space-y-3">
             <Layers className="h-8 w-8 mx-auto text-[#8C90C1] animate-pulse" />
             <p className="text-sm font-bold text-slate-900 dark:text-white">
-              Processing images... {uploadProgress}%
+              {uploadProgress >= 99 ? 'Finalizing upload…' : `Uploading images… ${uploadProgress}%`}
             </p>
+            {uploadStatus && <p className="text-xs text-slate-500 dark:text-slate-400 truncate">{uploadStatus}</p>}
             <div className="w-64 mx-auto h-2 bg-slate-200 dark:bg-[#1E2235] rounded-full overflow-hidden">
               <div className="h-full bg-[#8C90C1] rounded-full transition-all duration-300" style={{ width: `${uploadProgress}%` }} />
             </div>

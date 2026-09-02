@@ -208,20 +208,31 @@ const AdminWorkspace: React.FC = () => {
     return () => window.clearTimeout(timer);
   }, [adminTestimonials, token, testimonialsDirty]);
 
-  const uploadImage = async (file: File) => {
+  const uploadImage = async (file: File, onProgress?: (percent: number) => void) => {
     if (!token) throw new Error('Please sign in again before uploading an image.');
-    const formData = new FormData();
-    formData.append('image', file);
-    const response = await fetch(`${API_URL}/api/packages/upload-image`, {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${token}` },
-      body: formData,
+    return new Promise<string>((resolve, reject) => {
+      const request = new XMLHttpRequest();
+      const formData = new FormData();
+      formData.append('image', file);
+
+      request.open('POST', `${API_URL}/api/packages/upload-image`);
+      request.setRequestHeader('Authorization', `Bearer ${token}`);
+      request.upload.onprogress = (event) => {
+        if (event.lengthComputable) onProgress?.(Math.round((event.loaded / event.total) * 100));
+      };
+      request.onerror = () => reject(new Error('Network error while uploading the image.'));
+      request.onload = () => {
+        let payload: any = null;
+        try { payload = JSON.parse(request.responseText); } catch {}
+        if (request.status < 200 || request.status >= 300 || !payload?.success || !payload?.data?.imageUrl) {
+          reject(new Error(payload?.message || 'Image upload failed.'));
+          return;
+        }
+        onProgress?.(100);
+        resolve(payload.data.imageUrl as string);
+      };
+      request.send(formData);
     });
-    const payload = await response.json();
-    if (!response.ok || !payload?.success || !payload?.data?.imageUrl) {
-      throw new Error(payload?.message || 'Image upload failed.');
-    }
-    return payload.data.imageUrl as string;
   };
 
   const handleUpdatePackage = (pkg: PackageItem) => {
