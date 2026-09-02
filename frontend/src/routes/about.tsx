@@ -223,13 +223,13 @@ function AboutContactForm() {
   };
 
   return (
-    <div className="bg-[#FAF8F5] p-6 sm:p-10 md:p-14 rounded-3xl border border-[#261E1E]/12 shadow-xl max-w-5xl mx-auto space-y-8 text-left">
+    <div className="bg-[#FAF8F5] p-6 sm:p-10 md:p-14 rounded-3xl border border-[#261E1E]/12 shadow-xl max-w-5xl mx-auto space-y-8 text-left font-sans">
       <div className="space-y-2.5 border-b border-[#261E1E]/12 pb-6">
-        <span className="text-xs font-mono uppercase tracking-[0.22em] text-[#922A2F] font-bold block">
+        <span className="text-xs uppercase tracking-[0.12em] text-[#922A2F] font-semibold block">
           GET IN TOUCH
         </span>
-        <h2 className="font-display text-3xl sm:text-5xl md:text-6xl text-[#261E1E] font-normal leading-tight">
-          Tell Us Your Story
+        <h2 className="font-poppins text-3xl sm:text-4xl md:text-5xl text-[#261E1E] font-normal leading-tight">
+          Let&apos;s Create Together
         </h2>
         <p className="text-xs sm:text-sm text-[#4A453F] font-light leading-relaxed max-w-xl">
           Share a little about your celebration. We reply personally to every inquiry, usually within 24 to 48 hours.
@@ -251,7 +251,7 @@ function AboutContactForm() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
             {fields.map((f) => (
               <div key={f.name} className="space-y-2">
-                <label className="block text-[11px] font-mono uppercase tracking-[0.16em] text-[#261E1E]/80 font-bold">
+                <label className="block text-[11px] uppercase tracking-[0.08em] text-[#261E1E]/80 font-semibold">
                   {f.label}
                   {"required" in f && f.required ? <span className="text-[#922A2F]"> *</span> : null}
                 </label>
@@ -267,7 +267,7 @@ function AboutContactForm() {
           </div>
 
           <div className="space-y-2 pt-2">
-            <label className="block text-[11px] font-mono uppercase tracking-[0.16em] text-[#261E1E]/80 font-bold">
+            <label className="block text-[11px] uppercase tracking-[0.08em] text-[#261E1E]/80 font-semibold">
               Tell Us About Your Celebration &amp; Vision
             </label>
             <textarea

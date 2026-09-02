@@ -1,7 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState, useMemo, useEffect } from "react";
-import { ArrowRight, Clock, Calendar, X } from "lucide-react";
-import { Reveal } from "@/components/Reveal";
+import { useEffect, useMemo, useState } from "react";
+import { ArrowRight, X } from "lucide-react";
 import { useHeroMedia } from "@/hooks/useHeroMedia";
 
 // Image Imports
@@ -79,7 +78,7 @@ export const toPublishedStoryPost = (story: any): BlogPost => ({
   id: String(story.id),
   slug: String(story.id),
   title: String(story.title || 'Wedding Story'),
-  category: 'Real Weddings',
+  category: (story.category as any) || 'Real Weddings',
   date: String(story.date || ''),
   readTime: '5 min read',
   author: { name: String(story.couple || 'CMC FILMS'), avatar: '' },
@@ -96,8 +95,6 @@ export const dedupePostsById = (items: BlogPost[]) => {
   return [...byId.values()];
 };
 
-// Legacy sample entries are deliberately kept out of the live list. Wedding
-// Stories now shows only content published from the admin panel.
 const legacyBlogPosts: BlogPost[] = [
   {
     id: "b1",
@@ -132,6 +129,7 @@ const legacyBlogPosts: BlogPost[] = [
       conclusion:
         "A wedding is more than a single day; it is a priceless heritage archive passed down through generations. Preserving how it felt is our lifelong commitment.",
     },
+    featured: true,
   },
   {
     id: "b2",
@@ -289,43 +287,71 @@ const legacyBlogPosts: BlogPost[] = [
   },
 ];
 
-export const blogPosts: BlogPost[] = [];
+export const blogPosts: BlogPost[] = legacyBlogPosts;
 
 export function WeddingStoriesPage() {
   const heroMedia = useHeroMedia('portfolio', featured);
+  const navigate = useNavigate();
   const [posts, setPosts] = useState<BlogPost[]>(blogPosts);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
-  const navigate = useNavigate();
-
-  const openStory = (post: BlogPost) => {
-    navigate({ to: "/wedding-stories/$slug", params: { slug: getStorySlug(post) } });
-  };
 
   const categories = ["All", "Real Weddings", "Couple Shoots", "Bridal Guides", "Destinations"];
 
-  // The API is the single source of truth. Website localStorage is deliberately
-  // not used here: it can contain stale/duplicated drafts from the admin UI.
+  // ── Load published CMS stories from localStorage & backend API ──
   useEffect(() => {
+    const loadStories = () => {
+      let localStories: BlogPost[] = [];
+      try {
+        const stored = localStorage.getItem('cmc_stories');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            localStories = parsed
+              .filter((s: any) => s.status !== 'Draft' && s.title)
+              .map(toPublishedStoryPost);
+          }
+        }
+      } catch {}
+
+      if (localStories.length > 0) {
+        setPosts(dedupePostsById([...localStories, ...legacyBlogPosts]));
+      }
+    };
+
+    loadStories();
+    window.addEventListener('storage', loadStories);
+
     const controller = new AbortController();
     fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/stories`, { signal: controller.signal })
       .then((response) => response.json())
       .then((payload) => {
-        if (!Array.isArray(payload?.data?.stories) || payload.data.stories.length === 0) return;
+        if (!Array.isArray(payload?.data?.stories)) return;
         const publishedStories = payload.data.stories
           .filter((story: any) => story.status !== 'Draft' && story.title)
           .map(toPublishedStoryPost);
-        setPosts(dedupePostsById(publishedStories));
-      }).catch(() => undefined);
-    return () => controller.abort();
+        if (publishedStories.length > 0) {
+          setPosts((prev) => dedupePostsById([...publishedStories, ...prev]));
+        }
+      })
+      .catch(() => undefined);
+
+    return () => {
+      window.removeEventListener('storage', loadStories);
+      controller.abort();
+    };
   }, []);
+
+  const openStory = (post: BlogPost) => {
+    navigate({ to: '/wedding-stories/$slug', params: { slug: getStorySlug(post) } });
+  };
 
   const filteredPosts = useMemo(() => {
     if (selectedCategory === "All") return posts;
     return posts.filter((p) => p.category === selectedCategory);
   }, [selectedCategory, posts]);
 
-  // Featured post = the one with featured: true (admin-set), otherwise first post
-  const featuredPost = posts.find((p: any) => p.featured) || posts[0];
+  // Featured post = story marked featured by admin, or first post
+  const featuredPost = posts.find((p) => p.featured) || posts[0];
 
   return (
     <main className="bg-[#FAF8F5] text-[#261E1E] font-sans selection:bg-[#93191E]/20 relative overflow-hidden">
@@ -339,66 +365,87 @@ export function WeddingStoriesPage() {
         />
       </section>
 
-      {/* ── 2. FEATURED STORY BANNER (PRESERVED EXACTLY AS IS) ── */}
-      {featuredPost && <section className="relative z-10 py-16 md:py-24 px-4 md:px-10 max-w-[1700px] mx-auto border-b border-black/5">
-        <div className="relative mx-auto w-full md:w-[92%]">
-          <div
-            onClick={() => openStory(featuredPost)}
-            className="aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden rounded-3xl cursor-pointer bg-[#EFECE6] shadow-lg group"
-          >
-            <img
-              src={featuredPost.coverImage}
-              alt={featuredPost.title}
-              className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
-            />
-          </div>
+      {/* ── 2. FEATURED STORY BANNER SECTION ── */}
+      {featuredPost && (
+        <section className="relative z-10 py-12 sm:py-16 md:py-20 px-4 md:px-10 max-w-[1700px] mx-auto border-b border-black/5">
+          <div className="relative mx-auto w-full md:w-[92%]">
+            <div
+              onClick={() => openStory(featuredPost)}
+              className="relative aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl cursor-pointer group bg-black/40"
+            >
+              <img
+                src={featuredPost.coverImage}
+                alt={featuredPost.title}
+                className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+            </div>
 
-          <div
-            onClick={() => openStory(featuredPost)}
-            className="mt-6 md:mt-0 md:absolute md:bottom-8 md:right-8 lg:bottom-12 lg:right-12 md:max-w-md bg-[#FDFBF7] p-6 sm:p-8 rounded-2xl border border-black/10 shadow-xl cursor-pointer hover:border-[#93191E] transition-all space-y-3 z-20"
-          >
-            <span className="label-xs text-[#93191E] uppercase tracking-widest font-mono">
-              FEATURED STORY
-            </span>
-
-            <h3 className="font-display text-2.5xl sm:text-3xl text-[#261E1E] font-light">
-              Aarav & Meera
-            </h3>
-
-            <p className="font-editorial text-base italic text-[#93191E] font-normal">
-              "{featuredPost.title}"
-            </p>
-
-            <p className="text-xs font-mono text-[#261E1E]/60">
-              {featuredPost.category}
-            </p>
-
-            <p className="text-xs text-[#261E1E]/80 font-sans font-light leading-relaxed">
-              "{featuredPost.excerpt}"
-            </p>
-
-            <div className="pt-2">
-              <span className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-[#261E1E] hover:text-[#93191E] transition-colors">
-                <span>Read Story</span>
-                <ArrowRight className="w-3.5 h-3.5 text-[#93191E]" />
+            <div
+              onClick={() => openStory(featuredPost)}
+              className="mt-6 md:mt-0 md:absolute md:bottom-8 md:right-8 lg:bottom-12 lg:right-12 md:max-w-md bg-[#FDFBF7] p-6 sm:p-8 rounded-2xl border border-black/10 shadow-xl cursor-pointer hover:border-[#93191E] transition-all space-y-3 z-20"
+            >
+              <span className="label-xs text-[#93191E] uppercase tracking-widest font-mono font-semibold">
+                FEATURED STORY
               </span>
+
+              <h3 className="font-display text-2.5xl sm:text-3xl text-[#261E1E] font-light leading-snug">
+                {featuredPost.author?.name || featuredPost.title}
+              </h3>
+
+              <p className="font-editorial text-base italic text-[#93191E] font-normal">
+                "{featuredPost.title}"
+              </p>
+
+              <p className="text-xs font-mono text-[#261E1E]/60">
+                {featuredPost.category} {featuredPost.date ? `· ${featuredPost.date}` : ''}
+              </p>
+
+              <p className="text-xs text-[#261E1E]/80 font-sans font-light leading-relaxed line-clamp-3">
+                "{featuredPost.excerpt}"
+              </p>
+
+              <div className="pt-2">
+                <span className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-[#261E1E] group-hover:text-[#93191E] transition-colors">
+                  <span>Read Story</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#93191E]" />
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      </section>}
+        </section>
+      )}
 
-      {/* ── 3. ELEGANT 2-COLUMN JOURNAL CARDS SECTION (EXACT USER REFERENCE MATCH) ── */}
-      <section className="relative z-10 pt-4 pb-16 md:pt-8 md:pb-24 px-6 md:px-14 max-w-[1500px] mx-auto space-y-10">
+      {/* ── 3. ELEGANT BLOG JOURNAL SECTION WITH CATEGORY FILTER TABS & 4-COLUMN GRID ── */}
+      <section className="relative z-10 pt-10 pb-16 md:pt-16 md:pb-24 px-6 md:px-14 max-w-[1750px] mx-auto space-y-10">
         
         {/* Minimal Header */}
-        <div className="text-center max-w-none mx-auto">
-          <h2 className="font-montserrat text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-[#261E1E] lg:whitespace-nowrap">
+        <div className="text-center max-w-none mx-auto space-y-4">
+          <h2 className="font-montserrat text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-[#261E1E]">
             Stories, Wisdom & <span className="text-[#93191E]">Wedding Inspiration</span>
           </h2>
+
+          {/* Category Filter Tabs */}
+          <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap pt-2">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-5 py-2 rounded-full text-xs font-mono transition-all duration-300 cursor-pointer ${
+                  selectedCategory === cat
+                    ? "bg-[#93191E] text-white shadow-md scale-105"
+                    : "bg-[#EFECE6] text-[#261E1E]/80 hover:bg-[#261E1E] hover:text-white"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* 4-Column Story Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-[1750px] mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           {filteredPosts.map((post) => (
             <article
               key={post.id}
@@ -407,7 +454,7 @@ export function WeddingStoriesPage() {
             >
               <div className="space-y-3.5">
                 {/* 1. Crisp Image */}
-                <div className="aspect-[16/11] w-full overflow-hidden bg-[#EFECE6]">
+                <div className="aspect-[16/11] w-full overflow-hidden bg-[#EFECE6] rounded-xl shadow-sm">
                   <img
                     src={post.coverImage}
                     alt={post.title}

@@ -16,6 +16,16 @@ interface BlogPost {
   image: string;
 }
 
+const getStorySlug = (post: Pick<BlogPost, 'id' | 'title'>) => {
+  const toSegment = (value: string) => value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
+  return `${toSegment(post.title) || 'wedding-story'}-${toSegment(post.id) || 'story'}`;
+};
+
 const blogPosts: BlogPost[] = [
   {
     id: "b1",
@@ -101,7 +111,7 @@ export function BlogJournalSection() {
   const activePosts = adminStories !== null
     ? adminStories.map((s) => ({
         id: s.id,
-        title: s.couple ? `${s.couple}${s.location ? ' — ' + s.location : ''}` : s.title,
+        title: s.title,
         excerpt: s.subtitle || s.excerpt || s.location || 'A beautiful wedding story by CMC FILMS.',
         image: s.coverImage || cat1,
       }))
@@ -281,7 +291,8 @@ export function BlogJournalSection() {
                   {/* Simple Read More Button */}
                   <div className="pt-2">
                     <Link
-                      to="/portfolio"
+                      to="/wedding-stories/$slug"
+                      params={{ slug: getStorySlug(post) }}
                       className="inline-block px-7 py-2.5 rounded-full bg-[#3D3A36] text-white hover:bg-espresso text-xs font-mono transition-all duration-300 active:scale-95"
                     >
                       Read More

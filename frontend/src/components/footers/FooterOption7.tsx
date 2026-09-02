@@ -37,7 +37,7 @@ export function FooterOption7() {
           <div className="space-y-4">
             <BrandLogo
               variant="custom"
-              textClassName="text-xl sm:text-2xl font-display font-medium tracking-[0.34em] text-[#AE171E]"
+              textClassName="text-xl sm:text-2xl font-display font-bold tracking-[0.34em] text-[#AE171E]"
             />
 
             <p className="text-xs sm:text-sm text-[#AE171E]/90 font-normal leading-relaxed max-w-xs" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
@@ -64,12 +64,15 @@ export function FooterOption7() {
               >
                 <Youtube className="w-4 h-4" />
               </a>
-              <span
+              <a
+                href="https://www.facebook.com/share/14nobt7WzfT/?mibextid=wwXIfr"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Facebook"
-                className="w-9 h-9 rounded-full border border-[#AE171E]/20 text-[#AE171E] flex items-center justify-center"
+                className="w-9 h-9 rounded-full border border-[#AE171E]/20 text-[#AE171E] hover:bg-[#AE171E] hover:text-white flex items-center justify-center transition-all cursor-pointer"
               >
                 <Facebook className="w-4 h-4" />
-              </span>
+              </a>
               <a
                 href="https://wa.me/917425940636"
                 target="_blank"

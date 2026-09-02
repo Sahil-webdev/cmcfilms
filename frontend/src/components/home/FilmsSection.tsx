@@ -2,11 +2,11 @@ import { useState, useRef, useEffect } from "react";
 import { Play, X, ArrowLeft, ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import poster from "@/assets/featured.jpg";
-import t1 from "@/assets/cat-1.jpg";
 import t2 from "@/assets/cat-2.jpg";
 import t3 from "@/assets/cat-3.jpg";
 import luxuryEditorial from "@/assets/luxury-editorial.jpg";
 import heroImg from "@/assets/hero.jpg";
+import couplesHeroCustom from "@/assets/couples-hero-custom.jpg";
 
 interface MoviePosterFilm {
   id: string;
@@ -31,7 +31,7 @@ const posterFilms: MoviePosterFilm[] = [
     location: "Udaipur, Rajasthan",
     year: "2026",
     duration: "06:12",
-    image: t1,
+    image: couplesHeroCustom,
   },
   {
     id: "f2",

@@ -60,7 +60,7 @@ export function Navbar() {
           <BrandLogo
             variant="custom"
             textClassName={cn(
-              "font-display font-medium tracking-[0.34em] transition-all duration-300",
+              "font-display font-bold tracking-[0.34em] transition-all duration-300",
               scrolled ? "text-[#261E1E] text-lg sm:text-xl md:text-2xl" : "text-white text-xl sm:text-2xl md:text-[25px] drop-shadow-md"
             )}
           />
@@ -163,7 +163,7 @@ export function Navbar() {
         <div className="relative z-10 pb-4 border-b border-white/10">
           <BrandLogo
             variant="light"
-            textClassName="text-lg sm:text-xl font-display font-medium tracking-[0.32em]"
+            textClassName="text-lg sm:text-xl font-display font-bold tracking-[0.32em]"
           />
           <span className="label-xs text-[#E5CA92] text-[10px] uppercase tracking-widest block mt-2 font-mono">
             Stories for love • Told forever

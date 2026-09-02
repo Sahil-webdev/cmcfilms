@@ -72,9 +72,9 @@ function Contact() {
       </div>
 
       <div className="bg-ivory px-5 py-32 md:px-14 md:py-40">
-        <span className="label-xs text-gold">Enquiries</span>
-        <h1 className="mt-6 font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.98]">
-          Tell Us Your Story
+        <span className="label-xs font-sans text-gold">Enquiries</span>
+        <h1 className="mt-6 font-poppins text-[clamp(2.25rem,5vw,3.75rem)] font-normal leading-tight">
+          Let&apos;s Create Together
         </h1>
         <p className="mt-6 max-w-md text-sm leading-relaxed text-muted-foreground">
           Share a little about your celebration. We reply personally, usually within two days.
@@ -92,7 +92,7 @@ function Contact() {
             <div className="grid gap-5 sm:grid-cols-2">
               {fields.map((f) => (
                 <div key={f.name} className="space-y-1.5">
-                  <label className="block text-[11px] font-mono uppercase tracking-[0.16em] text-[#261E1E]/80 font-bold">
+                  <label className="block text-[11px] uppercase tracking-[0.08em] text-[#261E1E]/80 font-semibold">
                     {f.label}
                     {"required" in f && f.required ? <span className="text-[#922A2F]"> *</span> : null}
                   </label>
@@ -107,7 +107,7 @@ function Contact() {
             </div>
 
             <div className="space-y-1.5">
-              <label className="block text-[11px] font-mono uppercase tracking-[0.16em] text-[#261E1E]/80 font-bold">Tell Us About Your Story</label>
+              <label className="block text-[11px] uppercase tracking-[0.08em] text-[#261E1E]/80 font-semibold">Tell Us About Your Story</label>
               <textarea
                 name="story"
                 rows={4}

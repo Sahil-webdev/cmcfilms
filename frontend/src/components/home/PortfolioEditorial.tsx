@@ -100,7 +100,7 @@ export function PortfolioEditorial() {
         {/* Footer Link */}
         <Reveal className="mt-12 flex justify-center">
           <Link
-            to="/portfolio"
+            to="/couples"
             className="label-xs border border-espresso bg-espresso px-9 py-4 text-ivory transition-all duration-300 hover:bg-gold hover:border-gold hover:text-cinema shadow-md flex items-center gap-3"
           >
             <span>Explore Complete Archive Portfolio</span>
