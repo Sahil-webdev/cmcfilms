@@ -54,10 +54,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggleCollapse 
     >
       <div>
         {/* Brand Header */}
-        <div className="h-20 border-b px-5 flex items-center justify-between border-slate-200 dark:border-[#1E2235]">
+        <div
+          className={`h-20 border-b border-slate-200 dark:border-[#1E2235] flex items-center transition-all ${
+            isCollapsed
+              ? 'px-2.5 justify-center gap-2'
+              : 'px-5 justify-between max-lg:px-2.5 max-lg:justify-center max-lg:gap-2'
+          }`}
+        >
+          {/* Full Brand Info (Visible when expanded on lg+ screens) */}
           {!isCollapsed && (
             <div className="min-w-0 flex items-center gap-3 max-lg:hidden">
-              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[#8C90C1] to-[#6C70A6] flex items-center justify-center text-white font-bold text-sm shadow-md shrink-0">
+              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[#8C90C1] to-[#6C70A6] flex items-center justify-center text-white font-bold text-xs shadow-md shrink-0">
                 CMC
               </div>
               <div className="min-w-0">
@@ -70,20 +77,21 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggleCollapse 
               </div>
             </div>
           )}
-          {isCollapsed && (
-            <div className="mx-auto h-10 w-10 rounded-xl bg-gradient-to-br from-[#8C90C1] to-[#6C70A6] flex items-center justify-center text-white font-bold text-sm shadow-md">
-              C
-            </div>
-          )}
-          {!isCollapsed && (
-            <div className="lg:hidden mx-auto h-10 w-10 rounded-xl bg-gradient-to-br from-[#8C90C1] to-[#6C70A6] flex items-center justify-center text-white font-bold text-sm shadow-md">
-              C
-            </div>
-          )}
 
+          {/* Compact Logo Badge (Visible when collapsed OR on mobile max-lg screens) */}
+          <div
+            className={`h-9 w-9 rounded-xl bg-gradient-to-br from-[#8C90C1] to-[#6C70A6] flex items-center justify-center text-white font-bold text-[10px] tracking-tight shadow-md shrink-0 ${
+              !isCollapsed ? 'lg:hidden' : ''
+            }`}
+            title="CMC FILMS"
+          >
+            CMC
+          </div>
+
+          {/* Toggle Sidebar Collapse Button */}
           <button
             onClick={onToggleCollapse}
-            className="p-1.5 rounded-xl border transition-colors bg-slate-100 dark:bg-[#121522] hover:bg-slate-200 dark:hover:bg-[#1A1E2E] border-slate-200 dark:border-[#202435] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white cursor-pointer"
+            className="p-1.5 rounded-xl border transition-colors bg-slate-100 dark:bg-[#121522] hover:bg-slate-200 dark:hover:bg-[#1A1E2E] border-slate-200 dark:border-[#202435] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white cursor-pointer shrink-0"
             title={isCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
           >
             {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
