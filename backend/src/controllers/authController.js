@@ -25,14 +25,6 @@ const toProfile = (user) => ({
   avatar: user.avatar,
 });
 
-const isValidPassword = (password) =>
-  typeof password === 'string' &&
-  password.length >= 12 &&
-  /[a-z]/.test(password) &&
-  /[A-Z]/.test(password) &&
-  /\d/.test(password) &&
-  /[^A-Za-z0-9]/.test(password);
-
 const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
 const databaseUnavailable = (res) =>
@@ -63,11 +55,8 @@ export const registerFirstAdmin = async (req, res) => {
     return res.status(400).json({ success: false, message: 'Enter a valid name and email address.' });
   }
 
-  if (!isValidPassword(password)) {
-    return res.status(400).json({
-      success: false,
-      message: 'Password must have 12+ characters with uppercase, lowercase, number, and symbol.',
-    });
+  if (typeof password !== 'string' || password.length === 0) {
+    return res.status(400).json({ success: false, message: 'Password is required.' });
   }
 
   try {

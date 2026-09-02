@@ -154,11 +154,10 @@ export const LoginPage: React.FC = () => {
                   <input
                     type={showPassword ? 'text' : 'password'}
                     required
-                    minLength={12}
                     autoComplete={isSetup ? 'new-password' : 'current-password'}
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
-                    placeholder={isSetup ? 'Minimum 12 characters' : 'Enter your password'}
+                    placeholder="Enter your password"
                     className="w-full bg-[#1A1E2E] text-sm text-white pl-10 pr-10 py-3 rounded-xl border border-[#2B3147] focus:outline-none focus:border-[#8C90C1] transition-colors"
                   />
                   <button
@@ -170,7 +169,6 @@ export const LoginPage: React.FC = () => {
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
                 </div>
-                {isSetup && <p className="text-[11px] text-slate-500">Use uppercase, lowercase, a number, and a symbol.</p>}
               </div>
 
               {isSetup && (
@@ -181,7 +179,6 @@ export const LoginPage: React.FC = () => {
                     <input
                       type={showPassword ? 'text' : 'password'}
                       required
-                      minLength={12}
                       autoComplete="new-password"
                       value={confirmPassword}
                       onChange={(event) => setConfirmPassword(event.target.value)}
