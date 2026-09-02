@@ -324,6 +324,21 @@
   flex: 0 0 auto;
 }
 
+/* On phones/tablets one complete reason is visible at a time, never a clipped card. */
+@media (max-width: 900px) {
+  .why-choose-carousel {
+    mask-image: none;
+  }
+
+  .why-choose-carousel-track {
+    gap: 0;
+  }
+
+  .why-choose-card {
+    width: calc(100vw - 3rem);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .why-choose-carousel { overflow-x: auto; mask-image: none; }
   .why-choose-carousel-track { animation: none; }

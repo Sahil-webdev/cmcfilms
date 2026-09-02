@@ -47,7 +47,8 @@ function AboutPage() {
     const carousel = whyChooseCarouselRef.current;
     if (!carousel) return;
     whyChoosePauseUntilRef.current = Date.now() + 4500;
-    carousel.scrollBy({ left: direction === 'right' ? 360 : -360, behavior: 'smooth' });
+    const step = window.matchMedia('(max-width: 900px)').matches ? carousel.clientWidth : 360;
+    carousel.scrollBy({ left: direction === 'right' ? step : -step, behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -141,7 +142,7 @@ function AboutPage() {
       </section>
 
       {/* ── 3. WHY CHOOSE CMC FILMS (4 FEATURE CARDS) ── */}
-      <section className="py-20 sm:py-28 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto border-b border-[#D8D3CB] space-y-16">
+      <section className="pt-10 pb-20 sm:pt-14 sm:pb-28 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto border-b border-[#D8D3CB] space-y-16">
         <div className="text-center max-w-2xl mx-auto space-y-3">
           <h2 className="font-montserrat text-3xl sm:text-5xl text-[#171717] font-extrabold">
             WHY CHOOSE US

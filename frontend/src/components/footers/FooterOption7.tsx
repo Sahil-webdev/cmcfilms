@@ -109,9 +109,14 @@ export function FooterOption7() {
               </li>
             </ul>
 
-            <Link to="/contact" hash="enquiry-form" className="hover:underline transition-all inline-block py-0.5 text-xs sm:text-sm font-normal text-[#AE171E]/90">
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSebfL13mwd4qp6TyuMhyJ4COLz9TrSXurDtPyGPRI0hf4cwbQ/viewform?usp=dialog"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline transition-all inline-block py-0.5 text-xs sm:text-sm font-normal text-[#AE171E]/90"
+            >
               Work With Us
-            </Link>
+            </a>
           </div>
 
           {/* COL 3 (4 Cols): SERVICES (Single Vertical Column List) */}
