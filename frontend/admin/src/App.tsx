@@ -33,8 +33,8 @@ import {
 import { X } from 'lucide-react';
 import { API_URL } from './lib/environment';
 
-const AdminContent: React.FC = () => {
-  const { isAuthenticated, isAuthReady, activeTab, setActiveTab, token } = useAuth();
+const AdminWorkspace: React.FC = () => {
+  const { activeTab, setActiveTab, token } = useAuth();
 
   // Layout UI states
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -87,14 +87,6 @@ const AdminContent: React.FC = () => {
   const [newDate, setNewDate] = useState('');
   const [newVenue, setNewVenue] = useState('');
   const [newBudget, setNewBudget] = useState('₹8,00,000');
-
-  if (!isAuthReady) {
-    return <div className="min-h-screen bg-[#0B0D14]" aria-label="Checking secure session" />;
-  }
-
-  if (!isAuthenticated) {
-    return <LoginPage />;
-  }
 
   // Handlers
   const handleUpdateStatus = (id: string, status: Inquiry['status']) => {
@@ -515,6 +507,20 @@ const AdminContent: React.FC = () => {
       )}
     </div>
   );
+};
+
+const AdminContent: React.FC = () => {
+  const { isAuthenticated, isAuthReady } = useAuth();
+
+  if (!isAuthReady) {
+    return <div className="min-h-screen bg-[#0B0D14]" aria-label="Checking secure session" />;
+  }
+
+  if (!isAuthenticated) {
+    return <LoginPage />;
+  }
+
+  return <AdminWorkspace />;
 };
 
 export function App() {
