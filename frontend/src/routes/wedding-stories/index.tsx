@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowRight, X } from "lucide-react";
 import { useHeroMedia } from "@/hooks/useHeroMedia";
 
@@ -293,9 +293,6 @@ export function WeddingStoriesPage() {
   const heroMedia = useHeroMedia('portfolio', featured);
   const navigate = useNavigate();
   const [posts, setPosts] = useState<BlogPost[]>(blogPosts);
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
-
-  const categories = ["All", "Real Weddings", "Couple Shoots", "Bridal Guides", "Destinations"];
 
   // ── Load published CMS stories from localStorage & backend API ──
   useEffect(() => {
@@ -344,11 +341,6 @@ export function WeddingStoriesPage() {
   const openStory = (post: BlogPost) => {
     navigate({ to: '/wedding-stories/$slug', params: { slug: getStorySlug(post) } });
   };
-
-  const filteredPosts = useMemo(() => {
-    if (selectedCategory === "All") return posts;
-    return posts.filter((p) => p.category === selectedCategory);
-  }, [selectedCategory, posts]);
 
   // Featured post = story marked featured by admin, or first post
   const featuredPost = posts.find((p) => p.featured) || posts[0];
@@ -416,7 +408,7 @@ export function WeddingStoriesPage() {
         </section>
       )}
 
-      {/* ── 3. ELEGANT BLOG JOURNAL SECTION WITH CATEGORY FILTER TABS & 4-COLUMN GRID ── */}
+      {/* ── 3. BLOG JOURNAL SECTION ── */}
       <section className="relative z-10 pt-10 pb-16 md:pt-16 md:pb-24 px-6 md:px-14 max-w-[1750px] mx-auto space-y-10">
         
         {/* Minimal Header */}
@@ -425,28 +417,11 @@ export function WeddingStoriesPage() {
             Stories, Wisdom & <span className="text-[#93191E]">Wedding Inspiration</span>
           </h2>
 
-          {/* Category Filter Tabs */}
-          <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap pt-2">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-5 py-2 rounded-full text-xs font-mono transition-all duration-300 cursor-pointer ${
-                  selectedCategory === cat
-                    ? "bg-[#93191E] text-white shadow-md scale-105"
-                    : "bg-[#EFECE6] text-[#261E1E]/80 hover:bg-[#261E1E] hover:text-white"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
         </div>
 
         {/* 4-Column Story Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-          {filteredPosts.map((post) => (
+          {posts.map((post) => (
             <article
               key={post.id}
               onClick={() => openStory(post)}
