@@ -4,10 +4,10 @@ const inquirySchema = new mongoose.Schema(
   {
     coupleName: { type: String, required: true },
     email: { type: String, required: true },
-    phone: { type: String, required: true },
-    weddingDate: { type: Date, required: true },
-    venueLocation: { type: String, required: true },
-    estimatedBudget: { type: String, required: true },
+    phone: { type: String, default: '' },
+    weddingDate: { type: Date, default: null },
+    venueLocation: { type: String, default: '' },
+    estimatedBudget: { type: String, default: '' },
     servicesRequested: [{ type: String }],
     status: {
       type: String,

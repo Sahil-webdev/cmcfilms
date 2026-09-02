@@ -307,6 +307,7 @@
 .why-choose-carousel {
   overflow: hidden;
   padding: 0.35rem 0 1rem;
+  scroll-behavior: smooth;
   mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
 }
 
@@ -314,23 +315,13 @@
   display: flex;
   width: max-content;
   gap: 2rem;
-  animation: why-choose-scroll 28s linear infinite;
-}
-
-.why-choose-carousel:hover .why-choose-carousel-track,
-.why-choose-carousel:focus-within .why-choose-carousel-track {
-  animation-play-state: paused;
+  animation: none;
 }
 
 .why-choose-card {
   width: min(21rem, calc(100vw - 3rem));
   min-height: 23.5rem;
   flex: 0 0 auto;
-}
-
-@keyframes why-choose-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(calc(-50% - 1rem)); }
 }
 
 @media (prefers-reduced-motion: reduce) {

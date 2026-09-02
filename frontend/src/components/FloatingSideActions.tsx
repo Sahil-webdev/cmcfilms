@@ -7,12 +7,12 @@ export function FloatingSideActions() {
   return (
     <div
       aria-label="Quick contact actions"
-      className="fixed right-0 top-1/2 z-50 hidden md:flex flex-col items-end gap-2 -translate-y-1/2 select-none pointer-events-none"
+      className="fixed right-0 top-1/2 z-50 flex flex-col items-end gap-2 -translate-y-1/2 select-none pointer-events-none"
     >
       {/* 1. TOP ENQUIRY FORM TAB (Individually expands on hover) */}
       <Link
-        to="/about"
-        hash="contact"
+        to="/contact"
+        hash="enquiry-form"
         aria-label="Enquiry Form"
         title="Enquire For Booking"
         className="pointer-events-auto group relative flex h-11 w-11 sm:h-12 sm:w-12 items-center overflow-hidden rounded-l-xl rounded-r-none bg-[#F48F01] text-white px-3 sm:px-3.5 shadow-lg transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] hover:w-36 sm:hover:w-40 active:scale-95 cursor-pointer"

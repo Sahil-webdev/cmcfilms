@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useHeroMedia } from "@/hooks/useHeroMedia";
-import { ArrowUpRight, Camera, Film, Sparkles, Award, Heart, ShieldCheck, Users } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Camera, Film, Sparkles, Award, Users } from "lucide-react";
 
 // Image Imports
 import couplesHeroCustom from "@/assets/couples-hero-custom.jpg";
@@ -32,12 +32,46 @@ export const Route = createFileRoute("/about")({
 
 function AboutPage() {
   const heroMedia = useHeroMedia('about', featured);
+  const whyChooseCarouselRef = useRef<HTMLDivElement>(null);
+  const whyChoosePauseUntilRef = useRef(0);
   const whyChooseFeatures = [
     { icon: Users, title: "In-House Team", copy: "We never outsource your memories. Every photo and film frame is captured and edited by our dedicated in-house team." },
     { icon: Camera, title: "Cinema Gear", copy: "We use 4K full-frame cinema cameras, anamorphic lenses, studio lighting, and audio equipment for rich production value." },
-    { icon: Heart, title: "Unscripted Tones", copy: "No awkward forced posing. We document genuine emotions, candid laughter, and quiet moments as they naturally occur." },
-    { icon: ShieldCheck, title: "Worldwide Travel", copy: "Based in India and available for destination weddings worldwide — Jaipur, Udaipur, Goa, Dubai, and beyond." },
+    { icon: Award, title: "12+ Years of Experience", copy: "More than a decade of thoughtfully preserving real celebrations, emotions, and family memories." },
+    { icon: Film, title: "200+ Weddings Filmed", copy: "Over 200 love stories captured with the same care from the first frame to the final film." },
+    { icon: Sparkles, title: "20+ Shoot Destinations", copy: "From intimate hometown ceremonies to destination weddings across India and beyond." },
+    { icon: Users, title: "100% In-House Crafting", copy: "Your photographs and films are created, edited, and delivered by our dedicated in-house team." },
   ];
+
+  const moveWhyChooseCarousel = (direction: 'left' | 'right') => {
+    const carousel = whyChooseCarouselRef.current;
+    if (!carousel) return;
+    whyChoosePauseUntilRef.current = Date.now() + 4500;
+    carousel.scrollBy({ left: direction === 'right' ? 360 : -360, behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    let frameId = 0;
+    let previousTime = performance.now();
+    const scroll = (time: number) => {
+      const carousel = whyChooseCarouselRef.current;
+      const elapsed = time - previousTime;
+      previousTime = time;
+      if (carousel && Date.now() >= whyChoosePauseUntilRef.current) {
+        const loopPoint = carousel.scrollWidth / 2;
+        if (loopPoint > 0) {
+          const nextPosition = carousel.scrollLeft + (elapsed * 0.04);
+          carousel.scrollLeft = nextPosition >= loopPoint ? nextPosition - loopPoint : nextPosition;
+        }
+      }
+      frameId = window.requestAnimationFrame(scroll);
+    };
+    frameId = window.requestAnimationFrame(scroll);
+    return () => window.cancelAnimationFrame(frameId);
+  }, []);
+
   return (
     <main className="bg-[#FAF8F5] text-[#171717] font-poppins selection:bg-[#D8D3CB] min-h-screen">
       
@@ -60,8 +94,8 @@ function AboutPage() {
           <div className="lg:col-span-7 space-y-8 relative">
             
             <div className="relative">
-              <h2 className="font-montserrat text-3xl sm:text-5xl md:text-6xl text-[#171717] font-extrabold leading-[1.1] relative z-10">
-                The wedding photography <br className="hidden sm:block" />
+              <h2 className="font-montserrat text-3xl sm:text-4xl md:text-5xl text-[#171717] font-extrabold leading-[1.12] relative z-10">
+                Wedding photography <br />
                 specialists since 2018.
               </h2>
             </div>
@@ -73,10 +107,13 @@ function AboutPage() {
               </span>
 
               <p className="text-sm sm:text-base text-[#55504A] font-normal leading-relaxed">
-                Our journey of becoming a premium wedding photography & filmmaking studio began years ago. Since then, we have creatively captured the beginning of conjugal lives of 100s of couples across India and internationally. We have been successful in winning the admiration and respect of our clients because we have an in-house team of dedicated photographers, videographers, and cinematographers.
+                My journey into photography began when I was just in 7th grade, when I started learning photography with my Mama Ji. I would accompany him to weddings and slowly became fascinated by the way photographs and wedding films captured real emotions and memories. What started as simple curiosity gradually turned into a genuine passion for photography and filmmaking.
               </p>
               <p className="text-sm sm:text-base text-[#55504A] font-normal leading-relaxed">
-                We own and use only the most advanced cinema lighting equipment, anamorphic prime lenses, and 4K full-frame camera systems. We provide end-to-end services for all aspects of photography and film using our in-house team of trained photo and movie editors. Our level of professionalism and courtesy makes you and your guests feel completely at ease while being captured.
+                After school, I would spend my time at his studio, constantly observing and asking the editors how everything worked. At that time, wedding videos were created using DVC cameras, cassettes, and video mixing systems. I became especially interested in editing and started learning by watching the studio staff. Once they left in the evening, I would stay back, use the computer, experiment with editing, make mistakes, and keep trying until I understood how things worked.
+              </p>
+              <p className="text-sm sm:text-base text-[#55504A] font-normal leading-relaxed">
+                Over time, those countless hours of practice turned into real skills. I learned photography, videography, and editing not through a formal course, but through observation, curiosity, practice, and countless late nights. What began as a small opportunity to learn alongside my Mama Ji eventually became my profession and my passion. Today, I continue to create photographs and films with the same curiosity and dedication that first inspired me when I was in 7th grade.
               </p>
             </div>
 
@@ -111,7 +148,24 @@ function AboutPage() {
           </h2>
         </div>
 
-        <div className="why-choose-carousel" aria-label="Why choose CMC Films">
+        <div className="relative">
+          <button
+            type="button"
+            onClick={() => moveWhyChooseCarousel('left')}
+            aria-label="Previous reason"
+            className="absolute left-0 top-1/2 z-10 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full bg-[#171717] text-white shadow-lg transition hover:bg-[#C47A65] sm:-left-5"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </button>
+          <button
+            type="button"
+            onClick={() => moveWhyChooseCarousel('right')}
+            aria-label="Next reason"
+            className="absolute right-0 top-1/2 z-10 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full bg-[#171717] text-white shadow-lg transition hover:bg-[#C47A65] sm:-right-5"
+          >
+            <ArrowRight className="h-5 w-5" />
+          </button>
+        <div ref={whyChooseCarouselRef} className="why-choose-carousel" aria-label="Why choose CMC Films">
           <div className="why-choose-carousel-track">
           {[...whyChooseFeatures, ...whyChooseFeatures].map((feature, index) => {
             const Icon = feature.icon;
@@ -127,31 +181,10 @@ function AboutPage() {
           })}
           </div>
         </div>
-      </section>
-
-      {/* ── 4. KEY STATS STRIP ── */}
-      <section className="py-16 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto border-b border-[#D8D3CB]">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          <div className="space-y-1">
-            <span className="font-montserrat text-4xl sm:text-5xl text-[#C47A65] font-extrabold">8+</span>
-            <p className="text-xs font-poppins font-semibold uppercase tracking-widest text-[#68645E]">Years Experience</p>
-          </div>
-          <div className="space-y-1">
-            <span className="font-montserrat text-4xl sm:text-5xl text-[#C47A65] font-extrabold">150+</span>
-            <p className="text-xs font-poppins font-semibold uppercase tracking-widest text-[#68645E]">Weddings Filmed</p>
-          </div>
-          <div className="space-y-1">
-            <span className="font-montserrat text-4xl sm:text-5xl text-[#C47A65] font-extrabold">20+</span>
-            <p className="text-xs font-poppins font-semibold uppercase tracking-widest text-[#68645E]">Shoot Destinations</p>
-          </div>
-          <div className="space-y-1">
-            <span className="font-montserrat text-4xl sm:text-5xl text-[#C47A65] font-extrabold">100%</span>
-            <p className="text-xs font-poppins font-semibold uppercase tracking-widest text-[#68645E]">In-House Crafting</p>
-          </div>
         </div>
       </section>
 
-      {/* ── 5. EMBEDDED CONTACT & ENQUIRY FORM SECTION ── */}
+      {/* ── 4. EMBEDDED CONTACT & ENQUIRY FORM SECTION ── */}
       <section className="py-20 sm:py-28 px-6 sm:px-12 md:px-16 max-w-[1500px] mx-auto space-y-12">
         <AboutContactForm />
       </section>

@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -15,6 +16,7 @@ import { getCoupleContent, updateCoupleContent } from './src/controllers/coupleC
 import { getStories, updateStories } from './src/controllers/storiesController.js';
 import { getFilms, updateFilms } from './src/controllers/filmsController.js';
 import { getHomeGallery, updateHomeGallery, getTestimonials, updateTestimonials } from './src/controllers/websiteContentController.js';
+import { Inquiry } from './src/models/Inquiry.js';
 
 dotenv.config();
 
@@ -46,6 +48,48 @@ connectDB();
 // API Routes
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', studio: 'CMC Films API', time: new Date() });
+});
+
+const publicInquiryLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 8,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, message: 'Too many enquiries submitted. Please try again in 15 minutes.' },
+});
+
+app.post('/api/inquiries', publicInquiryLimiter, async (req, res) => {
+  const { name, partner, email, phone, date, city, venue, eventType, referral, story } = req.body || {};
+  const clientName = String(name || '').trim();
+  const clientEmail = String(email || '').trim().toLowerCase();
+  if (!clientName || !/^\S+@\S+\.\S+$/.test(clientEmail)) {
+    return res.status(400).json({ success: false, message: 'Please enter a valid name and email address.' });
+  }
+  const parsedDate = date ? new Date(String(date)) : null;
+  if (parsedDate && Number.isNaN(parsedDate.getTime())) {
+    return res.status(400).json({ success: false, message: 'Please enter a valid wedding date.' });
+  }
+  if (mongoose.connection.readyState !== 1) {
+    return res.status(503).json({ success: false, message: 'Database is unavailable. Please try again shortly.' });
+  }
+  try {
+    const inquiry = await Inquiry.create({
+      coupleName: partner ? `${clientName} & ${String(partner).trim()}` : clientName,
+      email: clientEmail,
+      phone: String(phone || '').trim(),
+      weddingDate: parsedDate,
+      venueLocation: [venue, city].filter(Boolean).map((value) => String(value).trim()).join(', '),
+      estimatedBudget: '',
+      servicesRequested: eventType ? [String(eventType).trim()] : [],
+      notes: [
+        story ? `Story: ${String(story).trim()}` : '',
+        referral ? `Referral: ${String(referral).trim()}` : '',
+      ].filter(Boolean).join('\n'),
+    });
+    return res.status(201).json({ success: true, data: { id: inquiry.id }, message: 'Your enquiry has been received.' });
+  } catch (error) {
+    return res.status(503).json({ success: false, message: 'Unable to save your enquiry right now. Please try again shortly.' });
+  }
 });
 
 // Auth Routes
@@ -142,8 +186,27 @@ const DUMMY_INQUIRIES = [
   },
 ];
 
-app.get('/api/inquiries', protect, requireAdmin, (req, res) => {
-  res.json({ success: true, count: DUMMY_INQUIRIES.length, data: DUMMY_INQUIRIES });
+app.get('/api/inquiries', protect, requireAdmin, async (_req, res) => {
+  if (mongoose.connection.readyState !== 1) {
+    return res.status(503).json({ success: false, message: 'Database is unavailable.' });
+  }
+  try {
+    const inquiries = await Inquiry.find().sort({ createdAt: -1 }).lean();
+    return res.json({ success: true, count: inquiries.length, data: inquiries.map((inquiry) => ({
+      id: String(inquiry._id),
+      coupleName: inquiry.coupleName,
+      email: inquiry.email,
+      phone: inquiry.phone,
+      weddingDate: inquiry.weddingDate ? new Date(inquiry.weddingDate).toISOString().slice(0, 10) : '',
+      venueLocation: inquiry.venueLocation,
+      estimatedBudget: inquiry.estimatedBudget,
+      servicesRequested: inquiry.servicesRequested,
+      status: inquiry.status,
+      createdAt: inquiry.createdAt,
+    })) });
+  } catch {
+    return res.status(500).json({ success: false, message: 'Unable to load enquiries.' });
+  }
 });
 
 const server = app.listen(PORT, () => {

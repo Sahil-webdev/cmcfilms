@@ -6,6 +6,7 @@ import img from "@/assets/story-1.jpg";
 const title = "Tell Us Your Story — Contact CMC FILMS";
 const description =
   "Enquire about wedding photography and cinematic films with CMC FILMS. Share your dates, venue and story.";
+const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5001').replace(/\/$/, '');
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -36,9 +37,10 @@ const fields = [
 
 function Contact() {
   const [sent, setSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     if (!data.get("name") || !data.get("email")) {
@@ -46,7 +48,21 @@ function Contact() {
       return;
     }
     setError(null);
-    setSent(true);
+    setIsSubmitting(true);
+    try {
+      const response = await fetch(`${API_URL}/api/inquiries`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(data.entries())),
+      });
+      const payload = await response.json();
+      if (!response.ok || !payload?.success) throw new Error(payload?.message || 'Unable to send your enquiry.');
+      setSent(true);
+    } catch (submitError) {
+      setError(submitError instanceof Error ? submitError.message : 'Unable to send your enquiry. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -104,9 +120,10 @@ function Contact() {
 
             <button
               type="submit"
+              disabled={isSubmitting}
               className="bg-[#261E1E] hover:bg-[#922A2F] text-white px-9 py-3.5 rounded-full font-sans text-xs font-semibold uppercase tracking-[0.2em] transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer"
             >
-              Send Enquiry
+              {isSubmitting ? 'Sending…' : 'Send Enquiry'}
             </button>
           </form>
         )}

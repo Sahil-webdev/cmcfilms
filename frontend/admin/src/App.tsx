@@ -150,6 +150,25 @@ const AdminWorkspace: React.FC = () => {
     setFilms((prev) => prev.map((f) => (f.id === id ? { ...f, featured: !f.featured } : f)));
   };
 
+  // Booking enquiries submitted from the public contact form are read from
+  // MongoDB so the admin sees real leads rather than browser/demo data.
+  useEffect(() => {
+    if (!token) return;
+    const controller = new AbortController();
+    fetch(`${API_URL}/api/inquiries`, {
+      signal: controller.signal,
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((response) => response.json().then((payload) => ({ response, payload })))
+      .then(({ response, payload }) => {
+        if (response.ok && payload?.success && Array.isArray(payload?.data)) {
+          setInquiries(payload.data);
+        }
+      })
+      .catch(() => undefined);
+    return () => controller.abort();
+  }, [token]);
+
   // The database is the only content source. A browser cache must never replace
   // previously published website content after a new deployment.
   useEffect(() => {
