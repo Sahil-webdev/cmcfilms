@@ -35,6 +35,7 @@ export const updateFilms = async (req, res) => {
   if (!Array.isArray(req.body?.films)) {
     return res.status(400).json({ success: false, message: 'Films must be a list.' });
   }
+  if (!databaseAvailable()) return res.status(503).json({ success: false, message: 'Database is unavailable. Wedding film changes were not saved.' });
 
   const value = {
     films: normalizeFilms(req.body.films),

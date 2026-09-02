@@ -13,27 +13,16 @@ import {
   Video,
 } from 'lucide-react';
 
-interface FilmsPageProps {
-  films: WeddingFilm[];
-  onAddFilm: (film: WeddingFilm) => void;
-  onDeleteFilm: (id: string) => void;
-  onToggleFeatured: (id: string) => void;
-}
-
-export const FilmsPage: React.FC<FilmsPageProps> = ({
-  films,
-  onAddFilm,
-  onDeleteFilm,
-  onToggleFeatured,
-}) => {
+export const FilmsPage: React.FC = () => {
   const { token } = useAuth();
   const [showAddModal, setShowAddModal] = useState(false);
   const [title, setTitle] = useState('');
   const [youtubeUrl, setYoutubeUrl] = useState('');
-  const [managedFilms, setManagedFilms] = useState<WeddingFilm[]>(films);
+  const [managedFilms, setManagedFilms] = useState<WeddingFilm[]>([]);
   const [introTitle, setIntroTitle] = useState('Deeply personal, immersive, and timeless Films.');
   const [introText, setIntroText] = useState('Cinematic wedding films rooted in genuine emotion, unscripted movement, and honest storytelling. We take pride in understanding the couple, their families, and the quiet, intimate glances between. Every celebration deserves a wedding film thoughtfully crafted to do justice to the beauty, grace, and authentic spirit of your story.');
   const [hydrated, setHydrated] = useState(false);
+  const [dirty, setDirty] = useState(false);
 
   // Extract YouTube Thumbnail helper
   const getYoutubeThumbnail = (url: string, fallback?: string) => {
@@ -70,16 +59,18 @@ export const FilmsPage: React.FC<FilmsPageProps> = ({
   }, []);
 
   useEffect(() => {
-    if (!hydrated || !token) return;
+    if (!hydrated || !token || !dirty) return;
     const timer = window.setTimeout(() => {
       fetch(`${API_URL}/api/films`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ films: managedFilms, introTitle, introText }),
+      }).then((response) => {
+        if (response.ok) setDirty(false);
       }).catch(() => undefined);
     }, 400);
     return () => window.clearTimeout(timer);
-  }, [managedFilms, introTitle, introText, hydrated, token]);
+  }, [managedFilms, introTitle, introText, hydrated, token, dirty]);
 
   const handleCreateFilm = (e: React.FormEvent) => {
     e.preventDefault();
@@ -99,7 +90,7 @@ export const FilmsPage: React.FC<FilmsPageProps> = ({
     };
 
     setManagedFilms((current) => [newFilm, ...current]);
-    onAddFilm(newFilm);
+    setDirty(true);
     setShowAddModal(false);
     setTitle('');
     setYoutubeUrl('');
@@ -137,8 +128,8 @@ export const FilmsPage: React.FC<FilmsPageProps> = ({
           <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">This heading and text appear above the six-film showcase on the website.</p>
         </div>
         <div className="grid gap-4">
-          <input value={introTitle} onChange={(event) => setIntroTitle(event.target.value)} placeholder="Section heading" className="w-full rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm font-semibold outline-none focus:border-[#8C90C1] dark:border-[#2B3147] dark:bg-[#1A1E2E] dark:text-white" />
-          <textarea value={introText} onChange={(event) => setIntroText(event.target.value)} placeholder="Section introduction" rows={4} className="w-full rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm outline-none focus:border-[#8C90C1] dark:border-[#2B3147] dark:bg-[#1A1E2E] dark:text-white" />
+          <input value={introTitle} onChange={(event) => { setIntroTitle(event.target.value); setDirty(true); }} placeholder="Section heading" className="w-full rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm font-semibold outline-none focus:border-[#8C90C1] dark:border-[#2B3147] dark:bg-[#1A1E2E] dark:text-white" />
+          <textarea value={introText} onChange={(event) => { setIntroText(event.target.value); setDirty(true); }} placeholder="Section introduction" rows={4} className="w-full rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm outline-none focus:border-[#8C90C1] dark:border-[#2B3147] dark:bg-[#1A1E2E] dark:text-white" />
           <p className="text-[11px] text-slate-400">Changes save automatically and publish to the live Wedding Films page.</p>
         </div>
       </section>
@@ -169,7 +160,7 @@ export const FilmsPage: React.FC<FilmsPageProps> = ({
 
                 {/* Featured Toggle */}
                 <button
-                  onClick={() => setManagedFilms((current) => current.map((item) => item.id === film.id ? { ...item, featured: !item.featured } : item))}
+                  onClick={() => { setManagedFilms((current) => current.map((item) => item.id === film.id ? { ...item, featured: !item.featured } : item)); setDirty(true); }}
                   className={`absolute top-3 right-3 p-1.5 rounded-full border backdrop-blur-md transition-colors cursor-pointer ${
                     film.featured
                       ? 'bg-[#8C90C1] text-white border-[#8C90C1]'
@@ -207,7 +198,7 @@ export const FilmsPage: React.FC<FilmsPageProps> = ({
                 {/* Card Action Controls */}
                 <div className="pt-3 border-t border-slate-200 dark:border-[#1E2235] flex items-center justify-between">
                   <button
-                    onClick={() => setManagedFilms((current) => current.filter((item) => item.id !== film.id))}
+                    onClick={() => { setManagedFilms((current) => current.filter((item) => item.id !== film.id)); setDirty(true); }}
                     className="p-2 rounded-xl text-slate-400 hover:text-red-500 hover:bg-red-500/10 transition-colors cursor-pointer"
                     title="Delete Film"
                   >

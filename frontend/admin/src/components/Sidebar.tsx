@@ -48,15 +48,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggleCollapse 
 
   return (
     <aside
-      className={`border-r flex flex-col justify-between shrink-0 h-screen sticky top-0 z-30 select-none transition-all duration-300 bg-white dark:bg-[#0B0D14] border-slate-200 dark:border-[#1E2235] ${
-        isCollapsed ? 'w-20' : 'w-64 sm:w-72'
+      className={`border-r flex flex-col justify-between shrink-0 h-screen sticky top-0 z-30 select-none transition-all duration-300 bg-white dark:bg-[#0B0D14] border-slate-200 dark:border-[#1E2235] max-lg:!w-20 ${
+        isCollapsed ? 'w-20' : 'w-64 xl:w-72'
       }`}
     >
       <div>
         {/* Brand Header */}
         <div className="h-20 border-b px-5 flex items-center justify-between border-slate-200 dark:border-[#1E2235]">
           {!isCollapsed && (
-            <div className="min-w-0 flex items-center gap-3">
+            <div className="min-w-0 flex items-center gap-3 max-lg:hidden">
               <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[#8C90C1] to-[#6C70A6] flex items-center justify-center text-white font-bold text-sm shadow-md shrink-0">
                 CMC
               </div>
@@ -75,6 +75,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggleCollapse 
               C
             </div>
           )}
+          {!isCollapsed && (
+            <div className="lg:hidden mx-auto h-10 w-10 rounded-xl bg-gradient-to-br from-[#8C90C1] to-[#6C70A6] flex items-center justify-center text-white font-bold text-sm shadow-md">
+              C
+            </div>
+          )}
 
           <button
             onClick={onToggleCollapse}
@@ -90,7 +95,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggleCollapse 
           {/* Main Section */}
           <div className="space-y-1.5">
             {!isCollapsed && (
-              <p className="px-3 text-[10px] uppercase font-bold tracking-wider text-slate-400 dark:text-slate-500 mb-2">
+              <p className="max-lg:hidden px-3 text-[10px] uppercase font-bold tracking-wider text-slate-400 dark:text-slate-500 mb-2">
                 MAIN WORKSPACE
               </p>
             )}
@@ -113,7 +118,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggleCollapse 
                     <span className="absolute left-0 top-1.5 bottom-1.5 w-1.5 rounded-r-full bg-[#8C90C1] shadow-sm" />
                   )}
 
-                  <div className={`flex items-center gap-3 ${isCollapsed ? 'mx-auto' : ''}`}>
+                  <div className={`flex items-center gap-3 ${isCollapsed ? 'mx-auto' : 'max-lg:mx-auto'}`}>
                     {/* Icon Badge Box */}
                     <div
                       className={`w-8.5 h-8.5 rounded-xl flex items-center justify-center transition-colors shrink-0 ${
@@ -124,12 +129,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggleCollapse 
                     >
                       <Icon className="h-4.5 w-4.5" />
                     </div>
-                    {!isCollapsed && <span className="truncate">{item.label}</span>}
+                    {!isCollapsed && <span className="truncate max-lg:hidden">{item.label}</span>}
                   </div>
 
                   {!isCollapsed && item.badge && (
                     <span
-                      className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                      className={`max-lg:hidden text-[10px] font-bold px-2 py-0.5 rounded-full ${
                         isActive
                           ? 'bg-[#8C90C1] text-white shadow-xs'
                           : 'bg-[#8C90C1]/15 text-[#6C70A6] border border-[#8C90C1]/20'
@@ -146,7 +151,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggleCollapse 
           {/* System Section */}
           <div className="space-y-1.5">
             {!isCollapsed && (
-              <p className="px-3 text-[10px] uppercase font-bold tracking-wider text-slate-400 dark:text-slate-500 mb-2">
+              <p className="max-lg:hidden px-3 text-[10px] uppercase font-bold tracking-wider text-slate-400 dark:text-slate-500 mb-2">
                 STUDIO INSIGHTS
               </p>
             )}
@@ -169,7 +174,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggleCollapse 
                     <span className="absolute left-0 top-1.5 bottom-1.5 w-1.5 rounded-r-full bg-[#8C90C1] shadow-sm" />
                   )}
 
-                  <div className={`flex items-center gap-3 ${isCollapsed ? 'mx-auto' : ''}`}>
+                  <div className={`flex items-center gap-3 ${isCollapsed ? 'mx-auto' : 'max-lg:mx-auto'}`}>
                     {/* Icon Badge Box */}
                     <div
                       className={`w-8.5 h-8.5 rounded-xl flex items-center justify-center transition-colors shrink-0 ${
@@ -180,7 +185,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggleCollapse 
                     >
                       <Icon className="h-4.5 w-4.5" />
                     </div>
-                    {!isCollapsed && <span className="truncate">{item.label}</span>}
+                    {!isCollapsed && <span className="truncate max-lg:hidden">{item.label}</span>}
                   </div>
                 </button>
               );
@@ -197,7 +202,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggleCollapse 
             href={WEBSITE_URL}
             target="_blank"
             rel="noreferrer"
-            className="w-full flex items-center justify-between px-3.5 py-2.5 text-xs font-medium border rounded-xl transition-all bg-slate-50 dark:bg-[#121522] hover:bg-slate-100 dark:hover:bg-[#1A1E2E] border-slate-200 dark:border-[#202435] text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
+            className="max-lg:hidden w-full flex items-center justify-between px-3.5 py-2.5 text-xs font-medium border rounded-xl transition-all bg-slate-50 dark:bg-[#121522] hover:bg-slate-100 dark:hover:bg-[#1A1E2E] border-slate-200 dark:border-[#202435] text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
           >
             <span className="flex items-center gap-2 font-semibold">
               <ShieldCheck className="h-4 w-4 text-[#8C90C1]" />
@@ -220,7 +225,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggleCollapse 
               className="w-9 h-9 rounded-full object-cover border-2 border-[#8C90C1] shrink-0"
             />
             {!isCollapsed && (
-              <div className="min-w-0">
+              <div className="min-w-0 max-lg:hidden">
                 <p className="text-xs font-bold text-slate-900 dark:text-white truncate">
                   {user?.name || 'Sahil Sharma'}
                 </p>

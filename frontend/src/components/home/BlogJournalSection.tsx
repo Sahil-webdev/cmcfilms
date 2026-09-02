@@ -7,6 +7,8 @@ import coastal from "@/assets/coastal.jpg";
 import luxuryEditorial from "@/assets/luxury-editorial.jpg";
 import maternity from "@/assets/maternity.jpg";
 
+const STORIES_API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5001').replace(/\/$/, '');
+
 interface BlogPost {
   id: string;
   title: string;
@@ -52,7 +54,7 @@ const blogPosts: BlogPost[] = [
   },
 ];
 
-// Admin Story type (from cmc_stories localStorage)
+// Admin Story type returned by the CMS API.
 interface AdminStory {
   id: string;
   title: string;
@@ -72,37 +74,31 @@ export function BlogJournalSection() {
   const [isPaused, setIsPaused] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
 
-  // ── Dynamic: Read stories from localStorage (set by Admin Wedding Stories) ──
-  const [adminStories, setAdminStories] = useState<AdminStory[]>([]);
+  const [adminStories, setAdminStories] = useState<AdminStory[] | null>(null);
 
   useEffect(() => {
-    const loadStories = () => {
-      try {
-        const stored = localStorage.getItem('cmc_stories');
-        if (stored) {
-          const parsed: AdminStory[] = JSON.parse(stored);
-          const published = parsed.filter((s) => s.status !== 'Draft' && s.title);
-          setAdminStories(published.length > 0 ? published : []);
-          return;
+    const controller = new AbortController();
+    fetch(`${STORIES_API_URL}/api/stories`, { signal: controller.signal })
+      .then((response) => response.json())
+      .then((payload) => {
+        if (payload?.success && Array.isArray(payload?.data?.stories)) {
+          setAdminStories(payload.data.stories.filter((story: AdminStory) => story.status !== 'Draft' && story.title));
         }
-      } catch {}
-      setAdminStories([]);
-    };
-    loadStories();
-    window.addEventListener('storage', loadStories);
-    return () => window.removeEventListener('storage', loadStories);
+      })
+      .catch(() => undefined);
+    return () => controller.abort();
   }, []);
 
   // Reset carousel position when story list changes
   useEffect(() => {
-    const count = adminStories.length > 0 ? adminStories.length : blogPosts.length;
+    const count = adminStories !== null ? adminStories.length : blogPosts.length;
     setCurrentIndex(count); // start at middle copy for seamless infinite loop
     setIsTransitioning(false);
     setTimeout(() => setIsTransitioning(true), 50);
-  }, [adminStories.length]);
+  }, [adminStories]);
 
-  // Merge: admin stories take priority; fallback to static blogPosts
-  const activePosts = adminStories.length > 0
+  // A saved empty list is intentionally empty; do not restore bundled samples.
+  const activePosts = adminStories !== null
     ? adminStories.map((s) => ({
         id: s.id,
         title: s.couple ? `${s.couple}${s.location ? ' — ' + s.location : ''}` : s.title,
@@ -162,7 +158,9 @@ export function BlogJournalSection() {
     setCurrentIndex((prev) => prev - 1);
   };
 
-  const activeDotIndex = currentIndex % activePosts.length;
+  const activeDotIndex = activePosts.length ? currentIndex % activePosts.length : 0;
+
+  if (activePosts.length === 0) return null;
 
   return (
     <section className="bg-[#FAF8F5] py-16 md:py-24 overflow-hidden relative">

@@ -15,6 +15,7 @@ export const getStories = async (_req, res) => {
 
 export const updateStories = async (req, res) => {
   if (!Array.isArray(req.body?.stories)) return res.status(400).json({ success: false, message: 'Stories must be a list.' });
+  if (!databaseAvailable()) return res.status(503).json({ success: false, message: 'Database is unavailable. Story changes were not saved.' });
   try {
     memoryStories = req.body.stories;
     if (databaseAvailable()) await SiteSetting.findOneAndUpdate({ key: KEY }, { value: { stories: memoryStories } }, { new: true, upsert: true, setDefaultsOnInsert: true });

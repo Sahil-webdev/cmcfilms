@@ -77,7 +77,7 @@ export const DashboardPage: React.FC<DashboardProps> = ({
   ];
 
   return (
-    <div className="p-6 sm:p-8 space-y-8 max-w-7xl mx-auto font-sans">
+    <div className="w-full max-w-none p-4 sm:p-6 lg:p-8 space-y-6 lg:space-y-8 font-sans">
       {/* Contextual Top Summary & Action Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200 dark:border-[#1E2235]">
         <div>
@@ -90,7 +90,7 @@ export const DashboardPage: React.FC<DashboardProps> = ({
         </div>
 
         {/* Controls */}
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           {/* Date Range Selector */}
           <div className="flex items-center p-1 rounded-xl text-xs font-medium bg-slate-100 dark:bg-[#121522] border border-slate-200 dark:border-[#202435]">
             <button
@@ -181,7 +181,7 @@ export const DashboardPage: React.FC<DashboardProps> = ({
         </div>
 
         {/* Visual Chart Graph */}
-        <div className="h-56 w-full flex items-end justify-between gap-4 sm:gap-8 pt-4 px-2">
+        <div className="h-56 w-full flex items-end justify-between gap-3 sm:gap-8 pt-4 px-2">
           {chartData.map((d, idx) => (
             <div key={idx} className="flex-1 flex flex-col items-center gap-3 h-full justify-end group">
               <div className="w-full flex items-end justify-center gap-1.5 h-44 relative">

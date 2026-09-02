@@ -141,7 +141,7 @@ export function TestimonialsPage() {
   const heroMedia = useHeroMedia('testimonials', hero);
 
   // Published CMS data is shared across devices, unlike browser local storage.
-  const [adminTestimonials, setAdminTestimonials] = useState<TestimonialItem[]>([]);
+  const [adminTestimonials, setAdminTestimonials] = useState<TestimonialItem[] | null>(null);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -149,7 +149,7 @@ export function TestimonialsPage() {
       .then((response) => response.json())
       .then((payload) => {
         const saved = payload?.data?.testimonials;
-        if (!payload?.success || !Array.isArray(saved) || saved.length === 0) return;
+        if (!payload?.success || !Array.isArray(saved)) return;
         setAdminTestimonials(saved.map((item: Partial<TestimonialItem>) => ({
           id: String(item.id || crypto.randomUUID()),
           couple: String(item.couple || 'CMC FILMS Couple'),
@@ -168,8 +168,9 @@ export function TestimonialsPage() {
     return () => controller.abort();
   }, []);
 
-  // Use admin testimonials if available, otherwise fall back to static
-  const activeTestimonials = adminTestimonials.length > 0 ? adminTestimonials : testimonialsData;
+  // An explicit empty CMS list must remain empty; it must never revive old
+  // bundled testimonials after a frontend deployment.
+  const activeTestimonials = adminTestimonials ?? testimonialsData;
 
   return (
     <main className="bg-[#FAF8F5] text-[#171717] font-poppins selection:bg-[#D8D3CB] selection:text-[#171717] min-h-screen">

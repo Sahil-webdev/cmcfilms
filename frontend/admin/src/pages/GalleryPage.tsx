@@ -62,6 +62,7 @@ interface GalleryPageProps {
   onAddImages: (imgs: GalleryImage[]) => void;
   onDeleteImage: (id: string) => void;
   onUpdateCategory: (id: string, category: GalleryCategory) => void;
+  onClearAll: () => void;
   onUploadImage: (file: File) => Promise<string>;
 }
 
@@ -70,6 +71,7 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({
   onAddImages,
   onDeleteImage,
   onUpdateCategory,
+  onClearAll,
   onUploadImage,
 }) => {
   const [activeFilter, setActiveFilter] = useState<'All' | GalleryCategory>('All');
@@ -91,6 +93,12 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({
 
   const deleteSelected = () => {
     selectedIds.forEach((id) => onDeleteImage(id));
+    setSelectedIds(new Set());
+  };
+
+  const clearAll = () => {
+    if (!images.length || !window.confirm('Remove every image from the live home gallery?')) return;
+    onClearAll();
     setSelectedIds(new Set());
   };
 
@@ -167,6 +175,15 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({
           </p>
         </div>
         <div className="flex items-center gap-3 flex-wrap">
+          {images.length > 0 && (
+            <button
+              onClick={clearAll}
+              className="flex items-center gap-2 border border-red-500/30 bg-white px-4 py-2.5 text-xs font-semibold text-red-500 transition-all hover:bg-red-500 hover:text-white dark:bg-[#121522]"
+            >
+              <Trash2 className="h-4 w-4" />
+              Clear All Images
+            </button>
+          )}
           {selectedIds.size > 0 && (
             <button
               onClick={deleteSelected}

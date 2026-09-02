@@ -44,6 +44,7 @@ export const updatePackages = async (req, res) => {
   if (!Array.isArray(packages)) {
     return res.status(400).json({ success: false, message: 'Packages must be provided as a list.' });
   }
+  if (!databaseAvailable()) return res.status(503).json({ success: false, message: 'Database is unavailable. Package changes were not saved.' });
 
   try {
     await savePackages(packages);

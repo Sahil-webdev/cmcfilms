@@ -19,6 +19,7 @@ export const getCoupleContent = async (_req, res) => {
 export const updateCoupleContent = async (req, res) => {
   const { content } = req.body;
   if (!content || !Array.isArray(content.galleryImages) || !Array.isArray(content.blogs)) return res.status(400).json({ success: false, message: 'Gallery images and blogs are required.' });
+  if (!databaseAvailable()) return res.status(503).json({ success: false, message: 'Database is unavailable. Couple Shoot changes were not saved.' });
   try {
     inMemoryContent = content;
     if (databaseAvailable()) await SiteSetting.findOneAndUpdate({ key: CONTENT_KEY }, { value: { content } }, { new: true, upsert: true, setDefaultsOnInsert: true });

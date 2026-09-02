@@ -44,6 +44,7 @@ export const uploadHeroMedia = async (req, res) => {
   const key = req.body?.key;
   if (!allowedKeys.has(key)) return res.status(400).json({ success: false, message: 'Invalid website page selected.' });
   if (!req.file) return res.status(400).json({ success: false, message: 'Please choose a media file.' });
+  if (!databaseAvailable()) return res.status(503).json({ success: false, message: 'Database is unavailable. Hero media was not saved.' });
 
   try {
     const media = await readHeroMedia();

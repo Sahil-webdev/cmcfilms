@@ -90,6 +90,8 @@ const posterFilms: MoviePosterFilm[] = [
   },
 ];
 
+const FILMS_API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5001').replace(/\/$/, '');
+
 interface AdminFilm {
   id: string;
   title: string;
@@ -113,26 +115,22 @@ export function FilmsSection() {
   const [isPaused, setIsPaused] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // ── Dynamic Films: Read from localStorage (set by Admin Panel) ──
-  const [adminFilms, setAdminFilms] = useState<AdminFilm[]>([]);
+  // Published films always come from the CMS API, not the visitor's browser.
+  const [adminFilms, setAdminFilms] = useState<AdminFilm[] | null>(null);
 
   useEffect(() => {
-    const loadFilms = () => {
-      try {
-        const stored = localStorage.getItem('cmc_films');
-        if (stored) {
-          const parsed = JSON.parse(stored);
-          if (Array.isArray(parsed) && parsed.length > 0) setAdminFilms(parsed);
-        }
-      } catch {}
-    };
-    loadFilms();
-    window.addEventListener('storage', loadFilms);
-    return () => window.removeEventListener('storage', loadFilms);
+    const controller = new AbortController();
+    fetch(`${FILMS_API_URL}/api/films`, { signal: controller.signal })
+      .then((response) => response.json())
+      .then((payload) => {
+        if (payload?.success && Array.isArray(payload?.data?.films)) setAdminFilms(payload.data.films);
+      })
+      .catch(() => undefined);
+    return () => controller.abort();
   }, []);
 
-  // Convert admin films to poster format; fallback to static posterFilms if admin has none
-  const displayFilms: MoviePosterFilm[] = adminFilms.length > 0
+  // An explicitly empty CMS list remains empty after every deployment.
+  const displayFilms: MoviePosterFilm[] = adminFilms !== null
     ? adminFilms.map((af) => ({
         id: af.id,
         title: af.title,

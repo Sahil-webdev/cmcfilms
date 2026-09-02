@@ -51,6 +51,7 @@ export const updateHomeHero = async (req, res) => {
   if (typeof videoUrl !== 'string') {
     return res.status(400).json({ success: false, message: 'A video URL is required.' });
   }
+  if (!databaseAvailable()) return res.status(503).json({ success: false, message: 'Database is unavailable. Hero changes were not saved.' });
 
   const normalizedUrl = videoUrl.trim();
   if (normalizedUrl) {
@@ -79,6 +80,7 @@ export const uploadHomeHero = async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ success: false, message: 'Please choose an MP4 video file.' });
   }
+  if (!databaseAvailable()) return res.status(503).json({ success: false, message: 'Database is unavailable. Hero changes were not saved.' });
 
   try {
     const media = await uploadToImageKit({

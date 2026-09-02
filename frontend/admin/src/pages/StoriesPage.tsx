@@ -44,43 +44,6 @@ export interface WeddingStory {
   photosCount?: number;
 }
 
-const initialStories: WeddingStory[] = [
-  {
-    id: 'story-1',
-    title: 'The Royal Lake Palace Romance of Ananya & Dev',
-    subtitle: 'A 3-Day Sunset Royal Wedding at Taj Lake Pichola, Udaipur',
-    couple: 'Ananya & Dev',
-    date: 'February 14, 2026',
-    location: 'Taj Lake Pichola, Udaipur',
-    category: 'Royal Palace',
-    coverImage: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800',
-    content:
-      '<h2>The Heritage Arrival</h2><p>Set amidst the serene waters of Lake Pichola, Ananya and Dev celebrated their vows surrounded by centuries-old marble palaces and crimson sunsets.</p>',
-    status: 'Published',
-    featured: true,
-  },
-  {
-    id: 'story-2',
-    title: 'Sunset Coastal vows at Alila Diwa, Goa',
-    subtitle: 'Intimate Beachfront Nuptials with Golden Hour Mandap',
-    couple: 'Rhea & Rohan',
-    date: 'January 28, 2026',
-    location: 'Alila Diwa, South Goa',
-    category: 'Destination Beach',
-    coverImage: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800',
-    content:
-      '<h2>Coastal Harmony</h2><p>Warm ocean breeze, acoustic strings, and an ethereal floral mandap created an unscripted sunset celebration.</p>',
-    status: 'Published',
-    featured: true,
-  },
-];
-
-export interface StoriesPageProps {
-  stories?: any[];
-  onToggleFeatured?: (id: string) => void;
-  onAddStory?: (story: any) => void;
-}
-
 const dedupeStories = (items: WeddingStory[]) => {
   const byId = new Map<string, WeddingStory>();
   items.forEach((story) => {
@@ -104,31 +67,11 @@ const getStorySlug = (story: Pick<WeddingStory, 'id' | 'title'>) => {
 const getPublicStoryUrl = (story: Pick<WeddingStory, 'id' | 'title'>) =>
   `${WEBSITE_URL}/wedding-stories/${getStorySlug(story)}`;
 
-export const StoriesPage: React.FC<StoriesPageProps> = ({
-  stories: propStories,
-  onToggleFeatured: propToggleFeatured,
-  onAddStory: propAddStory,
-}) => {
+export const StoriesPage: React.FC = () => {
   const { token } = useAuth();
-  const [stories, setStories] = useState<WeddingStory[]>(() => {
-    try {
-      const saved = localStorage.getItem('cmc_stories');
-      if (saved) return dedupeStories(JSON.parse(saved));
-    } catch {
-    }
-    if (propStories && propStories.length > 0) return dedupeStories(propStories);
-    return initialStories;
-  });
+  const [stories, setStories] = useState<WeddingStory[]>([]);
   const [storiesReady, setStoriesReady] = useState(false);
-  const skipFirstPublish = useRef(true);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem('cmc_stories', JSON.stringify(dedupeStories(stories)));
-    } catch (err) {
-      console.error('Failed to save stories:', err);
-    }
-  }, [stories]);
+  const [storiesDirty, setStoriesDirty] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -136,16 +79,8 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({
       .then((response) => response.json())
       .then((payload) => {
         if (Array.isArray(payload?.data?.stories)) {
-          setStories((current) => {
-            const remoteStories = dedupeStories(payload.data.stories as WeddingStory[]);
-            const hasLocalOnlyStory = current.some((story) => !remoteStories.some((remote) => remote.id === story.id));
-            if (hasLocalOnlyStory) {
-              skipFirstPublish.current = false;
-              return current;
-            }
-            return remoteStories;
-          });
-        } else skipFirstPublish.current = false;
+          setStories(dedupeStories(payload.data.stories as WeddingStory[]));
+        }
       })
       .catch(() => undefined)
       .finally(() => !controller.signal.aborted && setStoriesReady(true));
@@ -153,8 +88,7 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({
   }, []);
 
   useEffect(() => {
-    if (!storiesReady || !token) return;
-    if (skipFirstPublish.current) { skipFirstPublish.current = false; return; }
+    if (!storiesReady || !token || !storiesDirty) return;
     const timer = window.setTimeout(async () => {
       try {
         const uniqueStories = dedupeStories(stories);
@@ -172,12 +106,13 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({
         if (publishedStories.some((story, index) => story.coverImage !== uniqueStories[index].coverImage)) setStories(publishedStories);
         const response = await fetch(`${API_URL}/api/stories`, { method: 'PUT', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify({ stories: publishedStories }) });
         if (!response.ok) throw new Error(`Publishing failed (${response.status}).`);
+        setStoriesDirty(false);
       } catch (error) {
         console.error('Unable to publish stories:', error);
       }
     }, 300);
     return () => window.clearTimeout(timer);
-  }, [stories, storiesReady, token]);
+  }, [stories, storiesReady, token, storiesDirty]);
 
   const [viewMode, setViewMode] = useState<'list' | 'editor'>('list');
   const [editingStory, setEditingStory] = useState<WeddingStory | null>(null);
@@ -426,9 +361,6 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({
       featured,
     };
 
-    // Parent state is used by the dashboard too. It performs an id-based
-    // upsert, so editing this story can never create a second record.
-    if (propAddStory) { try { propAddStory(newStory); } catch {} }
     if (editingStory) {
       setStories((prev) => dedupeStories(prev.map((s) => (s.id === newStory.id ? newStory : s))));
       showNotice(`Wedding Story "${title}" updated!`);
@@ -436,6 +368,7 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({
       setStories((prev) => dedupeStories([newStory, ...prev]));
       showNotice(`Wedding Story "${title}" published!`);
     }
+    setStoriesDirty(true);
 
     setViewMode('list');
   };
@@ -443,12 +376,12 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({
   const handleDeletePost = (id: string, postTitle: string) => {
     if (window.confirm(`Delete story post "${postTitle}"?`)) {
       setStories((prev) => prev.filter((s) => s.id !== id));
+      setStoriesDirty(true);
       showNotice(`Story post "${postTitle}" deleted.`);
     }
   };
 
   const onToggleFeatured = (id: string) => {
-    if (propToggleFeatured) propToggleFeatured(id);
     setStories((prev) => {
       const target = prev.find((s) => s.id === id);
       const becomingFeatured = target ? !target.featured : false;
@@ -458,6 +391,7 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({
           : becomingFeatured ? { ...s, featured: false } : s
       );
     });
+    setStoriesDirty(true);
   };
 
   // Toggle CKEditor Toolbar Visibility

@@ -59,21 +59,10 @@ const AdminWorkspace: React.FC = () => {
   });
   const [packages, setPackages] = useState<PackageItem[]>(INITIAL_PACKAGES);
   const [media, setMedia] = useState<MediaAsset[]>(INITIAL_MEDIA);
-  const [adminTestimonials, setAdminTestimonials] = useState<AdminTestimonialItem[]>(() => {
-    try {
-      const saved = localStorage.getItem('cmc_testimonials');
-      if (saved) return JSON.parse(saved) as AdminTestimonialItem[];
-    } catch {}
-    return [];
-  });
-
-  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>(() => {
-    try {
-      const saved = localStorage.getItem('cmc_gallery');
-      if (saved) return JSON.parse(saved) as GalleryImage[];
-    } catch {}
-    return [];
-  });
+  const [adminTestimonials, setAdminTestimonials] = useState<AdminTestimonialItem[]>([]);
+  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
+  const [galleryDirty, setGalleryDirty] = useState(false);
+  const [testimonialsDirty, setTestimonialsDirty] = useState(false);
   const galleryHydrated = useRef(false);
   const testimonialsHydrated = useRef(false);
 
@@ -161,36 +150,8 @@ const AdminWorkspace: React.FC = () => {
     setFilms((prev) => prev.map((f) => (f.id === id ? { ...f, featured: !f.featured } : f)));
   };
 
-  // Persist films to localStorage whenever films state changes
-  React.useEffect(() => {
-    try {
-      localStorage.setItem('cmc_films', JSON.stringify(films));
-    } catch {}
-  }, [films]);
-
-  // Persist gallery to localStorage
-  React.useEffect(() => {
-    try {
-      localStorage.setItem('cmc_gallery', JSON.stringify(galleryImages));
-    } catch {}
-  }, [galleryImages]);
-
-  // Persist stories to localStorage
-  React.useEffect(() => {
-    try {
-      localStorage.setItem('cmc_stories', JSON.stringify(stories));
-    } catch {}
-  }, [stories]);
-
-  // Persist testimonials to localStorage
-  React.useEffect(() => {
-    try {
-      localStorage.setItem('cmc_testimonials', JSON.stringify(adminTestimonials));
-    } catch {}
-  }, [adminTestimonials]);
-
-  // The backend is the source of truth for content shown on the live website.
-  // Local storage remains only as a small offline cache for the admin UI.
+  // The database is the only content source. A browser cache must never replace
+  // previously published website content after a new deployment.
   useEffect(() => {
     const controller = new AbortController();
     fetch(`${API_URL}/api/home-gallery`, { signal: controller.signal })
@@ -220,28 +181,32 @@ const AdminWorkspace: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (!galleryHydrated.current || !token) return;
+    if (!galleryHydrated.current || !token || !galleryDirty) return;
     const timer = window.setTimeout(() => {
       fetch(`${API_URL}/api/home-gallery`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ images: galleryImages }),
+      }).then((response) => {
+        if (response.ok) setGalleryDirty(false);
       }).catch((error) => console.error('Unable to publish the home gallery.', error));
     }, 350);
     return () => window.clearTimeout(timer);
-  }, [galleryImages, token]);
+  }, [galleryImages, token, galleryDirty]);
 
   useEffect(() => {
-    if (!testimonialsHydrated.current || !token) return;
+    if (!testimonialsHydrated.current || !token || !testimonialsDirty) return;
     const timer = window.setTimeout(() => {
       fetch(`${API_URL}/api/testimonials`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ testimonials: adminTestimonials }),
+      }).then((response) => {
+        if (response.ok) setTestimonialsDirty(false);
       }).catch((error) => console.error('Unable to publish testimonials.', error));
     }, 350);
     return () => window.clearTimeout(timer);
-  }, [adminTestimonials, token]);
+  }, [adminTestimonials, token, testimonialsDirty]);
 
   const uploadImage = async (file: File) => {
     if (!token) throw new Error('Please sign in again before uploading an image.');
@@ -270,25 +235,36 @@ const AdminWorkspace: React.FC = () => {
   // Testimonials Handlers
   const handleAddTestimonial = (t: AdminTestimonialItem) => {
     setAdminTestimonials((prev) => [t, ...prev]);
+    setTestimonialsDirty(true);
   };
   const handleUpdateTestimonial = (t: AdminTestimonialItem) => {
     setAdminTestimonials((prev) => prev.map((x) => (x.id === t.id ? t : x)));
+    setTestimonialsDirty(true);
   };
   const handleDeleteTestimonial = (id: string) => {
     setAdminTestimonials((prev) => prev.filter((x) => x.id !== id));
+    setTestimonialsDirty(true);
   };
 
   // Gallery Handlers
   const handleAddGalleryImages = (imgs: GalleryImage[]) => {
     setGalleryImages((prev) => [...prev, ...imgs]);
+    setGalleryDirty(true);
   };
 
   const handleDeleteGalleryImage = (id: string) => {
     setGalleryImages((prev) => prev.filter((img) => img.id !== id));
+    setGalleryDirty(true);
   };
 
   const handleUpdateGalleryCategory = (id: string, category: GalleryCategory) => {
     setGalleryImages((prev) => prev.map((img) => img.id === id ? { ...img, category } : img));
+    setGalleryDirty(true);
+  };
+
+  const handleClearGallery = () => {
+    setGalleryImages([]);
+    setGalleryDirty(true);
   };
 
   const renderActiveView = () => {
@@ -317,22 +293,9 @@ const AdminWorkspace: React.FC = () => {
           />
         );
       case 'stories':
-        return (
-          <StoriesPage
-            stories={stories}
-            onToggleFeatured={handleToggleFeaturedStory}
-            onAddStory={handleAddStory}
-          />
-        );
+        return <StoriesPage />;
       case 'films':
-        return (
-          <FilmsPage
-            films={films}
-            onAddFilm={handleAddFilm}
-            onDeleteFilm={handleDeleteFilm}
-            onToggleFeatured={handleToggleFeaturedFilm}
-          />
-        );
+        return <FilmsPage />;
       case 'testimonials-cms':
         return (
           <TestimonialsAdminPage
@@ -350,6 +313,7 @@ const AdminWorkspace: React.FC = () => {
             onAddImages={handleAddGalleryImages}
             onDeleteImage={handleDeleteGalleryImage}
             onUpdateCategory={handleUpdateGalleryCategory}
+            onClearAll={handleClearGallery}
             onUploadImage={uploadImage}
           />
         );
@@ -379,7 +343,7 @@ const AdminWorkspace: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex bg-slate-50 dark:bg-[#0B0C10] text-slate-900 dark:text-[#E2E8F0] transition-colors duration-200 font-sans">
+    <div className="min-h-screen w-full flex bg-slate-50 dark:bg-[#0B0C10] text-slate-900 dark:text-[#E2E8F0] transition-colors duration-200 font-sans">
       {/* Sidebar */}
       <Sidebar
         isCollapsed={isSidebarCollapsed}
@@ -387,7 +351,7 @@ const AdminWorkspace: React.FC = () => {
       />
 
       {/* Main Workspace */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 min-w-0 flex flex-col overflow-x-hidden">
         <Header
           onNewInquiryClick={() => setShowNewInquiryModal(true)}
           onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}

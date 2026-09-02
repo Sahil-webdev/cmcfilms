@@ -275,7 +275,7 @@ function RecentFilmsCarousel() {
     return () => clearInterval(interval);
   }, [isHovered]);
 
-  const [adminFilms, setAdminFilms] = useState<ManagedFilm[]>([]);
+  const [adminFilms, setAdminFilms] = useState<ManagedFilm[] | null>(null);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -299,7 +299,7 @@ function RecentFilmsCarousel() {
   ];
 
   // Published films from the admin panel take priority; otherwise show samples.
-  const recentFilmsList = adminFilms.length > 0
+  const recentFilmsList = adminFilms !== null
     ? adminFilms.map((af) => ({
         id: af.id,
         couple: af.title,
@@ -390,7 +390,7 @@ function RecentFilmsCarousel() {
 
 export function WeddingFilmsPage() {
   const [activeFilmModal, setActiveFilmModal] = useState<FilmItem | null>(null);
-  const [managedFilms, setManagedFilms] = useState<ManagedFilm[]>([]);
+  const [managedFilms, setManagedFilms] = useState<ManagedFilm[] | null>(null);
   const [introTitle, setIntroTitle] = useState('Deeply personal, immersive, and timeless Films.');
   const [introText, setIntroText] = useState('Cinematic wedding films rooted in genuine emotion, unscripted movement, and honest storytelling. We take pride in understanding the couple, their families, and the quiet, intimate glances between. Every celebration deserves a wedding film thoughtfully crafted to do justice to the beauty, grace, and authentic spirit of your story.');
 
@@ -408,7 +408,7 @@ export function WeddingFilmsPage() {
     return () => controller.abort();
   }, []);
 
-  const displayedFilms: FilmItem[] = managedFilms.length > 0
+  const displayedFilms: FilmItem[] = managedFilms !== null
     ? managedFilms.map((film, index) => ({
         id: film.id,
         code: String(index + 1).padStart(2, '0'),

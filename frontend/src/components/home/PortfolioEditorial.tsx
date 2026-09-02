@@ -2,17 +2,6 @@ import { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { Reveal, SectionLabel } from "@/components/Reveal";
 import { Lightbox, type LightboxItem } from "@/components/ui/Lightbox";
-import featured from "@/assets/featured.jpg";
-import luxuryEditorial from "@/assets/luxury-editorial.jpg";
-import haldi from "@/assets/haldi.jpg";
-import coastal from "@/assets/coastal.jpg";
-import story1 from "@/assets/story-1.jpg";
-import story2 from "@/assets/story-2.jpg";
-import story3 from "@/assets/story-3.jpg";
-import cat1 from "@/assets/cat-1.jpg";
-import cat2 from "@/assets/cat-2.jpg";
-import cat3 from "@/assets/cat-3.jpg";
-import heroImg from "@/assets/hero.jpg";
 
 const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:5001").replace(/\/$/, "");
 
@@ -22,8 +11,9 @@ type GalleryWallItem = LightboxItem & {
   aspectRatio: string;
 };
 
-// Mixed Portrait & Landscape Editorial Gallery Wall (KnotsByAmp Style Mosaic)
-const wallItems: GalleryWallItem[] = [
+// Legacy preview-only data. It is intentionally never used as a live fallback:
+// the database is the source of truth for published gallery images.
+const _legacyWallItems: GalleryWallItem[] = [
   {
     id: "w1",
     src: featured,
@@ -164,7 +154,9 @@ export function PortfolioEditorial() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   // The public page loads images published through the admin CMS.
-  const [adminGallery, setAdminGallery] = useState<AdminGalleryImage[]>([]);
+  // `null` means content has not loaded yet. An empty array is an intentional
+  // CMS choice and must stay empty after a code deployment.
+  const [adminGallery, setAdminGallery] = useState<AdminGalleryImage[] | null>(null);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -180,8 +172,7 @@ export function PortfolioEditorial() {
   }, []);
 
   // Convert admin gallery to GalleryWallItem format
-  const activeItems: GalleryWallItem[] = adminGallery.length > 0
-    ? adminGallery.map((img) => ({
+  const activeItems: GalleryWallItem[] = (adminGallery || []).map((img) => ({
         id: img.id,
         src: img.src,
         alt: img.alt || img.title,
@@ -191,12 +182,15 @@ export function PortfolioEditorial() {
         location: '',
         year: img.createdAt?.split('-')[0] || '2026',
         aspectRatio: img.aspectRatio || 'aspect-[4/3]',
-      }))
-    : wallItems; // fallback to static if no admin gallery
+      }));
 
   const filtered = activeTab === "All Stories"
     ? activeItems
     : activeItems.filter((item) => item.categoryTag === activeTab);
+
+  // Do not render old bundled/sample photos when the gallery is intentionally
+  // empty or the CMS cannot be reached.
+  if (activeItems.length === 0) return null;
 
   return (
     <section className="bg-[#F0E8DF] px-4 pt-4 pb-10 md:px-8 md:pt-10 md:pb-24 border-b border-espresso/10">

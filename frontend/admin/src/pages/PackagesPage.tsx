@@ -187,26 +187,11 @@ const initialPackages: ServicePackage[] = [
 
 export const PackagesPage: React.FC = () => {
   const { token } = useAuth();
-  // Persistence via localStorage
-  const [packages, setPackages] = useState<ServicePackage[]>(() => {
-    try {
-      const saved = localStorage.getItem('cmc_packages');
-      return saved ? JSON.parse(saved) : initialPackages;
-    } catch {
-      return initialPackages;
-    }
-  });
+  // Published content belongs to the database, never to a browser cache.
+  const [packages, setPackages] = useState<ServicePackage[]>([]);
   const [packagesLoaded, setPackagesLoaded] = useState(false);
+  const [packagesDirty, setPackagesDirty] = useState(false);
   const [syncMessage, setSyncMessage] = useState<string | null>(null);
-  const skipFirstRemoteSave = useRef(true);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem('cmc_packages', JSON.stringify(packages));
-    } catch (err) {
-      console.error('Failed to save packages:', err);
-    }
-  }, [packages]);
 
   // Load packages published through the admin panel. Website and admin use this same API.
   useEffect(() => {
@@ -219,7 +204,7 @@ export const PackagesPage: React.FC = () => {
           setPackages(payload.data.packages);
         }
       } catch {
-        setSyncMessage('Backend is offline. Your edits are saved locally until the API is running.');
+        setSyncMessage('Backend is offline. Please restore the database connection before making changes.');
       } finally {
         if (!controller.signal.aborted) setPackagesLoaded(true);
       }
@@ -230,12 +215,7 @@ export const PackagesPage: React.FC = () => {
 
   // Publish each add, edit or delete action automatically.
   useEffect(() => {
-    if (!packagesLoaded) return;
-    if (skipFirstRemoteSave.current) {
-      skipFirstRemoteSave.current = false;
-      return;
-    }
-    if (!token) return;
+    if (!packagesLoaded || !token || !packagesDirty) return;
 
     const publishTimer = window.setTimeout(async () => {
       try {
@@ -247,13 +227,14 @@ export const PackagesPage: React.FC = () => {
         const payload = await response.json();
         if (!response.ok || !payload.success) throw new Error(payload.message || 'Unable to publish packages.');
         setSyncMessage('Changes published to the website.');
+        setPackagesDirty(false);
       } catch (error) {
         setSyncMessage(error instanceof Error ? error.message : 'Could not publish packages to the website.');
       }
     }, 400);
 
     return () => window.clearTimeout(publishTimer);
-  }, [packages, packagesLoaded, token]);
+  }, [packages, packagesLoaded, token, packagesDirty]);
 
   // Current View State (Full Page Mode navigation)
   const [viewMode, setViewMode] = useState<ViewMode>('list');
@@ -366,6 +347,7 @@ export const PackagesPage: React.FC = () => {
 
   const handleBackToList = () => {
     setViewMode('list');
+    setPackagesDirty(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -412,11 +394,13 @@ export const PackagesPage: React.FC = () => {
     }
 
     setViewMode('list');
+    setPackagesDirty(true);
   };
 
   const handleDeleteMainPackage = (pkgId: string, pkgTitle: string) => {
     if (window.confirm(`Are you sure you want to delete Main Package "${pkgTitle}" and all its sub-packages?`)) {
       setPackages((prev) => prev.filter((p) => p.id !== pkgId));
+      setPackagesDirty(true);
       showNotice(`Main Package "${pkgTitle}" deleted.`);
     }
   };
@@ -482,6 +466,7 @@ export const PackagesPage: React.FC = () => {
     }
 
     setViewMode('list');
+    setPackagesDirty(true);
   };
 
   const handleDeleteSubPackage = (parentId: string, subId: string, subName: string) => {
@@ -493,6 +478,7 @@ export const PackagesPage: React.FC = () => {
             : p
         )
       );
+      setPackagesDirty(true);
       showNotice(`Sub-Package "${subName}" deleted.`);
     }
   };

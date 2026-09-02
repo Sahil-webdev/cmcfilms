@@ -36,6 +36,7 @@ export const getHomeGallery = async (_req, res) => {
 
 export const updateHomeGallery = async (req, res) => {
   if (!Array.isArray(req.body?.images)) return res.status(400).json({ success: false, message: 'Images must be a list.' });
+  if (!databaseAvailable()) return res.status(503).json({ success: false, message: 'Database is unavailable. Gallery changes were not saved.' });
   try {
     const value = { images: req.body.images };
     await saveContent(HOME_GALLERY_KEY, value, (next) => { memoryGallery = next; });
@@ -56,6 +57,7 @@ export const getTestimonials = async (_req, res) => {
 
 export const updateTestimonials = async (req, res) => {
   if (!Array.isArray(req.body?.testimonials)) return res.status(400).json({ success: false, message: 'Testimonials must be a list.' });
+  if (!databaseAvailable()) return res.status(503).json({ success: false, message: 'Database is unavailable. Testimonial changes were not saved.' });
   try {
     const value = { testimonials: req.body.testimonials };
     await saveContent(TESTIMONIALS_KEY, value, (next) => { memoryTestimonials = next; });
