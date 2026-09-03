@@ -434,13 +434,13 @@ export function WeddingFilmsPage() {
       {/* ── SECTION 2 — RECENT FILMS CAROUSEL (knotsbyamp.com reference design with auto-loop) ── */}
       <RecentFilmsCarousel />
 
-      {/* ── SECTION 3 — MARWADI WEDDINGS SECTION WITH VERY LIGHT BG & SIMPLE TYPOGRAPHY ── */}
-      <section className="bg-[#FAF8F5] text-[#261E1E] py-14 sm:py-18 md:py-22 px-6 sm:px-10 md:px-16 border-b border-black/5 relative overflow-hidden">
-        <div className="max-w-[1600px] mx-auto space-y-10 sm:space-y-12 relative z-10">
+      {/* ── SECTION 3 — UNIFIED MARWADI WEDDINGS SECTION WITH LIGHT RED BG (#F7887B) & SIMPLE TYPOGRAPHY ── */}
+      <section className="bg-[#F7887B] text-white py-16 md:py-22 px-6 sm:px-10 md:px-16 border-b border-black/10 relative overflow-hidden">
+        <div className="max-w-[1600px] mx-auto space-y-12 sm:space-y-16 relative z-10">
           
           {/* Simple Centered Header Title "MARWADI WEDDINGS" */}
           <Reveal className="text-center">
-            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light uppercase tracking-wider text-[#261E1E]">
+            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light uppercase tracking-wider text-white drop-shadow-xs">
               MARWADI WEDDINGS
             </h1>
           </Reveal>
