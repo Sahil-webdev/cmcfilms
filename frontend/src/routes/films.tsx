@@ -434,78 +434,54 @@ export function WeddingFilmsPage() {
       {/* ── SECTION 2 — RECENT FILMS CAROUSEL (knotsbyamp.com reference design with auto-loop) ── */}
       <RecentFilmsCarousel />
 
-      {/* ── SECTION 3 — MINIMAL & DISTINCTIVE MARWADI WEDDINGS GALLERY ── */}
-      <section className="bg-[#FAF8F5] text-[#261E1E] py-16 md:py-24 px-6 sm:px-10 md:px-16 border-t border-b border-black/5 relative overflow-hidden">
-        <div className="max-w-[1600px] mx-auto space-y-12 sm:space-y-16 relative z-10">
+      {/* ── SECTION 3 — MARWADI WEDDINGS FILM GRID SECTION ── */}
+      <section className="bg-[#E0CDCD] text-[#171717] py-14 sm:py-20 md:py-24 px-4 sm:px-8 md:px-12 relative overflow-hidden border-b border-[#171717]/10 select-none">
+        <div className="max-w-[1600px] mx-auto space-y-10 sm:space-y-14">
           
-          {/* Clean Editorial Header */}
-          <Reveal className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-black/10 pb-8">
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#93191E]" />
-                <span className="font-mono text-xs uppercase tracking-[0.25em] text-[#93191E] font-semibold">
-                  CINEMATIC ARCHIVE
-                </span>
-              </div>
-              <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-light uppercase tracking-tight text-[#261E1E]">
-                MARWADI <em className="font-editorial italic font-normal text-[#93191E] lowercase">Weddings</em>
-              </h1>
-            </div>
-
-            <p className="font-sans text-xs sm:text-sm font-light text-[#8A7D71] max-w-md leading-relaxed">
-              Real 4K wedding cinema documenting royal heritage, unscripted emotion, and timeless celebrations.
-            </p>
+          {/* Centered Title — Same Format as Upper Home Section */}
+          <Reveal className="text-center space-y-2">
+            <h2 className="font-display text-2xl sm:text-4xl md:text-5xl text-[#171717] font-light tracking-tight">
+              MARWADI <em className="font-editorial italic font-normal text-[#5C2325]">WEDDINGS</em>
+            </h2>
           </Reveal>
 
-          {/* 3-Column Clean Video Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+          {/* 3-Column Video Card Grid Layout */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {displayedFilms.map((film) => (
               <Reveal key={film.id}>
-                <article
+                <div
                   onClick={() => setActiveFilmModal(film)}
-                  className="group cursor-pointer space-y-3.5 flex flex-col justify-between"
+                  className="group relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-[#171717] shadow-xl cursor-pointer border border-white/20 transition-all duration-500 hover:shadow-2xl hover:scale-[1.02]"
                 >
-                  {/* Clean Video Frame */}
-                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-[#171512] shadow-md border border-black/5">
-                    {/* Cover Image */}
-                    <img
-                      src={film.coverImage}
-                      alt={film.couple}
-                      className="h-full w-full object-cover opacity-90 transition-transform duration-700 ease-out group-hover:scale-104"
-                    />
+                  {/* Film Cover Image */}
+                  <img
+                    src={film.coverImage}
+                    alt={film.couple}
+                    className="h-full w-full object-cover opacity-90 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+                  />
 
-                    {/* Overlay Gradient & Minimal Play Button */}
-                    <div className="absolute inset-0 bg-black/25 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
-                      <button
-                        type="button"
-                        aria-label="Play 4K Wedding Film"
-                        onClick={(event) => {
-                          event.stopPropagation();
-                          window.open(film.videoUrl, "_blank", "noopener,noreferrer");
-                        }}
-                        className="h-13 w-13 rounded-full bg-white/95 text-[#261E1E] flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-[#93191E] group-hover:text-white transition-all duration-300 cursor-pointer"
-                      >
-                        <Play className="w-5 h-5 fill-current ml-0.5" />
-                      </button>
-                    </div>
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/10 group-hover:from-black/90 group-hover:via-black/40 transition-all duration-500 flex items-center justify-center">
+                    <button
+                      type="button"
+                      aria-label="Open CMC FILMS on YouTube"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        window.open(film.videoUrl, "_blank", "noopener,noreferrer");
+                      }}
+                      className="h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-white/20 backdrop-blur-md border border-white/40 flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:bg-white text-white group-hover:text-[#171717] transition-all duration-300 cursor-pointer"
+                    >
+                      <Play className="w-5 h-5 fill-current ml-0.5" />
+                    </button>
                   </div>
 
-                  {/* Below Card Details (Clean & Legible) */}
-                  <div className="flex items-start justify-between gap-3 pt-1">
-                    <div>
-                      <h3 className="font-display uppercase tracking-wider text-xl sm:text-2xl font-normal text-[#261E1E] group-hover:text-[#93191E] transition-colors leading-snug">
-                        {film.couple}
-                      </h3>
-                      <p className="font-mono text-[11px] text-[#8A7D71] uppercase tracking-wider mt-1">
-                        {film.location} · 4K FILM
-                      </p>
-                    </div>
-
-                    <span className="font-mono text-xs text-[#93191E] font-semibold opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 shrink-0 pt-1">
-                      Watch <ArrowRight className="w-3.5 h-3.5" />
-                    </span>
+                  {/* Couple Title Inside Card at Bottom Overlay */}
+                  <div className="absolute bottom-4 left-5 right-5 text-white space-y-0.5 pointer-events-none">
+                    <h3 className="font-display uppercase tracking-wider text-xl sm:text-2xl font-normal text-white drop-shadow-md leading-tight">
+                      {film.couple}
+                    </h3>
                   </div>
-                </article>
+                </div>
               </Reveal>
             ))}
           </div>
