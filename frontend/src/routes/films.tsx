@@ -391,7 +391,7 @@ function RecentFilmsCarousel() {
 export function WeddingFilmsPage() {
   const [activeFilmModal, setActiveFilmModal] = useState<FilmItem | null>(null);
   const [managedFilms, setManagedFilms] = useState<ManagedFilm[] | null>(null);
-  const [introTitle, setIntroTitle] = useState('Deeply personal, immersive, and timeless Films.');
+  const [introTitle, setIntroTitle] = useState('MARWADI WEDDINGS');
   const [introText, setIntroText] = useState('Cinematic wedding films rooted in genuine emotion, unscripted movement, and honest storytelling. We take pride in understanding the couple, their families, and the quiet, intimate glances between. Every celebration deserves a wedding film thoughtfully crafted to do justice to the beauty, grace, and authentic spirit of your story.');
 
   useEffect(() => {
@@ -437,16 +437,32 @@ export function WeddingFilmsPage() {
       {/* ── SECTION 3 — EDITORIAL INTRO & FILM GRID ── */}
       <section className="py-20 md:py-28 px-6 sm:px-10 md:px-16 max-w-[1600px] mx-auto space-y-16">
         
-        {/* Editorial Intro Header */}
-        <Reveal className="max-w-4xl space-y-6">
-          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-light leading-[1.08] text-[#C47A65]">
-            {introTitle}
-          </h2>
+        {/* Designed Header Banner with Background #EE594B & Centered MARWADI WEDDINGS Heading */}
+        <Reveal className="w-full">
+          <div className="bg-[#EE594B] text-white py-14 sm:py-20 md:py-24 px-6 sm:px-12 rounded-2xl md:rounded-3xl shadow-2xl text-center space-y-4 relative overflow-hidden border border-white/10">
+            {/* Subtle Overlay Gradient */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/15 pointer-events-none" />
 
-          <div className="space-y-5 text-sm sm:text-base text-[#171512]/75 font-sans font-light leading-relaxed">
-            <p>
-              {introText}
-            </p>
+            {/* Top Tag */}
+            <div className="relative z-10 flex items-center justify-center gap-3">
+              <span className="h-px w-8 sm:w-12 bg-white/40" />
+              <span className="font-mono text-[11px] sm:text-xs uppercase tracking-[0.3em] text-white/90 font-semibold">
+                CMC FILMS CINEMATIC SERIES
+              </span>
+              <span className="h-px w-8 sm:w-12 bg-white/40" />
+            </div>
+
+            {/* Centered Heading "MARWADI WEDDINGS" */}
+            <h1 className="relative z-10 font-display text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-light uppercase tracking-wider text-white drop-shadow-md leading-none">
+              MARWADI WEDDINGS
+            </h1>
+
+            {/* Sub Tagline Accent */}
+            <div className="relative z-10 pt-2">
+              <p className="font-serif italic text-base sm:text-xl text-white/90 tracking-wide">
+                ✦ Royal Heritage & Timeless Celebrations ✦
+              </p>
+            </div>
           </div>
         </Reveal>
 

@@ -8,9 +8,9 @@ const heroPages = [
   { key: 'portfolio', label: 'Wedding Stories', type: 'image', recommendation: '1920 × 1080 px · 16:9' },
   { key: 'films', label: 'Wedding Films', type: 'video', recommendation: '1920 × 1080 px · 16:9' },
   { key: 'couples', label: 'Couple Shoot', type: 'image', recommendation: '1600 × 2000 px · 4:5 portrait' },
-  { key: 'testimonials', label: 'Testimonials', type: 'image', recommendation: '1920 × 1080 px · 16:9' },
-  { key: 'packages', label: 'Packages', type: 'image', recommendation: '1920 × 1080 px · 16:9' },
-  { key: 'about', label: 'About', type: 'image', recommendation: '1920 × 1080 px · 16:9' },
+  { key: 'testimonials', label: 'Testimonials', type: 'image', recommendation: '1920 × 680 px · 2.82:1 wide banner' },
+  { key: 'packages', label: 'Packages', type: 'image', recommendation: '1920 × 680 px · 2.82:1 wide banner' },
+  { key: 'about', label: 'About', type: 'image', recommendation: '1920 × 680 px · 2.82:1 wide banner' },
 ] as const;
 type HeroKey = (typeof heroPages)[number]['key'];
 type HeroMedia = Record<string, { url: string; type: 'image' | 'video' }>;
