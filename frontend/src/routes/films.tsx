@@ -434,27 +434,15 @@ export function WeddingFilmsPage() {
       {/* ── SECTION 2 — RECENT FILMS CAROUSEL (knotsbyamp.com reference design with auto-loop) ── */}
       <RecentFilmsCarousel />
 
-      {/* ── SECTION 3 — UNIFIED MARWADI WEDDINGS SECTION WITH BG #EE594B & FILM GRID ── */}
-      <section className="bg-[#EE594B] text-white py-16 md:py-24 px-6 sm:px-10 md:px-16 border-b border-black/10 relative overflow-hidden">
-        <div className="max-w-[1600px] mx-auto space-y-12 sm:space-y-16 relative z-10">
+      {/* ── SECTION 3 — MARWADI WEDDINGS SECTION WITH VERY LIGHT BG & SIMPLE TYPOGRAPHY ── */}
+      <section className="bg-[#FAF8F5] text-[#261E1E] py-14 sm:py-18 md:py-22 px-6 sm:px-10 md:px-16 border-b border-black/5 relative overflow-hidden">
+        <div className="max-w-[1600px] mx-auto space-y-10 sm:space-y-12 relative z-10">
           
-          {/* Centered Header Title "MARWADI WEDDINGS" */}
-          <Reveal className="text-center space-y-3">
-            <div className="flex items-center justify-center gap-3">
-              <span className="h-px w-8 sm:w-12 bg-white/40" />
-              <span className="font-mono text-[11px] sm:text-xs uppercase tracking-[0.3em] text-white/90 font-semibold">
-                CMC FILMS CINEMATIC SERIES
-              </span>
-              <span className="h-px w-8 sm:w-12 bg-white/40" />
-            </div>
-
-            <h1 className="font-display text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-light uppercase tracking-wider text-white drop-shadow-md leading-none">
+          {/* Simple Centered Header Title "MARWADI WEDDINGS" */}
+          <Reveal className="text-center">
+            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light uppercase tracking-wider text-[#261E1E]">
               MARWADI WEDDINGS
             </h1>
-
-            <p className="font-serif italic text-base sm:text-xl text-white/90 tracking-wide pt-1">
-              ✦ Royal Heritage & Timeless Celebrations ✦
-            </p>
           </Reveal>
 
           {/* 3-Column Video Grid Layout */}
