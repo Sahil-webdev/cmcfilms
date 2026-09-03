@@ -434,110 +434,78 @@ export function WeddingFilmsPage() {
       {/* ── SECTION 2 — RECENT FILMS CAROUSEL (knotsbyamp.com reference design with auto-loop) ── */}
       <RecentFilmsCarousel />
 
-      {/* ── SECTION 3 — MARWADI WEDDINGS ROYAL CINEMATIC COLLECTION ── */}
-      <section className="bg-gradient-to-b from-[#7A1C20] via-[#661519] to-[#4D0D10] text-white py-20 sm:py-24 md:py-28 px-6 sm:px-10 md:px-16 border-b border-black/20 relative overflow-hidden">
-        {/* Subtle Ambient Glow Overlays */}
-        <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#D4AF37]/10 blur-[120px] rounded-full" />
-        <div className="pointer-events-none absolute bottom-0 right-0 w-[600px] h-[300px] bg-[#E2584C]/15 blur-[100px] rounded-full" />
-
-        <div className="max-w-[1600px] mx-auto space-y-14 sm:space-y-18 relative z-10">
+      {/* ── SECTION 3 — MINIMAL & DISTINCTIVE MARWADI WEDDINGS GALLERY ── */}
+      <section className="bg-[#FAF8F5] text-[#261E1E] py-16 md:py-24 px-6 sm:px-10 md:px-16 border-t border-b border-black/5 relative overflow-hidden">
+        <div className="max-w-[1600px] mx-auto space-y-12 sm:space-y-16 relative z-10">
           
-          {/* Royal Header Section */}
-          <Reveal className="text-center space-y-4 max-w-4xl mx-auto">
-            {/* Top Badge */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md shadow-inner">
-              <span className="h-2 w-2 rounded-full bg-[#F3E5AB] animate-pulse" />
-              <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#F3E5AB] font-bold">
-                CMC FILMS CINEMATIC SERIES
-              </span>
-            </div>
-
-            {/* Main Centered Heading */}
-            <h1 className="font-display text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-light uppercase tracking-wider text-white drop-shadow-lg leading-none">
-              MARWADI <em className="font-editorial italic font-normal text-[#F3E5AB] lowercase tracking-normal">Weddings</em>
-            </h1>
-
-            {/* Sub Tagline */}
-            <p className="font-serif italic text-base sm:text-xl text-white/85 tracking-wide max-w-2xl mx-auto font-light leading-relaxed">
-              Where ancient royal heritage, sacred Vedic pheras, & grand celebrations live forever in 4K cinema.
-            </p>
-
-            {/* Filter Pills Bar */}
-            <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap pt-3">
-              {['All Films', 'Royal Palaces', 'Heritage Forts', 'Desert Sunset', 'Sacred Pheras'].map((filterTag, idx) => (
-                <span
-                  key={filterTag}
-                  className={`px-4 py-1.5 rounded-full text-xs font-mono transition-all duration-300 cursor-pointer ${
-                    idx === 0
-                      ? 'bg-[#F3E5AB] text-[#4D0D10] font-bold shadow-md'
-                      : 'bg-white/10 hover:bg-white/20 text-white/90 border border-white/15'
-                  }`}
-                >
-                  {filterTag}
+          {/* Clean Editorial Header */}
+          <Reveal className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-black/10 pb-8">
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#93191E]" />
+                <span className="font-mono text-xs uppercase tracking-[0.25em] text-[#93191E] font-semibold">
+                  CINEMATIC ARCHIVE
                 </span>
-              ))}
+              </div>
+              <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-light uppercase tracking-tight text-[#261E1E]">
+                MARWADI <em className="font-editorial italic font-normal text-[#93191E] lowercase">Weddings</em>
+              </h1>
             </div>
+
+            <p className="font-sans text-xs sm:text-sm font-light text-[#8A7D71] max-w-md leading-relaxed">
+              Real 4K wedding cinema documenting royal heritage, unscripted emotion, and timeless celebrations.
+            </p>
           </Reveal>
 
-          {/* 3-Column Luxury 4K Video Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {displayedFilms.map((film, idx) => (
+          {/* 3-Column Clean Video Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+            {displayedFilms.map((film) => (
               <Reveal key={film.id}>
-                <div
+                <article
                   onClick={() => setActiveFilmModal(film)}
-                  className="group relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-black/60 shadow-2xl cursor-pointer border border-white/15 hover:border-[#F3E5AB]/60 transition-all duration-500"
+                  className="group cursor-pointer space-y-3.5 flex flex-col justify-between"
                 >
-                  {/* Film Cover Image */}
-                  <img
-                    src={film.coverImage}
-                    alt={film.couple}
-                    className="h-full w-full object-cover opacity-90 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
-                  />
+                  {/* Clean Video Frame */}
+                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-[#171512] shadow-md border border-black/5">
+                    {/* Cover Image */}
+                    <img
+                      src={film.coverImage}
+                      alt={film.couple}
+                      className="h-full w-full object-cover opacity-90 transition-transform duration-700 ease-out group-hover:scale-104"
+                    />
 
-                  {/* Top Left Badge Overlay */}
-                  <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
-                    <span className="bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 text-[10px] font-mono tracking-widest text-[#F3E5AB] uppercase font-bold">
-                      {idx % 2 === 0 ? '4K ULTRA HD' : 'FEATURE FILM'}
-                    </span>
-                  </div>
-
-                  {/* Top Right Duration Tag */}
-                  <div className="absolute top-4 right-4 z-10">
-                    <span className="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/20 text-[10px] font-mono tracking-wider text-white/90 font-semibold">
-                      {film.duration || '04:45'}
-                    </span>
-                  </div>
-
-                  {/* Glowing Play Button Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/10 group-hover:from-black/90 group-hover:via-black/40 transition-all duration-500 flex items-center justify-center">
-                    <button
-                      type="button"
-                      aria-label="Play 4K Wedding Film"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        window.open(film.videoUrl, "_blank", "noopener,noreferrer");
-                      }}
-                      className="h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-gradient-to-tr from-[#D4AF37] to-[#F3E5AB] text-[#1A0E10] flex items-center justify-center shadow-[0_0_30px_rgba(243,229,171,0.4)] group-hover:scale-110 transition-all duration-300 cursor-pointer"
-                    >
-                      <Play className="w-6 h-6 fill-current ml-0.5" />
-                    </button>
-                  </div>
-
-                  {/* Bottom Content Overlay Text */}
-                  <div className="absolute bottom-4 left-5 right-5 text-white space-y-1 pointer-events-none">
-                    <p className="font-mono text-[10px] text-[#F3E5AB] uppercase tracking-widest font-semibold truncate">
-                      {film.location} · {film.year || '2026'}
-                    </p>
-                    <div className="flex items-center justify-between gap-2">
-                      <h3 className="font-display uppercase tracking-wider text-xl sm:text-2xl font-normal text-white drop-shadow-md leading-tight truncate">
-                        {film.couple}
-                      </h3>
-                      <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-xs font-mono text-[#F3E5AB] flex items-center gap-1 shrink-0 font-semibold">
-                        Watch <ArrowRight className="w-3.5 h-3.5" />
-                      </span>
+                    {/* Overlay Gradient & Minimal Play Button */}
+                    <div className="absolute inset-0 bg-black/25 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
+                      <button
+                        type="button"
+                        aria-label="Play 4K Wedding Film"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          window.open(film.videoUrl, "_blank", "noopener,noreferrer");
+                        }}
+                        className="h-13 w-13 rounded-full bg-white/95 text-[#261E1E] flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-[#93191E] group-hover:text-white transition-all duration-300 cursor-pointer"
+                      >
+                        <Play className="w-5 h-5 fill-current ml-0.5" />
+                      </button>
                     </div>
                   </div>
-                </div>
+
+                  {/* Below Card Details (Clean & Legible) */}
+                  <div className="flex items-start justify-between gap-3 pt-1">
+                    <div>
+                      <h3 className="font-display uppercase tracking-wider text-xl sm:text-2xl font-normal text-[#261E1E] group-hover:text-[#93191E] transition-colors leading-snug">
+                        {film.couple}
+                      </h3>
+                      <p className="font-mono text-[11px] text-[#8A7D71] uppercase tracking-wider mt-1">
+                        {film.location} · 4K FILM
+                      </p>
+                    </div>
+
+                    <span className="font-mono text-xs text-[#93191E] font-semibold opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 shrink-0 pt-1">
+                      Watch <ArrowRight className="w-3.5 h-3.5" />
+                    </span>
+                  </div>
+                </article>
               </Reveal>
             ))}
           </div>
