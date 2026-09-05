@@ -112,6 +112,7 @@ const getYouTubeVideoId = (url: string): string => {
 
 export function FilmsSection() {
   const [activeVideo, setActiveVideo] = useState<MoviePosterFilm | null>(null);
+  const [isCompactCarousel, setIsCompactCarousel] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   // Published films always come from the CMS API, not the visitor's browser.
@@ -144,8 +145,39 @@ export function FilmsSection() {
       }))
     : posterFilms;
 
-  // Continuous seamless auto carousel: one poster-width every six seconds.
   useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const updateViewport = () => setIsCompactCarousel(mediaQuery.matches);
+    updateViewport();
+    mediaQuery.addEventListener("change", updateViewport);
+    return () => mediaQuery.removeEventListener("change", updateViewport);
+  }, []);
+
+  // Desktop scrolls continuously; compact screens show one complete poster per step.
+  useEffect(() => {
+    if (isCompactCarousel) {
+      const interval = window.setInterval(() => {
+        const carousel = scrollContainerRef.current;
+        if (!carousel || carousel.children.length < 2) return;
+
+        const firstCard = carousel.children[0] as HTMLElement;
+        const secondCard = carousel.children[1] as HTMLElement;
+        const firstRepeatedCard = carousel.children[Math.floor(carousel.children.length / 2)] as HTMLElement;
+        const step = secondCard.offsetLeft - firstCard.offsetLeft;
+        const loopPoint = firstRepeatedCard.offsetLeft - firstCard.offsetLeft;
+
+        if (step > 0 && loopPoint > 0) {
+          if (carousel.scrollLeft + step >= loopPoint - 1) {
+            carousel.scrollTo({ left: 0, behavior: "auto" });
+          } else {
+            carousel.scrollBy({ left: step, behavior: "smooth" });
+          }
+        }
+      }, 6000);
+
+      return () => window.clearInterval(interval);
+    }
+
     let animationFrame = 0;
     let previousTime = performance.now();
 
@@ -173,13 +205,15 @@ export function FilmsSection() {
     animationFrame = window.requestAnimationFrame(animate);
 
     return () => window.cancelAnimationFrame(animationFrame);
-  }, [displayFilms.length]);
+  }, [displayFilms.length, isCompactCarousel]);
 
   const scroll = (direction: "left" | "right") => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = direction === "left" ? -350 : 350;
-      scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
-    }
+    const carousel = scrollContainerRef.current;
+    if (!carousel || carousel.children.length < 2) return;
+    const firstCard = carousel.children[0] as HTMLElement;
+    const secondCard = carousel.children[1] as HTMLElement;
+    const step = secondCard.offsetLeft - firstCard.offsetLeft;
+    carousel.scrollBy({ left: direction === "left" ? -step : step, behavior: "smooth" });
   };
 
   return (
@@ -228,7 +262,7 @@ export function FilmsSection() {
                 href={film.youtubeUrl || "https://www.youtube.com"}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-[260px] sm:w-[300px] md:w-[320px] shrink-0 flex flex-col items-center gap-3.5 group/card cursor-pointer"
+                className="w-[calc(100vw-3rem)] sm:w-[calc(100vw-5rem)] md:w-[320px] shrink-0 flex flex-col items-center gap-3.5 group/card cursor-pointer"
               >
                 {/* Movie Poster Card */}
                 <div className="relative aspect-[2/3] w-full rounded-xl overflow-hidden bg-black/40 shadow-xl border border-white/20 transition-all duration-500 group-hover/card:shadow-2xl group-hover/card:scale-[1.02]">

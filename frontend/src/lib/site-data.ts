@@ -28,8 +28,8 @@ export const studio = {
   ],
   city: "Udaipur, Rajasthan, India",
   socials: [
-    { label: "Instagram", href: "#" },
-    { label: "YouTube", href: "#" },
+    { label: "Instagram", href: "https://www.instagram.com/cmc_films?utm_source=ig_web_button_share_sheet&igsi=ZDNlZDc0MzIxNw==" },
+    { label: "YouTube", href: "https://www.youtube.com/@cmcfilms" },
     { label: "Vimeo", href: "#" },
     { label: "Pinterest", href: "#" },
   ],

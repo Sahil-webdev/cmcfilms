@@ -1,6 +1,6 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Instagram, Youtube, Calendar, ArrowUpRight, MessageCircle } from "lucide-react";
+import { Instagram, Youtube, Calendar, ArrowUpRight, MessageCircle, ChevronRight } from "lucide-react";
 import { navLinks, studio } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
 import { BrandLogo } from "./BrandLogo";
@@ -149,127 +149,120 @@ export function Navbar() {
         role="navigation"
         aria-label="Mobile Navigation Sidebar"
         className={cn(
-          "fixed top-0 right-0 bottom-0 z-[85] h-[100dvh] w-[82%] max-w-[360px] bg-black/35 backdrop-blur-2xl text-white rounded-l-[24px] shadow-[-20px_0_50px_rgba(0,0,0,0.5)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.36,1)] lg:hidden flex flex-col justify-between p-7 pt-20 overflow-y-auto overflow-x-hidden",
+          "fixed top-0 right-0 bottom-0 z-[85] h-[100dvh] w-[85%] max-w-[340px] bg-[#120F0D]/95 backdrop-blur-2xl text-white rounded-l-3xl border-l border-white/10 shadow-[-20px_0_50px_rgba(0,0,0,0.7)] transition-all duration-400 ease-[cubic-bezier(0.16,1,0.36,1)] lg:hidden flex flex-col justify-between p-6 pt-16 overflow-y-auto overflow-x-hidden",
           open
             ? "translate-x-0 opacity-100"
             : "translate-x-full opacity-0 pointer-events-none",
         )}
       >
-        {/* Ambient Glow in Background */}
-        <div className="pointer-events-none absolute -top-16 -right-16 h-56 w-56 rounded-full bg-[#E5CA92]/20 blur-3xl" />
-        <div className="pointer-events-none absolute bottom-10 -left-16 h-48 w-48 rounded-full bg-[#015287]/25 blur-3xl" />
+        {/* Subtle Ambient Glow */}
+        <div className="pointer-events-none absolute -top-16 -right-16 h-48 w-48 rounded-full bg-[#93191E]/20 blur-3xl" />
+        <div className="pointer-events-none absolute bottom-10 -left-16 h-48 w-48 rounded-full bg-[#D4AF37]/15 blur-3xl" />
 
         {/* ── Top Header / Brand Mark ── */}
-        <div className="relative z-10 pb-4 border-b border-white/10">
+        <div className="relative z-10 pb-5 border-b border-white/10">
           <BrandLogo
             variant="light"
-            textClassName="text-lg sm:text-xl font-display font-black tracking-[0.32em] [-webkit-text-stroke:0.6px_currentColor]"
+            textClassName="text-lg font-bold tracking-[0.25em] text-white"
           />
-          <span className="label-xs text-[#E5CA92] text-[10px] uppercase tracking-widest block mt-2 font-mono">
-            Stories for love • Told forever
+          <span className="text-[10px] text-amber-400/90 uppercase tracking-widest block mt-1 font-mono">
+            Cinematic Wedding Films
           </span>
         </div>
 
-        {/* ── Clean Animated Text Navigation Links (No Boxed Buttons / Borders) ── */}
-        <div className="relative z-10 py-6 my-auto flex flex-col gap-5">
+        {/* ── Navigation Links (Clean, Normal Sans Typography) ── */}
+        <div className="relative z-10 py-6 my-auto flex flex-col gap-2">
           {navLinks.map((l, i) => {
             const isActive = location.pathname === l.to;
             return (
-                <Link
-                  key={l.label}
-                  to={l.to}
+              <Link
+                key={l.label}
+                to={l.to}
                 resetScroll={l.to === "/"}
                 onClick={() => {
                   setOpen(false);
                   if (l.to === "/") scrollHomeToTop();
                 }}
-                className="group relative flex items-center justify-between transition-all duration-300 py-1"
+                className={cn(
+                  "group relative flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200",
+                  isActive
+                    ? "bg-[#93191E]/25 text-white font-medium border border-[#93191E]/40"
+                    : "text-white/80 hover:text-white hover:bg-white/5",
+                )}
                 style={{
-                  transitionDelay: `${open ? 60 + i * 40 : 0}ms`,
-                  transform: open ? "translateY(0)" : "translateY(12px)",
+                  transitionDelay: `${open ? 40 + i * 30 : 0}ms`,
+                  transform: open ? "translateY(0)" : "translateY(10px)",
                   opacity: open ? 1 : 0,
                 }}
               >
                 <div className="flex items-center gap-3">
-                  <span className="font-mono text-xs text-[#E5CA92]/80 group-hover:text-[#E5CA92] transition-colors">
-                    0{i + 1}
-                  </span>
                   <span
                     className={cn(
-                      "font-display text-3xl md:text-4xl tracking-wide font-light transition-all duration-300 group-hover:translate-x-2",
+                      "h-1.5 w-1.5 rounded-full transition-all",
                       isActive
-                        ? "text-[#E5CA92] font-normal drop-shadow-[0_2px_10px_rgba(229,202,146,0.3)]"
-                        : "text-white/90 group-hover:text-[#E5CA92]",
+                        ? "bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]"
+                        : "bg-white/20 group-hover:bg-white/60",
                     )}
-                  >
+                  />
+                  <span className="font-sans text-base font-medium tracking-wide">
                     {l.label}
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  {isActive && (
-                    <span className="h-2 w-2 rounded-full bg-[#E5CA92] shadow-[0_0_10px_#E5CA92] animate-pulse" />
+                <ChevronRight
+                  className={cn(
+                    "w-4 h-4 transition-transform duration-200",
+                    isActive
+                      ? "text-amber-400 translate-x-0.5"
+                      : "text-white/30 group-hover:text-white/70 group-hover:translate-x-1",
                   )}
-                  <ArrowUpRight className="w-5 h-5 text-white/40 group-hover:text-[#E5CA92] group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
-                </div>
+                />
               </Link>
             );
           })}
+        </div>
 
-          {/* Book Experience Text Link */}
+        {/* ── Bottom Actions & Social Links ── */}
+        <div className="relative z-10 pt-5 border-t border-white/10 space-y-4">
           <Link
-            to="/packages"
+            to="/contact"
             onClick={() => setOpen(false)}
-            className="group relative flex items-center justify-between transition-all duration-300 py-1 mt-2"
-            style={{
-              transitionDelay: `${open ? 60 + navLinks.length * 40 : 0}ms`,
-              transform: open ? "translateY(0)" : "translateY(12px)",
-              opacity: open ? 1 : 0,
-            }}
+            className="w-full py-3 rounded-xl bg-gradient-to-r from-[#93191E] to-[#b82329] text-white text-xs font-mono font-semibold tracking-wider uppercase flex items-center justify-center gap-2 shadow-lg hover:shadow-rose-900/40 transition-all active:scale-[0.98]"
           >
-            <div className="flex items-center gap-3">
-              <span className="font-mono text-xs text-[#E5CA92]/80 group-hover:text-[#E5CA92] transition-colors">
-                06
-              </span>
-              <span className="font-display text-3xl md:text-4xl tracking-wide font-light text-white/90 group-hover:text-[#E5CA92] group-hover:translate-x-2 transition-all duration-300">
-                Book Experience
-              </span>
-            </div>
-            <ArrowUpRight className="w-5 h-5 text-[#E5CA92] group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
+            <Calendar className="w-3.5 h-3.5" />
+            <span>Book Consultation</span>
           </Link>
-        </div>
 
-        {/* ── Minimalist Bottom Social Links (Clean Text Row, No Extra Box Clutter) ── */}
-        <div className="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-white/60">
-          <a
-            href={studio.socials[0]?.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-[#E5CA92] transition-colors"
-          >
-            Instagram
-          </a>
-          <span className="text-white/20">•</span>
-          <a
-            href={studio.socials[1]?.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-[#E5CA92] transition-colors"
-          >
-            YouTube
-          </a>
-          <span className="text-white/20">•</span>
-          <a
-            href="https://wa.me/919999999999"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-[#E5CA92] transition-colors flex items-center gap-1"
-          >
-            <MessageCircle className="w-3 h-3 text-[#E5CA92]" />
-            <span>WhatsApp</span>
-          </a>
-        </div>
-      </aside>
+          <div className="flex items-center justify-between text-xs font-mono text-white/50 pt-1 px-1">
+            <a
+              href={studio.socials[0]?.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-amber-400 transition-colors"
+            >
+              Instagram
+            </a>
+            <span className="text-white/20">•</span>
+            <a
+              href={studio.socials[1]?.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-amber-400 transition-colors"
+            >
+              YouTube
+            </a>
+            <span className="text-white/20">•</span>
+            <a
+              href="https://wa.me/917425940636"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-amber-400 transition-colors flex items-center gap-1"
+            >
+              <MessageCircle className="w-3.5 h-3.5 text-amber-400" />
+              <span>WhatsApp</span>
+            </a>
+          </div>
+        </div></aside>
     </>
   );
 }

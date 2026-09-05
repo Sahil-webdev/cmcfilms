@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowRight, X, Sparkles, Calendar, Clock } from "lucide-react";
+import { ArrowRight, X } from "lucide-react";
 import { useHeroMedia } from "@/hooks/useHeroMedia";
 
 // Image Imports
@@ -368,9 +368,6 @@ export function WeddingStoriesPage() {
                 Featured Story
               </span>
             </div>
-            <span className="text-xs font-mono text-[#261E1E]/50 hidden sm:inline-block uppercase tracking-wider">
-              Real Weddings & Editorial Journal
-            </span>
           </div>
 
           {/* 2-Column Luxury Split Magazine Card */}
@@ -387,31 +384,11 @@ export function WeddingStoriesPage() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20 lg:hidden" />
               
-              {/* Badge Overlay */}
-              <div className="absolute top-5 left-5 z-10">
-                <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md text-amber-300 text-xs font-mono font-medium tracking-wider border border-white/20 shadow-lg">
-                  <Sparkles className="w-3.5 h-3.5 text-amber-400 fill-amber-400/30" />
-                  <span>Spotlight Edition</span>
-                </span>
-              </div>
             </div>
 
             {/* Right Column: Editorial Text (5 cols) */}
             <div className="lg:col-span-5 p-7 sm:p-10 lg:p-12 flex flex-col justify-between space-y-6 bg-[#F7F4EF]">
               <div className="space-y-4 sm:space-y-5">
-                {/* Meta Badge & Date */}
-                <div className="flex items-center justify-between gap-3 text-xs font-mono text-[#93191E] font-semibold tracking-wider uppercase flex-wrap">
-                  <span className="inline-block px-3 py-1 rounded-md bg-[#93191E]/10 border border-[#93191E]/20 text-[#93191E]">
-                    {featuredPost.category}
-                  </span>
-                  {featuredPost.date && (
-                    <span className="text-[#261E1E]/60 font-normal flex items-center gap-1.5">
-                      <Calendar className="w-3.5 h-3.5 text-[#93191E]" />
-                      {featuredPost.date}
-                    </span>
-                  )}
-                </div>
-
                 {/* Main Story Title */}
                 <h2 className="font-serif text-2.5xl sm:text-3xl lg:text-[2.4rem] font-normal text-[#1A1817] leading-[1.2] tracking-tight group-hover:text-[#93191E] transition-colors">
                   "{featuredPost.title}"
@@ -434,18 +411,11 @@ export function WeddingStoriesPage() {
               </div>
 
               {/* Bottom CTA Bar */}
-              <div className="pt-5 border-t border-[#E2DCCE] flex items-center justify-between gap-4">
+              <div className="pt-5 border-t border-[#E2DCCE] flex items-center">
                 <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#93191E] text-white text-xs font-mono font-bold tracking-wider uppercase group-hover:bg-[#7a1418] transition-colors shadow-md">
                   <span>Read Full Story</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </span>
-
-                {featuredPost.readTime && (
-                  <span className="text-xs font-mono text-[#261E1E]/50 flex items-center gap-1.5">
-                    <Clock className="w-3.5 h-3.5 text-[#93191E]" />
-                    {featuredPost.readTime}
-                  </span>
-                )}
               </div>
             </div>
           </div>
