@@ -301,9 +301,6 @@ export function ClientExperiencesSection() {
                         <h4 className="font-display text-sm sm:text-base text-[#261E1E] font-medium leading-tight">
                           {review.coupleName}
                         </h4>
-                        <p className="text-[10px] font-mono text-[#261E1E]/70 truncate mt-0.5">
-                          {review.weddingLocation}
-                        </p>
                       </div>
                     </div>
 

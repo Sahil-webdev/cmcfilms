@@ -38,6 +38,7 @@ const CATEGORIES: GalleryCategory[] = [
   'Ceremonies',
   'Uncategorized',
 ];
+const MAX_GALLERY_IMAGES = 15;
 
 function detectAspectRatioClass(width: number, height: number): string {
   const ratio = width / height;
@@ -81,7 +82,14 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [previewSrc, setPreviewSrc] = useState<string | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
+  const [limitNotice, setLimitNotice] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const remainingSlots = Math.max(0, MAX_GALLERY_IMAGES - images.length);
+  const atImageLimit = remainingSlots === 0;
+
+  const showImageLimitNotice = () => {
+    setLimitNotice(`Gallery limit reached: only ${MAX_GALLERY_IMAGES} images can be added.`);
+  };
 
   const toggleSelect = (id: string) => {
     setSelectedIds((prev) => {
@@ -107,18 +115,28 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({
     async (files: FileList | File[]) => {
       const fileArr = Array.from(files).filter((f) => f.type.startsWith('image/'));
       if (!fileArr.length) return;
+      if (atImageLimit) {
+        showImageLimitNotice();
+        return;
+      }
+      const filesToUpload = fileArr.slice(0, remainingSlots);
+      if (fileArr.length > remainingSlots) {
+        setLimitNotice(`Only ${remainingSlots} more image${remainingSlots === 1 ? '' : 's'} can be added. Gallery limit is ${MAX_GALLERY_IMAGES}.`);
+      } else {
+        setLimitNotice(null);
+      }
       setIsUploading(true);
       setUploadProgress(0);
-      setUploadStatus(`Preparing ${fileArr.length} image${fileArr.length > 1 ? 's' : ''}…`);
+      setUploadStatus(`Preparing ${filesToUpload.length} image${filesToUpload.length > 1 ? 's' : ''}…`);
       try {
         const results: GalleryImage[] = [];
-        for (let i = 0; i < fileArr.length; i++) {
-          const file = fileArr[i];
-          setUploadStatus(`Uploading ${i + 1} of ${fileArr.length}: ${file.name}`);
+        for (let i = 0; i < filesToUpload.length; i++) {
+          const file = filesToUpload[i];
+          setUploadStatus(`Uploading ${i + 1} of ${filesToUpload.length}: ${file.name}`);
           const src = await onUploadImage(file, (fileProgress) => {
-            setUploadProgress(Math.min(99, Math.round(((i + fileProgress / 100) / fileArr.length) * 100)));
+            setUploadProgress(Math.min(99, Math.round(((i + fileProgress / 100) / filesToUpload.length) * 100)));
           });
-          setUploadStatus(`Finalizing ${i + 1} of ${fileArr.length}: ${file.name}`);
+          setUploadStatus(`Finalizing ${i + 1} of ${filesToUpload.length}: ${file.name}`);
           const { w, h } = await getImageDimensions(src);
           const aspectRatio = detectAspectRatioClass(w, h);
           results.push({
@@ -130,7 +148,7 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({
             aspectRatio,
             createdAt: new Date().toISOString().split('T')[0],
           });
-          setUploadProgress(Math.round(((i + 1) / fileArr.length) * 100));
+          setUploadProgress(Math.round(((i + 1) / filesToUpload.length) * 100));
         }
         onAddImages(results);
       } catch (error) {
@@ -141,7 +159,7 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({
         setUploadStatus('');
       }
     },
-    [onAddImages, onUploadImage]
+    [atImageLimit, onAddImages, onUploadImage, remainingSlots]
   );
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -201,11 +219,11 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({
             </button>
           )}
           <button
-            onClick={() => fileInputRef.current?.click()}
+            onClick={() => atImageLimit ? showImageLimitNotice() : fileInputRef.current?.click()}
             className="flex items-center gap-2 bg-[#8C90C1] hover:bg-[#787CAE] text-white text-xs font-semibold px-5 py-3 rounded-xl shadow-lg shadow-[#8C90C1]/20 cursor-pointer transition-all active:scale-95"
           >
             <Plus className="h-4 w-4" />
-            Upload Images
+            Upload Images ({images.length}/{MAX_GALLERY_IMAGES})
           </button>
         </div>
       </div>
@@ -213,7 +231,7 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
-          { label: 'Total Images', value: images.length },
+          { label: 'Total Images', value: `${images.length} / ${MAX_GALLERY_IMAGES}` },
           { label: 'Categories Used', value: new Set(images.map((i) => i.category)).size },
           { label: 'Selected', value: selectedIds.size },
           { label: 'Est. Size', value: `${totalSizeMB.toFixed(1)} MB` },
@@ -228,12 +246,14 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({
       {/* Hidden File Input */}
       <input type="file" ref={fileInputRef} multiple accept="image/*" className="hidden" onChange={handleFileChange} />
 
+      {limitNotice && <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-xs font-semibold text-amber-700 dark:text-amber-300">{limitNotice}</div>}
+
       {/* Drag & Drop Zone */}
       <div
         onDrop={handleDrop}
         onDragOver={(e) => { e.preventDefault(); setIsDragOver(true); }}
         onDragLeave={() => setIsDragOver(false)}
-        onClick={() => fileInputRef.current?.click()}
+        onClick={() => atImageLimit ? showImageLimitNotice() : fileInputRef.current?.click()}
         className={`border-2 border-dashed rounded-3xl p-8 text-center cursor-pointer transition-all duration-200 ${
           isDragOver
             ? 'border-[#8C90C1] bg-[#8C90C1]/10 scale-[1.01]'
@@ -258,7 +278,7 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({
               Drop images here, or click to browse
             </p>
             <p className="text-xs text-slate-400">
-              JPG, PNG, WEBP • Select multiple at once • No limit • Aspect ratio auto-detected
+              JPG, PNG, WEBP • Select multiple at once • Maximum {MAX_GALLERY_IMAGES} images • Aspect ratio auto-detected
             </p>
           </div>
         )}

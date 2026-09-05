@@ -37,7 +37,7 @@ export function FooterOption7() {
           <div className="space-y-4">
             <BrandLogo
               variant="custom"
-              textClassName="text-xl sm:text-2xl font-display font-bold tracking-[0.34em] text-[#AE171E]"
+              textClassName="text-xl sm:text-2xl font-display font-black tracking-[0.34em] [-webkit-text-stroke:0.6px_currentColor] text-[#AE171E]"
             />
 
             <p className="text-xs sm:text-sm text-[#AE171E]/90 font-normal leading-relaxed max-w-xs" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
@@ -209,11 +209,11 @@ export function FooterOption7() {
                 </div>
                 <div className="flex items-center gap-2.5">
                   <Phone className="w-4 h-4 text-[#AE171E] shrink-0" />
-                  <a href="tel:+917425940636" className="hover:underline transition-all">+91 74259 40636</a>
+                  <a href="tel:+917014940636" className="hover:underline transition-all">+91 70149 40636</a>
                 </div>
                 <div className="flex items-center gap-2.5">
                   <Phone className="w-4 h-4 text-[#AE171E] shrink-0" />
-                  <a href="tel:+917014940636" className="hover:underline transition-all">+91 70149 40636</a>
+                  <a href="tel:+917425940636" className="hover:underline transition-all">+91 74259 40636</a>
                 </div>
               </div>
             </div>

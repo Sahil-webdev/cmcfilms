@@ -1,7 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Outlet, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
-import { ArrowRight, ArrowLeft, X } from "lucide-react";
-import { useHeroMedia } from "@/hooks/useHeroMedia";
+import { ArrowRight, ArrowLeft } from "lucide-react";
 
 // Pinterest Folder Assets (src/assets/pinterest)
 import pin1 from "@/assets/pinterest/pin1.jpg";
@@ -56,7 +55,7 @@ export interface CoupleStoryItem {
   };
 }
 
-const coupleStoriesList: CoupleStoryItem[] = [
+export const coupleStoriesList: CoupleStoryItem[] = [
   {
     id: "cs-01",
     couple: "Mrinal & Abhishek",
@@ -185,6 +184,16 @@ const coupleStoriesList: CoupleStoryItem[] = [
   },
 ];
 
+export const getCoupleStorySlug = (story: Pick<CoupleStoryItem, "id" | "title">) => {
+  const toSegment = (value: string) => value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+  return `${toSegment(story.title) || "couple-story"}-${toSegment(story.id) || "story"}`;
+};
+
 // Photo Collage Grid Items (PINTEREST IMAGES)
 const collagePhotos = [
   { src: pin1, alt: "Couple Embrace at Sunset", title: "Sunset Romance" },
@@ -196,10 +205,12 @@ const collagePhotos = [
 ];
 
 export function CoupleShootsPage() {
-  const heroMedia = useHeroMedia('couples', couplesHeroCustom);
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  const navigate = useNavigate();
+  const [heroImages, setHeroImages] = useState<string[]>([couplesHeroCustom, pin1, pin2]);
+  const [activeHeroImage, setActiveHeroImage] = useState(0);
   const [galleryPhotos, setGalleryPhotos] = useState(collagePhotos);
   const [stories, setStories] = useState<CoupleStoryItem[]>(coupleStoriesList);
-  const [activeStoryModal, setActiveStoryModal] = useState<CoupleStoryItem | null>(null);
   const [activeLightboxPhoto, setActiveLightboxPhoto] = useState<string | null>(null);
   const [isPaused, setIsPaused] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -223,6 +234,31 @@ export function CoupleShootsPage() {
     return () => controller.abort();
   }, []);
 
+  // Three editable hero slides from the admin panel. Old single-image hero
+  // settings remain supported as the first slide during the transition.
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/site-settings/hero-media`, { signal: controller.signal })
+      .then((response) => response.json())
+      .then((payload) => {
+        const saved = payload?.data?.media?.couples;
+        const savedImages = Array.isArray(saved?.images)
+          ? saved.images.filter((image: unknown) => typeof image === 'string' && image)
+          : saved?.url ? [saved.url] : [];
+        if (savedImages.length) setHeroImages([...savedImages, pin1, pin2].slice(0, 3));
+      })
+      .catch(() => undefined);
+    return () => controller.abort();
+  }, []);
+
+  useEffect(() => {
+    if (heroImages.length < 2) return;
+    const timer = window.setInterval(() => {
+      setActiveHeroImage((current) => (current + 1) % heroImages.length);
+    }, 4000);
+    return () => window.clearInterval(timer);
+  }, [heroImages.length]);
+
   useEffect(() => {
     if (isPaused) return;
     const interval = setInterval(() => {
@@ -244,6 +280,16 @@ export function CoupleShootsPage() {
       carouselRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
     }
   };
+
+  const openStory = (story: CoupleStoryItem) => {
+    navigate({
+      to: "/couples/$slug",
+      params: { slug: getCoupleStorySlug(story) },
+    });
+  };
+
+  // The detail route owns the full screen when a story URL is open.
+  if (pathname.startsWith("/couples/")) return <Outlet />;
 
   return (
     <main className="bg-[#F3F0EA] text-[#171717] font-sans selection:bg-[#922A2F]/20 relative overflow-hidden">
@@ -279,23 +325,25 @@ export function CoupleShootsPage() {
           {/* Left Column: Clean Tall Vertical Real Couple Image */}
           <div className="lg:col-span-6 flex justify-center lg:justify-start w-full">
             <div className="relative h-[520px] sm:h-[600px] lg:h-[660px] w-full max-w-lg lg:max-w-xl overflow-hidden rounded-2xl shadow-xl bg-[#D8D3CB]">
-              <img
-                src={heroMedia}
-                alt="Real Couple Shoot Hero"
-                className="h-full w-full object-cover object-top transition-transform duration-1000 hover:scale-105"
-              />
+              {heroImages.map((image, index) => (
+                <img
+                  key={`${image}-${index}`}
+                  src={image}
+                  alt={`Real Couple Shoot Hero ${index + 1}`}
+                  className={`absolute inset-0 h-full w-full object-cover object-top transition-opacity duration-1000 ease-in-out ${index === activeHeroImage ? 'opacity-100' : 'opacity-0'}`}
+                />
+              ))}
             </div>
           </div>
 
-          {/* Right Column: Alex Brush Cursive Title & Editorial Copy */}
+          {/* Right Column: Signature-style display title & editorial copy */}
           <div className="lg:col-span-6 space-y-6 pt-4 lg:pt-0 text-left">
             <div>
               <h1
-                className="font-normal leading-[0.85] text-6xl sm:text-7xl md:text-8xl lg:text-9xl select-none"
-                style={{ fontFamily: "'Alex Brush', cursive" }}
+                className="leading-[0.82] text-6xl sm:text-7xl md:text-8xl lg:text-9xl select-none"
               >
-                <span className="text-[#922A2F] block">Couple</span>
-                <span className="text-[#8A8072] block pl-[1.35em] sm:pl-[1.5em] md:pl-[1.65em] -mt-2 sm:-mt-4 md:-mt-6">Shoots</span>
+                <span className="block text-[#922A2F]" style={{ fontFamily: "'Sofia', cursive" }}>Couple</span>
+                <span className="font-editorial italic font-normal tracking-[-0.035em] text-[#8A8072] block pl-[1.45em] sm:pl-[1.6em] md:pl-[1.8em] mt-0 sm:mt-1 md:mt-2">Shoots</span>
               </h1>
             </div>
 
@@ -414,7 +462,7 @@ export function CoupleShootsPage() {
             {stories.map((story) => (
               <div
                 key={story.id}
-                onClick={() => setActiveStoryModal(story)}
+                onClick={() => openStory(story)}
                 className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.35rem)] snap-center shrink-0 group cursor-pointer space-y-4 text-left flex flex-col justify-between"
               >
                 <div className="space-y-4">
@@ -441,6 +489,10 @@ export function CoupleShootsPage() {
                 <div className="pt-2">
                   <button
                     type="button"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      openStory(story);
+                    }}
                     className="uiverse-button group/btn inline-flex items-center gap-2.5 bg-[#261E1E] hover:bg-black text-white font-semibold text-xs py-2 px-4 pl-3 rounded-full transition-all duration-300 shadow-xs cursor-pointer whitespace-nowrap overflow-hidden"
                     style={{ "--clr": "#261E1E" } as React.CSSProperties}
                   >
@@ -479,155 +531,6 @@ export function CoupleShootsPage() {
 
       </section>
 
-      {/* ── 4. DEDICATED COUPLE STORY PAGE MODAL ── */}
-      {activeStoryModal && (
-        <IndividualCoupleStoryModal
-          story={activeStoryModal}
-          stories={stories}
-          onClose={() => setActiveStoryModal(null)}
-          onNextStory={(nextS) => setActiveStoryModal(nextS)}
-        />
-      )}
     </main>
-  );
-}
-
-// ── DEDICATED COUPLE STORY EDITORIAL DETAIL MODAL ──
-function IndividualCoupleStoryModal({
-  story,
-  stories,
-  onClose,
-  onNextStory,
-}: {
-  story: CoupleStoryItem;
-  stories: CoupleStoryItem[];
-  onClose: () => void;
-  onNextStory: (nextS: CoupleStoryItem) => void;
-}) {
-  const currentIndex = stories.findIndex((s) => s.id === story.id);
-  const nextStory = stories[(currentIndex + 1) % stories.length] || story;
-
-  return (
-    <div className="fixed inset-0 z-[100] bg-[#F3F0EA] text-[#171717] overflow-y-auto animate-in fade-in duration-300">
-      
-      {/* Sticky Top Header */}
-      <div className="sticky top-0 z-50 flex items-center justify-between px-6 py-4 bg-[#F3F0EA]/95 backdrop-blur-md border-b border-[#D8D3CB]">
-        <span className="text-xs font-mono uppercase tracking-widest text-[#68645E]">
-          CMC FILMS · EDITORIAL STORY
-        </span>
-        <button
-          type="button"
-          onClick={onClose}
-          className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-widest text-[#171717] hover:text-[#68645E] transition-colors cursor-pointer"
-        >
-          <span>Close</span>
-          <X className="w-4 h-4" />
-        </button>
-      </div>
-
-      {/* Story Opening */}
-      <section className="pt-8 pb-16 px-6 max-w-[1440px] mx-auto space-y-8">
-        
-        {/* Large Hero Image */}
-        <div className="aspect-[16/9] w-full overflow-hidden bg-[#D8D3CB]">
-          <img src={story.heroImage} alt={story.couple} className="h-full w-full object-cover" />
-        </div>
-
-        {/* Title & Metadata */}
-        <div className="space-y-2 border-b border-[#D8D3CB] pb-8 text-left">
-          <h1 className="font-editorial text-4xl sm:text-6xl md:text-7xl text-[#171717] font-normal">
-            {story.title}
-          </h1>
-          <p className="text-xs font-mono uppercase tracking-widest text-[#68645E]">
-            {story.location} · {story.shootType} · {story.year}
-          </p>
-        </div>
-
-        {/* Short Introduction */}
-        <div className="max-w-3xl py-4 text-left">
-          <p className="font-sans text-base sm:text-lg text-[#171717] font-light leading-relaxed">
-            {story.introText}
-          </p>
-        </div>
-      </section>
-
-      {/* Gallery Flow */}
-      <section className="py-12 px-6 max-w-[1440px] mx-auto space-y-16">
-        
-        {/* 1. Full-Width Image */}
-        <div className="aspect-[16/10] w-full overflow-hidden bg-[#D8D3CB]">
-          <img src={story.galleryImages[0] || story.heroImage} alt="Gallery 1" className="h-full w-full object-cover" />
-        </div>
-
-        {/* 2. Two Portraits Side by Side */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-          <div className="aspect-[4/5] overflow-hidden bg-[#D8D3CB]">
-            <img src={story.galleryImages[1] || pin2} alt="Gallery 2" className="h-full w-full object-cover" />
-          </div>
-          <div className="aspect-[4/5] overflow-hidden bg-[#D8D3CB]">
-            <img src={story.galleryImages[2] || pin3} alt="Gallery 3" className="h-full w-full object-cover" />
-          </div>
-        </div>
-
-        {/* 3. One Landscape Image */}
-        <div className="aspect-[3/2] max-w-4xl mx-auto overflow-hidden bg-[#D8D3CB]">
-          <img src={story.galleryImages[3] || pin4} alt="Gallery 4" className="h-full w-full object-cover" />
-        </div>
-
-        {/* 4. Short Text Passage */}
-        <div className="max-w-xl mx-auto text-center py-6">
-          <p className="font-editorial text-2xl sm:text-3xl italic text-[#68645E] font-light">
-            “No schedules. No rush. Just moments as they unfolded.”
-          </p>
-        </div>
-
-        {/* 5. One Vertical Image */}
-        <div className="max-w-md mx-auto aspect-[3/4] overflow-hidden bg-[#D8D3CB]">
-          <img src={story.galleryImages[4] || pin5} alt="Gallery 5" className="h-full w-full object-cover" />
-        </div>
-
-        {/* 6. Three-Image Sequence */}
-        <div className="grid grid-cols-3 gap-4">
-          {story.galleryImages.slice(0, 3).map((img, i) => (
-            <div key={i} className="aspect-square overflow-hidden bg-[#D8D3CB]">
-              <img src={img} alt="Sequence frame" className="h-full w-full object-cover" />
-            </div>
-          ))}
-        </div>
-
-        {/* 7. Full-Width Closing Image */}
-        <div className="aspect-[2/1] w-full overflow-hidden bg-[#D8D3CB]">
-          <img src={story.galleryImages[5] || pin6} alt="Closing image" className="h-full w-full object-cover" />
-        </div>
-
-      </section>
-
-      {/* Next Story Banner */}
-      <section
-        onClick={() => {
-          window.scrollTo({ top: 0, behavior: "smooth" });
-          onNextStory(nextStory);
-        }}
-        className="py-24 px-6 border-t border-[#D8D3CB] bg-[#E8E4DC] hover:bg-[#DDD8CE] transition-colors cursor-pointer group text-left"
-      >
-        <div className="max-w-[1440px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div>
-            <span className="text-xs font-mono uppercase tracking-widest text-[#68645E]">
-              NEXT EDITORIAL STORY
-            </span>
-            <h3 className="font-editorial text-3xl sm:text-4xl text-[#171717] group-hover:text-[#68645E] transition-colors">
-              {nextStory.title}
-            </h3>
-            <p className="text-xs font-mono uppercase tracking-widest text-[#68645E] mt-1">
-              {nextStory.location}
-            </p>
-          </div>
-          <span className="inline-flex items-center gap-1 text-xs font-mono uppercase tracking-widest text-[#171717]">
-            View Story →
-          </span>
-        </div>
-      </section>
-
-    </div>
   );
 }

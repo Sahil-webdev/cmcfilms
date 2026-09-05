@@ -112,7 +112,6 @@ const getYouTubeVideoId = (url: string): string => {
 
 export function FilmsSection() {
   const [activeVideo, setActiveVideo] = useState<MoviePosterFilm | null>(null);
-  const [isPaused, setIsPaused] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   // Published films always come from the CMS API, not the visitor's browser.
@@ -145,27 +144,36 @@ export function FilmsSection() {
       }))
     : posterFilms;
 
-  // Infinite seamless Right-to-Left auto swipe every 4 seconds
+  // Continuous seamless auto carousel: one poster-width every six seconds.
   useEffect(() => {
-    if (isPaused) return;
+    let animationFrame = 0;
+    let previousTime = performance.now();
 
-    const interval = setInterval(() => {
-      if (scrollContainerRef.current) {
-        const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
-        const maxScroll = scrollWidth - clientWidth;
-        
-        // When approaching the middle of duplicated array, reset scroll position seamlessly so cards always flow Right-to-Left
-        if (scrollLeft >= maxScroll - 350) {
-          scrollContainerRef.current.scrollLeft = 0;
-          scrollContainerRef.current.scrollBy({ left: 320, behavior: "smooth" });
-        } else {
-          scrollContainerRef.current.scrollBy({ left: 320, behavior: "smooth" });
+    const animate = (time: number) => {
+      const carousel = scrollContainerRef.current;
+      const elapsed = Math.min(time - previousTime, 64);
+      previousTime = time;
+
+      if (carousel && carousel.children.length >= 2) {
+        const firstCard = carousel.children[0] as HTMLElement;
+        const secondCard = carousel.children[1] as HTMLElement;
+        const firstRepeatedCard = carousel.children[Math.floor(carousel.children.length / 2)] as HTMLElement;
+        const step = secondCard.offsetLeft - firstCard.offsetLeft;
+        const loopPoint = firstRepeatedCard.offsetLeft - firstCard.offsetLeft;
+
+        if (step > 0 && loopPoint > 0) {
+          // Move at a constant rate instead of jumping every two seconds.
+          const nextPosition = carousel.scrollLeft + (elapsed * step) / 6000;
+          carousel.scrollLeft = nextPosition >= loopPoint ? nextPosition - loopPoint : nextPosition;
         }
       }
-    }, 4000);
+      animationFrame = window.requestAnimationFrame(animate);
+    };
 
-    return () => clearInterval(interval);
-  }, [isPaused]);
+    animationFrame = window.requestAnimationFrame(animate);
+
+    return () => window.cancelAnimationFrame(animationFrame);
+  }, [displayFilms.length]);
 
   const scroll = (direction: "left" | "right") => {
     if (scrollContainerRef.current) {
@@ -185,14 +193,8 @@ export function FilmsSection() {
           </h2>
         </Reveal>
 
-        {/* Poster Slider Carousel Wrapper (Auto-swipes every 4 seconds, pauses on hover) */}
-        <div
-          className="relative group"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-          onTouchStart={() => setIsPaused(true)}
-          onTouchEnd={() => setIsPaused(false)}
-        >
+        {/* Poster Slider Carousel Wrapper (continuous auto-swipe every 6 seconds) */}
+        <div className="relative group">
           
           {/* Left Arrow Button */}
           <button
@@ -217,7 +219,7 @@ export function FilmsSection() {
           {/* Poster Cards Row */}
           <div
             ref={scrollContainerRef}
-            className="flex gap-4 sm:gap-6 overflow-x-auto scroll-smooth pb-4 px-2 no-bar items-stretch"
+            className="flex gap-4 sm:gap-6 overflow-x-auto pb-4 px-2 no-bar items-stretch"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {[...displayFilms, ...displayFilms].map((film, idx) => (

@@ -3,6 +3,7 @@ import { SiteSetting } from '../models/SiteSetting.js';
 
 const HOME_GALLERY_KEY = 'homeGallery';
 const TESTIMONIALS_KEY = 'testimonials';
+const MAX_HOME_GALLERY_IMAGES = 15;
 let memoryGallery = null;
 let memoryTestimonials = null;
 
@@ -36,6 +37,9 @@ export const getHomeGallery = async (_req, res) => {
 
 export const updateHomeGallery = async (req, res) => {
   if (!Array.isArray(req.body?.images)) return res.status(400).json({ success: false, message: 'Images must be a list.' });
+  if (req.body.images.length > MAX_HOME_GALLERY_IMAGES) {
+    return res.status(400).json({ success: false, message: `Home gallery can contain a maximum of ${MAX_HOME_GALLERY_IMAGES} images.` });
+  }
   if (!databaseAvailable()) return res.status(503).json({ success: false, message: 'Database is unavailable. Gallery changes were not saved.' });
   try {
     const value = { images: req.body.images };

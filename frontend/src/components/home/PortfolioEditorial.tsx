@@ -46,7 +46,7 @@ export function PortfolioEditorial() {
   }, []);
 
   // Convert admin gallery to GalleryWallItem format
-  const activeItems: GalleryWallItem[] = (adminGallery || []).map((img) => ({
+  const activeItems: GalleryWallItem[] = (adminGallery || []).slice(0, 15).map((img) => ({
         id: img.id,
         src: img.src,
         alt: img.alt || img.title,

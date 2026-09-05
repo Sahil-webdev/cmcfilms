@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
-import { ArrowUpRight, Play, ArrowLeft, ArrowRight, X } from "lucide-react";
+import { ArrowUpRight, Play, X } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { useHeroMedia } from "@/hooks/useHeroMedia";
 
@@ -206,13 +206,6 @@ function FilmsVideoHero() {
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/40 pointer-events-none" />
 
       <div className="relative flex h-full flex-col items-center justify-end px-5 pb-20 md:pb-28 text-center text-white">
-        <p
-          className="mb-4 font-mono text-[11px] tracking-[0.35em] uppercase text-white/60 transition-all duration-700 delay-100"
-          style={{ opacity: ready ? 1 : 0, transform: ready ? "none" : "translateY(10px)" }}
-        >
-          CMC FILMS · WEDDING CINEMA
-        </p>
-
         <h1
           className="font-display text-[clamp(3.2rem,8.5vw,6.5rem)] font-normal md:font-medium leading-none tracking-tight text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)] transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]"
           style={{ opacity: ready ? 1 : 0, transform: ready ? "none" : "translateY(20px)" }}
@@ -234,46 +227,6 @@ function FilmsVideoHero() {
 // ── RECENT FILMS INFINITE AUTO-LOOP CAROUSEL (knotsbyamp.com reference design) ──
 function RecentFilmsCarousel() {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
-
-  const scroll = (direction: 'left' | 'right') => {
-    if (scrollRef.current) {
-      const container = scrollRef.current;
-      const scrollAmount = 340;
-      
-      if (direction === 'right') {
-        if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 15) {
-          container.scrollTo({ left: 0, behavior: 'smooth' });
-        } else {
-          container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        }
-      } else {
-        if (container.scrollLeft <= 15) {
-          container.scrollTo({ left: container.scrollWidth, behavior: 'smooth' });
-        } else {
-          container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-        }
-      }
-    }
-  };
-
-  // Infinite Auto-Loop Timer
-  useEffect(() => {
-    if (isHovered) return;
-
-    const interval = setInterval(() => {
-      if (scrollRef.current) {
-        const container = scrollRef.current;
-        if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 15) {
-          container.scrollTo({ left: 0, behavior: 'smooth' });
-        } else {
-          container.scrollBy({ left: 340, behavior: 'smooth' });
-        }
-      }
-    }, 2800);
-
-    return () => clearInterval(interval);
-  }, [isHovered]);
 
   const [adminFilms, setAdminFilms] = useState<ManagedFilm[] | null>(null);
 
@@ -309,12 +262,39 @@ function RecentFilmsCarousel() {
       }))
     : staticRecentFilms;
 
+  // Duplicate the cards so the visible sequence can restart without a pause.
+  const loopingRecentFilms = [...recentFilmsList, ...recentFilmsList];
+
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (container) container.scrollTo({ left: 0, behavior: 'auto' });
+  }, [recentFilmsList.length]);
+
+  // Advance one poster every two seconds. At the duplicate boundary, reset to
+  // the matching first copy so the carousel remains visually seamless.
+  useEffect(() => {
+    if (recentFilmsList.length < 2) return;
+
+    const interval = window.setInterval(() => {
+      const container = scrollRef.current;
+      if (!container) return;
+
+      const card = container.querySelector<HTMLElement>('[data-film-card]');
+      const step = (card?.getBoundingClientRect().width || 320) + 24;
+      const loopBoundary = container.scrollWidth / 2;
+
+      if (container.scrollLeft + step >= loopBoundary - 1) {
+        container.scrollTo({ left: 0, behavior: 'auto' });
+      } else {
+        container.scrollBy({ left: step, behavior: 'smooth' });
+      }
+    }, 2000);
+
+    return () => window.clearInterval(interval);
+  }, [recentFilmsList.length]);
+
   return (
-    <section
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className="bg-[#FAF7F2] py-20 md:py-28 relative overflow-hidden select-none border-t border-b border-[#EAE5DC]"
-    >
+    <section className="bg-[#FAF7F2] py-20 md:py-28 relative overflow-hidden select-none border-t border-b border-[#EAE5DC]">
       {/* Centered Serif Italic Header */}
       <div className="text-center mb-12 px-4">
         <h2 className="font-editorial italic text-4xl sm:text-5xl md:text-6xl text-[#2B2724] tracking-tight font-normal">
@@ -322,38 +302,21 @@ function RecentFilmsCarousel() {
         </h2>
       </div>
 
-      {/* Navigation Controls & Carousel Container */}
+      {/* Smooth, automatic carousel */}
       <div className="max-w-[1700px] mx-auto relative px-4 sm:px-14">
-        {/* Left Floating Arrow Button */}
-        <button
-          onClick={() => scroll('left')}
-          className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 h-12 w-12 rounded-full bg-black/40 hover:bg-black/80 text-white backdrop-blur-md flex items-center justify-center transition-all shadow-xl border border-white/20 cursor-pointer active:scale-95"
-          aria-label="Previous Films"
-        >
-          <ArrowLeft className="w-5 h-5" />
-        </button>
-
-        {/* Right Floating Arrow Button */}
-        <button
-          onClick={() => scroll('right')}
-          className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 h-12 w-12 rounded-full bg-black/40 hover:bg-black/80 text-white backdrop-blur-md flex items-center justify-center transition-all shadow-xl border border-white/20 cursor-pointer active:scale-95"
-          aria-label="Next Films"
-        >
-          <ArrowRight className="w-5 h-5" />
-        </button>
-
         {/* Horizontal Scroll Area */}
         <div
           ref={scrollRef}
           className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar py-4 px-2"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          {recentFilmsList.map((film) => (
+          {loopingRecentFilms.map((film, index) => (
             <a
-              key={film.id}
+              key={`${film.id}-${index}`}
               href={film.youtubeUrl}
               target="_blank"
               rel="noreferrer"
+              data-film-card
               className="snap-center shrink-0 w-[260px] sm:w-[300px] md:w-[320px] flex flex-col items-center gap-3.5 group cursor-pointer"
             >
               {/* Movie Poster Card */}
@@ -434,14 +397,14 @@ export function WeddingFilmsPage() {
       {/* ── SECTION 2 — RECENT FILMS CAROUSEL (knotsbyamp.com reference design with auto-loop) ── */}
       <RecentFilmsCarousel />
 
-      {/* ── SECTION 3 — MARWADI WEDDINGS FILM GRID SECTION ── */}
+      {/* ── SECTION 3 — MARWAR RO VIVAAH FILM GRID SECTION ── */}
       <section className="bg-[#E0CDCD] text-[#171717] py-14 sm:py-20 md:py-24 px-4 sm:px-8 md:px-12 relative overflow-hidden border-b border-[#171717]/10 select-none">
         <div className="max-w-[1600px] mx-auto space-y-10 sm:space-y-14">
           
           {/* Centered Title — Same Format as Upper Home Section */}
           <Reveal className="text-center space-y-2">
-            <h2 className="font-display text-2xl sm:text-4xl md:text-5xl text-[#171717] font-light tracking-tight">
-              MARWADI <em className="font-editorial italic font-normal text-[#5C2325]">WEDDINGS</em>
+            <h2 className="font-poppins text-2xl sm:text-4xl md:text-5xl text-[#171717] font-semibold tracking-tight">
+              Marwar Ro Vivaah
             </h2>
           </Reveal>
 
@@ -476,8 +439,8 @@ export function WeddingFilmsPage() {
                   </div>
 
                   {/* Couple Title Inside Card at Bottom Overlay */}
-                  <div className="absolute bottom-4 left-5 right-5 text-white space-y-0.5 pointer-events-none">
-                    <h3 className="font-display uppercase tracking-wider text-xl sm:text-2xl font-normal text-white drop-shadow-md leading-tight">
+                  <div className="absolute bottom-4 left-5 right-5 text-center text-white pointer-events-none">
+                    <h3 className="font-sans normal-case tracking-normal text-base sm:text-lg font-normal text-white drop-shadow-md leading-tight">
                       {film.couple}
                     </h3>
                   </div>

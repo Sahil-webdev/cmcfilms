@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import cat1 from "@/assets/cat-1.jpg";
 import haldi from "@/assets/haldi.jpg";
 import coastal from "@/assets/coastal.jpg";
@@ -81,7 +80,6 @@ interface AdminStory {
 export function BlogJournalSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(true);
-  const [isPaused, setIsPaused] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
 
   const [adminStories, setAdminStories] = useState<AdminStory[] | null>(null);
@@ -129,16 +127,14 @@ export function BlogJournalSection() {
     return () => mediaQuery.removeEventListener("change", updateViewport);
   }, []);
 
-  // Automatic Step Carousel (1.5 Second Slightly Faster Interval)
+  // Automatic smooth carousel step: advances every three seconds.
   useEffect(() => {
-    if (isPaused) return;
-
     const timer = setInterval(() => {
       setCurrentIndex((prev) => prev + 1);
-    }, 1500);
+    }, 3000);
 
     return () => clearInterval(timer);
-  }, [isPaused]);
+  }, []);
 
   // Seamless Infinite Loop Reset at boundary
   const handleTransitionEnd = () => {
@@ -159,14 +155,6 @@ export function BlogJournalSection() {
       return () => clearTimeout(t);
     }
   }, [isTransitioning]);
-
-  const handleNext = () => {
-    setCurrentIndex((prev) => prev + 1);
-  };
-
-  const handlePrev = () => {
-    setCurrentIndex((prev) => prev - 1);
-  };
 
   const activeDotIndex = activePosts.length ? currentIndex % activePosts.length : 0;
 
@@ -221,30 +209,8 @@ export function BlogJournalSection() {
           </h2>
         </div>
 
-        {/* ── INFINITE SEAMLESS LOOP CAROUSEL CONTAINER (2-Sec Auto Step) ── */}
-        <div
-          className="relative px-4"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
-          {/* Circular Navigation Buttons */}
-          <button
-            type="button"
-            onClick={handlePrev}
-            aria-label="Previous story"
-          className="absolute left-1 md:-left-2 top-1/3 -translate-y-1/2 z-20 h-9 w-9 md:h-11 md:w-11 rounded-full bg-[#3D3A36]/80 hover:bg-[#3D3A36] text-white flex items-center justify-center transition-all duration-300 active:scale-95 cursor-pointer shadow-md"
-          >
-            <ArrowLeft className="w-4 h-4" />
-          </button>
-
-          <button
-            type="button"
-            onClick={handleNext}
-            aria-label="Next story"
-          className="absolute right-1 md:-right-2 top-1/3 -translate-y-1/2 z-20 h-9 w-9 md:h-11 md:w-11 rounded-full bg-[#3D3A36]/80 hover:bg-[#3D3A36] text-white flex items-center justify-center transition-all duration-300 active:scale-95 cursor-pointer shadow-md"
-          >
-            <ArrowRight className="w-4 h-4" />
-          </button>
+        {/* ── INFINITE SEAMLESS LOOP CAROUSEL CONTAINER (3-Sec Auto Step) ── */}
+        <div className="relative px-4">
 
           {/* Sliding Track */}
           <div className="overflow-hidden py-2">
@@ -252,7 +218,7 @@ export function BlogJournalSection() {
               onTransitionEnd={handleTransitionEnd}
               className={`flex ${isDesktop ? "gap-8" : ""} ${
                 isTransitioning
-                  ? "transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
+                  ? "transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)]"
                   : "transition-none"
               }`}
               style={{

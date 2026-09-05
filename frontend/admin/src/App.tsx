@@ -278,8 +278,13 @@ const AdminWorkspace: React.FC = () => {
 
   // Gallery Handlers
   const handleAddGalleryImages = (imgs: GalleryImage[]) => {
-    setGalleryImages((prev) => [...prev, ...imgs]);
-    setGalleryDirty(true);
+    setGalleryImages((prev) => {
+      const availableSlots = Math.max(0, 15 - prev.length);
+      const nextImages = imgs.slice(0, availableSlots);
+      if (!nextImages.length) return prev;
+      setGalleryDirty(true);
+      return [...prev, ...nextImages];
+    });
   };
 
   const handleDeleteGalleryImage = (id: string) => {

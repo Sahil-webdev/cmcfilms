@@ -20,6 +20,7 @@ import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as TermsOfServiceRouteImport } from './routes/terms-of-service'
 import { Route as TestimonialsRouteImport } from './routes/testimonials'
 import { Route as WeddingStoriesRouteImport } from './routes/wedding-stories'
+import { Route as CouplesSlugRouteImport } from './routes/couples/$slug'
 import { Route as WeddingStoriesIndexRouteImport } from './routes/wedding-stories/index'
 import { Route as WeddingStoriesSlugRouteImport } from './routes/wedding-stories/$slug'
 
@@ -78,6 +79,11 @@ const WeddingStoriesRoute = WeddingStoriesRouteImport.update({
   path: '/wedding-stories',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CouplesSlugRoute = CouplesSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => CouplesRoute,
+} as any)
 const WeddingStoriesIndexRoute = WeddingStoriesIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -93,7 +99,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
-  '/couples': typeof CouplesRoute
+  '/couples': typeof CouplesRouteWithChildren
   '/films': typeof FilmsRoute
   '/packages': typeof PackagesRoute
   '/portfolio': typeof PortfolioRoute
@@ -101,6 +107,7 @@ export interface FileRoutesByFullPath {
   '/terms-of-service': typeof TermsOfServiceRoute
   '/testimonials': typeof TestimonialsRoute
   '/wedding-stories': typeof WeddingStoriesRouteWithChildren
+  '/couples/$slug': typeof CouplesSlugRoute
   '/wedding-stories/$slug': typeof WeddingStoriesSlugRoute
   '/wedding-stories/': typeof WeddingStoriesIndexRoute
 }
@@ -108,13 +115,14 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
-  '/couples': typeof CouplesRoute
+  '/couples': typeof CouplesRouteWithChildren
   '/films': typeof FilmsRoute
   '/packages': typeof PackagesRoute
   '/portfolio': typeof PortfolioRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/testimonials': typeof TestimonialsRoute
+  '/couples/$slug': typeof CouplesSlugRoute
   '/wedding-stories/$slug': typeof WeddingStoriesSlugRoute
   '/wedding-stories': typeof WeddingStoriesIndexRoute
 }
@@ -123,7 +131,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
-  '/couples': typeof CouplesRoute
+  '/couples': typeof CouplesRouteWithChildren
   '/films': typeof FilmsRoute
   '/packages': typeof PackagesRoute
   '/portfolio': typeof PortfolioRoute
@@ -131,6 +139,7 @@ export interface FileRoutesById {
   '/terms-of-service': typeof TermsOfServiceRoute
   '/testimonials': typeof TestimonialsRoute
   '/wedding-stories': typeof WeddingStoriesRouteWithChildren
+  '/couples/$slug': typeof CouplesSlugRoute
   '/wedding-stories/$slug': typeof WeddingStoriesSlugRoute
   '/wedding-stories/': typeof WeddingStoriesIndexRoute
 }
@@ -148,6 +157,7 @@ export interface FileRouteTypes {
     | '/terms-of-service'
     | '/testimonials'
     | '/wedding-stories'
+    | '/couples/$slug'
     | '/wedding-stories/$slug'
     | '/wedding-stories/'
   fileRoutesByTo: FileRoutesByTo
@@ -162,6 +172,7 @@ export interface FileRouteTypes {
     | '/privacy-policy'
     | '/terms-of-service'
     | '/testimonials'
+    | '/couples/$slug'
     | '/wedding-stories/$slug'
     | '/wedding-stories'
   id:
@@ -177,6 +188,7 @@ export interface FileRouteTypes {
     | '/terms-of-service'
     | '/testimonials'
     | '/wedding-stories'
+    | '/couples/$slug'
     | '/wedding-stories/$slug'
     | '/wedding-stories/'
   fileRoutesById: FileRoutesById
@@ -185,7 +197,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
-  CouplesRoute: typeof CouplesRoute
+  CouplesRoute: typeof CouplesRouteWithChildren
   FilmsRoute: typeof FilmsRoute
   PackagesRoute: typeof PackagesRoute
   PortfolioRoute: typeof PortfolioRoute
@@ -274,6 +286,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WeddingStoriesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/couples/$slug': {
+      id: '/couples/$slug'
+      path: '/$slug'
+      fullPath: '/couples/$slug'
+      preLoaderRoute: typeof CouplesSlugRouteImport
+      parentRoute: typeof CouplesRoute
+    }
     '/wedding-stories/': {
       id: '/wedding-stories/'
       path: '/'
@@ -290,6 +309,17 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface CouplesRouteChildren {
+  CouplesSlugRoute: typeof CouplesSlugRoute
+}
+
+const CouplesRouteChildren: CouplesRouteChildren = {
+  CouplesSlugRoute: CouplesSlugRoute,
+}
+
+const CouplesRouteWithChildren =
+  CouplesRoute._addFileChildren(CouplesRouteChildren)
 
 interface WeddingStoriesRouteChildren {
   WeddingStoriesSlugRoute: typeof WeddingStoriesSlugRoute
@@ -309,7 +339,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
-  CouplesRoute: CouplesRoute,
+  CouplesRoute: CouplesRouteWithChildren,
   FilmsRoute: FilmsRoute,
   PackagesRoute: PackagesRoute,
   PortfolioRoute: PortfolioRoute,

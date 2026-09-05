@@ -42,9 +42,13 @@ export const getHeroMedia = async (_req, res) => {
 
 export const uploadHeroMedia = async (req, res) => {
   const key = req.body?.key;
+  const requestedSlot = Number(req.body?.slot);
   if (!allowedKeys.has(key)) return res.status(400).json({ success: false, message: 'Invalid website page selected.' });
   if (!req.file) return res.status(400).json({ success: false, message: 'Please choose a media file.' });
   if (!databaseAvailable()) return res.status(503).json({ success: false, message: 'Database is unavailable. Hero media was not saved.' });
+  if (key === 'couples' && (!Number.isInteger(requestedSlot) || requestedSlot < 0 || requestedSlot > 2)) {
+    return res.status(400).json({ success: false, message: 'Choose a valid Couple Shoot carousel slot.' });
+  }
 
   try {
     const media = await readHeroMedia();
@@ -53,10 +57,20 @@ export const uploadHeroMedia = async (req, res) => {
       folder: `/cmc-films/hero-media/${key}`,
       tags: ['cmc-films', 'hero-media', key],
     });
-    const updatedMedia = {
-      ...media,
-      [key]: { ...uploadedMedia, type: req.file.mimetype === 'video/mp4' ? 'video' : 'image' },
-    };
+    const uploadedEntry = { ...uploadedMedia, type: req.file.mimetype === 'video/mp4' ? 'video' : 'image' };
+    const updatedMedia = key === 'couples'
+      ? (() => {
+          const previousImages = Array.isArray(media.couples?.images)
+            ? media.couples.images.slice(0, 3).map((url) => typeof url === 'string' ? url : '')
+            : media.couples?.url ? [media.couples.url] : [];
+          const images = [...previousImages];
+          images[requestedSlot] = uploadedMedia.url;
+          return {
+            ...media,
+            couples: { ...uploadedEntry, url: images[0] || uploadedMedia.url, images: images.slice(0, 3) },
+          };
+        })()
+      : { ...media, [key]: uploadedEntry };
     await saveHeroMedia(updatedMedia);
     return res.json({ success: true, data: { media: updatedMedia }, message: 'Hero media saved and published.' });
   } catch (error) {
