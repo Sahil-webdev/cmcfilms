@@ -42,6 +42,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const scrollHomeToTop = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: "auto" }));
   };
 
@@ -200,10 +201,10 @@ export function Navbar() {
               <Link
                 key={l.label}
                 to={l.to}
-                resetScroll={l.to === "/"}
+                resetScroll
                 onClick={() => {
                   setOpen(false);
-                  if (l.to === "/") scrollHomeToTop();
+                  scrollHomeToTop();
                 }}
                 className={cn(
                   "group relative flex items-center gap-3.5 px-4.5 py-3.5 rounded-xl transition-all duration-200 overflow-hidden",
@@ -245,7 +246,11 @@ export function Navbar() {
         <div className="relative z-10 pt-5 border-t border-white/10 space-y-4">
           <Link
             to="/contact"
-            onClick={() => setOpen(false)}
+            resetScroll
+            onClick={() => {
+              setOpen(false);
+              scrollHomeToTop();
+            }}
             className="w-full py-3 rounded-xl bg-gradient-to-r from-[#93191E] to-[#b82329] text-white text-xs font-mono font-semibold tracking-wider uppercase flex items-center justify-center gap-2 shadow-lg hover:shadow-rose-900/40 transition-all active:scale-[0.98]"
           >
             <Calendar className="w-3.5 h-3.5" />

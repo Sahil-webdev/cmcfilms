@@ -340,10 +340,10 @@ export function CoupleShootsPage() {
           <div className="lg:col-span-6 space-y-6 pt-4 lg:pt-0 text-left">
             <div>
               <h1
-                className="leading-[0.82] text-6xl sm:text-7xl md:text-8xl lg:text-9xl select-none"
+                className="text-center lg:text-left leading-[0.82] text-6xl sm:text-7xl md:text-8xl lg:text-9xl select-none"
               >
                 <span className="block text-[#922A2F]" style={{ fontFamily: "'Sofia', cursive" }}>Couple</span>
-                <span className="font-editorial italic font-normal tracking-[-0.035em] text-[#8A8072] block pl-[1.45em] sm:pl-[1.6em] md:pl-[1.8em] mt-0 sm:mt-1 md:mt-2">Shoots</span>
+                <span className="font-editorial italic font-normal tracking-[-0.035em] text-[#8A8072] block relative left-4 sm:left-5 lg:left-0 lg:pl-[1.8em] mt-0 sm:mt-1 md:mt-2">Shoots</span>
               </h1>
             </div>
 

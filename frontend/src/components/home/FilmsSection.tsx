@@ -156,6 +156,7 @@ export function FilmsSection() {
   // Desktop scrolls continuously; compact screens show one complete poster per step.
   useEffect(() => {
     if (isCompactCarousel) {
+      let loopResetTimer = 0;
       const interval = window.setInterval(() => {
         const carousel = scrollContainerRef.current;
         if (!carousel || carousel.children.length < 2) return;
@@ -168,14 +169,23 @@ export function FilmsSection() {
 
         if (step > 0 && loopPoint > 0) {
           if (carousel.scrollLeft + step >= loopPoint - 1) {
-            carousel.scrollTo({ left: 0, behavior: "auto" });
+            // Scroll into the duplicated first card, then silently return to
+            // the matching original position after the smooth transition.
+            carousel.scrollBy({ left: step, behavior: "smooth" });
+            window.clearTimeout(loopResetTimer);
+            loopResetTimer = window.setTimeout(() => {
+              carousel.scrollTo({ left: carousel.scrollLeft - loopPoint, behavior: "auto" });
+            }, 650);
           } else {
             carousel.scrollBy({ left: step, behavior: "smooth" });
           }
         }
-      }, 6000);
+      }, 1000);
 
-      return () => window.clearInterval(interval);
+      return () => {
+        window.clearInterval(interval);
+        window.clearTimeout(loopResetTimer);
+      };
     }
 
     let animationFrame = 0;
