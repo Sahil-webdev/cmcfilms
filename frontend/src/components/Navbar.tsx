@@ -1,9 +1,41 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Instagram, Youtube, Calendar, ArrowUpRight, MessageCircle, ChevronRight } from "lucide-react";
+import {
+  Home,
+  BookOpen,
+  Film,
+  Heart,
+  Star,
+  Tag,
+  Info,
+  Calendar,
+  MessageCircle,
+  Sparkles,
+} from "lucide-react";
 import { navLinks, studio } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
 import { BrandLogo } from "./BrandLogo";
+
+const getNavIcon = (label: string) => {
+  switch (label) {
+    case "Home":
+      return Home;
+    case "Wedding Stories":
+      return BookOpen;
+    case "Wedding Films":
+      return Film;
+    case "Couple Shoot":
+      return Heart;
+    case "Testimonials":
+      return Star;
+    case "Packages":
+      return Tag;
+    case "About":
+      return Info;
+    default:
+      return Sparkles;
+  }
+};
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -34,45 +66,33 @@ export function Navbar() {
     };
   }, [open]);
 
-  // Close sidebar on route change
-  useEffect(() => {
-    setOpen(false);
-  }, [location.pathname]);
-
   return (
     <>
-      {/* ── Desktop Website Header (Untouched & Pristine) ── */}
       <header
         className={cn(
-          "fixed z-50 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
+          "fixed top-0 left-0 right-0 z-[70] transition-all duration-500",
           scrolled
-            ? "top-3 md:top-4 inset-x-3 md:inset-x-auto md:left-1/2 md:-translate-x-1/2 md:w-[94%] max-w-[1400px] h-16 md:h-18 rounded-full border border-espresso/15 bg-ivory/92 text-espresso backdrop-blur-xl shadow-[0_12px_40px_rgba(0,0,0,0.14)]"
-            : "top-0 inset-x-0 h-20 md:h-24 rounded-none border-b border-transparent bg-gradient-to-b from-black/70 via-black/20 to-transparent text-white",
+            ? "bg-ivory/85 backdrop-blur-md shadow-sm border-b border-espresso/10 py-3"
+            : "bg-gradient-to-b from-black/60 via-black/20 to-transparent py-5",
         )}
       >
-        <div
-          className={cn(
-            "mx-auto flex h-full items-center justify-between transition-all duration-500",
-            scrolled ? "px-4 md:px-8 max-w-full" : "px-5 md:px-10 max-w-[1600px]",
-          )}
-        >
-          {/* Desktop Left Brand Logo */}
-          <BrandLogo
-            variant="custom"
-            textClassName={cn(
-              "font-display font-black tracking-[0.34em] [-webkit-text-stroke:0.6px_currentColor] transition-all duration-300",
-              scrolled ? "text-[#261E1E] text-lg sm:text-xl md:text-2xl" : "text-white text-xl sm:text-2xl md:text-[25px] drop-shadow-md"
-            )}
-          />
+        <div className="max-w-[1700px] mx-auto px-6 sm:px-10 flex items-center justify-between">
+          <Link
+            to="/"
+            resetScroll
+            onClick={scrollHomeToTop}
+            className="flex items-center gap-3 group"
+          >
+            <BrandLogo
+              variant={scrolled ? "dark" : "light"}
+              textClassName="text-xl sm:text-2xl font-display font-black tracking-[0.25em] transition-all duration-300"
+            />
+          </Link>
 
-          {/* Desktop Right Navigation Links (Animated Gold Underline Active Highlight) */}
-          <nav className="hidden items-center gap-5 md:gap-7 lg:flex" role="navigation" aria-label="Main Navigation">
+          {/* Desktop Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-8">
             {navLinks.map((l) => {
-              const isActive =
-                l.to === "/"
-                  ? location.pathname === "/"
-                  : location.pathname === l.to;
-
+              const isActive = location.pathname === l.to;
               return (
                 <Link
                   key={l.label}
@@ -143,21 +163,21 @@ export function Navbar() {
         aria-hidden="true"
       />
 
-      {/* 2. Sleek Blurry Transparent Glass Drawer (No heavy box borders or extra clutter) */}
+      {/* 2. Sleek Minimal Glassmorphism Sidebar Drawer (With left active indicator & icons) */}
       <aside
         id="mobile-sidebar-drawer"
         role="navigation"
         aria-label="Mobile Navigation Sidebar"
         className={cn(
-          "fixed top-0 right-0 bottom-0 z-[85] h-[100dvh] w-[85%] max-w-[340px] bg-[#120F0D]/95 backdrop-blur-2xl text-white rounded-l-3xl border-l border-white/10 shadow-[-20px_0_50px_rgba(0,0,0,0.7)] transition-all duration-400 ease-[cubic-bezier(0.16,1,0.36,1)] lg:hidden flex flex-col justify-between p-6 pt-16 overflow-y-auto overflow-x-hidden",
+          "fixed top-0 right-0 bottom-0 z-[85] h-[100dvh] w-[82%] max-w-[320px] bg-black/55 backdrop-blur-2xl text-white rounded-l-3xl border-l border-white/15 shadow-[-20px_0_50px_rgba(0,0,0,0.7)] transition-all duration-400 ease-[cubic-bezier(0.16,1,0.36,1)] lg:hidden flex flex-col justify-between p-6 pt-16 overflow-y-auto overflow-x-hidden",
           open
             ? "translate-x-0 opacity-100"
             : "translate-x-full opacity-0 pointer-events-none",
         )}
       >
-        {/* Subtle Ambient Glow */}
+        {/* Subtle Ambient Background Glow */}
         <div className="pointer-events-none absolute -top-16 -right-16 h-48 w-48 rounded-full bg-[#93191E]/20 blur-3xl" />
-        <div className="pointer-events-none absolute bottom-10 -left-16 h-48 w-48 rounded-full bg-[#D4AF37]/15 blur-3xl" />
+        <div className="pointer-events-none absolute bottom-10 -left-16 h-48 w-48 rounded-full bg-amber-500/10 blur-3xl" />
 
         {/* ── Top Header / Brand Mark ── */}
         <div className="relative z-10 pb-5 border-b border-white/10">
@@ -170,10 +190,12 @@ export function Navbar() {
           </span>
         </div>
 
-        {/* ── Navigation Links (Clean, Normal Sans Typography) ── */}
-        <div className="relative z-10 py-6 my-auto flex flex-col gap-2">
+        {/* ── Icon-based Menu Items (Matching user requested minimal list + glassmorphism) ── */}
+        <div className="relative z-10 py-6 my-auto flex flex-col gap-1.5">
           {navLinks.map((l, i) => {
             const isActive = location.pathname === l.to;
+            const IconComponent = getNavIcon(l.label);
+
             return (
               <Link
                 key={l.label}
@@ -184,39 +206,36 @@ export function Navbar() {
                   if (l.to === "/") scrollHomeToTop();
                 }}
                 className={cn(
-                  "group relative flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200",
+                  "group relative flex items-center gap-3.5 px-4.5 py-3.5 rounded-xl transition-all duration-200 overflow-hidden",
                   isActive
-                    ? "bg-[#93191E]/25 text-white font-medium border border-[#93191E]/40"
-                    : "text-white/80 hover:text-white hover:bg-white/5",
+                    ? "bg-white/15 text-white font-semibold shadow-sm"
+                    : "text-white/75 hover:text-white hover:bg-white/5",
                 )}
                 style={{
                   transitionDelay: `${open ? 40 + i * 30 : 0}ms`,
-                  transform: open ? "translateY(0)" : "translateY(10px)",
+                  transform: open ? "translateY(0)" : "translateY(8px)",
                   opacity: open ? 1 : 0,
                 }}
               >
-                <div className="flex items-center gap-3">
-                  <span
-                    className={cn(
-                      "h-1.5 w-1.5 rounded-full transition-all",
-                      isActive
-                        ? "bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]"
-                        : "bg-white/20 group-hover:bg-white/60",
-                    )}
-                  />
-                  <span className="font-sans text-base font-medium tracking-wide">
-                    {l.label}
-                  </span>
-                </div>
+                {/* Left Active Edge Accent Bar */}
+                {isActive && (
+                  <span className="absolute left-0 top-2 bottom-2 w-1 bg-[#93191E] rounded-r-full shadow-[0_0_8px_#93191E]" />
+                )}
 
-                <ChevronRight
+                {/* Left Icon */}
+                <IconComponent
                   className={cn(
-                    "w-4 h-4 transition-transform duration-200",
+                    "w-5 h-5 transition-colors duration-200 shrink-0",
                     isActive
-                      ? "text-amber-400 translate-x-0.5"
-                      : "text-white/30 group-hover:text-white/70 group-hover:translate-x-1",
+                      ? "text-amber-400"
+                      : "text-white/60 group-hover:text-white",
                   )}
                 />
+
+                {/* Text Label */}
+                <span className="font-sans text-base font-medium tracking-wide">
+                  {l.label}
+                </span>
               </Link>
             );
           })}
@@ -262,7 +281,8 @@ export function Navbar() {
               <span>WhatsApp</span>
             </a>
           </div>
-        </div></aside>
+        </div>
+      </aside>
     </>
   );
 }
