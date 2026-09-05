@@ -359,90 +359,93 @@ export function WeddingStoriesPage() {
 
       {/* ── 2. FEATURED STORY BANNER SECTION ── */}
       {featuredPost && (
-        <section className="relative z-10 py-12 sm:py-16 md:py-20 px-4 md:px-10 max-w-[1700px] mx-auto border-b border-black/5">
-          <div className="relative mx-auto w-full md:w-[94%]">
-            <div
-              onClick={() => openStory(featuredPost)}
-              className="relative aspect-[16/10] md:aspect-[21/9] w-full overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl cursor-pointer group bg-black/40 border border-black/10"
-            >
+        <section className="relative z-10 py-10 sm:py-16 md:py-20 px-4 sm:px-6 md:px-12 max-w-[1700px] mx-auto border-b border-black/5">
+          {/* Section Header */}
+          <div className="flex items-center justify-between mb-6 sm:mb-8">
+            <div className="flex items-center gap-3">
+              <span className="h-px w-8 bg-[#93191E]" />
+              <span className="text-xs font-mono font-bold tracking-widest text-[#93191E] uppercase">
+                Featured Story
+              </span>
+            </div>
+            <span className="text-xs font-mono text-[#261E1E]/50 hidden sm:inline-block uppercase tracking-wider">
+              Real Weddings & Editorial Journal
+            </span>
+          </div>
+
+          {/* 2-Column Luxury Split Magazine Card */}
+          <div
+            onClick={() => openStory(featuredPost)}
+            className="group cursor-pointer grid grid-cols-1 lg:grid-cols-12 rounded-3xl overflow-hidden bg-[#F7F4EF] border border-[#E5DEC3]/80 shadow-xl hover:shadow-2xl transition-all duration-500"
+          >
+            {/* Left Column: Full Photo (7 cols) */}
+            <div className="lg:col-span-7 relative min-h-[350px] sm:min-h-[460px] lg:min-h-[540px] overflow-hidden bg-black/10">
               <img
                 src={featuredPost.coverImage}
                 alt={featuredPost.title}
-                className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20" />
-
-              {/* Visual Badge overlay on top corner */}
-              <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-10">
-                <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-amber-300 text-xs font-mono tracking-wider shadow-lg">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20 lg:hidden" />
+              
+              {/* Badge Overlay */}
+              <div className="absolute top-5 left-5 z-10">
+                <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md text-amber-300 text-xs font-mono font-medium tracking-wider border border-white/20 shadow-lg">
                   <Sparkles className="w-3.5 h-3.5 text-amber-400 fill-amber-400/30" />
-                  <span>Featured Journal</span>
+                  <span>Spotlight Edition</span>
                 </span>
               </div>
             </div>
 
-            {/* Luxury Editorial Dark Glassmorphic Card */}
-            <div
-              onClick={() => openStory(featuredPost)}
-              className="mt-6 md:mt-0 md:absolute md:bottom-6 md:right-6 lg:bottom-10 lg:right-10 md:max-w-lg bg-[#14100E]/90 backdrop-blur-xl p-6 sm:p-8 md:p-9 rounded-2xl sm:rounded-3xl border border-[#D4AF37]/30 shadow-[0_25px_60px_rgba(0,0,0,0.7)] cursor-pointer group hover:border-[#D4AF37]/60 hover:bg-[#14100E]/95 transition-all duration-300 space-y-3.5 z-20 text-white"
-            >
-              {/* Top Decorative Golden Gradient Line */}
-              <div className="h-0.5 w-16 bg-gradient-to-r from-amber-400 via-rose-500 to-transparent rounded-full mb-1" />
-
-              {/* Tag & Category */}
-              <div className="flex items-center justify-between gap-3 flex-wrap">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#93191E]/40 border border-[#D4AF37]/40 text-[#E5C158] text-[11px] font-mono tracking-widest font-semibold uppercase shadow-sm">
-                  <Sparkles className="w-3 h-3 text-amber-400" />
-                  Featured Story
-                </span>
-                {featuredPost.category && (
-                  <span className="text-[11px] font-mono text-white/70 tracking-wider uppercase bg-white/10 px-2.5 py-0.5 rounded-md border border-white/10">
+            {/* Right Column: Editorial Text (5 cols) */}
+            <div className="lg:col-span-5 p-7 sm:p-10 lg:p-12 flex flex-col justify-between space-y-6 bg-[#F7F4EF]">
+              <div className="space-y-4 sm:space-y-5">
+                {/* Meta Badge & Date */}
+                <div className="flex items-center justify-between gap-3 text-xs font-mono text-[#93191E] font-semibold tracking-wider uppercase flex-wrap">
+                  <span className="inline-block px-3 py-1 rounded-md bg-[#93191E]/10 border border-[#93191E]/20 text-[#93191E]">
                     {featuredPost.category}
                   </span>
+                  {featuredPost.date && (
+                    <span className="text-[#261E1E]/60 font-normal flex items-center gap-1.5">
+                      <Calendar className="w-3.5 h-3.5 text-[#93191E]" />
+                      {featuredPost.date}
+                    </span>
+                  )}
+                </div>
+
+                {/* Main Story Title */}
+                <h2 className="font-serif text-2.5xl sm:text-3xl lg:text-[2.4rem] font-normal text-[#1A1817] leading-[1.2] tracking-tight group-hover:text-[#93191E] transition-colors">
+                  "{featuredPost.title}"
+                </h2>
+
+                {/* Couple Subtitle */}
+                {featuredPost.author?.name && (
+                  <div className="flex items-center gap-3 pt-0.5">
+                    <span className="h-px w-6 bg-[#93191E]/50" />
+                    <p className="font-serif italic text-base sm:text-lg text-[#7A6B63]">
+                      Featuring {featuredPost.author.name}
+                    </p>
+                  </div>
                 )}
+
+                {/* Excerpt */}
+                <p className="text-xs sm:text-sm text-[#4A423D] font-sans font-light leading-relaxed line-clamp-4 pt-1">
+                  {featuredPost.excerpt}
+                </p>
               </div>
 
-              {/* Author / Couple Name */}
-              <h3 className="font-serif text-2xl sm:text-3xl text-[#FAF8F5] font-normal leading-tight tracking-tight group-hover:text-amber-200 transition-colors">
-                {featuredPost.author?.name || featuredPost.title}
-              </h3>
+              {/* Bottom CTA Bar */}
+              <div className="pt-5 border-t border-[#E2DCCE] flex items-center justify-between gap-4">
+                <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#93191E] text-white text-xs font-mono font-bold tracking-wider uppercase group-hover:bg-[#7a1418] transition-colors shadow-md">
+                  <span>Read Full Story</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </span>
 
-              {/* Subtitle / Title */}
-              <p className="font-serif text-base sm:text-lg italic text-[#E0A96D] font-normal leading-relaxed">
-                "{featuredPost.title}"
-              </p>
-
-              {/* Date & Read Time */}
-              <div className="flex items-center gap-3 text-xs font-mono text-white/60 pt-0.5">
-                {featuredPost.date && (
-                  <span className="flex items-center gap-1.5">
-                    <Calendar className="w-3.5 h-3.5 text-amber-400/80" />
-                    {featuredPost.date}
-                  </span>
-                )}
-                {featuredPost.date && featuredPost.readTime && <span>•</span>}
                 {featuredPost.readTime && (
-                  <span className="flex items-center gap-1.5">
-                    <Clock className="w-3.5 h-3.5 text-amber-400/80" />
+                  <span className="text-xs font-mono text-[#261E1E]/50 flex items-center gap-1.5">
+                    <Clock className="w-3.5 h-3.5 text-[#93191E]" />
                     {featuredPost.readTime}
                   </span>
                 )}
-              </div>
-
-              {/* Excerpt */}
-              <p className="text-xs sm:text-sm text-white/80 font-sans font-light leading-relaxed line-clamp-3 pt-1">
-                "{featuredPost.excerpt}"
-              </p>
-
-              {/* Action Link & Button */}
-              <div className="pt-3 border-t border-white/10 flex items-center justify-between">
-                <span className="inline-flex items-center gap-2.5 px-4.5 py-2.5 rounded-full bg-gradient-to-r from-[#93191E] to-[#B82329] text-white text-xs font-mono tracking-wide font-semibold shadow-md group-hover:shadow-rose-900/50 group-hover:scale-105 transition-all">
-                  <span>Read Full Story</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-white group-hover:translate-x-1 transition-transform" />
-                </span>
-                <span className="text-[11px] font-mono text-amber-300/80 italic hidden sm:inline">
-                  Royal Wedding Journal
-                </span>
               </div>
             </div>
           </div>
