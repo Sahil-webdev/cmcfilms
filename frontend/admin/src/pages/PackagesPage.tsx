@@ -183,6 +183,41 @@ const initialPackages: ServicePackage[] = [
       },
     ],
   },
+  {
+    id: 'pkg-7',
+    no: '07',
+    title: 'BROADCASTING SHOOT',
+    subtitle: 'Multi-Camera Live Event Coverage',
+    copy: 'Professional multi-camera broadcasting for live celebrations, events, and stage moments.',
+    fullDescription:
+      'Our broadcasting crew plans, captures, and delivers live event coverage with coordinated multi-camera direction, crystal-clear audio, and a polished broadcast-ready finish.',
+    startingPrice: '₹75,000',
+    heroImagePreview: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800',
+    offerings: [
+      {
+        id: 'off-16',
+        name: 'Live Wedding Broadcast',
+        duration: 'Single Event (Up to 8 Hours)',
+        destinations: 'Udaipur & Nearby Venues',
+        themes: 'Live, Multi-Camera, Wedding Broadcast',
+        price: 'INR 75,000',
+        categoryTag: 'Live Coverage',
+        imagePreview: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800',
+        inclusions: ['3 Camera Operators', 'Live Switching', 'Professional Audio Feed', 'Private Live Stream', 'Full Broadcast Recording'],
+      },
+      {
+        id: 'off-17',
+        name: 'Premium Event Broadcast',
+        duration: 'Full Day (Up to 12 Hours)',
+        destinations: 'Destination & Corporate Venues',
+        themes: 'Stage, Event, Live Production',
+        price: 'INR 1,25,000',
+        categoryTag: 'Premium Production',
+        imagePreview: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=800',
+        inclusions: ['5 Camera Operators', 'Director & Live Switching', 'Professional Audio Team', 'Custom Stream Branding', 'Master Recording Delivery'],
+      },
+    ],
+  },
 ];
 
 export const PackagesPage: React.FC = () => {
@@ -201,9 +236,12 @@ export const PackagesPage: React.FC = () => {
         const response = await fetch(`${API_URL}/api/packages`, { signal: controller.signal });
         const payload = await response.json();
         if (response.ok && Array.isArray(payload?.data?.packages)) {
-          setPackages(payload.data.packages);
+          setPackages(payload.data.packages.length > 0 ? payload.data.packages : initialPackages);
+        } else {
+          setPackages(initialPackages);
         }
       } catch {
+        setPackages(initialPackages);
         setSyncMessage('Backend is offline. Please restore the database connection before making changes.');
       } finally {
         if (!controller.signal.aborted) setPackagesLoaded(true);

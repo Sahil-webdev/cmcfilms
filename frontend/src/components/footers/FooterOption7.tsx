@@ -142,6 +142,9 @@ export function FooterOption7() {
                 <Link to="/packages" className="hover:underline transition-all inline-block py-0.5">Destination Wedding Photography</Link>
               </li>
               <li>
+                <Link to="/packages" className="hover:underline transition-all inline-block py-0.5">Broadcasting Shoot</Link>
+              </li>
+              <li>
                 <Link to="/portfolio" className="hover:underline transition-all inline-block py-0.5">Event Photography</Link>
               </li>
               <li>

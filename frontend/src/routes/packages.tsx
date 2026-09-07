@@ -329,6 +329,44 @@ const servicesData: ServiceDetail[] = [
       },
     ],
   },
+  {
+    id: "pkg-7",
+    no: "07",
+    title: "BROADCASTING SHOOT",
+    subtitle: "Multi-Camera Live Event Coverage",
+    copy: "Professional multi-camera broadcasting for live celebrations, events, and stage moments.",
+    fullDescription:
+      "Our broadcasting crew plans, captures, and delivers live event coverage with coordinated multi-camera direction, crystal-clear audio, and a polished broadcast-ready finish.",
+    price: "₹75,000",
+    numericPrice: 75000,
+    image: featured,
+    offerings: [
+      {
+        id: "off-16",
+        name: "Live Wedding Broadcast",
+        duration: "Single Event (Up to 8 Hours)",
+        destinations: "Udaipur & Nearby Venues",
+        themes: "Live, Multi-Camera, Wedding Broadcast",
+        price: "INR 75,000",
+        numericPrice: 75000,
+        image: featured,
+        categoryTag: "Live Coverage",
+        inclusions: ["3 Camera Operators", "Live Switching", "Professional Audio Feed", "Private Live Stream", "Full Broadcast Recording"],
+      },
+      {
+        id: "off-17",
+        name: "Premium Event Broadcast",
+        duration: "Full Day (Up to 12 Hours)",
+        destinations: "Destination & Corporate Venues",
+        themes: "Stage, Event, Live Production",
+        price: "INR 1,25,000",
+        numericPrice: 125000,
+        image: hero,
+        categoryTag: "Premium Production",
+        inclusions: ["5 Camera Operators", "Director & Live Switching", "Professional Audio Team", "Custom Stream Branding", "Master Recording Delivery"],
+      },
+    ],
+  },
 ];
 
 const studioServices = [
@@ -338,6 +376,7 @@ const studioServices = [
   { id: "srv-4", no: "04", title: "Destination Weddings", price: 280000 },
   { id: "srv-5", no: "05", title: "Couple Portraits", price: 35000 },
   { id: "srv-6", no: "06", title: "Maternity Photoshoot", price: 30000 },
+  { id: "srv-7", no: "07", title: "Broadcasting Shoot", price: 75000 },
 ];
 
 const faqs = [

@@ -93,6 +93,12 @@ export const services = [
     copy: "Fine-art maternity portraits capturing the grace, glow and quiet emotion of new beginnings.",
     image: maternity,
   },
+  {
+    no: "07",
+    title: "Broadcasting Shoot",
+    copy: "Multi-camera broadcast coverage for celebrations and live events, delivered with polished production clarity.",
+    image: featured,
+  },
 ];
 
 export const experience = [
