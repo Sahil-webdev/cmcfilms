@@ -339,7 +339,7 @@ const servicesData: ServiceDetail[] = [
       "Our broadcasting crew plans, captures, and delivers live event coverage with coordinated multi-camera direction, crystal-clear audio, and a polished broadcast-ready finish.",
     price: "₹75,000",
     numericPrice: 75000,
-    image: featured,
+    image: hero,
     offerings: [
       {
         id: "off-16",
@@ -349,7 +349,7 @@ const servicesData: ServiceDetail[] = [
         themes: "Live, Multi-Camera, Wedding Broadcast",
         price: "INR 75,000",
         numericPrice: 75000,
-        image: featured,
+        image: hero,
         categoryTag: "Live Coverage",
         inclusions: ["3 Camera Operators", "Live Switching", "Professional Audio Feed", "Private Live Stream", "Full Broadcast Recording"],
       },
