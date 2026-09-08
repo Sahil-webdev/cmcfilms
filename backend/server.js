@@ -23,10 +23,16 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5001;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const configuredOrigins = [process.env.CLIENT_URL, process.env.ADMIN_URL]
+const normalizeOrigin = (origin) => origin.trim().replace(/\/+$/, '');
+const productionOrigins = [
+  'https://cmcfilms.in',
+  'https://www.cmcfilms.in',
+];
+const configuredOrigins = [process.env.CLIENT_URL, process.env.ADMIN_URL, ...productionOrigins]
   .filter(Boolean)
   .flatMap((value) => value.split(',').map((origin) => origin.trim()))
-  .filter(Boolean);
+  .filter(Boolean)
+  .map(normalizeOrigin);
 
 app.set('trust proxy', 1);
 app.use(helmet({ crossOriginResourcePolicy: false }));
@@ -34,7 +40,7 @@ app.use(
   cors({
     origin(origin, callback) {
       // Requests without an Origin header are health checks or server-to-server requests.
-      if (!origin || configuredOrigins.includes(origin)) return callback(null, true);
+      if (!origin || configuredOrigins.includes(normalizeOrigin(origin))) return callback(null, true);
       return callback(new Error('Origin is not allowed by CORS.'));
     },
   })

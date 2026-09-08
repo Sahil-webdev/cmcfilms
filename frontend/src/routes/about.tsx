@@ -120,21 +120,14 @@ function AboutPage() {
 
           </div>
 
-          {/* Right Column: Tall Couple Photo Frame (Matching Reference) */}
+          {/* Right Column: Portrait */}
           <div className="lg:col-span-5 flex justify-center sticky top-28">
-            <div className="relative w-full max-w-md shadow-2xl bg-white p-3 sm:p-4 rounded-2xl border border-black/10">
-              <div className="aspect-[3/4] w-full overflow-hidden rounded-xl bg-[#D8D3CB]">
-                <img
-                  src={couplesHeroCustom}
-                  alt="CMC FILMS Couple Portrait"
-                  className="h-full w-full object-cover object-top transition-transform duration-1000 hover:scale-105"
-                />
-              </div>
-              <div className="mt-3 text-center">
-                <span className="text-xs font-poppins uppercase tracking-widest text-[#68645E] font-semibold">
-                  Real Couple Shoot · CMC FILMS
-                </span>
-              </div>
+            <div className="w-full max-w-md overflow-hidden">
+              <img
+                src={couplesHeroCustom}
+                alt="CMC FILMS portrait"
+                className="aspect-[3/4] h-full w-full object-cover object-top transition-transform duration-1000 hover:scale-105"
+              />
             </div>
           </div>
 
