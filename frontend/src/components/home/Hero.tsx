@@ -26,8 +26,8 @@ export function Hero() {
   }, [heroImages.length, nextSlide]);
 
   return (
-    <section className="relative z-10 w-full h-[72vh] sm:h-[78vh] md:h-[82vh] min-h-[460px] max-h-[750px] overflow-hidden bg-black">
-      {/* ── Well-Proportioned Full-bleed Auto Carousel Images ── */}
+    <section className="relative z-10 w-full h-[85vh] sm:h-[88vh] md:h-[92vh] min-h-[520px] max-h-[900px] overflow-hidden bg-black">
+      {/* ── Tall High-Impact Auto Carousel Images ── */}
       {heroImages.map((image, index) => {
         const isActive = index === activeSlide;
         return (
@@ -50,7 +50,7 @@ export function Hero() {
 
       {/* ── Minimalist Bottom Active Indicators ── */}
       {heroImages.length > 1 && (
-        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 shadow-lg">
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 shadow-lg">
           {heroImages.map((_, idx) => (
             <button
               key={idx}
