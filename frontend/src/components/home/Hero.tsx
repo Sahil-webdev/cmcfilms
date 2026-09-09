@@ -26,8 +26,8 @@ export function Hero() {
   }, [heroImages.length, nextSlide]);
 
   return (
-    <section className="relative z-10 w-full h-[55vh] sm:h-[62vh] md:h-[68vh] min-h-[380px] max-h-[600px] overflow-hidden bg-black">
-      {/* ── Compact Full-bleed Auto Carousel Images ── */}
+    <section className="relative z-10 w-full h-[72vh] sm:h-[78vh] md:h-[82vh] min-h-[460px] max-h-[750px] overflow-hidden bg-black">
+      {/* ── Well-Proportioned Full-bleed Auto Carousel Images ── */}
       {heroImages.map((image, index) => {
         const isActive = index === activeSlide;
         return (
@@ -40,7 +40,7 @@ export function Hero() {
             <img
               src={image}
               alt={`CMC FILMS Showcase ${index + 1}`}
-              className="h-full w-full object-cover object-center transition-transform duration-1000 ease-out"
+              className="h-full w-full object-cover object-[center_30%] transition-transform duration-1000 ease-out"
             />
             {/* Subtle Vignette Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/30" />
@@ -50,16 +50,16 @@ export function Hero() {
 
       {/* ── Minimalist Bottom Active Indicators ── */}
       {heroImages.length > 1 && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 bg-black/40 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 shadow-lg">
+        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 shadow-lg">
           {heroImages.map((_, idx) => (
             <button
               key={idx}
               onClick={() => setActiveSlide(idx)}
               aria-label={`Go to slide ${idx + 1}`}
-              className={`h-1.5 rounded-full transition-all duration-300 ${
+              className={`h-2 rounded-full transition-all duration-300 ${
                 idx === activeSlide
-                  ? "w-6 bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]"
-                  : "w-1.5 bg-white/40 hover:bg-white/80"
+                  ? "w-7 bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]"
+                  : "w-2 bg-white/40 hover:bg-white/80"
               }`}
             />
           ))}
