@@ -27,7 +27,7 @@ export function Hero() {
 
   return (
     <section className="relative z-10 w-full h-[85vh] sm:h-[88vh] md:h-[92vh] min-h-[520px] max-h-[900px] overflow-hidden bg-black">
-      {/* ── Tall High-Impact Auto Carousel Images ── */}
+      {/* ── Pure Photo Auto Carousel (No Overlays, Buttons, or Indicators) ── */}
       {heroImages.map((image, index) => {
         const isActive = index === activeSlide;
         return (
@@ -47,24 +47,6 @@ export function Hero() {
           </div>
         );
       })}
-
-      {/* ── Minimalist Bottom Active Indicators ── */}
-      {heroImages.length > 1 && (
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 shadow-lg">
-          {heroImages.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => setActiveSlide(idx)}
-              aria-label={`Go to slide ${idx + 1}`}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                idx === activeSlide
-                  ? "w-7 bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]"
-                  : "w-2 bg-white/40 hover:bg-white/80"
-              }`}
-            />
-          ))}
-        </div>
-      )}
     </section>
   );
 }
