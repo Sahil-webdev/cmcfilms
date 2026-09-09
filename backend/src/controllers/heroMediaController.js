@@ -19,10 +19,12 @@ const readHeroMedia = async () => {
   if (!databaseAvailable()) return inMemoryHeroMedia;
   const setting = await SiteSetting.findOne({ key: HERO_MEDIA_KEY }).lean();
   const media = setting?.value?.media && typeof setting.value.media === 'object' ? setting.value.media : {};
-  if (media.home?.url) return media;
-  const legacyHomeHero = await SiteSetting.findOne({ key: 'homeHero' }).lean();
-  const legacyUrl = legacyHomeHero?.value?.videoUrl;
-  return typeof legacyUrl === 'string' && legacyUrl ? { ...media, home: { url: legacyUrl, type: 'video' } } : media;
+  // Home now uses an image carousel. Do not surface the legacy video setting.
+  if (media.home?.type === 'video') {
+    const { home: _legacyHome, ...mediaWithoutLegacyHome } = media;
+    return mediaWithoutLegacyHome;
+  }
+  return media;
 };
 
 const saveHeroMedia = async (media) => {
@@ -46,8 +48,12 @@ export const uploadHeroMedia = async (req, res) => {
   if (!allowedKeys.has(key)) return res.status(400).json({ success: false, message: 'Invalid website page selected.' });
   if (!req.file) return res.status(400).json({ success: false, message: 'Please choose a media file.' });
   if (!databaseAvailable()) return res.status(503).json({ success: false, message: 'Database is unavailable. Hero media was not saved.' });
-  if (key === 'couples' && (!Number.isInteger(requestedSlot) || requestedSlot < 0 || requestedSlot > 2)) {
-    return res.status(400).json({ success: false, message: 'Choose a valid Couple Shoot carousel slot.' });
+  const isImageCarousel = key === 'home' || key === 'couples';
+  if (isImageCarousel && req.file.mimetype === 'video/mp4') {
+    return res.status(400).json({ success: false, message: 'Home and Couple Shoot carousels accept image files only.' });
+  }
+  if (isImageCarousel && (!Number.isInteger(requestedSlot) || requestedSlot < 0 || requestedSlot > 2)) {
+    return res.status(400).json({ success: false, message: `Choose a valid ${key === 'home' ? 'Home' : 'Couple Shoot'} carousel slot.` });
   }
 
   try {
@@ -58,16 +64,16 @@ export const uploadHeroMedia = async (req, res) => {
       tags: ['cmc-films', 'hero-media', key],
     });
     const uploadedEntry = { ...uploadedMedia, type: req.file.mimetype === 'video/mp4' ? 'video' : 'image' };
-    const updatedMedia = key === 'couples'
+    const updatedMedia = isImageCarousel
       ? (() => {
-          const previousImages = Array.isArray(media.couples?.images)
-            ? media.couples.images.slice(0, 3).map((url) => typeof url === 'string' ? url : '')
-            : media.couples?.url ? [media.couples.url] : [];
+          const previousImages = Array.isArray(media[key]?.images)
+            ? media[key].images.slice(0, 3).map((url) => typeof url === 'string' ? url : '')
+            : media[key]?.url ? [media[key].url] : [];
           const images = [...previousImages];
           images[requestedSlot] = uploadedMedia.url;
           return {
             ...media,
-            couples: { ...uploadedEntry, url: images[0] || uploadedMedia.url, images: images.slice(0, 3) },
+            [key]: { ...uploadedEntry, type: 'image', url: images[0] || uploadedMedia.url, images: images.slice(0, 3) },
           };
         })()
       : { ...media, [key]: uploadedEntry };

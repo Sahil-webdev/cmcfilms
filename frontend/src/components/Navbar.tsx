@@ -71,10 +71,7 @@ export function Navbar() {
     <>
       <header
         className={cn(
-          "fixed top-0 left-0 right-0 z-[70] transition-all duration-500",
-          scrolled
-            ? "bg-ivory/85 backdrop-blur-md shadow-sm border-b border-espresso/10 py-3"
-            : "bg-gradient-to-b from-black/60 via-black/20 to-transparent py-5",
+          "fixed top-0 left-0 right-0 z-[70] border-b border-espresso/10 bg-ivory/95 py-3 shadow-sm backdrop-blur-md transition-all duration-500",
         )}
       >
         <div className="max-w-[1700px] mx-auto px-6 sm:px-10 flex items-center justify-between">
@@ -85,7 +82,7 @@ export function Navbar() {
             className="flex items-center gap-3 group"
           >
             <BrandLogo
-              variant={scrolled ? "dark" : "light"}
+              variant="dark"
               textClassName="text-xl sm:text-2xl font-display font-black tracking-[0.25em] transition-all duration-300"
             />
           </Link>
@@ -106,13 +103,9 @@ export function Navbar() {
                     isActive
                       ? "text-gold after:w-full font-bold"
                       : "after:w-0 hover:after:w-full",
-                    scrolled
-                      ? isActive
-                        ? "text-gold"
-                        : "text-espresso/85 hover:text-espresso"
-                      : isActive
-                        ? "text-gold"
-                        : "text-white/95 hover:text-gold drop-shadow-sm",
+                    isActive
+                      ? "text-gold"
+                      : "text-espresso/85 hover:text-espresso",
                   )}
                 >
                   {l.label}
@@ -132,9 +125,7 @@ export function Navbar() {
           "hamburger flex lg:!hidden items-center justify-center fixed top-4 right-4 z-[95] p-1.5 rounded-full transition-all duration-300 cursor-pointer select-none border",
           open
             ? "text-white bg-white/20 border-white/30 backdrop-blur-2xl shadow-lg"
-            : scrolled
-              ? "text-espresso bg-ivory/90 border-espresso/15 shadow-md backdrop-blur-md"
-              : "text-white bg-black/30 border-white/20 backdrop-blur-md drop-shadow-md",
+            : "text-espresso bg-ivory/90 border-espresso/15 shadow-md backdrop-blur-md",
         )}
         aria-label="Toggle navigation menu"
       >

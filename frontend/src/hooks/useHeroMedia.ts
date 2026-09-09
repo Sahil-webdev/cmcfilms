@@ -19,3 +19,29 @@ export function useHeroMedia(page: string, fallback: string) {
 
   return mediaUrl;
 }
+
+export function useHeroImages(page: string, fallbackImages: string[]) {
+  const [mediaUrls, setMediaUrls] = useState(fallbackImages);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch(`${API_URL}/api/site-settings/hero-media`, { signal: controller.signal })
+      .then((response) => response.json())
+      .then((payload) => {
+        const savedMedia = payload?.data?.media?.[page];
+        // Home only accepts images. A legacy video setting must never replace
+        // the image carousel's safe local fallback.
+        if (savedMedia?.type === 'video') return;
+        const savedImages = Array.isArray(savedMedia?.images)
+          ? savedMedia.images.filter((url: unknown): url is string => typeof url === 'string' && url.length > 0).slice(0, 3)
+          : typeof savedMedia?.url === 'string' && savedMedia.url
+            ? [savedMedia.url]
+            : [];
+        if (savedImages.length > 0) setMediaUrls(savedImages);
+      })
+      .catch(() => undefined);
+    return () => controller.abort();
+  }, [page]);
+
+  return mediaUrls;
+}

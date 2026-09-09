@@ -4,7 +4,7 @@ import { useHeroMedia } from "@/hooks/useHeroMedia";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Camera, Film, Sparkles, Award, Users } from "lucide-react";
 
 // Image Imports
-import couplesHeroCustom from "@/assets/couples-hero-custom.jpg";
+import founderPortrait from "@/assets/about-founder-portrait.png";
 import shoot1 from "@/assets/shoot/IMG_5570.JPG";
 import shoot2 from "@/assets/shoot/IMG_5603.JPG";
 import shoot3 from "@/assets/shoot/IMG_5636.JPG";
@@ -124,8 +124,8 @@ function AboutPage() {
           <div className="lg:col-span-5 flex justify-center sticky top-28">
             <div className="w-full max-w-md overflow-hidden">
               <img
-                src={couplesHeroCustom}
-                alt="CMC FILMS portrait"
+                src={founderPortrait}
+                alt="CMC FILMS founder portrait"
                 className="aspect-[3/4] h-full w-full object-cover object-top transition-transform duration-1000 hover:scale-105"
               />
             </div>
