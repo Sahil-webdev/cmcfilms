@@ -37,7 +37,7 @@ export function FooterOption7() {
           <div className="space-y-4">
             <BrandLogo
               variant="custom"
-              textClassName="text-xl sm:text-2xl font-display font-black tracking-[0.34em] [-webkit-text-stroke:0.6px_currentColor] text-[#AE171E]"
+              textClassName="text-xl sm:text-2xl font-agile font-black tracking-[0.34em] [-webkit-text-stroke:0.6px_currentColor] text-[#AE171E]"
             />
 
             <p className="text-xs sm:text-sm text-[#AE171E]/90 font-normal leading-relaxed max-w-xs" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>

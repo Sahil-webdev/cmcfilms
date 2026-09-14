@@ -39,7 +39,7 @@ export function BrandLogo({
     >
       <span
         className={cn(
-          "font-display text-xl sm:text-2xl md:text-[25px] font-normal uppercase tracking-[0.34em] transition-colors leading-none",
+          "font-agile text-xl sm:text-2xl md:text-[25px] font-normal uppercase tracking-[0.34em] transition-colors leading-none",
           textColor,
           textClassName
         )}

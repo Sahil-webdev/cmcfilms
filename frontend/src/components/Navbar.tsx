@@ -83,7 +83,7 @@ export function Navbar() {
           >
             <BrandLogo
               variant="dark"
-              textClassName="text-xl sm:text-2xl font-display font-black tracking-[0.25em] transition-all duration-300"
+              textClassName="text-xl sm:text-2xl font-agile font-black tracking-[0.25em] transition-all duration-300"
             />
           </Link>
 

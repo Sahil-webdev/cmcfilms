@@ -1,4 +1,17 @@
 @font-face {
+  font-family: "Agile";
+  src: url("/fonts/agile.otf") format("opentype"),
+       url("/fonts/agile.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-agile {
+  font-family: "Agile", sans-serif;
+}
+
+@font-face {
   font-family: "Echotun";
   src: url("/fonts/echotun.otf") format("opentype");
   font-weight: normal;
