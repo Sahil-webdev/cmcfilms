@@ -1,3 +1,15 @@
+@font-face {
+  font-family: "Echotun";
+  src: url("/fonts/echotun.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-echotun {
+  font-family: "Echotun", sans-serif;
+}
+
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
