@@ -202,7 +202,7 @@ app.get('/api/inquiries', protect, requireAdmin, async (_req, res) => {
       id: String(inquiry._id),
       coupleName: inquiry.coupleName,
       email: inquiry.email,
-      phone: inquiry.phone,
+      phone: inquiry.phone,   
       weddingDate: inquiry.weddingDate ? new Date(inquiry.weddingDate).toISOString().slice(0, 10) : '',
       venueLocation: inquiry.venueLocation,
       estimatedBudget: inquiry.estimatedBudget,
