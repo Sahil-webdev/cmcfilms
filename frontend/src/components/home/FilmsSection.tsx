@@ -288,7 +288,7 @@ export function FilmsSection() {
 
                   {/* Poster Title (Positioned at Bottom of Card) */}
                   <div className="absolute bottom-5 sm:bottom-6 inset-x-4 text-center z-10">
-                    <h3 className="font-poppins text-lg sm:text-xl md:text-2xl text-white font-semibold drop-shadow-md tracking-tight leading-snug">
+                    <h3 className="font-echotun text-lg sm:text-xl md:text-2xl text-white font-bold drop-shadow-md tracking-tight leading-snug">
                       {film.posterTitle}
                     </h3>
                   </div>
