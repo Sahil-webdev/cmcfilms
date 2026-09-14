@@ -232,11 +232,8 @@ export function FilmsSection() {
         
         {/* Section Title */}
         <Reveal className="text-center space-y-2">
-          <h2
-            className="text-3xl sm:text-5xl md:text-6xl font-black text-[#171717] tracking-tight uppercase leading-tight"
-            style={{ fontFamily: "'Outfit', 'Plus Jakarta Sans', 'Poppins', sans-serif" }}
-          >
-            Films That Let You <span className="text-[#93191E] font-black">Feel It Again.</span>
+          <h2 className="font-display text-2xl sm:text-4xl md:text-5xl text-[#171717] font-light tracking-tight">
+            Films That Let You <em className="font-editorial italic font-normal text-[#5C2325]">Feel It Again.</em>
           </h2>
         </Reveal>
 
