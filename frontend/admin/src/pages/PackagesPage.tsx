@@ -227,6 +227,7 @@ export const PackagesPage: React.FC = () => {
   const [packagesLoaded, setPackagesLoaded] = useState(false);
   const [packagesDirty, setPackagesDirty] = useState(false);
   const [syncMessage, setSyncMessage] = useState<string | null>(null);
+  const latestPackagesRef = useRef<ServicePackage[]>([]);
 
   // Load packages published through the admin panel. Website and admin use this same API.
   useEffect(() => {
@@ -251,6 +252,11 @@ export const PackagesPage: React.FC = () => {
     return () => controller.abort();
   }, []);
 
+  // Prevent an older publish request from marking a newer edit as saved.
+  useEffect(() => {
+    latestPackagesRef.current = packages;
+  }, [packages]);
+
   // Publish each add, edit or delete action automatically.
   useEffect(() => {
     if (!packagesLoaded || !token || !packagesDirty) return;
@@ -264,8 +270,10 @@ export const PackagesPage: React.FC = () => {
         });
         const payload = await response.json();
         if (!response.ok || !payload.success) throw new Error(payload.message || 'Unable to publish packages.');
-        setSyncMessage('Changes published to the website.');
-        setPackagesDirty(false);
+        if (latestPackagesRef.current === packages) {
+          setSyncMessage('Changes published to the website.');
+          setPackagesDirty(false);
+        }
       } catch (error) {
         setSyncMessage(error instanceof Error ? error.message : 'Could not publish packages to the website.');
       }
@@ -385,7 +393,6 @@ export const PackagesPage: React.FC = () => {
 
   const handleBackToList = () => {
     setViewMode('list');
-    setPackagesDirty(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -600,7 +607,23 @@ export const PackagesPage: React.FC = () => {
     return matchesCat && matchesSearch;
   });
 
+  const filteredMainPackages = packages.filter((pkg) => {
+    const query = searchQuery.trim().toLowerCase();
+    if (!query) return true;
+    return [pkg.title, pkg.subtitle, pkg.copy, pkg.startingPrice].some((value) =>
+      value.toLowerCase().includes(query)
+    );
+  });
+
   const selectedCategoryObj = packages.find((p) => p.id === subForm.parentPackageId);
+  const syncStatus = syncMessage ? (
+    <div
+      role="status"
+      className={`lg:col-span-12 rounded-xl border px-4 py-3 text-xs font-medium ${/offline|unable|could not|please sign in|failed/i.test(syncMessage) ? 'border-red-500/30 bg-red-500/10 text-red-700 dark:text-red-300' : 'border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300'}`}
+    >
+      {syncMessage}
+    </div>
+  ) : null;
 
   // ─────────────────────────────────────────────────────────────────────────────
   // RENDER 1: DEDICATED FULL-PAGE MAIN PACKAGE CREATION / EDITING
@@ -640,7 +663,8 @@ export const PackagesPage: React.FC = () => {
               Cancel
             </button>
             <button
-              onClick={handleSaveMainPackage}
+              type="submit"
+              form="main-package-form"
               className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold bg-[#8C90C1] hover:bg-[#787CAE] text-white shadow-lg shadow-[#8C90C1]/20 cursor-pointer transition-all active:scale-95"
             >
               <Save className="h-4 w-4" />
@@ -651,6 +675,7 @@ export const PackagesPage: React.FC = () => {
 
         {/* 2-Column Main Package Form & Live Preview Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {syncStatus}
           
           {/* Left Form Section */}
           <div className="lg:col-span-7 bg-white dark:bg-[#121522] border border-slate-200 dark:border-[#1E2235] rounded-3xl p-6 sm:p-8 shadow-xs space-y-5 text-left">
@@ -659,7 +684,7 @@ export const PackagesPage: React.FC = () => {
               <span>Main Package Information</span>
             </h2>
 
-            <form onSubmit={handleSaveMainPackage} className="space-y-6 text-xs font-sans">
+            <form id="main-package-form" onSubmit={handleSaveMainPackage} className="space-y-6 text-xs font-sans">
               <div>
                 <label className="block font-bold mb-1.5 text-slate-700 dark:text-slate-300">
                   Package Text / Name *
@@ -795,7 +820,8 @@ export const PackagesPage: React.FC = () => {
               Cancel
             </button>
             <button
-              onClick={handleSaveSubPackage}
+              type="submit"
+              form="sub-package-form"
               className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold bg-[#8C90C1] hover:bg-[#787CAE] text-white shadow-lg shadow-[#8C90C1]/20 cursor-pointer transition-all active:scale-95"
             >
               <Save className="h-4 w-4" />
@@ -806,6 +832,7 @@ export const PackagesPage: React.FC = () => {
 
         {/* 2-Column Sub-Package Form & Live Preview Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {syncStatus}
           
           {/* Left Form Section */}
           <div className="lg:col-span-7 bg-white dark:bg-[#121522] border border-slate-200 dark:border-[#1E2235] rounded-3xl p-6 sm:p-8 shadow-xs space-y-6 text-left">
@@ -834,7 +861,7 @@ export const PackagesPage: React.FC = () => {
               </p>
             </div>
 
-            <form onSubmit={handleSaveSubPackage} className="space-y-5 text-xs font-sans">
+            <form id="sub-package-form" onSubmit={handleSaveSubPackage} className="space-y-5 text-xs font-sans">
               {/* Name & Badge */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="sm:col-span-2">
@@ -1125,6 +1152,7 @@ export const PackagesPage: React.FC = () => {
       </div>
 
       {/* Notice Banner */}
+      {syncStatus}
       {notice && (
         <div className="flex items-center gap-2 text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-4 py-3 animate-in fade-in">
           <CheckCircle className="h-4 w-4 shrink-0" />
@@ -1177,7 +1205,7 @@ export const PackagesPage: React.FC = () => {
       {activeListTab === 'main-packages' && (
         <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {packages.map((pkg) => (
+            {filteredMainPackages.map((pkg) => (
               <div
                 key={pkg.id}
                 className="bg-white dark:bg-[#121522] border border-slate-200 dark:border-[#1E2235] rounded-2xl overflow-hidden shadow-sm hover:border-[#8C90C1]/40 transition-all flex flex-col justify-between"
@@ -1297,10 +1325,10 @@ export const PackagesPage: React.FC = () => {
             ))}
           </div>
 
-          {packages.length === 0 && (
+          {filteredMainPackages.length === 0 && (
             <div className="py-16 text-center border-2 border-dashed border-slate-300 dark:border-[#202435] rounded-3xl space-y-3">
               <Package className="h-10 w-10 text-slate-400 mx-auto" />
-              <p className="text-sm font-bold text-slate-700 dark:text-slate-300">No Main Packages Created Yet</p>
+              <p className="text-sm font-bold text-slate-700 dark:text-slate-300">{packages.length === 0 ? 'No Main Packages Created Yet' : 'No Main Packages Found'}</p>
               <button
                 onClick={handleOpenCreateMain}
                 className="px-5 py-2.5 rounded-xl bg-[#8C90C1] text-white text-xs font-bold hover:bg-[#787CAE]"

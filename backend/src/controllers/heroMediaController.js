@@ -49,10 +49,11 @@ export const uploadHeroMedia = async (req, res) => {
   if (!req.file) return res.status(400).json({ success: false, message: 'Please choose a media file.' });
   if (!databaseAvailable()) return res.status(503).json({ success: false, message: 'Database is unavailable. Hero media was not saved.' });
   const isImageCarousel = key === 'home' || key === 'couples';
+  const carouselSlotCount = key === 'home' ? 6 : 3;
   if (isImageCarousel && req.file.mimetype === 'video/mp4') {
     return res.status(400).json({ success: false, message: 'Home and Couple Shoot carousels accept image files only.' });
   }
-  if (isImageCarousel && (!Number.isInteger(requestedSlot) || requestedSlot < 0 || requestedSlot > 2)) {
+  if (isImageCarousel && (!Number.isInteger(requestedSlot) || requestedSlot < 0 || requestedSlot >= carouselSlotCount)) {
     return res.status(400).json({ success: false, message: `Choose a valid ${key === 'home' ? 'Home' : 'Couple Shoot'} carousel slot.` });
   }
 
@@ -67,13 +68,13 @@ export const uploadHeroMedia = async (req, res) => {
     const updatedMedia = isImageCarousel
       ? (() => {
           const previousImages = Array.isArray(media[key]?.images)
-            ? media[key].images.slice(0, 3).map((url) => typeof url === 'string' ? url : '')
+            ? media[key].images.slice(0, carouselSlotCount).map((url) => typeof url === 'string' ? url : '')
             : media[key]?.url ? [media[key].url] : [];
           const images = [...previousImages];
           images[requestedSlot] = uploadedMedia.url;
           return {
             ...media,
-            [key]: { ...uploadedEntry, type: 'image', url: images[0] || uploadedMedia.url, images: images.slice(0, 3) },
+            [key]: { ...uploadedEntry, type: 'image', url: images[0] || uploadedMedia.url, images: images.slice(0, carouselSlotCount) },
           };
         })()
       : { ...media, [key]: uploadedEntry };

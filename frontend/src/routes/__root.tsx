@@ -3,6 +3,7 @@ import {
   Outlet,
   Link,
   createRootRouteWithContext,
+  useLocation,
   useRouter,
 } from "@tanstack/react-router";
 import { useEffect } from "react";
@@ -124,6 +125,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const location = useLocation();
+
+  // A fresh page navigation should never inherit the scroll position from the
+  // page the visitor just left. This applies to the desktop/mobile navbar and
+  // every other internal link rendered within the site.
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    const frame = window.requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [location.pathname]);
 
   return (
     <QueryClientProvider client={queryClient}>

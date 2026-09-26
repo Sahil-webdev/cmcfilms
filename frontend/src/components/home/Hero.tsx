@@ -32,7 +32,7 @@ export function Hero() {
         const isActive = index === activeSlide;
         return (
           <div
-            key={image}
+            key={`${image}-${index}`}
             className={`absolute inset-0 h-full w-full transition-opacity duration-1000 ease-in-out ${
               isActive ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
             }`}
@@ -47,6 +47,10 @@ export function Hero() {
           </div>
         );
       })}
+      <div className="pointer-events-none absolute inset-x-6 bottom-10 z-20 text-center text-ivory drop-shadow-[0_2px_12px_rgba(0,0,0,0.65)] sm:bottom-14">
+        <p className="font-agile text-3xl font-black tracking-[0.22em] sm:text-4xl md:text-5xl">CMC FILMS</p>
+        <p className="mt-2 font-sans text-[10px] font-medium tracking-[0.2em] text-ivory/90 sm:text-xs">wedding storyteller</p>
+      </div>
     </section>
   );
 }

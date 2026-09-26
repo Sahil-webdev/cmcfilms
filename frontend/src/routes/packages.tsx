@@ -3,6 +3,7 @@ import { useEffect, useState, useMemo } from "react";
 import { Check, Sparkles, ArrowRight, Camera, Film, Clock, X, Send, ArrowUpRight, ArrowLeft, Search, Filter, RotateCcw, ChevronDown, ChevronUp, MapPin, Award, SlidersHorizontal, Phone, MessageSquare } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { useHeroMedia } from "@/hooks/useHeroMedia";
+import { studio } from "@/lib/site-data";
 
 // Image Imports
 import hero from "@/assets/featured.jpg";
@@ -399,6 +400,7 @@ const faqs = [
 ];
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001";
+const WHATSAPP_PHONE = studio.phone.replace(/\D/g, "");
 
 const numericValue = (value: string | undefined) => {
   const digits = (value || "").replace(/[^0-9]/g, "");
@@ -445,7 +447,7 @@ export function PackagesPage() {
       try {
         const response = await fetch(`${API_URL}/api/packages`, { signal: controller.signal });
         const payload = await response.json();
-        if (response.ok && Array.isArray(payload?.data?.packages)) {
+        if (response.ok && Array.isArray(payload?.data?.packages) && payload.data.packages.length > 0) {
           setServices(toWebsiteServices(payload.data.packages));
         }
       } catch {
@@ -493,6 +495,8 @@ export function PackagesPage() {
 
   const [enquiryModalItem, setEnquiryModalItem] = useState<{ name: string; price: string } | null>(null);
   const [formSent, setFormSent] = useState(false);
+  const [isSubmittingEnquiry, setIsSubmittingEnquiry] = useState(false);
+  const [enquiryError, setEnquiryError] = useState<string | null>(null);
   const [expandedDesc, setExpandedDesc] = useState(false);
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
 
@@ -517,9 +521,38 @@ export function PackagesPage() {
     }, 0);
   }, [selectedServices]);
 
-  const handleEnquirySubmit = (e: React.FormEvent) => {
+  const handleEnquirySubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setFormSent(true);
+    if (!enquiryModalItem) return;
+
+    const formData = new FormData(e.currentTarget);
+    setIsSubmittingEnquiry(true);
+    setEnquiryError(null);
+
+    try {
+      const response = await fetch(`${API_URL}/api/inquiries`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.get("name"),
+          email: formData.get("email"),
+          phone: formData.get("phone"),
+          date: formData.get("date"),
+          venue: formData.get("venue"),
+          eventType: `Package enquiry — ${enquiryModalItem.name}`,
+          story: `Interested package: ${enquiryModalItem.name} (${enquiryModalItem.price})`,
+        }),
+      });
+      const payload = await response.json().catch(() => null);
+      if (!response.ok || !payload?.success) {
+        throw new Error(payload?.message || "We could not send your enquiry. Please try again.");
+      }
+      setFormSent(true);
+    } catch (error) {
+      setEnquiryError(error instanceof Error ? error.message : "We could not send your enquiry. Please try again.");
+    } finally {
+      setIsSubmittingEnquiry(false);
+    }
   };
 
   // Filtered offerings inside Category Detail View
@@ -630,6 +663,7 @@ export function PackagesPage() {
                       price: activeOfferingDetail.offering.price,
                     });
                     setFormSent(false);
+                    setEnquiryError(null);
                   }}
                   className="flex-1 py-3.5 px-6 rounded-full bg-[#C47A65] hover:bg-[#171717] text-white font-mono text-xs uppercase font-bold tracking-wider transition-all shadow-sm cursor-pointer flex items-center justify-center gap-2"
                 >
@@ -638,7 +672,7 @@ export function PackagesPage() {
                 </button>
 
                 <a
-                  href={`https://wa.me/919876543210?text=Hi%20CMC%20FILMS%2C%20I%20want%20to%20enquire%20about%20booking%20"${encodeURIComponent(activeOfferingDetail.offering.name)}"%20(${encodeURIComponent(activeOfferingDetail.offering.price)}).`}
+                  href={`https://wa.me/${WHATSAPP_PHONE}?text=Hi%20CMC%20FILMS%2C%20I%20want%20to%20enquire%20about%20booking%20"${encodeURIComponent(activeOfferingDetail.offering.name)}"%20(${encodeURIComponent(activeOfferingDetail.offering.price)}).`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="py-3.5 px-6 rounded-full border border-[#171717] hover:bg-[#171717] hover:text-white text-[#171717] font-mono text-xs uppercase font-bold tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2"
@@ -740,6 +774,7 @@ export function PackagesPage() {
                       price: activeOfferingDetail.offering.price,
                     });
                     setFormSent(false);
+                    setEnquiryError(null);
                   }}
                   className="w-full py-3.5 rounded-full bg-[#C47A65] hover:bg-white hover:text-[#171717] text-white font-mono text-xs uppercase font-bold tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2"
                 >
@@ -972,6 +1007,7 @@ export function PackagesPage() {
                         onClick={() => {
                           setEnquiryModalItem({ name: offering.name, price: offering.price });
                           setFormSent(false);
+                          setEnquiryError(null);
                         }}
                         className="py-2 px-3.5 sm:px-5 rounded-full bg-[#C47A65] hover:bg-[#171717] text-white font-mono text-[11px] uppercase font-bold transition-all shadow-xs cursor-pointer whitespace-nowrap"
                       >
@@ -1118,11 +1154,17 @@ export function PackagesPage() {
               </div>
             ) : (
               <form onSubmit={handleEnquirySubmit} className="space-y-3.5 text-xs font-mono">
+                {enquiryError && (
+                  <p role="alert" className="rounded-xl border border-red-500/30 bg-red-500/10 px-3 py-2 text-red-700">
+                    {enquiryError}
+                  </p>
+                )}
                 <div>
                   <label className="block text-[#171717] font-semibold mb-1">Your Name *</label>
                   <input
                     required
                     type="text"
+                    name="name"
                     placeholder="Enter your full name..."
                     className="w-full p-2.5 rounded-xl bg-white border border-[#D8D3CB] font-sans text-xs focus:outline-none focus:border-[#C47A65]"
                   />
@@ -1133,6 +1175,7 @@ export function PackagesPage() {
                   <input
                     required
                     type="email"
+                    name="email"
                     placeholder="name@example.com"
                     className="w-full p-2.5 rounded-xl bg-white border border-[#D8D3CB] font-sans text-xs focus:outline-none focus:border-[#C47A65]"
                   />
@@ -1143,6 +1186,7 @@ export function PackagesPage() {
                     <label className="block text-[#171717] font-semibold mb-1">Phone / WhatsApp</label>
                     <input
                       type="tel"
+                      name="phone"
                       placeholder="+91 00000 00000"
                       className="w-full p-2.5 rounded-xl bg-white border border-[#D8D3CB] font-sans text-xs focus:outline-none focus:border-[#C47A65]"
                     />
@@ -1151,6 +1195,7 @@ export function PackagesPage() {
                     <label className="block text-[#171717] font-semibold mb-1">Event Date</label>
                     <input
                       type="date"
+                      name="date"
                       className="w-full p-2.5 rounded-xl bg-white border border-[#D8D3CB] font-sans text-xs focus:outline-none focus:border-[#C47A65]"
                     />
                   </div>
@@ -1160,6 +1205,7 @@ export function PackagesPage() {
                   <label className="block text-[#171717] font-semibold mb-1">Event Location / Venue</label>
                   <input
                     type="text"
+                    name="venue"
                     placeholder="City / Venue name (e.g. Udaipur, Jaipur)"
                     className="w-full p-2.5 rounded-xl bg-white border border-[#D8D3CB] font-sans text-xs focus:outline-none focus:border-[#C47A65]"
                   />
@@ -1167,9 +1213,10 @@ export function PackagesPage() {
 
                 <button
                   type="submit"
+                  disabled={isSubmittingEnquiry}
                   className="w-full py-3 rounded-full bg-[#171717] hover:bg-[#C47A65] text-white font-mono text-xs uppercase tracking-widest font-semibold transition-all shadow-md cursor-pointer flex items-center justify-center gap-2 mt-3"
                 >
-                  <span>Submit Package Enquiry</span>
+                  <span>{isSubmittingEnquiry ? "Sending Enquiry…" : "Submit Package Enquiry"}</span>
                   <Send className="w-3.5 h-3.5" />
                 </button>
               </form>

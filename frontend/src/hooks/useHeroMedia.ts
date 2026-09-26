@@ -33,7 +33,7 @@ export function useHeroImages(page: string, fallbackImages: string[]) {
         // the image carousel's safe local fallback.
         if (savedMedia?.type === 'video') return;
         const savedImages = Array.isArray(savedMedia?.images)
-          ? savedMedia.images.filter((url: unknown): url is string => typeof url === 'string' && url.length > 0).slice(0, 3)
+          ? savedMedia.images.filter((url: unknown): url is string => typeof url === 'string' && url.length > 0).slice(0, 6)
           : typeof savedMedia?.url === 'string' && savedMedia.url
             ? [savedMedia.url]
             : [];
